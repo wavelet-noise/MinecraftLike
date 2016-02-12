@@ -179,9 +179,10 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
   //GL_CALL(shader = glCreateShader(type));
   shader = glCreateShader(type);
 
-  if (glGetError())
+  if (int er = glGetError())
   {
-    throw "Shader not created.";
+    LOG(fatal) << "glCreateShader error " << er;
+    throw;
   }
 
   LOG(trace) << "compile type " << type;
@@ -189,6 +190,7 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
   char const *sourcePointer = data.c_str();
   GL_CALL(glShaderSource(shader, 1, &sourcePointer, NULL));
   GL_CALL(glCompileShader(shader));
+  GL_CALL(glAttachShader(mProgram, shader));
 
   GLint compiled = GL_FALSE;
   GL_CALL(glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled));
@@ -198,7 +200,7 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
     LogDumpError(shaderfile_name, data, shader);
 
     GL_CALL(glDeleteShader(shader));
-    throw "Shader not created.";
+    throw;
   }
 
   return shader;
@@ -253,7 +255,7 @@ int Shader::GetUniformLocation(const std::string &uni_name) const
   const auto &search = mUniforms.find(uni_name);
   if (search == mUniforms.end())
   {
-    GLuint loc = glGetUniformLocation(mProgram, uni_name.c_str());
+    int loc = glGetUniformLocation(mProgram, uni_name.c_str());
     if (loc == -1)
     {
       LOG(error) << uni_name << " missed in " << shaderfile_name;

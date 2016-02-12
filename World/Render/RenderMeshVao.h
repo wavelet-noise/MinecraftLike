@@ -31,7 +31,7 @@ private:
   void Create();
 
 private:
-  bool mCreated = true;
+  bool mCreated = false;
   size_t mVertexSize = 0;
   size_t mIndexCount = 0;
 

@@ -86,4 +86,5 @@ void RenderMeshVao::Create()
   GL_CALL(glGenBuffers(1, &mVbi));
   GL_CALL(glBindVertexArray(mVao));
   GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi));
+  mCreated = true;
 }

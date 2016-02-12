@@ -30,24 +30,16 @@ Game::Game()
 {
   Window::WindowSystemInitialize();
 
-  try
-  {
-    mWindow = std::make_unique<Window>(glm::uvec2(600, 600));
-    mCamera = std::make_unique<Camera>();
-    mWindow->SetCurrentContext();
+  mWindow = std::make_unique<Window>(glm::uvec2(600, 600));
+  mCamera = std::make_unique<Camera>();
+  mWindow->SetCurrentContext();
 
-    Render::Initialize();
-    mRender = std::make_unique<Render>();
+  Render::Initialize();
+  mRender = std::make_unique<Render>();
 
-    LOG(info) << "Render created. Version: " << mRender->GetVersion().major << "." << mRender->GetVersion().minor;
+  LOG(info) << "Render created. Version: " << mRender->GetVersion().major << "." << mRender->GetVersion().minor;
 
-    Initialized = true;
-  }
-  catch (const char *e)
-  {
-    LOG(error) << e << std::endl;
-    return;
-  }
+  Initialized = true;
 
   //GL_CALL(glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y)); 
 

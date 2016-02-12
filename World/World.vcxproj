@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json" />
+    <None Include="shaders\basic.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7703DB31-99E4-44B1-958A-98F60E8ED672}</ProjectGuid>
