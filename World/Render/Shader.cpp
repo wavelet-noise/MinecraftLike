@@ -61,19 +61,19 @@ void Shader::BuildType(int type)
   CreateShader(ss.str(), type);
 }
 
-std::string get_dir(std::string path)
+std::string get_dir(const std::string &path)
 {
   return path.substr(0, path.find_last_of('/') + 1);
 }
 
-std::string get_filename_headername(std::string path)
+std::string get_filename_headername(const std::string &path)
 {
   std::replace(path.begin(), path.end(), '.', '_');
   std::transform(path.begin(), path.end(), path.begin(), toupper);
   return path;
 }
 
-std::string get_name(std::string path)
+std::string get_name(const std::string &path)
 {
   return path.substr(path.find_last_of('/') + 1);
 }
@@ -83,8 +83,9 @@ void Shader::LogDumpError(const std::string &filename, const std::string &str, i
   std::string f_name;
   if (shader != -1)
   {
-    f_name = (boost::format("shader_error_log_%1%.txt") %
-      get_filename_headername(get_name(filename))).str();
+    f_name = (boost::format("shader_error_log_%1%_%2%.txt") %
+      get_filename_headername(get_name(filename)) %
+      shader).str();
 
     LOG(fatal) << "in file " << filename;
     LOG(fatal) << "shader error detail saveid in " << f_name;
@@ -92,7 +93,8 @@ void Shader::LogDumpError(const std::string &filename, const std::string &str, i
   else
   {
     f_name = (boost::format("shader_force_dump_%1%_%2%.txt") %
-      get_filename_headername(get_name(filename))).str();
+      get_filename_headername(get_name(filename)) %
+      shader).str();
 
     LOG(trace) << filename << " force dump to " << f_name;
   }
@@ -112,6 +114,7 @@ void Shader::LogDumpError(const std::string &filename, const std::string &str, i
 void Shader::BuildBody(const std::string &filename)
 {
   std::stringstream ss;
+  shaderfile_name = filename;
   BuildBody(ss, filename);
 
   body = ss.str();
@@ -164,8 +167,6 @@ void Shader::Use()
   GL_CALL(glUseProgram(mProgram));
 }
 
-
-
 unsigned int Shader::CreateShader(const std::string &data, int type)
 {
   if (data.empty())
@@ -193,13 +194,7 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
 
   if (compiled != GL_TRUE || glGetError())
   {
-    int infoLogLength = 0;
-    GL_CALL(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength));
-    if (infoLogLength)
-    {
-      std::vector<char> VertexShaderErrorMessage(infoLogLength);
-      GL_CALL(glGetShaderInfoLog(shader, infoLogLength, NULL, &VertexShaderErrorMessage[0]));
-    }
+    LogDumpError(shaderfile_name, data, shader);
 
     GL_CALL(glDeleteShader(shader));
     throw "Shader not created.";
