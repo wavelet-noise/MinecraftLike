@@ -16,9 +16,12 @@ RenderMeshVao::RenderMeshVao()
 
 RenderMeshVao::~RenderMeshVao()
 {
-  GL_CALL(glDeleteBuffers(1, &mVbi));
-  GL_CALL(glDeleteBuffers(1, &mVbo));
-  GL_CALL(glDeleteVertexArrays(1, &mVao));
+  if (mCreated)
+  {
+    GL_CALL(glDeleteBuffers(1, &mVbi));
+    GL_CALL(glDeleteBuffers(1, &mVbo));
+    GL_CALL(glDeleteVertexArrays(1, &mVao));
+  }
 }
 
 void RenderMeshVao::UseShader(const Shader *shader)
