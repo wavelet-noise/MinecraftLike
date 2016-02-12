@@ -18,8 +18,7 @@ public:
   /// из которой шейдер будет брать поток данных.
   /// Attribute::size размер атрибута в байтах.
   /// Attribute::offset смещение атрибута в байтах.
-  /// Attribute::enabled включить или выключить атрибут.
-  virtual void SetAttribute(AttributeType type, Attribute attribute) = 0;
+  virtual void SetAttribute(const std::vector<Attribute> &attribute) = 0;
 
   /// —оздать сетку в видеопам€ти.
   /// @param vertex указатель на начало буфера вершин.

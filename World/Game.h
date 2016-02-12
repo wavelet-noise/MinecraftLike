@@ -34,7 +34,6 @@ private:
   std::unique_ptr<Render> mRender;
   Camera mCamera;
   std::unique_ptr<World> mWorld;
-
 };
 
 #endif // GAME_H

@@ -99,9 +99,7 @@ public:
   /// @param indexSize количество элементов в буфере индексов.
   inline void Compile()
   {
-    mStrategy->SetAttribute(ATTRIBUTE_VERTEX, { true, sizeof(VertexType{}.vertex), offsetof(VertexType, vertex) });
-    mStrategy->SetAttribute(ATTRIBUTE_TEXTURE, { true, sizeof(VertexType{}.texture), offsetof(VertexType, texture) });
-    mStrategy->SetAttribute(ATTRIBUTE_NORMAL, { true, sizeof(VertexType{}.normal), offsetof(VertexType, normal) });
+    mStrategy->SetAttribute(VertexType::Get());
     mStrategy->Compile(reinterpret_cast<float *>(mVertex.data()), mVertex.size(), sizeof(VertexType),
       reinterpret_cast<size_t *>(mIndex.data()), mIndex.size());
   }
