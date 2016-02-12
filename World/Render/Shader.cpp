@@ -58,6 +58,7 @@ void Shader::BuildType(int type)
   ss << "//end of runtime header" << std::endl;
   ss << body;
 
+  source_loaded = true; //notify that other "define", "extension" setting is incorrect
   CreateShader(ss.str(), type);
 }
 
