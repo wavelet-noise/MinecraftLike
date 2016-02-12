@@ -6,7 +6,6 @@
 #ifndef Shader_h__
 #define Shader_h__
 
-
 #include <memory>
 #include <string>
 #include <glm/glm.hpp>
@@ -19,7 +18,7 @@ typedef std::shared_ptr<Shader> PShader;
 class Shader
 {
 public:
-  Shader(const std::string &shaderName);
+  Shader();
   ~Shader();
 
   /// Установить шейдер.
@@ -30,6 +29,24 @@ public:
   {
     return SetUniform_(val, name);
   };
+
+  ///
+  int GetUniformLocation(const std::string &uni_name) const;
+
+  ///
+  void AddExtension(std::string s);
+
+  ///
+  void AddDefine(std::string s);
+
+  ///
+  bool Link();
+
+  ///
+  void BuildType(int type);
+
+  ///
+  void BuildBody(const std::string & filename);
 
 #define UNIFORM_QUOTE(name) #name
 #define UNIFORM_MAKE_STR(macro) UNIFORM_QUOTE(macro)
@@ -47,28 +64,41 @@ private:
   /// Удалить шейдер
   void DeleteShader(unsigned int shader);
 
+  /// Записать файл
+  void SaveTxtFile(const std::string & fileName, const std::string & content);
+
   /// Прочитать файл.
   std::string ReadTxtFile(const std::string &fileName);
 
-  int GetUniformLocation(const char *name);
+  /// Записать дамп шейдера на диск
+  void LogDumpError(const std::string & filename, const std::string & str, int shader);
+
+  void BuildBody(std::stringstream &ss, const std::string &filename, int level = 0 );
 
 private:
 
-  bool SetUniform_(const glm::mat4 &val, const char *name);
-
-  bool SetUniform_(int val, const char *name);
-
-  bool SetUniform_(const glm::vec4 &val, const char *name);
-
-  bool SetUniform_(const glm::vec3 &val, const char *name);
-
-  bool SetUniform_(const glm::vec2 &val, const char *name);
+  void SetUniform_(const glm::mat4 &val, const std::string &uni_name) const;
+  void SetUniform_(const glm::mat3 &val, const std::string &uni_name) const;
+  void SetUniform_(const glm::mat2 &val, const std::string &uni_name) const;
+  void SetUniform_(int val, const std::string &uni_name) const;
+  void SetUniform_(unsigned int val, const std::string &uni_name) const;
+  void SetUniform_(const glm::vec4 &val, const std::string &uni_name) const;
+  void SetUniform_(const glm::vec3 &val, const std::string &uni_name) const;
+  void SetUniform_(const glm::vec2 &val, const std::string &uni_name) const;
+  void SetUniform_(const float &val, const std::string &uni_name) const;
 
 private:
 
-  std::unordered_map<std::string, int> mUniforms;
+  mutable std::unordered_map<std::string, int> mUniforms;
+  std::vector<int> shaders_;
 
+  std::vector<std::string> extensions;
+  std::vector<std::string> defines;
+
+  std::string shaderfile_name;
+  std::string version = "#version 330 core";
+  bool source_loaded = false;
+  std::string body;
 };
-
 
 #endif // Shader_h__

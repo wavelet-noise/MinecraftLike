@@ -4,79 +4,167 @@
 // ============================================================================
 #include "Shader.h"
 
-
 #include <GL/glew.h>
 #include <vector>
 #include <assert.h>
 #include <fstream>
+#include <sstream>
 #include "OpenGLCall.h"
+#include <map>
+#include "..\tools\Log.h"
+#include <regex>
+#include <boost\format.hpp>
 
-Shader::Shader(const std::string &shaderName)
+Shader::Shader()
 {
-  // Читаем и создаем шейдеры.
-  // Если файл не существует, шейдер не создается.
-  std::vector<int> shaders;
-
-  try
-  {
-    shaders.push_back(CreateShader(ReadTxtFile(shaderName + ".vs"), GL_VERTEX_SHADER));
-    shaders.push_back(CreateShader(ReadTxtFile(shaderName + ".fs"), GL_FRAGMENT_SHADER));
-  }
-  catch (char *)
-  {
-    // Удалим все созданные шейдеры.
-    for (auto it = shaders.begin(); it != shaders.end(); ++it)
-    {
-      DeleteShader(*it);
-    }
-    throw;
-  }
-
-  // Пытаемся собрать программу из всех прочитанных шейдеров.
-  GL_CALL(mProgram = glCreateProgram());
-  for (auto it = shaders.begin(); it != shaders.end(); ++it)
-  {
-    if (*it)
-    {
-      GL_CALL(glAttachShader(mProgram, *it));
-    }
-  }
-  GL_CALL(glLinkProgram(mProgram));
-
-  // Удаляем шейдеры.
-  for (auto it = shaders.begin(); it != shaders.end(); ++it)
-  {
-    DeleteShader(*it);
-  }
-
-  // Проверяем статус линковки
-  GLint link = GL_FALSE;
-  GL_CALL(glGetProgramiv(mProgram, GL_LINK_STATUS, &link));
-  if (link != GL_TRUE || glGetError())
-  {
-    GLint linkerLogSize = 0;
-    GL_CALL(glGetProgramiv(mProgram, GL_INFO_LOG_LENGTH, &linkerLogSize));
-    if (linkerLogSize)
-    {
-      std::string linkerLog(linkerLogSize, '\0');
-      GL_CALL(glGetProgramInfoLog(mProgram, linkerLogSize, NULL, &linkerLog[0]));
-    }
-
-    GL_CALL(glDeleteProgram(mProgram));
-    throw "Shader not created.";
-  }
+  mProgram = glCreateProgram();
 }
 
-
-Shader::~Shader()
+Shader::~Shader(void)
 {
+  while (!shaders_.empty()) {
+    GL_CALL(glDeleteShader(shaders_.back()));
+    LOG(trace) << "deleting shader " << std::to_string(shaders_.back());
+    shaders_.pop_back();
+  }
   GL_CALL(glDeleteProgram(mProgram));
+  LOG(trace) << "deleting program" << mProgram;
+}
+
+void Shader::BuildType(int type)
+{
+  std::stringstream ss;
+
+  static std::map<int, std::string> shader_defines = {
+    std::make_pair(GL_FRAGMENT_SHADER, "_FRAGMENT_"),
+    std::make_pair(GL_VERTEX_SHADER, "_VERTEX_"),
+    std::make_pair(GL_GEOMETRY_SHADER, "_GEOMETRY_"),
+    std::make_pair(GL_TESS_EVALUATION_SHADER, "_TESSEVAL_"),
+    std::make_pair(GL_TESS_CONTROL_SHADER, "_TESSCONTROL_")
+  };
+
+  ss << version << std::endl;
+  for (const auto &def : defines)
+  {
+    ss << "#define " << def << std::endl;
+  }
+
+  for (const auto &ext : extensions)
+  {
+    ss << "#extension " << ext << " : enable" << std::endl;
+  }
+
+  ss << "#define " << shader_defines[type] << std::endl;
+  ss << "//end of runtime header" << std::endl;
+  ss << body;
+
+  CreateShader(ss.str(), type);
+}
+
+std::string get_dir(std::string path)
+{
+  return path.substr(0, path.find_last_of('/') + 1);
+}
+
+std::string get_filename_headername(std::string path)
+{
+  std::replace(path.begin(), path.end(), '.', '_');
+  std::transform(path.begin(), path.end(), path.begin(), toupper);
+  return path;
+}
+
+std::string get_name(std::string path)
+{
+  return path.substr(path.find_last_of('/') + 1);
+}
+
+void Shader::LogDumpError(const std::string &filename, const std::string &str, int shader)
+{
+  std::string f_name;
+  if (shader != -1)
+  {
+    f_name = (boost::format("shader_error_log_%1%.txt") %
+      get_filename_headername(get_name(filename))).str();
+
+    LOG(fatal) << "in file " << filename;
+    LOG(fatal) << "shader error detail saveid in " << f_name;
+  }
+  else
+  {
+    f_name = (boost::format("shader_force_dump_%1%_%2%.txt") %
+      get_filename_headername(get_name(filename))).str();
+
+    LOG(trace) << filename << " force dump to " << f_name;
+  }
+
+  std::stringstream out_file;
+  out_file << str;
+  if (shader != -1)
+  {
+    char infoLog[1024];
+    int infologLength = 0;
+    glGetShaderInfoLog(shader, 1024, &infologLength, infoLog);
+    out_file << std::endl << "=======ERROR======" << std::endl << infoLog << std::endl;
+  }
+  SaveTxtFile(f_name, out_file.str());
+}
+
+void Shader::BuildBody(const std::string &filename)
+{
+  std::stringstream ss;
+  BuildBody(ss, filename);
+
+  body = ss.str();
+}
+
+void Shader::BuildBody(std::stringstream &ss, const std::string &filename, int level /*= 0 */)
+{
+  if (level > 32)
+    LOG(fatal) << "header inclusion depth limit reached, might be caused by cyclic header inclusion";
+
+  LOG(trace) << "build shader body for " << filename;
+
+  static const std::regex re("^[ ]*#[ ]*include[ ]+[\"<](.*)[\">].*");
+  static const std::regex rdump("^[ ]*//DUMP_SOURCE.*");
+  std::stringstream input;
+
+  input << ReadTxtFile(filename);
+
+  size_t line_number = 1;
+  std::smatch matches;
+
+  std::string line;
+  while (std::getline(input, line))
+  {
+    if (std::regex_search(line, matches, re))
+    {
+      std::string include_file = matches[1];
+
+      ss << "#ifndef " << get_filename_headername(include_file) << std::endl;
+      ss << "#define " << get_filename_headername(include_file) << std::endl;
+      LOG(trace) << "include parsing " << include_file;
+      BuildBody(ss, get_dir(filename) + include_file, level + 1);
+      ss << "#endif //" << get_filename_headername(include_file) << std::endl;
+    }
+    else
+    {
+      ss << line << std::endl;
+    }
+
+    if (std::regex_search(line, matches, rdump))
+    {
+      LogDumpError(filename, ss.str(), -1);
+    }
+    ++line_number;
+  }
 }
 
 void Shader::Use()
 {
   GL_CALL(glUseProgram(mProgram));
 }
+
+
 
 unsigned int Shader::CreateShader(const std::string &data, int type)
 {
@@ -93,6 +181,8 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
   {
     throw "Shader not created.";
   }
+
+  LOG(trace) << "compile type " << type;
 
   char const *sourcePointer = data.c_str();
   GL_CALL(glShaderSource(shader, 1, &sourcePointer, NULL));
@@ -123,6 +213,18 @@ void Shader::DeleteShader(unsigned int shader)
   GL_CALL(glDeleteShader(shader));
 }
 
+void Shader::SaveTxtFile(const std::string &fileName, const std::string &content)
+{
+  std::ofstream file(fileName);
+  if (file.is_open()) {
+    file << content;
+    file.close();
+  }
+  else {
+    LOG(fatal) << "Failed to save file " << fileName;
+  }
+}
+
 std::string Shader::ReadTxtFile(const std::string &fileName)
 {
   std::string code;
@@ -134,73 +236,96 @@ std::string Shader::ReadTxtFile(const std::string &fileName)
       code += "\n" + line;
     file.close();
   }
+  else {
+    LOG(fatal) << "Failed to read file " << fileName;
+  }
 
   return code;
 }
 
-bool Shader::SetUniform_(const glm::mat4 &val, const char *name)
-{
-  int location = GetUniformLocation(name);
-  if (location >= 0)
-  {
-    GL_CALL(glUniformMatrix4fv(location, 1, GL_FALSE, &val[0][0]));
-  }
-  return (location >= 0);
+bool Shader::Link() {
+  glLinkProgram(mProgram);
+  LOG(trace) << "Program " << std::to_string(mProgram) << " linking";
+  body.clear();
+  extensions.clear();
+  defines.clear();
+  return true;
 }
 
-bool Shader::SetUniform_(int val, const char *name)
+int Shader::GetUniformLocation(const std::string &uni_name) const
 {
-  int location = GetUniformLocation(name);
-  if (location >= 0)
+  const auto &search = mUniforms.find(uni_name);
+  if (search == mUniforms.end())
   {
-    GL_CALL(glUniform1i(location, val));
-  }
-  return (location >= 0);
-}
-
-bool Shader::SetUniform_(const glm::vec4 &val, const char *name)
-{
-  int location = GetUniformLocation(name);
-  if (location >= 0)
-  {
-    GL_CALL(glUniform4fv(location, 1, &val[0]));
-  }
-  return (location >= 0);
-}
-
-bool Shader::SetUniform_(const glm::vec3 &val, const char *name)
-{
-  int location = GetUniformLocation(name);
-  if (location >= 0)
-  {
-    GL_CALL(glUniform3fv(location, 1, &val[0]));
-  }
-  return (location >= 0);
-}
-
-bool Shader::SetUniform_(const glm::vec2 &val, const char *name)
-{
-  int location = GetUniformLocation(name);
-  if (location >= 0)
-  {
-    GL_CALL(glUniform2fv(location, 1, &val[0]));
-  }
-  return (location >= 0);
-}
-
-int Shader::GetUniformLocation(const char *name)
-{
-  auto it = mUniforms.find(name);
-  if (it == mUniforms.end())
-  {
-    int location = 0;
-    GL_CALL(location = glGetUniformLocation(mProgram, name));
-    if (location >= 0)
+    GLuint loc = glGetUniformLocation(mProgram, uni_name.c_str());
+    if (loc == -1)
     {
-      mUniforms.insert({ name, location });
+      LOG(error) << uni_name << " missed in " << shaderfile_name;
     }
-    return location;
+    mUniforms[uni_name] = loc;
+    return loc;
   }
-  
-  return (*it).second;
+  else
+  {
+    return mUniforms[uni_name];
+  }
+}
+
+void Shader::AddExtension(std::string s)
+{
+  if (source_loaded)
+    LOG(fatal) << "extensions must be added before source loading";
+  extensions.push_back(std::move(s));
+}
+
+void Shader::AddDefine(std::string s)
+{
+  if (source_loaded)
+    LOG(fatal) << "defines must be added before source loading";
+  defines.push_back(std::move(s));
+}
+
+void Shader::SetUniform_(const glm::mat4 &val, const std::string &uni_name) const
+{
+  glUniformMatrix4fv(GetUniformLocation(uni_name), 1, GL_FALSE, &val[0][0]);
+}
+
+void Shader::SetUniform_(const glm::mat3 &val, const std::string &uni_name) const
+{
+  glUniformMatrix3fv(GetUniformLocation(uni_name), 1, GL_FALSE, &val[0][0]);
+}
+
+void Shader::SetUniform_(const glm::mat2 &val, const std::string &uni_name) const
+{
+  glUniformMatrix2fv(GetUniformLocation(uni_name), 1, GL_FALSE, &val[0][0]);
+}
+
+void Shader::SetUniform_(int val, const std::string &uni_name) const
+{
+  glUniform1i(GetUniformLocation(uni_name), val);
+}
+
+void Shader::SetUniform_(unsigned int val, const std::string &uni_name) const
+{
+  glUniform1ui(GetUniformLocation(uni_name), val);
+}
+
+void Shader::SetUniform_(const glm::vec4 &val, const std::string &uni_name) const
+{
+  glUniform4fv(GetUniformLocation(uni_name), 1, &val[0]);
+}
+
+void Shader::SetUniform_(const glm::vec3 &val, const std::string &uni_name) const
+{
+  glUniform3fv(GetUniformLocation(uni_name), 1, &val[0]);
+}
+
+void Shader::SetUniform_(const glm::vec2 &val, const std::string &uni_name) const
+{
+  glUniform2fv(GetUniformLocation(uni_name), 1, &val[0]);
+}
+
+void Shader::SetUniform_(const float &val, const std::string &uni_name) const
+{
+  glUniform1f(GetUniformLocation(uni_name), val);
 }

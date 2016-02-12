@@ -35,7 +35,14 @@ Render::Render(void)
 
   try
   {
-    mShader.reset(new Shader("Graphic/Shaders/t"));
+    auto &s = std::make_unique<Shader>();
+
+    s->BuildBody("shaders/basic.glsl");
+    s->BuildType(GL_FRAGMENT_SHADER);
+    s->BuildType(GL_VERTEX_SHADER);
+    s->Link();
+
+    mShader = std::move(s);
   }
   catch (const char* msg)
   {
