@@ -48,8 +48,9 @@
     <ClCompile Include="Render\OpenGLCall.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Render\RenderMeshDList.cpp" />
-    <ClCompile Include="Render\Shader.cpp" />
+    <ClCompile Include="Render\RenderMeshVao.cpp" />
     <ClCompile Include="Render\Model.cpp" />
+    <ClCompile Include="Render\Shader.cpp" />
     <ClCompile Include="Render\Texture.cpp" />
     <ClCompile Include="Render\TextureManager.cpp" />
     <ClCompile Include="tools\Bresenham3D.cpp" />
@@ -93,8 +94,9 @@
     <ClInclude Include="Render\OpenGLCall.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Render\RenderMeshDList.h" />
-    <ClInclude Include="Render\Shader.h" />
+    <ClInclude Include="Render\RenderMeshVao.h" />
     <ClInclude Include="Render\Model.h" />
+    <ClInclude Include="Render\Shader.h" />
     <ClInclude Include="Render\Texture.h" />
     <ClInclude Include="Render\TextureManager.h" />
     <ClInclude Include="Render\Vertex.h" />

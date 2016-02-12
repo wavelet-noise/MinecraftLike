@@ -96,9 +96,6 @@
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Shader.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="Render\Texture.cpp">
       <Filter>Render</Filter>
     </ClCompile>
@@ -136,6 +133,10 @@
       <Filter>tools</Filter>
     </ClCompile>
     <ClCompile Include="Core\IRenderStrategy.cpp" />
+    <ClCompile Include="Render\RenderMeshVao.cpp" />
+    <ClCompile Include="Render\Shader.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -221,9 +222,6 @@
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Shader.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Texture.h">
       <Filter>Render</Filter>
     </ClInclude>
@@ -277,6 +275,10 @@
     </ClInclude>
     <ClInclude Include="Core\TemplateFactory.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderMeshVao.h" />
+    <ClInclude Include="Render\Shader.h">
+      <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

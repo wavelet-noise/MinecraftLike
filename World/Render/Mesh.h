@@ -100,7 +100,7 @@ public:
   inline void Compile()
   {
     mStrategy->SetAttribute(VertexType::Get());
-    mStrategy->Compile(reinterpret_cast<float *>(mVertex.data()), mVertex.size(), sizeof(VertexType),
+    mStrategy->Compile(reinterpret_cast<float *>(mVertex.data()), mVertex.size(),
       reinterpret_cast<size_t *>(mIndex.data()), mIndex.size());
   }
 

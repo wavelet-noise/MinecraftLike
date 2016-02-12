@@ -23,8 +23,14 @@ RenderMeshDList::~RenderMeshDList()
   GL_CALL(glDeleteLists(mList, 1));
 }
 
+void RenderMeshDList::UseShader(const Shader *shader)
+{
+
+}
+
 void RenderMeshDList::SetAttribute(const std::vector<Attribute> &attribute)
 {
+  mVertexSize = 0;
   for (const auto &attr : attribute)
   {
     if (std::string("vertex") == attr.name)
@@ -37,10 +43,11 @@ void RenderMeshDList::SetAttribute(const std::vector<Attribute> &attribute)
       mAttribute[ATTRIBUTE_TEXTURE] = attr;
       mEnabled[ATTRIBUTE_TEXTURE] = true;
     }
+    mVertexSize += attr.size;
   }
 }
 
-void RenderMeshDList::Compile(const float *vertex, size_t vertexCount, size_t vertexSize, const size_t *index, size_t indexCount)
+void RenderMeshDList::Compile(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount)
 {
   assert(vertex && "vertex pointer is null");
   assert(index && "index pointer is null");
@@ -59,11 +66,11 @@ void RenderMeshDList::Compile(const float *vertex, size_t vertexCount, size_t ve
   {
     if (mEnabled[ATTRIBUTE_TEXTURE])
     {
-      GL_CALL(glTexCoord2fv(&vertex[(vertexSize * index[i] + mAttribute[ATTRIBUTE_TEXTURE].offset) / sizeof(float)]));
+      GL_CALL(glTexCoord2fv(&vertex[(mVertexSize * index[i] + mAttribute[ATTRIBUTE_TEXTURE].offset) / sizeof(float)]));
     }
     if (mEnabled[ATTRIBUTE_VERTEX])
     {
-      GL_CALL(glVertex3fv(&vertex[(vertexSize * index[i] + mAttribute[ATTRIBUTE_VERTEX].offset) / sizeof(float)]));
+      GL_CALL(glVertex3fv(&vertex[(mVertexSize * index[i] + mAttribute[ATTRIBUTE_VERTEX].offset) / sizeof(float)]));
     }
   }
   GL_CALL(glEnd());

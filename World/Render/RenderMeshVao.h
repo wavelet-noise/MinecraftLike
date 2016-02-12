@@ -1,20 +1,21 @@
 // ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
 #pragma once
-#ifndef RenderMeshGL1_h__
-#define RenderMeshGL1_h__
+#ifndef RenderMeshVao_h__
+#define RenderMeshVao_h__
+
 
 #include "IRenderMeshStrategy.h"
 #include <array>
 
 /// Стратегия рисования меша с помощью дисплейных списков.
-class RenderMeshDList : public IRenderMeshStrategy
+class RenderMeshVao : public IRenderMeshStrategy
 {
 public:
-  RenderMeshDList();
-  virtual ~RenderMeshDList();
+  RenderMeshVao();
+  virtual ~RenderMeshVao();
 
 public:
 
@@ -27,26 +28,20 @@ public:
   void Draw() const override;
 
 private:
-  enum AttributeType
-  {
-    ATTRIBUTE_UNKNOWN = 0,
-    ATTRIBUTE_VERTEX = 1,
-    ATTRIBUTE_COLOR = 2,
-    ATTRIBUTE_TEXTURE = 3,
-    ATTRIBUTE_NORMAL = 4,
+  void Create();
 
-    ATTRIBUTE_SIZE,
-  };
-
-  std::array<Attribute, ATTRIBUTE_SIZE> mAttribute;
-  std::array<bool, ATTRIBUTE_SIZE> mEnabled;
-
+private:
   bool mCreated = false;
-  uint32_t mList = 0;
-
   size_t mVertexSize = 0;
+  size_t mIndexCount = 0;
+
+  unsigned int mVao = 0;
+  unsigned int mVbo = 0;
+  unsigned int mVbi = 0;
+
+  const Shader *mShader = nullptr;
 };
 
 
 
-#endif // RenderMeshGL1_h__
+#endif // RenderMeshVao_h__

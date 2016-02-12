@@ -25,6 +25,11 @@ public:
   /// Установить шейдер.
   void Use();
 
+  int GetId() const 
+  {
+    return mProgram;
+  }
+
   template<class T>
   bool SetUniform(const T &val, const char *name = "")
   {

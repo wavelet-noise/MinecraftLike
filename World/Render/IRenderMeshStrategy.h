@@ -7,11 +7,15 @@
 #define IRenderMesh_h__
 
 #include "Vertex.h"
+#include "..\Render\Shader.h"
 
 class IRenderMeshStrategy
 {
 public:
   virtual ~IRenderMeshStrategy() {};
+
+  /// Указывает с помощью какого шейдера рисовать.
+  virtual void UseShader(const Shader *shader) = 0;
 
   /// Настроить и включить атрибут.
   /// Для каждого типа атрибута определена фиксированная локация, 
@@ -22,10 +26,10 @@ public:
 
   /// Создать сетку в видеопамяти.
   /// @param vertex указатель на начало буфера вершин.
-  /// @param vertexSize количество элементов в буфере вершин.
+  /// @param vertexCount количество элементов в буфере вершин.
   /// @param index указатель на начало буфера индексов.
-  /// @param indexSize количество элементов в буфере индексов.
-  virtual void Compile(const float *vertex, size_t vertexCount, size_t vertexSize, const size_t *index, size_t indexCount) = 0;
+  /// @param indexCount количество элементов в буфере индексов.
+  virtual void Compile(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount) = 0;
 
   /// Нарисовать сетку.
   virtual void Draw() const = 0;
