@@ -93,6 +93,7 @@ void RenderSector::Draw(Render &render)
   if (mRebuildBuffers)
   {
     auto currentTime = glfwGetTime();
+    mModel.GetMesh()->GetStrategy().UseShader(render.GetShader());
     mModel.GetMesh()->Compile();
     mModel.GetMesh()->Release();
     LOG(trace) << "ListGen: " << glfwGetTime() - currentTime;

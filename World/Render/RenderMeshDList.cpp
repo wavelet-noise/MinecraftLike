@@ -20,7 +20,10 @@ RenderMeshDList::RenderMeshDList()
 
 RenderMeshDList::~RenderMeshDList()
 {
-  GL_CALL(glDeleteLists(mList, 1));
+  if (mCreated)
+  {
+    GL_CALL(glDeleteLists(mList, 1));
+  }
 }
 
 void RenderMeshDList::UseShader(const Shader *shader)

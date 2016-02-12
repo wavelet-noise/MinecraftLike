@@ -132,10 +132,14 @@
     <ClCompile Include="tools\Log.cpp">
       <Filter>tools</Filter>
     </ClCompile>
-    <ClCompile Include="Core\IRenderStrategy.cpp" />
-    <ClCompile Include="Render\RenderMeshVao.cpp" />
     <ClCompile Include="Render\Shader.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderMeshVao.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\IRenderStrategy.cpp">
+      <Filter>Core\RenderStrategy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -276,8 +280,10 @@
     <ClInclude Include="Core\TemplateFactory.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Render\RenderMeshVao.h" />
     <ClInclude Include="Render\Shader.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderMeshVao.h">
       <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>

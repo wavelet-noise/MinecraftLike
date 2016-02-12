@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 #include "RenderMeshDList.h"
+#include "RenderMeshVao.h"
 
 template<class V>
 class Mesh;
@@ -24,6 +25,7 @@ public:
 
   inline Mesh()
   {
+    mStrategy = std::make_unique<RenderMeshVao>();
     mStrategy = std::make_unique<RenderMeshDList>();
   }
 
@@ -110,6 +112,10 @@ public:
     mStrategy->Draw();
   }
 
+  IRenderMeshStrategy &GetStrategy()
+  {
+    return *mStrategy;
+  }
 
 private:
   std::vector<VertexType> mVertex;

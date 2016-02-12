@@ -34,6 +34,11 @@ public:
   /// Устанавливает параметры для рисования и рисует модель.
   void Draw(const Model &model);
 
+  Shader *GetShader()
+  {
+    return mShader.get();
+  }
+
 private:
 
   std::unique_ptr<Shader> mShader;
