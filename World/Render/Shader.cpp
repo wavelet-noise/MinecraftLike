@@ -66,7 +66,7 @@ std::string get_dir(const std::string &path)
   return path.substr(0, path.find_last_of('/') + 1);
 }
 
-std::string get_filename_headername(const std::string &path)
+std::string get_filename_headername(std::string path)
 {
   std::replace(path.begin(), path.end(), '.', '_');
   std::transform(path.begin(), path.end(), path.begin(), toupper);
