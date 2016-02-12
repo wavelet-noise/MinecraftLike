@@ -34,14 +34,27 @@ public:
   /// Устанавливает параметры для рисования и рисует модель.
   void Draw(const Model &model);
 
+  //TODO:shared
   Shader *GetShader()
   {
     return mShader.get();
   }
 
+  std::shared_ptr<Camera> GetCameta()
+  {
+    return mCamera;
+  }
+
+  void SetCamera(std::shared_ptr<Camera> &cam)
+  {
+    mCamera = cam;
+  }
+
 private:
 
+  //TODO:shared
   std::unique_ptr<Shader> mShader;
+  std::shared_ptr<Camera> mCamera;
    
   Version mVersion;
 

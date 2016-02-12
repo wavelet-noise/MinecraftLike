@@ -96,6 +96,7 @@ void RenderSector::Draw(Render &render)
     mModel.GetMesh()->GetStrategy().UseShader(render.GetShader());
     mModel.GetMesh()->Compile();
     mModel.GetMesh()->Release();
+
     LOG(trace) << "ListGen: " << glfwGetTime() - currentTime;
     mRebuildBuffers = false;
   }

@@ -32,7 +32,7 @@ private:
 
   std::unique_ptr<Window> mWindow;
   std::unique_ptr<Render> mRender;
-  Camera mCamera;
+  std::shared_ptr<Camera> mCamera;
   std::unique_ptr<World> mWorld;
 };
 

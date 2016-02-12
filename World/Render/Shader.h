@@ -30,9 +30,9 @@ public:
   }
 
   template<class T>
-  bool SetUniform(const T &val, const char *name = "")
+  void SetUniform(const T &val, const char *name = "")
   {
-    return SetUniform_(val, name);
+    SetUniform_(val, name);
   };
 
   ///
@@ -55,7 +55,7 @@ public:
 
 #define UNIFORM_QUOTE(name) #name
 #define UNIFORM_MAKE_STR(macro) UNIFORM_QUOTE(macro)
-#define SetUniform(val) SetUniform(val, UNIFORM_MAKE_STR(val))
+#define SetUniformNVP(val) SetUniformNVP(val, UNIFORM_MAKE_STR(val))
 
 private:
 

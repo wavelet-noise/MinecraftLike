@@ -33,6 +33,7 @@ Game::Game()
   try
   {
     mWindow = std::make_unique<Window>(glm::uvec2(600, 600));
+    mCamera = std::make_unique<Camera>();
     mWindow->SetCurrentContext();
 
     Render::Initialize();
@@ -69,7 +70,8 @@ int Game::Run()
     return -1;
   }
 
-  mCamera.Resize(mWindow->GetSize());
+  mCamera->Resize(mWindow->GetSize());
+  mRender->SetCamera(mCamera);
 
   TextureManager::Get().LoadTexture({ "Textures/stone.png", "Textures/sand.png", "Textures/brick.png" });
   TextureManager::Get().Compile();
@@ -123,10 +125,10 @@ int Game::Run()
   while (!mWindow->WindowShouldClose())
   {
     fps.Update();
-    glm::vec3 camPos = mCamera.GetPos();
+    glm::vec3 camPos = mCamera->GetPos();
     
     auto &moved = mWindow->GetMouse().GetPos();
-    auto ray = mCamera.GetRay(moved);
+    auto ray = mCamera->GetRay(moved);
     ray *= 10;
 
     auto points = Bresenham3D(camPos, camPos + ray);
@@ -177,28 +179,28 @@ void Game::Update(double dt)
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
   {
     mWorld->GetPlayer()->Rotate({ 0.0f, 0.0f, -speedRot });
-    mCamera.Rotate({ 0.0f, 0.0f, -speedRot });
+    mCamera->Rotate({ 0.0f, 0.0f, -speedRot });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
   {
     mWorld->GetPlayer()->Rotate({ 0.0f, 0.0f, speedRot });
-    mCamera.Rotate({ 0.0f, 0.0f, speedRot });
+    mCamera->Rotate({ 0.0f, 0.0f, speedRot });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
   {
     mWorld->GetPlayer()->Rotate({ speedRot, 0.0f, 0.0f });
-    mCamera.Rotate({ speedRot, 0.0f, 0.0f });
+    mCamera->Rotate({ speedRot, 0.0f, 0.0f });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_UP))
   {
     mWorld->GetPlayer()->Rotate({ -speedRot, 0.0f, 0.0f });
-    mCamera.Rotate({ -speedRot, 0.0f, 0.0f });
+    mCamera->Rotate({ -speedRot, 0.0f, 0.0f });
   }
 
   auto moved = mWindow->GetMouse().GetMoved();
   moved *= static_cast<float>(dt) * 0.07f;
   mWorld->GetPlayer()->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
-  mCamera.Rotate(glm::vec3(moved.y, 0.0f, moved.x));
+  mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
 
   static float k = 1.0f;
   if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_9))
@@ -257,20 +259,12 @@ void Game::Update(double dt)
 
 void Game::Draw(double dt)
 {
-  mCamera.SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
-  mCamera.Update();
+  mCamera->SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
+  mCamera->Update();
 
 
 
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));     // Очистка экрана
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadMatrixf(glm::value_ptr(mCamera.GetProject()));
-
-  glMatrixMode(GL_MODELVIEW);
-  GL_CALL(glLoadIdentity());                               // Сброс просмотра
-  glLoadMatrixf(glm::value_ptr(mCamera.GetView()));
-  //GL_CALL(glTranslatef(0.5f, 0.5f, 0.5f));
 
   mWorld->Draw(*mRender);
 }

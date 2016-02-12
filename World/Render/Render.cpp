@@ -39,6 +39,8 @@ Render::Render(void)
   s->BuildType(GL_FRAGMENT_SHADER);
   s->BuildType(GL_VERTEX_SHADER);
   s->Link();
+  s->Use();
+  s->SetUniform(0, "atlas");
 
   mShader = std::move(s);
 }
@@ -67,10 +69,16 @@ const Render::Version &Render::GetVersion() const
 
 void Render::Draw(const Model &model)
 {
+  assert(mCamera && mShader);
+  mShader->Use();
   if (model.GetTexture())
   {
     model.GetTexture()->Set(TEXTURE_SLOT_0);
   }
+
+  //TODO: prebuild NVP
+  mShader->SetUniform(mCamera->GetProject() * mCamera->GetView(), "transform_VP");
+
   model.GetMesh()->Draw();
 }
 

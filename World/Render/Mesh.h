@@ -26,7 +26,7 @@ public:
   inline Mesh()
   {
     mStrategy = std::make_unique<RenderMeshVao>();
-    mStrategy = std::make_unique<RenderMeshDList>();
+    //mStrategy = std::make_unique<RenderMeshDList>();
   }
 
   inline VertexType &Vertex(size_t i)
