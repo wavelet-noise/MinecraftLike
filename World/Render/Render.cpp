@@ -33,14 +33,14 @@ Render::Render(void)
 
   GL_CALL(glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f));
 
-  try
-  {
-    mShader.reset(new Shader("Graphic/Shaders/t"));
-  }
-  catch (const char* msg)
-  {
-    std::cout << msg << std::endl;
-  }
+  auto &s = std::make_unique<Shader>();
+
+  s->BuildBody("shaders/basic.glsl");
+  s->BuildType(GL_FRAGMENT_SHADER);
+  s->BuildType(GL_VERTEX_SHADER);
+  s->Link();
+
+  mShader = std::move(s);
 }
 
 Render::~Render(void)
