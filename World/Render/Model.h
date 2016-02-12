@@ -15,6 +15,8 @@
 class Model
 {
 public:
+  using VertexType = VertexVTN;
+
   enum Type
   {
     Static,
@@ -25,12 +27,12 @@ public:
     mTexture = texture;
   }
 
-  inline PMesh<VertexVT> &GetMesh() noexcept
+  inline PMesh<VertexType> &GetMesh() noexcept
   {
     return mMesh;
   }
 
-  inline const PMesh<VertexVT> &GetMesh() const noexcept
+  inline const PMesh<VertexType> &GetMesh() const noexcept
   {
     return mMesh;
   }
@@ -46,7 +48,7 @@ public:
   }
 
 private:
-  PMesh<VertexVT> mMesh;
+  PMesh<VertexType> mMesh;
   PTexture mTexture;
 
   Type mType = Static;

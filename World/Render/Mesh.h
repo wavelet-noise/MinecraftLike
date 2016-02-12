@@ -20,12 +20,14 @@ template<class V>
 class Mesh
 {
 public:
+  using VertexType = V;
+
   inline Mesh()
   {
     mStrategy = std::make_unique<RenderMeshDList>();
   }
 
-  inline V &Vertex(size_t i)
+  inline VertexType &Vertex(size_t i)
   {
     return mVertex[i];
   }
@@ -63,7 +65,7 @@ public:
     return mIndex.size();
   }
 
-  inline void PushVertex(const V &vertex)
+  inline void PushVertex(const VertexType &vertex)
   {
     mVertex.push_back(vertex);
   }
@@ -78,7 +80,7 @@ public:
     return mVertex.empty() && mIndex.empty();
   }
 
-  void Push(const Mesh<V> &mesh)
+  void Push(const Mesh<VertexType> &mesh)
   {
     mIndex.reserve(mesh.mIndex.size());
     size_t size = mVertex.size();
@@ -97,9 +99,8 @@ public:
   /// @param indexSize количество элементов в буфере индексов.
   inline void Compile()
   {
-    mStrategy->SetAttribute(ATTRIBUTE_VERTEX, { true, sizeof(VertexVT{}.vertex), offsetof(VertexVT, vertex) });
-    mStrategy->SetAttribute(ATTRIBUTE_TEXTURE, { true, sizeof(VertexVT{}.texture), offsetof(VertexVT, texture) });
-    mStrategy->Compile(reinterpret_cast<float *>(mVertex.data()), mVertex.size(), sizeof(V),
+    mStrategy->SetAttribute(VertexType::Get());
+    mStrategy->Compile(reinterpret_cast<float *>(mVertex.data()), mVertex.size(), sizeof(VertexType),
       reinterpret_cast<size_t *>(mIndex.data()), mIndex.size());
   }
 
@@ -111,7 +112,7 @@ public:
 
 
 private:
-  std::vector<V> mVertex;
+  std::vector<VertexType> mVertex;
   std::vector<size_t> mIndex;
 
   std::unique_ptr<IRenderMeshStrategy> mStrategy;

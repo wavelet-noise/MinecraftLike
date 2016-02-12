@@ -17,14 +17,26 @@ public:
   virtual ~RenderMeshDList();
 
 public:
-  void SetAttribute(AttributeType type, Attribute attribute) override;
+  void SetAttribute(const std::vector<Attribute> &attribute) override;
 
   void Compile(const float *vertex, size_t vertexCount, size_t vertexSize, const size_t *index, size_t indexCount) override;
 
   void Draw() const override;
 
 private:
-  std::array<Attribute, ATTRIBUTE_SIZE> mAttributeState;
+  enum AttributeType
+  {
+    ATTRIBUTE_UNKNOWN = 0,
+    ATTRIBUTE_VERTEX = 1,
+    ATTRIBUTE_COLOR = 2,
+    ATTRIBUTE_TEXTURE = 3,
+    ATTRIBUTE_NORMAL = 4,
+
+    ATTRIBUTE_SIZE,
+  };
+
+  std::array<Attribute, ATTRIBUTE_SIZE> mAttribute;
+  std::array<bool, ATTRIBUTE_SIZE> mEnabled;
 
   bool mCreated = false;
   uint32_t mList = 0;

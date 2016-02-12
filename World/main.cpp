@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "tools/Log.h"
+#include "Render/Vertex.h"
 
 int main()
 {

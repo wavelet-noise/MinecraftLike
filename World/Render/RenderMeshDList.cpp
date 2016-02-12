@@ -7,12 +7,13 @@
 #include <assert.h>
 #include <gl/glew.h>
 #include "OpenGLCall.h"
+#include <string>
 
 RenderMeshDList::RenderMeshDList()
 {
-  for (auto &i : mAttributeState)
+  for (auto &i : mEnabled)
   {
-    i = { false, 0, 0 };
+    i = false;
   }
 }
 
@@ -22,9 +23,21 @@ RenderMeshDList::~RenderMeshDList()
   GL_CALL(glDeleteLists(mList, 1));
 }
 
-void RenderMeshDList::SetAttribute(AttributeType type, Attribute attribute)
+void RenderMeshDList::SetAttribute(const std::vector<Attribute> &attribute)
 {
-  mAttributeState[type] = attribute;
+  for (const auto &attr : attribute)
+  {
+    if (std::string("vertex") == attr.name)
+    {
+      mAttribute[ATTRIBUTE_VERTEX] = attr;
+      mEnabled[ATTRIBUTE_VERTEX] = true;
+    }
+    if (std::string("texture") == attr.name)
+    {
+      mAttribute[ATTRIBUTE_TEXTURE] = attr;
+      mEnabled[ATTRIBUTE_TEXTURE] = true;
+    }
+  }
 }
 
 void RenderMeshDList::Compile(const float *vertex, size_t vertexCount, size_t vertexSize, const size_t *index, size_t indexCount)
@@ -44,13 +57,13 @@ void RenderMeshDList::Compile(const float *vertex, size_t vertexCount, size_t ve
   GL_CALL(glBegin(GL_TRIANGLES));
   for (size_t i = 0; i < indexCount; ++i)
   {
-    if (mAttributeState[ATTRIBUTE_TEXTURE].enabled)
+    if (mEnabled[ATTRIBUTE_TEXTURE])
     {
-      GL_CALL(glTexCoord2fv(&vertex[(vertexSize * index[i] + mAttributeState[ATTRIBUTE_TEXTURE].offset) / sizeof(float)]));
+      GL_CALL(glTexCoord2fv(&vertex[(vertexSize * index[i] + mAttribute[ATTRIBUTE_TEXTURE].offset) / sizeof(float)]));
     }
-    if (mAttributeState[ATTRIBUTE_VERTEX].enabled)
+    if (mEnabled[ATTRIBUTE_VERTEX])
     {
-      GL_CALL(glVertex3fv(&vertex[(vertexSize * index[i] + mAttributeState[ATTRIBUTE_VERTEX].offset) / sizeof(float)]));
+      GL_CALL(glVertex3fv(&vertex[(vertexSize * index[i] + mAttribute[ATTRIBUTE_VERTEX].offset) / sizeof(float)]));
     }
   }
   GL_CALL(glEnd());
