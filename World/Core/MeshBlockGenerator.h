@@ -18,6 +18,8 @@
 class MeshBlockGenerator
 {
 public:
+  using VertexType = VertexVTN;
+
   enum Side
   {
     EMPTY = 0,
@@ -35,7 +37,7 @@ public:
 public:
   MeshBlockGenerator();
 
-  void Create(Mesh<VertexVT> &mesh, Side side);
+  void Create(Mesh<VertexType> &mesh, Side side);
 
   void SetTexture(int side, std::string texture);
 
@@ -43,7 +45,7 @@ public:
 
   void Generate();
 
-  inline const PMesh<VertexVT> &Create(Side side) const
+  inline const PMesh<VertexType> &Create(Side side) const
   {
     return mMeshArray[side];
   }
@@ -52,7 +54,7 @@ private:
   /// —писок координат текстур дл€ сторон куба в атласе.
   std::vector<glm::vec4> mTextures;
 
-  std::vector<PMesh<VertexVT>> mMeshArray;
+  std::vector<PMesh<VertexType>> mMeshArray;
 };
 
 

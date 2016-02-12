@@ -6,16 +6,6 @@
 #include <type_traits>
 #include "..\Render\TextureManager.h"
 
-// static glm::vec3 vertexCube[] =
-// {
-//   { -0.5f, -0.5f, -0.5f },{ -0.5f, -0.5f,  0.5f },{  0.5f, -0.5f,  0.5f },{  0.5f, -0.5f, -0.5f }, // front
-//   {  0.5f, -0.5f, -0.5f },{  0.5f, -0.5f,  0.5f },{  0.5f,  0.5f,  0.5f },{  0.5f,  0.5f, -0.5f }, // right 
-//   {  0.5f,  0.5f, -0.5f },{  0.5f,  0.5f,  0.5f },{ -0.5f,  0.5f,  0.5f },{ -0.5f,  0.5f, -0.5f }, // back
-//   { -0.5f,  0.5f, -0.5f },{ -0.5f,  0.5f,  0.5f },{ -0.5f, -0.5f,  0.5f },{ -0.5f, -0.5f, -0.5f }, // left
-//   { -0.5f, -0.5f,  0.5f },{ -0.5f,  0.5f,  0.5f },{  0.5f,  0.5f,  0.5f },{  0.5f, -0.5f,  0.5f }, // top
-//   { -0.5f,  0.5f, -0.5f },{ -0.5f, -0.5f, -0.5f },{  0.5f, -0.5f, -0.5f },{  0.5f,  0.5f, -0.5f }  // bot
-// };
-
 static glm::vec3 vertexCube[] =
 {
   { 0.0f, 0.0f, 0.0f },{ 0.0f, 0.0f, 1.0f },{ 1.0f, 0.0f, 1.0f },{ 1.0f, 0.0f, 0.0f }, // front
@@ -25,6 +15,17 @@ static glm::vec3 vertexCube[] =
   { 0.0f, 0.0f, 1.0f },{ 0.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 1.0f },{ 1.0f, 0.0f, 1.0f }, // top
   { 0.0f, 1.0f, 0.0f },{ 0.0f, 0.0f, 0.0f },{ 1.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 0.0f }  // bot
 };
+
+static glm::vec3 normalCube[] =
+{
+  {  0.0f, -1.0f,  0.0f }, // front
+  {  1.0f,  0.0f,  0.0f }, // right 
+  {  0.0f,  1.0f,  0.0f }, // back
+  { -1.0f,  0.0f,  0.0f }, // left
+  {  0.0f,  0.0f,  1.0f }, // top
+  {  0.0f,  0.0f, -1.0f }, // bot
+};
+
 
 static size_t indexCubeSide[] =
 {
@@ -47,7 +48,7 @@ MeshBlockGenerator::MeshBlockGenerator()
   }
 }
 
-void MeshBlockGenerator::Create(Mesh<VertexVT> &mesh, Side side)
+void MeshBlockGenerator::Create(Mesh<VertexType> &mesh, Side side)
 {
   enum 
   {
@@ -81,6 +82,11 @@ void MeshBlockGenerator::Create(Mesh<VertexVT> &mesh, Side side)
           {
             test[j][0],
             test[j][1]
+          },
+          {
+            normalCube[i][0],
+            normalCube[i][1],
+            normalCube[i][2]
           }
         });
       }
