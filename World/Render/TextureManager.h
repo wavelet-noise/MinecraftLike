@@ -22,6 +22,8 @@ public:
   /// Загрузить указанную текстуру.
   void LoadTexture(const std::string &name);
 
+  void LoadDirectory(const std::string & s);
+
   /// Загрузить набор текстур.
   /// Все текстуры будут добавлены в один текстурный атлас.
   void LoadTexture(const std::initializer_list<std::string> &names);

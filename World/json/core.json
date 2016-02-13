@@ -1,42 +1,30 @@
 [
   {
     "type":"Block",
-    "id":"BlockSand",
+    "id":"grass",
     "agents":[
       {
         "type":"RenderAgent",
         "strategy":
         {
           "type":"BlockRenderStratery",
-          "all":"Textures/sand.png"
+          "separate":["Textures\\grass_side.png", "Textures\\grass_side.png", "Textures\\grass_side.png", "Textures\\grass_side.png",
+		              "Textures\\grass_top.png",
+		              "Textures\\dirt.png"]
         }
       }
     ]
   },  
   {
     "type":"Block",
-    "id":"BlockStone",
+    "id":"dirt",
     "agents":[
       {
         "type":"RenderAgent",
         "strategy":
         {
           "type":"BlockRenderStratery",
-          "all":"Textures/stone.png"
-        }
-      }
-    ]
-  },  
-  {
-    "type":"Block",
-    "id":"BlockBrick",
-    "agents":[
-      {
-        "type":"RenderAgent",
-        "strategy":
-        {
-          "type":"BlockRenderStratery",
-          "all":"Textures/brick.png"
+          "all":"Textures\\dirt.png"
         }
       }
     ]

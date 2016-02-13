@@ -42,6 +42,26 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
 	size_t blocksCount = 0;
 
   const size_t size = static_cast<size_t>(SECTOR_SIZE);
+<<<<<<< HEAD
+	for (size_t i = 0; i < s.mBlocks.size(); ++i)
+	{
+		auto pos = SBPos{ i % size, (i / size) % size, i / (size * size) };
+		float tx = static_cast<float>(pos.x + s.mPos.x*SECTOR_SIZE);
+		float ty = static_cast<float>(pos.y + s.mPos.y*SECTOR_SIZE);
+		float h = (noise.Noise2(tx / 10.0f, ty / 10.0f) + 1.0f) / 5.0f;
+		int32_t zh = static_cast<int32_t>(glm::round(h * (SECTOR_SIZE - 1)));
+		if (pos.z <= zh)
+		{
+			s.mBlocks[i] = DB::Get().Create(StringIntern(pos.x % 2 ? "BlockSand" : "BlockStone"));
+			++blocksCount;
+		}
+		else
+		{
+			s.mBlocks[i] = nullptr;
+		}
+	}
+  psec->mRenderSector.SayChanged();
+=======
   for (int i = 0; i < SECTOR_SIZE; ++i)
   {
     for (int j = 0; j < SECTOR_SIZE; ++j)
@@ -61,7 +81,8 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
       }
     }
   }
-  psec->mRenderSector.SayChanged();
+  psec->mRenderSector.Changed();
+>>>>>>> 09b977275dab867afe7d7b923aac18273383c945
 
 	LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime << " blocks count: " << blocksCount;
   return psec;
