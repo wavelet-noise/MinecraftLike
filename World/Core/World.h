@@ -20,9 +20,9 @@ public:
   World();
   ~World();
 
-  void Update(float dt, Render &render);
+  void Update(float dt);
 
-  void Draw(Render &render);
+  void UpdateGraphic(Render &render);
 
   /// ѕолучить сектор. ≈сли сектор не загружен, будет произведена попытка 
   /// загрузить сектор из загрузчика секторов.

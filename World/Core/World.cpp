@@ -9,6 +9,7 @@
 #include "..\tools\CoordSystem.h"
 #include "RenderSector.h"
 #include "MapGen\WorldWorker.h"
+#include "..\Render\Render.h"
 
 
 World::World()
@@ -21,21 +22,16 @@ World::~World()
 {
 }
 
-void World::Update(float dt, Render &render)
+void World::Update(float dt)
 {
   mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt});
-
-  for (auto &sector : mSectors)
-  {
-    sector.second->Update(this, render);
-  }
 }
 
-void World::Draw(Render &render)
+void World::UpdateGraphic(Render &render)
 {
   for (auto &sector : mSectors)
   {
-    sector.second->GetRenderSector().Draw(render);
+    sector.second->UpdateGraphic(this, render);
   }
 }
 
