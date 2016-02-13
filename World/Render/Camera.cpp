@@ -104,10 +104,6 @@ void Camera::CalculateFrustum() {
   const glm::mat4 &MV = mView;
   const glm::mat4 &P = mProjection;
 
-  enum FrustrumPlane {
-    RIGHT_PLANE, LEFT_PLANE, BOTTOM_PLANE, TOP_PLANE, BACK_PLANE, FRONT_PLANE
-  };
-
   m_clipMatrix[0] = (MV[0][0] * P[0][0]) + (MV[0][1] * P[1][0]) + (MV[0][2] * P[2][0]) + (MV[0][3] * P[3][0]);
   m_clipMatrix[1] = (MV[0][0] * P[0][1]) + (MV[0][1] * P[1][1]) + (MV[0][2] * P[2][1]) + (MV[0][3] * P[3][1]);
   m_clipMatrix[2] = (MV[0][0] * P[0][2]) + (MV[0][1] * P[1][2]) + (MV[0][2] * P[2][2]) + (MV[0][3] * P[3][2]);
@@ -128,41 +124,41 @@ void Camera::CalculateFrustum() {
   m_clipMatrix[14] = (MV[3][0] * P[0][2]) + (MV[3][1] * P[1][2]) + (MV[3][2] * P[2][2]) + (MV[3][3] * P[3][2]);
   m_clipMatrix[15] = (MV[3][0] * P[0][3]) + (MV[3][1] * P[1][3]) + (MV[3][2] * P[2][3]) + (MV[3][3] * P[3][3]);
 
-  m_frustum[RIGHT_PLANE][0] = m_clipMatrix[3] - m_clipMatrix[0];
-  m_frustum[RIGHT_PLANE][1] = m_clipMatrix[7] - m_clipMatrix[4];
-  m_frustum[RIGHT_PLANE][2] = m_clipMatrix[11] - m_clipMatrix[8];
-  m_frustum[RIGHT_PLANE][3] = m_clipMatrix[15] - m_clipMatrix[12];
-  NormalizePlane(m_frustum, RIGHT_PLANE);
+  m_frustum[0][0] = m_clipMatrix[3] - m_clipMatrix[0];
+  m_frustum[0][1] = m_clipMatrix[7] - m_clipMatrix[4];
+  m_frustum[0][2] = m_clipMatrix[11] - m_clipMatrix[8];
+  m_frustum[0][3] = m_clipMatrix[15] - m_clipMatrix[12];
+  NormalizePlane(m_frustum, 0);
 
-  m_frustum[LEFT_PLANE][0] = m_clipMatrix[3] + m_clipMatrix[0];
-  m_frustum[LEFT_PLANE][1] = m_clipMatrix[7] + m_clipMatrix[4];
-  m_frustum[LEFT_PLANE][2] = m_clipMatrix[11] + m_clipMatrix[8];
-  m_frustum[LEFT_PLANE][3] = m_clipMatrix[15] + m_clipMatrix[12];
-  NormalizePlane(m_frustum, LEFT_PLANE);
+  m_frustum[1][0] = m_clipMatrix[3] + m_clipMatrix[0];
+  m_frustum[1][1] = m_clipMatrix[7] + m_clipMatrix[4];
+  m_frustum[1][2] = m_clipMatrix[11] + m_clipMatrix[8];
+  m_frustum[1][3] = m_clipMatrix[15] + m_clipMatrix[12];
+  NormalizePlane(m_frustum, 1);
 
-  m_frustum[BOTTOM_PLANE][0] = m_clipMatrix[3] + m_clipMatrix[1];
-  m_frustum[BOTTOM_PLANE][1] = m_clipMatrix[7] + m_clipMatrix[5];
-  m_frustum[BOTTOM_PLANE][2] = m_clipMatrix[11] + m_clipMatrix[9];
-  m_frustum[BOTTOM_PLANE][3] = m_clipMatrix[15] + m_clipMatrix[13];
-  NormalizePlane(m_frustum, BOTTOM_PLANE);
+  m_frustum[2][0] = m_clipMatrix[3] + m_clipMatrix[1];
+  m_frustum[2][1] = m_clipMatrix[7] + m_clipMatrix[5];
+  m_frustum[2][2] = m_clipMatrix[11] + m_clipMatrix[9];
+  m_frustum[2][3] = m_clipMatrix[15] + m_clipMatrix[13];
+  NormalizePlane(m_frustum, 2);
 
-  m_frustum[TOP_PLANE][0] = m_clipMatrix[3] - m_clipMatrix[1];
-  m_frustum[TOP_PLANE][1] = m_clipMatrix[7] - m_clipMatrix[5];
-  m_frustum[TOP_PLANE][2] = m_clipMatrix[11] - m_clipMatrix[9];
-  m_frustum[TOP_PLANE][3] = m_clipMatrix[15] - m_clipMatrix[13];
-  NormalizePlane(m_frustum, TOP_PLANE);
+  m_frustum[3][0] = m_clipMatrix[3] - m_clipMatrix[1];
+  m_frustum[3][1] = m_clipMatrix[7] - m_clipMatrix[5];
+  m_frustum[3][2] = m_clipMatrix[11] - m_clipMatrix[9];
+  m_frustum[3][3] = m_clipMatrix[15] - m_clipMatrix[13];
+  NormalizePlane(m_frustum, 3);
 
-  m_frustum[BACK_PLANE][0] = m_clipMatrix[3] - m_clipMatrix[2];
-  m_frustum[BACK_PLANE][1] = m_clipMatrix[7] - m_clipMatrix[6];
-  m_frustum[BACK_PLANE][2] = m_clipMatrix[11] - m_clipMatrix[10];
-  m_frustum[BACK_PLANE][3] = m_clipMatrix[15] - m_clipMatrix[14];
-  NormalizePlane(m_frustum, BACK_PLANE);
+  m_frustum[4][0] = m_clipMatrix[3] - m_clipMatrix[2];
+  m_frustum[4][1] = m_clipMatrix[7] - m_clipMatrix[6];
+  m_frustum[4][2] = m_clipMatrix[11] - m_clipMatrix[10];
+  m_frustum[4][3] = m_clipMatrix[15] - m_clipMatrix[14];
+  NormalizePlane(m_frustum, 4);
 
-  m_frustum[FRONT_PLANE][0] = m_clipMatrix[3] + m_clipMatrix[2];
-  m_frustum[FRONT_PLANE][1] = m_clipMatrix[7] + m_clipMatrix[6];
-  m_frustum[FRONT_PLANE][2] = m_clipMatrix[11] + m_clipMatrix[10];
-  m_frustum[FRONT_PLANE][3] = m_clipMatrix[15] + m_clipMatrix[14];
-  NormalizePlane(m_frustum, FRONT_PLANE);
+  m_frustum[5][0] = m_clipMatrix[3] + m_clipMatrix[2];
+  m_frustum[5][1] = m_clipMatrix[7] + m_clipMatrix[6];
+  m_frustum[5][2] = m_clipMatrix[11] + m_clipMatrix[10];
+  m_frustum[5][3] = m_clipMatrix[15] + m_clipMatrix[14];
+  NormalizePlane(m_frustum, 5);
 }
 
 bool Camera::BoxWithinFrustum(const glm::vec3 &min, const glm::vec3 &max) const {
