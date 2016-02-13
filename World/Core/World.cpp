@@ -39,7 +39,7 @@ void World::Draw(Render &render)
   }
 }
 
-void World::GetSector(const SPos &position)
+std::shared_ptr<Sector> World::GetSector(const SPos &position)
 {
   auto it = mSectors.find(position);
   if (it == mSectors.end())
@@ -47,8 +47,13 @@ void World::GetSector(const SPos &position)
     if (auto psec = WorldWorker::instance().GetSector(position))
     {
       mSectors[position] = psec;
+      return psec;
     }
+
+    return nullptr;
   }
+  
+  return it->second;
 }
 
 std::shared_ptr<Sector> World::FindSector(const SPos &position)

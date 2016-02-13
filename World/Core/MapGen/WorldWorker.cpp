@@ -45,9 +45,9 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
 	for (size_t i = 0; i < s.mBlocks.size(); ++i)
 	{
 		auto pos = SBPos{ i % size, (i / size) % size, i / (size * size) };
-		float tx = static_cast<float>(pos.x);
-		float ty = static_cast<float>(pos.y);
-		float h = (noise.Noise2(tx / 10.0f, ty / 10.0f) + 1.0f) / 2.0f;
+		float tx = static_cast<float>(pos.x + s.mPos.x*SECTOR_SIZE);
+		float ty = static_cast<float>(pos.y + s.mPos.y*SECTOR_SIZE);
+		float h = (noise.Noise2(tx / 10.0f, ty / 10.0f) + 1.0f) / 5.0f;
 		int32_t zh = static_cast<int32_t>(glm::round(h * (SECTOR_SIZE - 1)));
 		if (pos.z <= zh)
 		{

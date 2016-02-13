@@ -65,6 +65,12 @@ void PhysicAgent::Update(const GameObjectParams &params)
   mDeltaPos += mVelocity;
 
   auto pos = GetPos();
+  auto s = params.world->GetSector(cs::WtoS(pos));
+  if (!s)
+  {
+    mDeltaPos = {};
+    mVelocity = {};
+  }
 
   if (glm::length(mDeltaPos) > 0)
   {

@@ -26,7 +26,7 @@ public:
 
   /// ѕолучить сектор. ≈сли сектор не загружен, будет произведена попытка 
   /// загрузить сектор из загрузчика секторов.
-  void GetSector(const SPos &position);
+  std::shared_ptr<Sector> GetSector(const SPos &position);
 
   PBlock GetBlock(const WBPos &position);
 
