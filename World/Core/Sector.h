@@ -17,25 +17,6 @@
 
 #include <boost\serialization\serialization.hpp>
 
-namespace boost {
-  namespace serialization {
-    template<class Archive>
-    inline void save_construct_data(Archive &ar, const Sector *t, const unsigned int)
-    {
-      ar << t->GetSectorPosition();
-    }
-
-    template<class Archive>
-    inline void load_construct_data(Archive &ar, Sector *t, const unsigned int)
-    {
-      glm::vec3 spos;
-      ar >> spos;
-
-      new (t) Sector(spos);
-    }
-  }
-}
-
 class Sector
 {
 public:
@@ -89,5 +70,24 @@ private:
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 };
+
+namespace boost {
+  namespace serialization {
+    template<class Archive>
+    inline void save_construct_data(Archive &ar, const Sector *t, const unsigned int)
+    {
+      ar << t->GetSectorPosition();
+    }
+
+    template<class Archive>
+    inline void load_construct_data(Archive &ar, Sector *t, const unsigned int)
+    {
+      glm::vec3 spos;
+      ar >> spos;
+
+      new (t) Sector(spos);
+    }
+  }
+}
 
 #endif // Sector_h__

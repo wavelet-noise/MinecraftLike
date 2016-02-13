@@ -28,5 +28,33 @@
         }
       }
     ]
+  },  
+  {
+    "type":"Block",
+    "id":"log",
+    "agents":[
+      {
+        "type":"RenderAgent",
+        "strategy":
+        {
+          "type":"BlockRenderStratery",
+          "all":"Textures\\log.png"
+        }
+      }
+    ]
+  },  
+  {
+    "type":"Block",
+    "id":"leaves",
+    "agents":[
+      {
+        "type":"RenderAgent",
+        "strategy":
+        {
+          "type":"BlockRenderStratery",
+          "all":"Textures\\leaves.png"
+        }
+      }
+    ]
   }
 ]
