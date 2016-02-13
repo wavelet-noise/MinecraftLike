@@ -51,6 +51,11 @@ void RenderAgent::Load(const rapidjson::Value & val)
     {
       LOG(error) << "render strategy has no type";
     }
+
+    if (stratVal.HasMember("transparent"))
+    {
+      mTrensperent = stratVal["transparent"].GetBool_();
+    }
   }
 
   Agent::Load(val);

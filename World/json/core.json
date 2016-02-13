@@ -52,7 +52,8 @@
         "strategy":
         {
           "type":"BlockRenderStratery",
-          "all":"Textures\\leaves.png"
+          "all":"Textures\\leaves.png",
+		  "transparent":true
         }
       }
     ]
