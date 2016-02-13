@@ -49,6 +49,10 @@ public:
 
   glm::vec3 GetRay(const glm::vec2 &pos);
 
+  void CalculateFrustum();
+
+  bool BoxWithinFrustum(const glm::vec3 & min, const glm::vec3 & max) const;
+
 private:
 
   glm::mat4 mView;
@@ -59,6 +63,9 @@ private:
 
   glm::vec3 mDir;
   glm::vec3 mPos;
+
+  float m_clipMatrix[16];
+  float m_frustum[6][4];
 
   float mFov;
   float mAspect;
