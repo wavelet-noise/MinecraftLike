@@ -13,7 +13,7 @@
 
 World::World()
 {
-  mPlayer = std::make_unique<Player>();
+  mPlayer = std::make_unique<Player>(StringIntern(std::string("player")));
 }
 
 

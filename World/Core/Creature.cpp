@@ -9,7 +9,7 @@
 const StringIntern Creature::mPositionAgentName = StringIntern("PositionAgent");
 
 
-Creature::Creature()
+Creature::Creature(const StringIntern &__id) : GameObject(__id)
 {
   auto positionAgent = std::make_unique<PositionAgent>(this);
   mAgents[positionAgent->GetFullName()] = std::move(positionAgent);
@@ -24,7 +24,7 @@ Creature::~Creature()
 
 PGameObject Creature::Clone()
 {
-  return MakeGameObject<Creature>();
+  return MakeGameObject<Creature>(id);
 }
 
 void Creature::Update(GameObjectParams &params)

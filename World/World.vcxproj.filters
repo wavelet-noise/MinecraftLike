@@ -25,6 +25,9 @@
     <Filter Include="Core\RenderStrategy">
       <UniqueIdentifier>{0f86c132-d989-40c3-9104-21a16b718a4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{5167f8a9-c11b-46f5-b8c4-6499054292af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsCounter.cpp" />
@@ -136,6 +139,21 @@
     <ClCompile Include="Render\RenderMeshVao.cpp" />
     <ClCompile Include="Render\Shader.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="network\packetholder.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\packetrequestplayers.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\packetrequestsector.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\packetresponsesector.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\network.cpp">
+      <Filter>network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +297,24 @@
     <ClInclude Include="Render\RenderMeshVao.h" />
     <ClInclude Include="Render\Shader.h">
       <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packetholder.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packetrequestplayers.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packetrequestsector.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packetresponsesector.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packet.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\network.h">
+      <Filter>network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

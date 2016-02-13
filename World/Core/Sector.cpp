@@ -8,9 +8,11 @@
 #include <glm/glm.hpp>
 #include <stdint.h>
 #include "../tools/Log.h"
+#include <glm\gtx\transform.hpp>
 
 Sector::Sector(const SPos &position)
-  : mPos(position)
+  : mPos(position),
+  mRenderSector(glm::mat3(glm::translate(glm::mat4(1), glm::vec3(position)*float(SECTOR_SIZE))))
 {
 }
 

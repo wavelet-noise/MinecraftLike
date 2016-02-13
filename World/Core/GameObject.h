@@ -26,7 +26,7 @@ inline std::shared_ptr<T> MakeGameObject(Args&&... args)
 class GameObject
 {
 public:
-  GameObject();
+  GameObject(const StringIntern &__id);
   virtual ~GameObject();
 
   virtual void Update(GameObjectParams &params);
@@ -49,9 +49,11 @@ public:
     return static_cast<const T*>(GetFromFullName(name));
   }
 
+  StringIntern GetId();
+
 protected:
   std::map<StringIntern, PAgent> mAgents;
-
+  StringIntern id;
 };
 
 

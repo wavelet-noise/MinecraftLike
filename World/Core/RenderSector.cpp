@@ -10,7 +10,7 @@
 
 
 
-RenderSector::RenderSector()
+RenderSector::RenderSector(const glm::mat3 &t) : transform(t)
 {
   using MeshType = std::remove_reference_t<decltype(mModel.GetMesh())>::element_type;
   mModel.GetMesh() = std::make_shared<MeshType>();
@@ -100,5 +100,5 @@ void RenderSector::Draw(Render &render)
     mRebuildBuffers = false;
   }
 
-  render.Draw(mModel);
+  render.Draw(mModel, transform);
 }

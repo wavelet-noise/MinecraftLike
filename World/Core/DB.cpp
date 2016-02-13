@@ -75,7 +75,7 @@ void DB::ReloadDirectory(const std::string & dir)
           std::string id = val["id"].GetString();
           LOG(trace) << "\"" << id << "\" parsing";
 
-          auto b = std::make_shared<Block>();
+          auto b = std::make_shared<Block>(StringIntern(id));
 
           if (val.HasMember("agents")) 
           {

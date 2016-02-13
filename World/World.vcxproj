@@ -41,6 +41,11 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="network\network.cpp" />
+    <ClCompile Include="network\packetholder.cpp" />
+    <ClCompile Include="network\packetrequestplayers.cpp" />
+    <ClCompile Include="network\packetrequestsector.cpp" />
+    <ClCompile Include="network\packetresponsesector.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
     <ClCompile Include="Render\Bitmap.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
@@ -85,6 +90,12 @@
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="lodepng\lodepng.h" />
+    <ClInclude Include="network\network.h" />
+    <ClInclude Include="network\packet.h" />
+    <ClInclude Include="network\packetholder.h" />
+    <ClInclude Include="network\packetrequestplayers.h" />
+    <ClInclude Include="network\packetrequestsector.h" />
+    <ClInclude Include="network\packetresponsesector.h" />
     <ClInclude Include="Render\Atlas.h" />
     <ClInclude Include="Render\Bitmap.h" />
     <ClInclude Include="Render\Camera.h" />

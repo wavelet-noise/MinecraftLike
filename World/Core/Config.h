@@ -9,6 +9,7 @@
 enum
 {
   SECTOR_SIZE = 32,
+  SECTOR_CAPACITY = SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE
 };
 
 #endif // Config_h__

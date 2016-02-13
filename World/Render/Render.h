@@ -32,7 +32,7 @@ public:
 
   /// Нарисовать модель.
   /// Устанавливает параметры для рисования и рисует модель.
-  void Draw(const Model &model);
+  void Draw(const Model &model, const glm::mat3 &transform);
 
   //TODO:shared
   Shader *GetShader()

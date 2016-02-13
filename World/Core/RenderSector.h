@@ -17,7 +17,7 @@
 class RenderSector
 {
 public:
-  RenderSector();
+  RenderSector(const glm::mat3 &transform);
   ~RenderSector();
 
   /// Сообщить, что геометрия изменилась.
@@ -39,7 +39,7 @@ private:
   bool mIsNeedBuild = false;
 
   std::atomic<bool> mRebuildBuffers = false;
-
+  glm::mat3 transform;
 };
 
 

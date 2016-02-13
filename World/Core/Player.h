@@ -12,7 +12,7 @@
 class Player : public Creature
 {
 public:
-  Player();
+  Player(const StringIntern &__id);
   ~Player();
 
   PGameObject Clone() override;

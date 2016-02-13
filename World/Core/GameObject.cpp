@@ -6,7 +6,7 @@
 
 
 
-GameObject::GameObject()
+GameObject::GameObject(const StringIntern &__id) :id(__id)
 {
 }
 
@@ -21,6 +21,11 @@ void GameObject::Update(GameObjectParams &params)
   {
     agent.second->Update(params);
   }
+}
+
+StringIntern GameObject::GetId()
+{
+  return id;
 }
 
 Agent *GameObject::GetFromFullName(const StringIntern &name)

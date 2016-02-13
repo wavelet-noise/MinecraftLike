@@ -19,7 +19,7 @@ typedef std::shared_ptr<class Block> PBlock;
 class Block : public GameObject
 {
 public:
-  Block();
+  Block(const StringIntern &__id);
   ~Block();
 
   PGameObject Clone() override;

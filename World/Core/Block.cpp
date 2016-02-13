@@ -4,7 +4,7 @@
 
 const StringIntern Block::mRenderAgentName = StringIntern("RenderAgent");
 
-Block::Block()
+Block::Block(const StringIntern &__id) : GameObject(__id)
 {
 }
  
@@ -15,7 +15,7 @@ Block::~Block()
 
 PGameObject Block::Clone()
 {
-  return MakeGameObject<Block>();
+  return MakeGameObject<Block>(id);
 }
 
 void Block::Update(GameObjectParams &params)

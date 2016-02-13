@@ -67,7 +67,7 @@ const Render::Version &Render::GetVersion() const
   return mVersion;
 }
 
-void Render::Draw(const Model &model)
+void Render::Draw(const Model &model, const glm::mat3 &transform)
 {
   assert(mCamera && mShader);
   mShader->Use();
@@ -77,7 +77,7 @@ void Render::Draw(const Model &model)
   }
 
   //TODO: prebuild NVP
-  mShader->SetUniform(mCamera->GetProject() * mCamera->GetView(), "transform_VP");
+  mShader->SetUniform( glm::mat4(transform) * mCamera->GetProject() * mCamera->GetView(), "transform_VP");
 
   model.GetMesh()->Draw();
 }

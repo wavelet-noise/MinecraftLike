@@ -8,7 +8,7 @@
 const StringIntern Player::mPhysicAgentName = StringIntern("PhysicAgent");
 
 
-Player::Player()
+Player::Player(const StringIntern &__id) : Creature(__id)
 {
 }
 
@@ -19,7 +19,7 @@ Player::~Player()
 
 PGameObject Player::Clone()
 {
-  return MakeGameObject<Player>();
+  return MakeGameObject<Player>(id);
 }
 
 void Player::Rotate(const glm::vec3 &degrees)
