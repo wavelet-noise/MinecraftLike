@@ -14,8 +14,7 @@ RenderSector::RenderSector()
 {
   using MeshType = std::remove_reference_t<decltype(mModel.GetMesh())>::element_type;
   mModel.GetMesh() = std::make_shared<MeshType>();
-  mModel.GetMesh()->Reserve(24 * SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE, 
-                           36 * SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE);
+  mModel.GetMesh()->Reserve(100000, 100000);
 }
 
 

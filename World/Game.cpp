@@ -190,7 +190,7 @@ void Game::Update(double dt)
   }
 
   auto moved = mWindow->GetMouse().GetMoved();
-  moved *= static_cast<float>(dt) * 0.07f;
+  moved *= 0.07f * static_cast<float>(dt);
   mWorld->GetPlayer()->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
   mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
 
@@ -225,6 +225,28 @@ void Game::Update(double dt)
   {
     mWorld->GetPlayer()->Move({ 0.0f, -speedMov, 0.0f });
   }
+  if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_SPACE))
+  {
+    mWorld->GetPlayer()->Accelerate({ 0.0f, 0.f, 0.05f });
+  }
+  if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_1))
+  {
+    mWorld->GetPlayer()->SetPosition({ 0.0f, 0.f, 100.0f });
+    mWorld->GetPlayer()->SetAcceleration({ 0.0f, 0.f, 0.f });
+  }
+
+  if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_F5))
+  {
+    static int i = -20;
+    static int j = 0;
+    i++;
+    if (i > 20)
+    {
+      j++;
+      i = -20;
+    }
+    mWorld->GetSector(glm::vec3(i, j, 0));
+  }
 
   SPos secPos = cs::WtoS(mWorld->GetPlayer()->GetPosition());
   secPos.z = 0;
@@ -245,7 +267,7 @@ void Game::Update(double dt)
     mWorld->GetSector(secPos + i);
   }
 
-  mWorld->Update();
+  mWorld->Update(dt);
 }
 
 

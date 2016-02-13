@@ -21,9 +21,9 @@ World::~World()
 {
 }
 
-void World::Update()
+void World::Update(float dt)
 {
-  mPlayer->Update(GameObjectParams{ this, nullptr, {} });
+  mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt});
 
   for (auto &sector : mSectors)
   {

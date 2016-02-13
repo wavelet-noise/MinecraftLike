@@ -32,6 +32,16 @@ void Player::Move(const glm::vec3 &dist)
   GetFromFullName<PhysicAgent>(mPhysicAgentName)->Move(dist);
 }
 
+void Player::SetAcceleration(const glm::vec3 &vel)
+{
+  GetFromFullName<PhysicAgent>(mPhysicAgentName)->SetAcceleration(vel);
+}
+
+void Player::Accelerate(const glm::vec3 &vel)
+{
+  GetFromFullName<PhysicAgent>(mPhysicAgentName)->Accelerate(vel);
+}
+
 const glm::vec3 & Player::GetPosition() const
 {
   return GetFromFullName<PhysicAgent>(mPhysicAgentName)->GetPos();

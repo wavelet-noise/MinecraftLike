@@ -12,7 +12,7 @@ Camera::Camera(void)
   mFov = 45.0f;
   mAspect = 1.0f;
   mNear = 0.01f;
-  mFar = 500.0f;
+  mFar = 2000.0f;
   mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
 
   mQuat = glm::quat_cast(glm::lookAt

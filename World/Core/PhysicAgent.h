@@ -44,11 +44,16 @@ public:
   /// Переместиться, относительно текущего положения и ориентации.
   void Move(const glm::vec3 &dist);
 
+  void Accelerate(const glm::vec3 & vel);
+
+  void SetAcceleration(const glm::vec3 & vel);
+
 private:
   static const StringIntern mPositionAgentName;
 
   glm::mat3 mDirection;
   glm::vec3 mDeltaPos;
+  glm::vec3 mVelocity;
 
   glm::quat mQuat;
   glm::vec3 mDir;

@@ -23,6 +23,10 @@ public:
   /// Переместиться, относительно текущего положения и ориентации.
   void Move(const glm::vec3 &dist);
 
+  void SetAcceleration(const glm::vec3 & vel);
+
+  void Accelerate(const glm::vec3 & vel);
+
   const glm::vec3 &GetPosition() const;
 
   void SetPosition(const glm::vec3 &pos);

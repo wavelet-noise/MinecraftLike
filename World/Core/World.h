@@ -20,7 +20,7 @@ public:
   World();
   ~World();
 
-  void Update();
+  void Update(float dt);
 
   void Draw(Render &render);
 

@@ -61,46 +61,45 @@ void PhysicAgent::Update(const GameObjectParams &params)
   mQuat = glm::normalize(mQuat);
 
   mDirection = glm::mat3_cast(mQuat);
+  mVelocity.z -= params.dt * 0.3f;
+  mDeltaPos += mVelocity;
 
   auto pos = GetPos();
-  auto newPos = pos;
 
-  if (true)
+  if (glm::length(mDeltaPos) > 0)
   {
-    pos.x += mDeltaPos.x;
-    if (!params.world->GetBlock(cs::WtoWB(pos)))
+    auto dir = glm::normalize(mDeltaPos);
+    auto sphere_checker = mDeltaPos + dir * 0.2f;
+
+    if (!params.world->GetBlock(cs::WtoWB(pos + glm::vec3(sphere_checker.x, 0, 0))))
     {
-      newPos = pos;
+      pos.x += mDeltaPos.x;
     }
     else
     {
-      pos.x -= mDeltaPos.x;
+      mVelocity.x = 0;
     }
-    pos.y += mDeltaPos.y;
-    if (!params.world->GetBlock(cs::WtoWB(pos)))
+
+    if (!params.world->GetBlock(cs::WtoWB(pos + glm::vec3(0, sphere_checker.y, 0))))
     {
-      newPos = pos;
-    }
-    else
-    {
-      pos.y -= mDeltaPos.y;
-    }
-    pos.z += mDeltaPos.z;
-    if (!params.world->GetBlock(cs::WtoWB(pos)))
-    {
-      newPos = pos;
+      pos.y += mDeltaPos.y;
     }
     else
     {
-      pos.z -= mDeltaPos.z;
+      mVelocity.y = 0;
+    }
+
+    if (!params.world->GetBlock(cs::WtoWB(pos + glm::vec3(0, 0, sphere_checker.z))))
+    {
+      pos.z += mDeltaPos.z;
+    }
+    else
+    {
+      mVelocity.z = 0;
     }
   }
-  else
-  {
-    newPos += mDeltaPos;
-  }
 
-  SetPos(newPos);
+  SetPos(pos);
   mDeltaPos = {};
 }
 
@@ -127,4 +126,14 @@ void PhysicAgent::Rotate(const glm::vec3 &degrees)
 void PhysicAgent::Move(const glm::vec3 &dist)
 {
   mDeltaPos += glm::vec3(dist.x, dist.z, -dist.y) * mQuat;
+}
+
+void PhysicAgent::Accelerate(const glm::vec3 &vel)
+{
+  mVelocity += vel;
+}
+
+void PhysicAgent::SetAcceleration(const glm::vec3 &vel)
+{
+  mVelocity = vel;
 }
