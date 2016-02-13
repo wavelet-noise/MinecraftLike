@@ -151,7 +151,16 @@ void BlockRenderStratery::Load(const rapidjson::Value & val)
   if (val.HasMember("all"))
   {
     mg.SetTexture(MeshBlockGenerator::ALL, val["all"].GetString());
-    
+  }
+  if (val.HasMember("separate"))
+  {
+    const rapidjson::Value &arr = val["separate"];
+    mg.SetTexture(MeshBlockGenerator::FRONT,  arr.Begin()->GetString());
+    mg.SetTexture(MeshBlockGenerator::RIGHT,  arr[1].GetString());
+    mg.SetTexture(MeshBlockGenerator::BACK,   arr[2].GetString());
+    mg.SetTexture(MeshBlockGenerator::LEFT,   arr[3].GetString());
+    mg.SetTexture(MeshBlockGenerator::TOP,    arr[4].GetString());
+    mg.SetTexture(MeshBlockGenerator::BOTTOM, arr[5].GetString());
   }
 
   mg.Generate();

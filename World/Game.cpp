@@ -65,7 +65,7 @@ int Game::Run()
   mCamera->Resize(mWindow->GetSize());
   mRender->SetCamera(mCamera);
 
-  TextureManager::Get().LoadTexture({ "Textures/stone.png", "Textures/sand.png", "Textures/brick.png" });
+  TextureManager::Get().LoadDirectory("Textures");
   TextureManager::Get().Compile();
 
   DB::Get().ReloadDirectory("json/");

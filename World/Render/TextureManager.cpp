@@ -5,6 +5,7 @@
 #include "TextureManager.h"
 
 #include <iostream>
+#include <boost\filesystem.hpp>
 
 TextureManager &TextureManager::Get()
 {
@@ -17,6 +18,20 @@ void TextureManager::LoadTexture(const std::string &name)
   LoadTexture(std::initializer_list<std::string>{name});
 }
 
+void TextureManager::LoadDirectory(const std::string &dir)
+{
+  boost::filesystem::path targetDir(dir);
+  boost::filesystem::recursive_directory_iterator iter(targetDir);
+
+  int loaded = 0;
+  for (const boost::filesystem::path &file : iter) 
+  {
+    if (boost::filesystem::is_regular_file(file) && boost::filesystem::extension(file) == ".png")
+    {
+      LoadTexture(file.string());
+    }
+  }
+}
 
 void TextureManager::LoadTexture(const std::initializer_list<std::string> &names)
 {

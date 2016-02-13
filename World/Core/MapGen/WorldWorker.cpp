@@ -42,23 +42,25 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
 	size_t blocksCount = 0;
 
   const size_t size = static_cast<size_t>(SECTOR_SIZE);
-	for (size_t i = 0; i < s.mBlocks.size(); ++i)
-	{
-		auto pos = SBPos{ i % size, (i / size) % size, i / (size * size) };
-		float tx = static_cast<float>(pos.x + s.mPos.x*SECTOR_SIZE);
-		float ty = static_cast<float>(pos.y + s.mPos.y*SECTOR_SIZE);
-		float h = (noise.Noise2(tx / 10.0f, ty / 10.0f) + 1.0f) / 5.0f;
-		int32_t zh = static_cast<int32_t>(glm::round(h * (SECTOR_SIZE - 1)));
-		if (pos.z <= zh)
-		{
-			s.mBlocks[i] = DB::Get().Create(StringIntern(pos.x % 2 ? "BlockSand" : "BlockStone"));
-			++blocksCount;
-		}
-		else
-		{
-			s.mBlocks[i] = nullptr;
-		}
-	}
+  for (int i = 0; i < SECTOR_SIZE; ++i)
+  {
+    for (int j = 0; j < SECTOR_SIZE; ++j)
+    {
+      float tx = static_cast<float>(i + s.mPos.x*SECTOR_SIZE);
+      float ty = static_cast<float>(j + s.mPos.y*SECTOR_SIZE);
+
+      float h = (noise.Noise2(tx / 10.0f, ty / 10.0f) + 1.0f)  * SECTOR_SIZE / 3.f;
+
+      h = glm::min(h, float(SECTOR_SIZE));
+      h = glm::max(h, 0.f);
+
+      s.mBlocks[int(h) * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("grass"));
+      for (int k = 0; k < int(h); ++k)
+      {
+        s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt"));
+      }
+    }
+  }
   psec->mRenderSector.Changed();
 
 	LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime << " blocks count: " << blocksCount;

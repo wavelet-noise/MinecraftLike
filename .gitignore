@@ -23,5 +23,6 @@ Thumbs.db
 *.rar
 [Dd]ebug
 [Rr]elease
-[Tt]extures
 World.VC.opendb
+/rapidjson/
+/textures
