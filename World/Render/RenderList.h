@@ -31,13 +31,13 @@ class RenderIterator;
 class RenderList
 {
 public:
-  RenderList();
+  RenderList(class Render &render);
   ~RenderList();
 
   /// Добавить модель на отрисовку. 
   RenderIterator PushModel(const Model &model, const glm::mat4 &matrix);
 
-  void Draw();
+  void Draw(class Render &render);
 
 private:
   void AddElements();
@@ -66,6 +66,9 @@ private:
   std::list<Element> mRemoveList;
 
   mutable std::mutex mMutex;
+
+
+  class Render &mRender;
 };
 
 class RenderIterator

@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <stdint.h>
 #include "../tools/Log.h"
+#include "../Render/Render.h"
 
 Sector::Sector(const SPos &position)
   : mPos(position), mRenderSector(position)
@@ -35,7 +36,7 @@ void Sector::SetBlock(const SBPos &pos, PBlock block)
   mBlocks[pos.z * SECTOR_SIZE * SECTOR_SIZE + pos.y * SECTOR_SIZE + pos.x] = block;
 }
 
-void Sector::Update(class World *world)
+void Sector::Update(class World *world, Render &render)
 {
   auto currentTime = glfwGetTime();
 
@@ -62,7 +63,7 @@ void Sector::Update(class World *world)
     }
     LOG(trace) << "SectorBuild: " << glfwGetTime() - currentTime;
   }
-  mRenderSector.Update();
+  mRenderSector.Update(render);
 }
 
 RenderSector &Sector::GetRenderSector()

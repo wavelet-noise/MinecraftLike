@@ -63,11 +63,12 @@ void RenderSector::Push(const Model &model, const glm::vec3 &pos)
   }
 }
 
-void RenderSector::Update()
+void RenderSector::Update(Render &render)
 {
   // Сектор должен был перестроиться. К этому моменту он уже перестроен.
   if (mIsNeedBuild)
   {
+    render.Draw(mModel, mModelMatrix);
     mIsNeedBuild = false;
     mRebuildBuffers = true;
   }
@@ -93,16 +94,16 @@ void RenderSector::Draw(Render &render)
   // Если сектор был изменен, ставим флаг, что сектор должен быть перестроен.
   // Если флаг о перестройке установлен - перестраиваем сектор.
   
-  if (mRebuildBuffers)
-  {
-    auto currentTime = glfwGetTime();
-    mModel.GetMesh()->GetStrategy().UseShader(render.GetShader());
-    mModel.GetMesh()->Compile();
-    mModel.GetMesh()->Release();
+//   if (mRebuildBuffers)
+//   {
+//     auto currentTime = glfwGetTime();
+//     mModel.GetMesh()->GetStrategy().UseShader(render.GetShader());
+//     mModel.GetMesh()->Compile();
+//     mModel.GetMesh()->Release();
+// 
+//     LOG(trace) << "ListGen: " << glfwGetTime() - currentTime;
+//     mRebuildBuffers = false;
+//   }
 
-    LOG(trace) << "ListGen: " << glfwGetTime() - currentTime;
-    mRebuildBuffers = false;
-  }
-
-  render.Draw(mModel, mModelMatrix);
+  //render.Draw(mModel, mModelMatrix);
 }

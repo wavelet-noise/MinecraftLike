@@ -30,7 +30,7 @@ public:
 
   void Push(const Model &model, const glm::vec3 &pos);
 
-  void Update();
+  void Update(Render &render);
 
   void Draw(Render &render);
 

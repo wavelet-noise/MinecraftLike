@@ -267,7 +267,7 @@ void Game::Update(double dt)
     mWorld->GetSector(secPos + i);
   }
 
-  mWorld->Update(dt);
+  mWorld->Update(dt, *mRender);
 }
 
 
@@ -280,6 +280,7 @@ void Game::Draw(double dt)
 
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));     // Очистка экрана
 
-  mWorld->Draw(*mRender);
+  //mWorld->Draw(*mRender);
+  mRender->Draw();
 }
 

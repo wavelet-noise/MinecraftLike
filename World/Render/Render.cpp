@@ -12,6 +12,7 @@
 #include "OpenGLCall.h"
 
 Render::Render(void)
+  : mRenderList(*this)
 {
   GL_CALL(glGetIntegerv(GL_MAJOR_VERSION, &mVersion.major));
   GL_CALL(glGetIntegerv(GL_MINOR_VERSION, &mVersion.minor));
@@ -69,18 +70,24 @@ const Render::Version &Render::GetVersion() const
 
 void Render::Draw(const Model &model, const glm::mat4 &mat)
 {
-  assert(mCamera && mShader);
-  mShader->Use();
-  if (model.GetTexture())
-  {
-    model.GetTexture()->Set(TEXTURE_SLOT_0);
-  }
+//   assert(mCamera && mShader);
+//   mShader->Use();
+//   if (model.GetTexture())
+//   {
+//     model.GetTexture()->Set(TEXTURE_SLOT_0);
+//   }
+// 
+//   //TODO: prebuild NVP
+//   mShader->SetUniform(mCamera->GetProject() * mCamera->GetView() * mat, "transform_VP");
+// 
+//   model.GetMesh()->Draw();
 
-  //TODO: prebuild NVP
-  mShader->SetUniform(mCamera->GetProject() * mCamera->GetView() * mat, "transform_VP");
-
-  model.GetMesh()->Draw();
+  mRenderList.PushModel(model, mat);
 }
 
+void Render::Draw()
+{
+  mRenderList.Draw(*this);
+}
 
 

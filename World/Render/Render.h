@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Shader.h"
 #include "Model.h"
+#include "RenderList.h"
 
 
 
@@ -50,6 +51,8 @@ public:
     mCamera = cam;
   }
 
+  void Draw();
+
 private:
 
   //TODO:shared
@@ -57,6 +60,7 @@ private:
   std::shared_ptr<Camera> mCamera;
    
   Version mVersion;
+  RenderList mRenderList;
 
 };
 
