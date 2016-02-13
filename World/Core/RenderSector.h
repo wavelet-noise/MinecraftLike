@@ -8,6 +8,8 @@
 
 #include <atomic>
 #include "..\Render\Render.h"
+#include <glm/glm.hpp>
+#include "..\tools\CoordSystem.h"
 
 
 /// Рисует сектор.
@@ -17,7 +19,7 @@
 class RenderSector
 {
 public:
-  RenderSector();
+  RenderSector(const SPos &pos);
   ~RenderSector();
 
   /// Сообщить, что геометрия изменилась.
@@ -34,6 +36,7 @@ public:
 
 private:
   Model mModel;
+  glm::mat4 mModelMatrix;
 
   bool mIsChanged = true;
   bool mIsNeedBuild = false;

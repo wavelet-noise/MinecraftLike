@@ -1,5 +1,5 @@
 // ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
 #include "RenderSector.h"
@@ -7,15 +7,19 @@
 #include <GLFW\glfw3.h>
 #include <type_traits>
 #include "..\tools\Log.h"
+#include <glm\gtc\matrix_transform.hpp>
 
 
 
-RenderSector::RenderSector()
+RenderSector::RenderSector(const SPos &pos)
 {
   using MeshType = std::remove_reference_t<decltype(mModel.GetMesh())>::element_type;
   mModel.GetMesh() = std::make_shared<MeshType>();
   mModel.GetMesh()->Reserve(100000, 100000);
+
+  mModelMatrix = glm::translate(mModelMatrix, cs::StoW(pos));
 }
+
 
 
 RenderSector::~RenderSector()
@@ -100,5 +104,5 @@ void RenderSector::Draw(Render &render)
     mRebuildBuffers = false;
   }
 
-  render.Draw(mModel);
+  render.Draw(mModel, mModelMatrix);
 }

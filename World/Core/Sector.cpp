@@ -10,7 +10,7 @@
 #include "../tools/Log.h"
 
 Sector::Sector(const SPos &position)
-  : mPos(position)
+  : mPos(position), mRenderSector(position)
 {
 }
 

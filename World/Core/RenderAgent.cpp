@@ -58,7 +58,8 @@ void RenderAgent::Load(const rapidjson::Value & val)
 
 void RenderAgent::Update(const GameObjectParams &params)
 {
-  params.sector->GetRenderSector().Push(mRenderStrategy->GetModel(params), params.pos);
+  params.sector->GetRenderSector().Push(mRenderStrategy->GetModel(params), 
+    cs::WBtoSB(params.pos, params.sector->GetSectorPosition()));
 }
 
 void RenderAgent::SetStrategy(const PRenderStrategy &strategy)
