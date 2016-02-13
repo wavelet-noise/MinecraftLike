@@ -16,8 +16,8 @@ Render::Render(void)
   GL_CALL(glGetIntegerv(GL_MAJOR_VERSION, &mVersion.major));
   GL_CALL(glGetIntegerv(GL_MINOR_VERSION, &mVersion.minor));
 
-  mVersion.major = 1;
-  mVersion.minor = 4;
+  mVersion.major = 3;
+  mVersion.minor = 3;
 
   // Настройки для старого огл.
   if (mVersion.major < 3)
