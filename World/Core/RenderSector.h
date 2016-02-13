@@ -12,10 +12,6 @@
 #include "..\tools\CoordSystem.h"
 
 
-/// Рисует сектор.
-/// Поток логики: Если установлен флаг, пробегаем по всем блокам, запрашиваем рендер агента,
-/// у рендер агента запрашиваем модель, сливаем все в один буфер.
-/// Поток рендера: Затем компилируем и рисуем.
 class RenderSector
 {
 public:
@@ -23,26 +19,20 @@ public:
   ~RenderSector();
 
   /// Сообщить, что геометрия изменилась.
-  void Changed();
+  void SayChanged();
 
-  /// Нужно ли перестроить геометрию?
+  /// Нужно ли перестроить сектор?
   bool IsNeedBuild() const;
 
-  void Push(const Model &model, const glm::vec3 &pos);
+  void Push(const Model &model, const WPos &pos);
 
   void Update(Render &render);
-
-  void Draw(Render &render);
-
 private:
   Model mModel;
   glm::mat4 mModelMatrix;
 
   bool mIsChanged = true;
   bool mIsNeedBuild = false;
-
-  std::atomic<bool> mRebuildBuffers = false;
-
 };
 
 

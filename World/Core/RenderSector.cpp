@@ -26,7 +26,7 @@ RenderSector::~RenderSector()
 {
 }
 
-void RenderSector::Changed()
+void RenderSector::SayChanged()
 {
   mIsChanged = true;
 }
@@ -36,7 +36,7 @@ bool RenderSector::IsNeedBuild() const
   return mIsNeedBuild;
 }
 
-void RenderSector::Push(const Model &model, const glm::vec3 &pos)
+void RenderSector::Push(const Model &model, const WPos &pos)
 {
   // Если сектор надо перестроить и модель статическая - перестраиваем сектор.
   if (mIsNeedBuild && model.GetType() == Model::Static)
@@ -70,40 +70,12 @@ void RenderSector::Update(Render &render)
   {
     render.Draw(mModel, mModelMatrix);
     mIsNeedBuild = false;
-    mRebuildBuffers = true;
   }
 
-  // Сектор был изменен, нужно его перестроить.
+  // Геометрия изменилась, нужно его перестроить.
   if (mIsChanged)
   {
-    // Если буфер компилируется, не трогаем сектор.
-    if (!mRebuildBuffers)
-    {
-      mModel.GetMesh()->Reserve(24 * SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE,
-        36 * SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE);
-
-      mIsNeedBuild = true;
-      mIsChanged = false;
-    }
+    mIsNeedBuild = true;
+    mIsChanged = false;
   }
-}
-
-void RenderSector::Draw(Render &render)
-{
-  // Рисуем сектор.
-  // Если сектор был изменен, ставим флаг, что сектор должен быть перестроен.
-  // Если флаг о перестройке установлен - перестраиваем сектор.
-  
-//   if (mRebuildBuffers)
-//   {
-//     auto currentTime = glfwGetTime();
-//     mModel.GetMesh()->GetStrategy().UseShader(render.GetShader());
-//     mModel.GetMesh()->Compile();
-//     mModel.GetMesh()->Release();
-// 
-//     LOG(trace) << "ListGen: " << glfwGetTime() - currentTime;
-//     mRebuildBuffers = false;
-//   }
-
-  //render.Draw(mModel, mModelMatrix);
 }

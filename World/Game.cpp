@@ -127,18 +127,6 @@ int Game::Run()
 
     auto far = camPos + ray;
     glm::vec3 blockPos;
-    //for (auto &p : points)
-    //{
-    //  if (REGISTRY_CORE.GetWorld().GetBlock(p))
-    //  {
-    //    blockPos = p;
-    //    if (REGISTRY_GRAPHIC.GetWindow().GetKeyboard().IsKeyPress(GLFW_KEY_SPACE))
-    //    {
-    //      REGISTRY_CORE.GetWorld().SetBlock(p, REGISTRY_CORE.GetBlocksLibrary().Create(StringIntern("BlockBrick")));
-    //    }
-    //    break;
-    //  }
-    //}
 
     mWindow->SetTitle(
       std::to_string(fps.GetCount()) + std::string(" fps. pos: [x: ") +
@@ -267,7 +255,8 @@ void Game::Update(double dt)
     mWorld->GetSector(secPos + i);
   }
 
-  mWorld->Update(dt, *mRender);
+  mWorld->Update(static_cast<float>(dt));
+  mWorld->UpdateGraphic(*mRender);
 }
 
 
@@ -276,11 +265,8 @@ void Game::Draw(double dt)
   mCamera->SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
   mCamera->Update();
 
-
-
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));     // Очистка экрана
 
-  //mWorld->Draw(*mRender);
   mRender->Draw();
 }
 

@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include "../tools/Log.h"
 #include "../Render/Render.h"
+#include "World.h"
 
 Sector::Sector(const SPos &position)
   : mPos(position), mRenderSector(position)
@@ -36,19 +37,15 @@ void Sector::SetBlock(const SBPos &pos, PBlock block)
   mBlocks[pos.z * SECTOR_SIZE * SECTOR_SIZE + pos.y * SECTOR_SIZE + pos.x] = block;
 }
 
-void Sector::Update(class World *world, Render &render)
+void Sector::Update(World *world)
+{
+
+}
+
+void Sector::UpdateGraphic(World *world, Render &render)
 {
   auto currentTime = glfwGetTime();
-
-  GameObjectParams params{ world , this, {} };
-//   for (size_t i = 0; i < mBlocks.size(); ++i)
-//   {
-//     if (mBlocks[i] && !mBlocks[i]->IsStatic())
-//     {
-//       params.pos = mPos + static_cast<glm::ivec3>(mBlocksPos[i]);
-//       mBlocks[i]->Update(params);
-//     }
-//   }
+  GameObjectParams params{ world , this,{} };
 
   if (mRenderSector.IsNeedBuild())
   {

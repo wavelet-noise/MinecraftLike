@@ -17,6 +17,7 @@
 
 #include <boost\serialization\serialization.hpp>
 
+
 class Sector
 {
 public:
@@ -32,7 +33,9 @@ public:
   /// Существующий блок будет удален.
   void SetBlock(const SBPos &pos, PBlock block);
 
-  void Update(class World *world, class Render &render);
+  void Update(class World *world);
+
+  void UpdateGraphic(class World *world, class Render &render);
 
   RenderSector &GetRenderSector();
 
@@ -89,5 +92,6 @@ namespace boost {
     }
   }
 }
+
 
 #endif // Sector_h__
