@@ -68,6 +68,21 @@ const Render::Version &Render::GetVersion() const
   return mVersion;
 }
 
+<<<<<<< HEAD
+void Render::Draw(const Model &model, const glm::mat3 &transform)
+{
+  assert(mCamera && mShader);
+  mShader->Use();
+  if (model.GetTexture())
+  {
+    model.GetTexture()->Set(TEXTURE_SLOT_0);
+  }
+
+  //TODO: prebuild NVP
+  mShader->SetUniform( glm::mat4(transform) * mCamera->GetProject() * mCamera->GetView(), "transform_VP");
+
+  model.GetMesh()->Draw();
+=======
 void Render::Draw(const Model &model, const glm::mat4 &mat)
 {
 //   assert(mCamera && mShader);
@@ -83,6 +98,7 @@ void Render::Draw(const Model &model, const glm::mat4 &mat)
 //   model.GetMesh()->Draw();
 
   mRenderList.PushModel(model, mat);
+>>>>>>> RenderScene
 }
 
 void Render::Draw()

@@ -51,7 +51,7 @@ public:
   /// Существующий блок будет удален.
   void SetBlock(const SBPos &pos, PBlock block);
 
-  void Update(class World *world);
+  void Update(class World *world, class Render &render);
 
   RenderSector &GetRenderSector();
 

@@ -107,6 +107,17 @@ namespace cs
 
     return spos * size + pos;
   }
+
+  ///  оординаты сектора в мировые координаты.
+  /// ¬озвращаютс€ координаты нулевого блока в секторе.
+  inline WPos StoW(const SPos &pos)
+  {
+    WPos wpos;
+    typedef SPos::value_type vtype;
+    const vtype size = static_cast<vtype>(SECTOR_SIZE);
+
+    return pos * size;
+  }
 }
 
 namespace std

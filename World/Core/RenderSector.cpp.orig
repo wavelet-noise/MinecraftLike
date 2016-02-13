@@ -11,7 +11,11 @@
 
 
 
+<<<<<<< HEAD
+RenderSector::RenderSector(const glm::mat3 &t) : transform(t)
+=======
 RenderSector::RenderSector(const SPos &pos)
+>>>>>>> RenderScene
 {
   using MeshType = std::remove_reference_t<decltype(mModel.GetMesh())>::element_type;
   mModel.GetMesh() = std::make_shared<MeshType>();
@@ -105,5 +109,9 @@ void RenderSector::Draw(Render &render)
 //     mRebuildBuffers = false;
 //   }
 
+<<<<<<< HEAD
+  render.Draw(mModel, transform);
+=======
   //render.Draw(mModel, mModelMatrix);
+>>>>>>> RenderScene
 }

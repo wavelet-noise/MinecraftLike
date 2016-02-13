@@ -52,6 +52,7 @@
     <ClCompile Include="Render\Color.cpp" />
     <ClCompile Include="Render\OpenGLCall.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="Render\RenderList.cpp" />
     <ClCompile Include="Render\RenderMeshDList.cpp" />
     <ClCompile Include="Render\RenderMeshVao.cpp" />
     <ClCompile Include="Render\Model.cpp" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\OpenGLCall.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="Render\RenderList.h" />
     <ClInclude Include="Render\RenderMeshDList.h" />
     <ClInclude Include="Render\RenderMeshVao.h" />
     <ClInclude Include="Render\Model.h" />

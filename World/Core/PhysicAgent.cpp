@@ -61,7 +61,7 @@ void PhysicAgent::Update(const GameObjectParams &params)
   mQuat = glm::normalize(mQuat);
 
   mDirection = glm::mat3_cast(mQuat);
-  mVelocity.z -= params.dt * 0.3f;
+  //mVelocity.z -= params.dt * 0.3f;
   mDeltaPos += mVelocity;
 
   auto pos = GetPos();

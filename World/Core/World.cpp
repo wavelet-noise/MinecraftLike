@@ -21,13 +21,13 @@ World::~World()
 {
 }
 
-void World::Update(float dt)
+void World::Update(float dt, Render &render)
 {
   mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt});
 
   for (auto &sector : mSectors)
   {
-    sector.second->Update(this);
+    sector.second->Update(this, render);
   }
 }
 

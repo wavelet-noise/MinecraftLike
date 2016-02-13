@@ -138,29 +138,31 @@
     <ClCompile Include="Render\Shader.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="network\packetholder.cpp">
       <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\IRenderStrategy.cpp">
-      <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="network\packetrequestplayers.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="Render\RenderList.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="network\packetrequestsector.cpp">
       <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\RenderMeshVao.cpp">
-      <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="network\packetresponsesector.cpp">
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="network\network.cpp">
       <Filter>network</Filter>
+=======
+    <ClCompile Include="Core\IRenderStrategy.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderList.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderMeshVao.cpp">
+      <Filter>Render</Filter>
+>>>>>>> RenderScene
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,12 +306,7 @@
     <ClInclude Include="Render\Shader.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Render\RenderList.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\RenderMeshVao.h">
-      <Filter>Render</Filter>
-    </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="network\packetholder.h">
       <Filter>network</Filter>
     </ClInclude>
@@ -327,6 +324,13 @@
     </ClInclude>
     <ClInclude Include="network\network.h">
       <Filter>network</Filter>
+=======
+    <ClInclude Include="Render\RenderList.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderMeshVao.h">
+      <Filter>Render</Filter>
+>>>>>>> RenderScene
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
