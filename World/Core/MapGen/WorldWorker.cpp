@@ -91,7 +91,7 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
       int tx = rand() % 10 - 5;
       int ty = rand() % 10 - 5;
       int tz = rand() % 10 - 5;
-      if (glm::length(glm::vec3(tx, ty, tz)) <= 4)
+      if (glm::length(glm::vec3(tx, ty, tz)) <= 3)
       {
         s.mBlocks[(int(h) + top + tz) * SECTOR_SIZE * SECTOR_SIZE + (y + ty) * SECTOR_SIZE + x + tx] = DB::Get().Create(StringIntern("leaves"));
       }
