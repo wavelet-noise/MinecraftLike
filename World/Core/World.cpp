@@ -80,7 +80,7 @@ void World::SetBlock(const WBPos &wbpos, PBlock block)
   if (auto sector = FindSector(spos))
   {
     sector->SetBlock(cs::WBtoSB(wbpos, spos), block);
-    sector->GetRenderSector().Changed();
+    sector->GetRenderSector().SayChanged();
   }
 }
 

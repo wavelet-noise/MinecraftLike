@@ -26,9 +26,10 @@ public:
   }
 
 private:
+  static const StringIntern mRenderAgentName;
+
   Model mModel;
   MeshBlockGenerator mMeshBlockGenerator;
-
 };
 
 REGISTER_RENDER_STRATEGY(BlockRenderStratery)

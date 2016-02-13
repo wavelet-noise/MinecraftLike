@@ -59,7 +59,7 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
 			s.mBlocks[i] = nullptr;
 		}
 	}
-  psec->mRenderSector.Changed();
+  psec->mRenderSector.SayChanged();
 
 	LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime << " blocks count: " << blocksCount;
   return psec;

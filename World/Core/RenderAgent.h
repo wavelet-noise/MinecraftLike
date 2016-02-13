@@ -30,13 +30,13 @@ public:
 
   void SetStrategy(const PRenderStrategy &strategy);
 
-  inline bool IsStatic() const noexcept
+  inline bool IsTransparent() const noexcept
   {
-    return mStatic;
+    return mTrensperent;
   }
 
 private:
-  bool mStatic = true;
+  bool mTrensperent = true;
   PRenderStrategy mRenderStrategy;
 
 };
