@@ -137,6 +137,7 @@
     <ClCompile Include="Render\Shader.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="Render\RenderList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -280,6 +281,7 @@
     <ClInclude Include="Render\Shader.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="Render\RenderList.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json">
