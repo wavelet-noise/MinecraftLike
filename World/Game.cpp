@@ -215,7 +215,7 @@ void Game::Update(double dt)
   }
   if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_SPACE))
   {
-    mWorld->GetPlayer()->Accelerate({ 0.0f, 0.f, 0.05f });
+    mWorld->GetPlayer()->Accelerate({ 0.0f, 0.f, 0.03f });
   }
   if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_1))
   {

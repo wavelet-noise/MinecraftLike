@@ -10,9 +10,13 @@ layout (location = 0) out vec4 out_color;
 
 void main(void)
 {
+    vec4 tcol = texture(atlas, fragTexcoord).rgba;
+	if(tcol.a < 0.5)
+	    discard;
+
     const vec3 lightvector = normalize(vec3(0.1, 0.4, 0.3));
-	float coef = max(0, dot(norm, lightvector) + 0.3);
-    out_color = vec4(texture(atlas, fragTexcoord).rgba) * coef;
+	float coef = min(1, max(0, dot(norm, lightvector)) + 0.5);
+    out_color = tcol * coef;
 	out_color.a = 1;
 }
 

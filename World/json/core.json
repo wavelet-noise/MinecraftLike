@@ -28,5 +28,48 @@
         }
       }
     ]
+  },  
+  {
+    "type":"Block",
+    "id":"log",
+    "agents":[
+      {
+        "type":"RenderAgent",
+        "strategy":
+        {
+          "type":"BlockRenderStratery",
+          "all":"Textures\\log.png"
+        }
+      }
+    ]
+  },  
+  {
+    "type":"Block",
+    "id":"leaves",
+    "agents":[
+      {
+        "type":"RenderAgent",
+        "strategy":
+        {
+          "type":"BlockRenderStratery",
+          "all":"Textures\\leaves.png"
+        }
+      }
+    ]
+  },  
+  {
+    "type":"Block",
+    "id":"leaves_t",
+    "agents":[
+      {
+        "type":"RenderAgent",
+        "strategy":
+        {
+          "type":"BlockRenderStratery",
+          "all":"Textures\\leaves_t.png",
+		  "transparent":true
+        }
+      }
+    ]
   }
 ]

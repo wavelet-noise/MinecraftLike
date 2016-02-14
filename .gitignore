@@ -26,3 +26,4 @@ Thumbs.db
 World.VC.opendb
 /rapidjson/
 /textures
+*.orig
