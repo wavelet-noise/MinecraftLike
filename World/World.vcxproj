@@ -101,6 +101,7 @@
     <ClInclude Include="Render\Bitmap.h" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Color.h" />
+    <ClInclude Include="Render\ErrorImage.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\OpenGLCall.h" />

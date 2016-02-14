@@ -50,6 +50,9 @@ public:
   /// Создать битмапу заданного размера и цвета.
   Bitmap(const glm::uvec2 &size, const Color &color = Color::black);
 
+  /// Создать битмапу заданного размера и массива данных.
+  Bitmap(const glm::uvec2 &size, const unsigned char *data);
+
   /// Разрушает битмапу.
   ~Bitmap();
 

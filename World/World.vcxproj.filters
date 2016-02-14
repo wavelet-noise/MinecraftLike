@@ -343,6 +343,9 @@
     <ClInclude Include="Core\IRenderBlockStrategy.h">
       <Filter>Core\Block</Filter>
     </ClInclude>
+    <ClInclude Include="Render\ErrorImage.h">
+      <Filter>Render\texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.glsl" />

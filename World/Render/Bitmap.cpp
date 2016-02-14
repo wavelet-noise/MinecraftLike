@@ -34,6 +34,14 @@ Bitmap::Bitmap(const glm::uvec2 &size, const Color &color)
   }
 }
 
+Bitmap::Bitmap(const glm::uvec2 &size, const unsigned char *data)
+  : mSize(size)
+{
+  size_t pixSize = mSize.x * mSize.y * 4;// hardcore
+  mData.resize(pixSize);
+  memcpy(mData.data(), data, pixSize);
+}
+
 Bitmap::~Bitmap()
 {
 }

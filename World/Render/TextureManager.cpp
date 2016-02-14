@@ -6,11 +6,21 @@
 
 #include <iostream>
 #include <boost\filesystem.hpp>
+#include "ErrorImage.h"
 
 TextureManager &TextureManager::Get()
 {
   static TextureManager obj;
   return obj;
+}
+
+TextureManager::TextureManager()
+{
+  mMultiAtlas.resize(1);
+  Bitmap bitmap(glm::uvec2(error_image.width, error_image.height), 
+    reinterpret_cast<const unsigned char *>(error_image.pixel_data));
+  auto pos = mMultiAtlas[0].atlas.Add(error_image.name, bitmap);
+  mTextures[error_image.name] = { 0, pos };
 }
 
 void TextureManager::LoadTexture(const std::string &name)
@@ -59,7 +69,8 @@ std::tuple<PTexture, glm::uvec4> TextureManager::GetTexture(const std::string &n
   if (itTexture == mTextures.end())
   {
     // Текстура не найдена.
-    return std::make_tuple<PTexture, glm::uvec4>(nullptr, {});
+    const auto &texture = mTextures.find(error_image.name)->second;
+    return std::tuple<PTexture, glm::uvec4>(mMultiAtlas[texture.index].texture, texture.pos);
   }
 
   return std::tuple<PTexture, glm::uvec4>(mMultiAtlas[(*itTexture).second.index].texture, (*itTexture).second.pos);

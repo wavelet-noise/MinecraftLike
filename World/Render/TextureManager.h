@@ -57,7 +57,7 @@ private:
   std::unordered_map<std::string, AtlasChunk> mTextures;
 
 private:
-  TextureManager() {};
+  TextureManager();
   ~TextureManager() {};
   TextureManager(const TextureManager &) = delete;
   TextureManager& operator=(const TextureManager &) = delete;

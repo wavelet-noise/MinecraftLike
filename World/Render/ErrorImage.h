@@ -8,11 +8,11 @@
 #include <string>
 
 static const struct {
-	std::string name;
-	unsigned int width;
-	unsigned int height;
-	unsigned int size;
-	unsigned char pixel_data[32 * 32 * 4 + 1];
+	const std::string name;
+	size_t width;
+  size_t height;
+  size_t size;
+	const char *pixel_data;
 } error_image = {
 	"error_autotexture",
 	32, 32, 32 * 32 * 4 + 1,
