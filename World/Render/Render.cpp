@@ -70,17 +70,6 @@ const Render::Version &Render::GetVersion() const
 
 void Render::Draw(const Model &model, const glm::mat4 &mat)
 {
-//   assert(mCamera && mShader);
-//   mShader->Use();
-//   if (model.GetTexture())
-//   {
-//     model.GetTexture()->Set(TEXTURE_SLOT_0);
-//   }
-// 
-//   //TODO: prebuild NVP
-//   mShader->SetUniform(mCamera->GetProject() * mCamera->GetView() * mat, "transform_VP");
-// 
-//   model.GetMesh()->Draw();
 
   mRenderList.PushModel(model, mat);
 }

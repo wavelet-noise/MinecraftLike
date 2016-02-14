@@ -22,11 +22,26 @@
     <Filter Include="lodepng">
       <UniqueIdentifier>{a032ce15-3102-4c85-951b-897c1582c372}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\RenderStrategy">
-      <UniqueIdentifier>{0f86c132-d989-40c3-9104-21a16b718a4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="network">
       <UniqueIdentifier>{5167f8a9-c11b-46f5-b8c4-6499054292af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\Mesh">
+      <UniqueIdentifier>{16894c04-24f8-4a25-a2eb-daeaad6b4f35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\tools">
+      <UniqueIdentifier>{4773de93-9090-4501-afbf-d4a4dd900b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\texture">
+      <UniqueIdentifier>{38f7c21b-069f-4632-894d-d6638dc4b103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Block">
+      <UniqueIdentifier>{0f86c132-d989-40c3-9104-21a16b718a4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\sector">
+      <UniqueIdentifier>{eeb9449d-afd1-4cf2-b2e7-37fe55c73ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\tools">
+      <UniqueIdentifier>{d3495acf-d628-406a-b109-7c98216cb1bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,9 +49,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Core\GameObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Sector.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\World.cpp">
@@ -48,15 +60,6 @@
     <ClCompile Include="Core\Player.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\SectorLoader.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\RenderSector.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\MeshBlockGenerator.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Agent.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
@@ -64,9 +67,6 @@
       <Filter>Core\Agents</Filter>
     </ClCompile>
     <ClCompile Include="Core\Creature.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Block.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\PhysicAgent.cpp">
@@ -81,28 +81,13 @@
     <ClCompile Include="Core\DB.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Atlas.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Bitmap.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="Render\Camera.cpp">
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="Render\Color.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Render\OpenGLCall.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="Render\Render.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Texture.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\TextureManager.cpp">
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="Window\Keyboard.cpp">
@@ -117,14 +102,11 @@
     <ClCompile Include="lodepng\lodepng.cpp">
       <Filter>lodepng</Filter>
     </ClCompile>
-    <ClCompile Include="Render\RenderMeshDList.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="Core\RenderAgent.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
     <ClCompile Include="Core\BlockRenderStratery.cpp">
-      <Filter>Core\RenderStrategy</Filter>
+      <Filter>Core\Block</Filter>
     </ClCompile>
     <ClCompile Include="Core\MapGen\WorldWorker.cpp">
       <Filter>Core\MapGen</Filter>
@@ -141,9 +123,6 @@
     <ClCompile Include="network\packetholder.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="Core\IRenderStrategy.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="network\packetrequestplayers.cpp">
       <Filter>network</Filter>
     </ClCompile>
@@ -153,14 +132,50 @@
     <ClCompile Include="network\packetrequestsector.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="Render\RenderMeshVao.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="network\packetresponsesector.cpp">
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="network\network.cpp">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderMeshDList.cpp">
+      <Filter>Render\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderMeshVao.cpp">
+      <Filter>Render\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\OpenGLCall.cpp">
+      <Filter>Render\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Texture.cpp">
+      <Filter>Render\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\TextureManager.cpp">
+      <Filter>Render\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Atlas.cpp">
+      <Filter>Render\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Bitmap.cpp">
+      <Filter>Render\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Block.cpp">
+      <Filter>Core\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\MeshBlockGenerator.cpp">
+      <Filter>Core\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Sector.cpp">
+      <Filter>Core\sector</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SectorLoader.cpp">
+      <Filter>Core\sector</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\RenderSector.cpp">
+      <Filter>Core\sector</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\IRenderBlockStrategy.cpp">
+      <Filter>Core\Block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,28 +187,13 @@
     <ClInclude Include="Core\GameObject.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Sector.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\World.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\GameObjectParams.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\MapGen\PerlinNoise.h">
       <Filter>Core\MapGen</Filter>
     </ClInclude>
     <ClInclude Include="Core\Player.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SectorLoader.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\RenderSector.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MeshBlockGenerator.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Agent.h">
@@ -205,9 +205,6 @@
     <ClInclude Include="Core\Creature.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Block.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\PhysicAgent.h">
       <Filter>Core\Agents</Filter>
     </ClInclude>
@@ -217,17 +214,8 @@
     <ClInclude Include="tools\CoordSystem.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Config.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\DB.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Atlas.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Bitmap.h">
-      <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Camera.h">
       <Filter>Render</Filter>
@@ -235,28 +223,10 @@
     <ClInclude Include="Render\Color.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Render\IRenderMeshStrategy.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Mesh.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\OpenGLCall.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Texture.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\TextureManager.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Vertex.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\VertexTools.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Window\Keyboard.h">
@@ -271,17 +241,11 @@
     <ClInclude Include="lodepng\lodepng.h">
       <Filter>lodepng</Filter>
     </ClInclude>
-    <ClInclude Include="Render\RenderMeshDList.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="Core\RenderAgent.h">
       <Filter>Core\Agents</Filter>
     </ClInclude>
-    <ClInclude Include="Core\IRenderStrategy.h">
-      <Filter>Core\RenderStrategy</Filter>
-    </ClInclude>
     <ClInclude Include="Core\BlockRenderStratery.h">
-      <Filter>Core\RenderStrategy</Filter>
+      <Filter>Core\Block</Filter>
     </ClInclude>
     <ClInclude Include="TemplateFactory.h">
       <Filter>tools</Filter>
@@ -298,16 +262,10 @@
     <ClInclude Include="tools\Log.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="Core\TemplateFactory.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Shader.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\RenderList.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\RenderMeshVao.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="network\packetholder.h">
@@ -328,11 +286,68 @@
     <ClInclude Include="network\network.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="Render\RenderMeshDList.h">
+      <Filter>Render\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderMeshVao.h">
+      <Filter>Render\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IRenderMeshStrategy.h">
+      <Filter>Render\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Mesh.h">
+      <Filter>Render\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VertexTools.h">
+      <Filter>Render\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\OpenGLCall.h">
+      <Filter>Render\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\TextureManager.h">
+      <Filter>Render\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Texture.h">
+      <Filter>Render\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Bitmap.h">
+      <Filter>Render\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Atlas.h">
+      <Filter>Render\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Block.h">
+      <Filter>Core\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MeshBlockGenerator.h">
+      <Filter>Core\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SectorLoader.h">
+      <Filter>Core\sector</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Sector.h">
+      <Filter>Core\sector</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RenderSector.h">
+      <Filter>Core\sector</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Config.h">
+      <Filter>Core\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\TemplateFactory.h">
+      <Filter>Core\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GameObjectParams.h">
+      <Filter>Core\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\IRenderBlockStrategy.h">
+      <Filter>Core\Block</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="json\core.json">
-      <Filter>Core</Filter>
-    </None>
     <None Include="shaders\basic.glsl" />
+    <None Include="json\core.json">
+      <Filter>Core\tools</Filter>
+    </None>
   </ItemGroup>
 </Project>

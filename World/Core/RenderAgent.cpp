@@ -43,7 +43,7 @@ void RenderAgent::Load(const rapidjson::Value & val)
     if(stratVal.HasMember("type"))
     {
       std::string type = stratVal["type"].GetString();
-      std::shared_ptr<IRenderStrategy> irs = RenderStrategyFactory::Get().Create(StringIntern(type));
+      std::shared_ptr<IRenderBlockStrategy> irs = RenderBlockStrategyFactory::Get().Create(StringIntern(type));
       irs->Load(stratVal);
       SetStrategy(irs);
     }

@@ -2,11 +2,11 @@
 // ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
-#include "IRenderStrategy.h"
+#include "IRenderBlockStrategy.h"
 
 
 
-RenderStrategyFactory::FactoryType & RenderStrategyFactory::Get()
+RenderBlockStrategyFactory::FactoryType & RenderBlockStrategyFactory::Get()
 {
   static FactoryType object;
   return object;

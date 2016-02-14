@@ -6,30 +6,33 @@
 #ifndef BlockRenderStratery_h__
 #define BlockRenderStratery_h__
 
-#include "IRenderStrategy.h"
+#include "IRenderBlockStrategy.h"
 #include "MeshBlockGenerator.h"
 #include "..\Render\Model.h"
 
-
-class BlockRenderStratery : public IRenderStrategy
+/// √енератор модели дл€ блока.
+/// ќтсекает невидимые стороны блока.
+class BlockRenderStratery : public IRenderBlockStrategy
 {
 public:
   BlockRenderStratery();
   ~BlockRenderStratery();
 
-  const Model &GetModel(const GameObjectParams &params);
+  /// ƒанна€ стратеги€ всегда формирует статическую модель.
+  bool IsStatic() const override
+  {
+    return true;
+  };
+
   void Load(const rapidjson::Value &val) override;
 
-  MeshBlockGenerator &GetGenerator()
-  {
-    return mMeshBlockGenerator;
-  }
+  const Model &GetModel(const GameObjectParams &params) override;
 
 private:
   static const StringIntern mRenderAgentName;
 
   Model mModel;
-  MeshBlockGenerator mMeshBlockGenerator;
+  MeshBlockGenerator mGenerator;
 };
 
 REGISTER_RENDER_STRATEGY(BlockRenderStratery)

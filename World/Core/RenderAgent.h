@@ -8,7 +8,7 @@
 
 
 #include "Agent.h"
-#include "IRenderStrategy.h"
+#include "IRenderBlockStrategy.h"
 
 typedef std::unique_ptr<class RenderAgent> PStaticRenderAgent;
 

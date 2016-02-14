@@ -14,7 +14,7 @@
 #include "TemplateFactory.h"
 #include "..\tools\StringIntern.h"
 
-using PRenderStrategy = std::shared_ptr<class IRenderStrategy>;
+using PRenderStrategy = std::shared_ptr<class IRenderBlockStrategy>;
 
 template<class T, class... Args>
 inline std::shared_ptr<T> MakeRenderStrategy(Args&&... args)
@@ -22,22 +22,28 @@ inline std::shared_ptr<T> MakeRenderStrategy(Args&&... args)
   return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
-class IRenderStrategy
+/// —тратеги€ формирует и возвращает модель блока.
+/// ѕредоставл€ет информацию о типе возвращаемой модели,
+/// статическа€ или динамическа€. ” статической модели 
+/// не измен€етс€ меш или матрица модели.
+class IRenderBlockStrategy
 {
 public:
-  IRenderStrategy() = default;
-  virtual ~IRenderStrategy() {};
+  IRenderBlockStrategy() = default;
+  virtual ~IRenderBlockStrategy() {};
 
   virtual void Load(const rapidjson::Value &val) = 0;
 
   virtual const Model &GetModel(const GameObjectParams &params) = 0;
+
+  virtual bool IsStatic() const = 0;
 };
 
-#define REGISTER_RENDER_STRATEGY(type) REGISTER_ELEMENT(type, RenderStrategyFactory::Get(), StringIntern(#type))
+#define REGISTER_RENDER_STRATEGY(type) REGISTER_ELEMENT(type, RenderBlockStrategyFactory::Get(), StringIntern(#type))
 
-struct RenderStrategyFactory : public boost::noncopyable
+struct RenderBlockStrategyFactory : public boost::noncopyable
 {
-  using FactoryType = TemplateFactory<StringIntern, IRenderStrategy>;
+  using FactoryType = TemplateFactory<StringIntern, IRenderBlockStrategy>;
   static FactoryType &Get();
 };
 
