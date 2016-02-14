@@ -12,7 +12,7 @@
 #include "World.h"
 
 Sector::Sector(const SPos &position)
-  : mPos(position), mRenderSector(position)
+  : mPos(position)
 {
 }
 
@@ -39,15 +39,21 @@ void Sector::SetBlock(const SBPos &pos, PBlock block)
 
 void Sector::Update(World *world)
 {
-
+  // Если рендер сектор давно не обновлялся, нужно его удалить.
 }
 
 void Sector::UpdateGraphic(World *world, Render &render)
 {
+  // Если рендер сектор отсутствует, нужно его создать.
+  if (!mRenderSector)
+  {
+    mRenderSector = std::make_unique<RenderSector>(mPos);
+  }
+
   auto currentTime = glfwGetTime();
   GameObjectParams params{ world , this,{} };
 
-  if (mRenderSector.IsNeedBuild())
+  if (mRenderSector->IsNeedBuild())
   {
     const size_t size = static_cast<size_t>(SECTOR_SIZE);
     for (size_t i = 0; i < mBlocks.size(); ++i)
@@ -60,10 +66,19 @@ void Sector::UpdateGraphic(World *world, Render &render)
     }
     LOG(trace) << "SectorBuild: " << glfwGetTime() - currentTime;
   }
-  mRenderSector.Update(render);
+  mRenderSector->Update(render);
+}
+
+void Sector::SayChanged()
+{
+  if (!mRenderSector)
+  {
+    mRenderSector = std::make_unique<RenderSector>(mPos);
+  }
+  mRenderSector->SayChanged();
 }
 
 RenderSector &Sector::GetRenderSector()
 {
-  return mRenderSector;
+  return *mRenderSector;
 }

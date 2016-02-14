@@ -36,7 +36,7 @@ public:
   }
 
 private:
-  bool mTrensperent = true;
+  bool mTrensperent = false;
   PRenderStrategy mRenderStrategy;
 
 };

@@ -58,6 +58,10 @@ void RenderAgent::Load(const rapidjson::Value & val)
 
 void RenderAgent::Update(const GameObjectParams &params)
 {
+  // ƒл€ статических блоков вызываетс€ только 
+  // при необходимости перестроить сектор!!!.
+  // ≈сли итератор на модель валидный, просто обновл€ем параметры.
+  // ¬ противном случае обновл€ем модель.
   params.sector->GetRenderSector().Push(mRenderStrategy->GetModel(params), 
     cs::WBtoSB(params.pos, params.sector->GetSectorPosition()));
 }

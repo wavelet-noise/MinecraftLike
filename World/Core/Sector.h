@@ -37,15 +37,16 @@ public:
 
   void UpdateGraphic(class World *world, class Render &render);
 
-  RenderSector &GetRenderSector();
+  void SayChanged();
 
+  RenderSector &GetRenderSector();
 private:
   friend class WorldWorker;
   std::array<PBlock, SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE> mBlocks;
 
   SPos mPos;
 
-  RenderSector mRenderSector;
+  std::unique_ptr<RenderSector> mRenderSector;
 
   friend class boost::serialization::access;
 
