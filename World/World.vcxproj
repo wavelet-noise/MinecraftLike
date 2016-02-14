@@ -37,7 +37,6 @@
     <ClCompile Include="Core\Sector.cpp" />
     <ClCompile Include="Core\SectorLoader.cpp" />
     <ClCompile Include="Core\World.cpp" />
-    <ClCompile Include="DemoWindow.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
@@ -68,7 +67,6 @@
     <ClCompile Include="tools\Bresenham3D.cpp" />
     <ClCompile Include="tools\Log.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
-    <ClCompile Include="Window\Gui\AppRoot.cpp" />
     <ClCompile Include="Window\Keyboard.cpp" />
     <ClCompile Include="Window\Mouse.cpp" />
     <ClCompile Include="Window\Window.cpp" />
@@ -95,7 +93,6 @@
     <ClInclude Include="Core\SectorLoader.h" />
     <ClInclude Include="Core\TemplateFactory.h" />
     <ClInclude Include="Core\World.h" />
-    <ClInclude Include="DemoWindow.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
@@ -137,7 +134,6 @@
     <ClInclude Include="tools\CoordSystem.h" />
     <ClInclude Include="tools\Log.h" />
     <ClInclude Include="tools\StringIntern.h" />
-    <ClInclude Include="Window\Gui\AppRoot.h" />
     <ClInclude Include="Window\Keyboard.h" />
     <ClInclude Include="Window\Mouse.h" />
     <ClInclude Include="Window\Window.h" />
@@ -197,11 +193,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)..\3rdparty\msvc14_x86\boost;$(SolutionDir)..\3rdparty\msvc14_x86\glew;$(SolutionDir)..\3rdparty\msvc14_x86\glfw;$(SolutionDir)..\3rdparty\msvc14_x86\glm;$(SolutionDir)\World;$(SolutionDir)\World\turbobadger\src\tb\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\3rdparty\msvc14_x86\boost;$(SolutionDir)..\3rdparty\msvc14_x86\glew;$(SolutionDir)..\3rdparty\msvc14_x86\glfw;$(SolutionDir)..\3rdparty\msvc14_x86\glm;$(SolutionDir)\World;$(SolutionDir)\World\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\..\3rdparty\msvc14_x86\boost\stage\lib;$(SolutionDir)\..\3rdparty\msvc14_x86\glew\lib;$(SolutionDir)\..\3rdparty\msvc14_x86\glfw\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)..\3rdparty\msvc14_x86\boost;$(SolutionDir)..\3rdparty\msvc14_x86\glew;$(SolutionDir)..\3rdparty\msvc14_x86\glfw;$(SolutionDir)..\3rdparty\msvc14_x86\glm;$(SolutionDir)\World;$(SolutionDir)\World\turbobadger\src\tb\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\3rdparty\msvc14_x86\boost;$(SolutionDir)..\3rdparty\msvc14_x86\glew;$(SolutionDir)..\3rdparty\msvc14_x86\glfw;$(SolutionDir)..\3rdparty\msvc14_x86\glm;$(SolutionDir)\World;$(SolutionDir)\World\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\..\3rdparty\msvc14_x86\boost\stage\lib;$(SolutionDir)\..\3rdparty\msvc14_x86\glew\lib;$(SolutionDir)\..\3rdparty\msvc14_x86\glfw\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

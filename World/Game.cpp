@@ -26,6 +26,8 @@
 #include "Core/BlockRenderStratery.h"
 #include "tools/Log.h"
 
+#include "gui\imgui_impl_glfw_gl3.h"
+
 Game::Game()
 {
   Window::WindowSystemInitialize();
@@ -36,6 +38,8 @@ Game::Game()
 
   Render::Initialize();
   mRender = std::make_unique<Render>();
+
+  ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
 
   Initialized = true;
 
@@ -175,10 +179,13 @@ void Game::Update(double dt)
     mCamera->Rotate({ -speedRot, 0.0f, 0.0f });
   }
 
-  auto moved = mWindow->GetMouse().GetMoved();
-  moved *= 0.07f * static_cast<float>(dt);
-  mWorld->GetPlayer()->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
-  mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
+  if (mWindow->GetMouse().GetCentring())
+  {
+    auto moved = mWindow->GetMouse().GetMoved();
+    moved *= 0.07f * static_cast<float>(dt);
+    mWorld->GetPlayer()->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
+    mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
+  }
 
   static float k = 1.0f;
   if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_9))
@@ -219,6 +226,10 @@ void Game::Update(double dt)
   {
     mWorld->GetPlayer()->SetPosition({ 0.0f, 0.f, 100.0f });
     mWorld->GetPlayer()->SetAcceleration({ 0.0f, 0.f, 0.f });
+  }
+  if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_TAB))
+  {
+    mWindow->GetMouse().SetCentring(!mWindow->GetMouse().GetCentring());
   }
 
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_F5))
@@ -266,5 +277,35 @@ void Game::Draw(double dt)
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));     // Очистка экрана
 
   mRender->Draw();
+
+  ImGui_ImplGlfwGL3_NewFrame();
+  bool show_test_window = true, show_another_window = true;
+  {
+    static float f = 0.0f;
+    ImGui::Text("Hello, world!");
+    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+    ImGui::ColorEdit3("clear color", (float*)&glm::vec4(1,1,1,1)[0]);
+    if (ImGui::Button("Test Window")) show_test_window ^= 1;
+    if (ImGui::Button("Another Window")) show_another_window ^= 1;
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+  }
+
+  // 2. Show another simple window, this time using an explicit Begin/End pair
+  if (show_another_window)
+  {
+    ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_FirstUseEver);
+    ImGui::Begin("Another Window", &show_another_window);
+    ImGui::Text("Hello");
+    ImGui::End();
+  }
+
+  // 3. Show the ImGui test window. Most of the sample code is in ImGui::ShowTestWindow()
+  if (show_test_window)
+  {
+    ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+    ImGui::ShowTestWindow(&show_test_window);
+  }
+
+  ImGui::Render();
 }
 

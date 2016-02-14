@@ -10,7 +10,6 @@ Mouse::Mouse(GLFWwindow &window)
   : mWindow(window)
 {
   mIsFocused = (glfwGetWindowAttrib(&mWindow, GLFW_FOCUSED) == GL_TRUE);
-  //glfwSetInputMode(&mWindow, GLFW_CURSOR, mIsFocused ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL);
 
   glm::ivec2 size;
   glfwGetWindowSize(&mWindow, &size.x, &size.y);
@@ -72,9 +71,21 @@ void Mouse::Update()
   mIsFocused = focused;
   glm::vec2 newPos(cx, cy);
 
-  glfwSetCursorPos(&mWindow, size.x, size.y);
+  if(mCentring)
+    glfwSetCursorPos(&mWindow, size.x, size.y);
 
   std::lock_guard<std::mutex> lock(mMutex);
   mMoved = newPos - mPos;
   mPos = size;
+}
+
+void Mouse::SetCentring(bool b)
+{
+  mCentring = b;
+  glfwSetInputMode(&mWindow, GLFW_CURSOR, b ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL);
+}
+
+bool Mouse::GetCentring()
+{
+  return mCentring;
 }

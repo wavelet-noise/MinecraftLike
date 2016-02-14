@@ -28,9 +28,6 @@
     <Filter Include="network">
       <UniqueIdentifier>{5167f8a9-c11b-46f5-b8c4-6499054292af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Window\Gui">
-      <UniqueIdentifier>{e6651665-f87a-44eb-ba8b-1646e98fa689}</UniqueIdentifier>
-    </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{7f7b3b83-cdc1-46e0-bdb7-ea19d9dc9138}</UniqueIdentifier>
     </Filter>
@@ -165,13 +162,7 @@
     <ClCompile Include="network\network.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="Window\Gui\AppRoot.cpp">
-      <Filter>Window\Gui</Filter>
-    </ClCompile>
     <ClCompile Include="Core\IRenderBlockStrategy.cpp" />
-    <ClCompile Include="DemoWindow.cpp">
-      <Filter>Window\Gui</Filter>
-    </ClCompile>
     <ClCompile Include="network\GameServer.cpp">
       <Filter>network</Filter>
     </ClCompile>
@@ -350,14 +341,8 @@
     <ClInclude Include="network\network.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="Window\Gui\AppRoot.h">
-      <Filter>Window\Gui</Filter>
-    </ClInclude>
     <ClInclude Include="Core\IRenderBlockStrategy.h" />
     <ClInclude Include="Render\ErrorImage.h" />
-    <ClInclude Include="DemoWindow.h">
-      <Filter>Window\Gui</Filter>
-    </ClInclude>
     <ClInclude Include="network\GameServer.h">
       <Filter>network</Filter>
     </ClInclude>

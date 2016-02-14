@@ -26,6 +26,9 @@ public:
 
   void Update();
 
+  void SetCentring(bool b);
+  bool GetCentring();
+
 private:
   struct GLFWwindow &mWindow;
 
@@ -35,6 +38,7 @@ private:
   std::mutex mMutex;
 
   bool mIsFocused;
+  bool mCentring = true;
 };
 
 

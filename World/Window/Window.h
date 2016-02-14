@@ -46,6 +46,8 @@ public:
   /// Получить мышь.
   Mouse &GetMouse();
 
+  GLFWwindow *Get();
+
 private:
 
   struct WindowDeleter

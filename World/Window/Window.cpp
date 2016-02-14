@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <iostream>
 #include <tools\Log.h>
+#include <gui\imgui_impl_glfw_gl3.h>
 
 Window::Window(const glm::uvec2 &size)
   : mSize(size),
@@ -48,7 +49,12 @@ Window::Window(const glm::uvec2 &size)
     Window *window = static_cast<Window *>(glfwGetWindowUserPointer(win));
     assert(window);
     window->mKeyboard->SetKey(key, scancode, action, mods);
+    ImGui_ImplGlfwGL3_KeyCallback(win, key, scancode, action, mods);
   });
+
+  glfwSetMouseButtonCallback(mWindow.get(), ImGui_ImplGlfwGL3_MouseButtonCallback);
+  glfwSetScrollCallback(mWindow.get(), ImGui_ImplGlfwGL3_ScrollCallback);
+  glfwSetCharCallback(mWindow.get(), ImGui_ImplGlfwGL3_CharCallback);
 
   std::cout << "Window created" << std::endl;
 }
@@ -92,7 +98,7 @@ void Window::SetCurrentContext()
   assert(mWindow);
   glfwMakeContextCurrent(mWindow.get());
 
-  glfwSwapInterval(1);
+  glfwSwapInterval(0);
 
   const GLubyte* renderer = glGetString (GL_RENDERER);
   const GLubyte* version = glGetString (GL_VERSION);
@@ -139,6 +145,11 @@ void Window::SetTitle(const std::string &title)
 Mouse &Window::GetMouse()
 {
   return *mMouse;
+}
+
+GLFWwindow * Window::Get()
+{
+  return mWindow.get();
 }
 
 
