@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include "OpenGLCall.h"
+#include <tools\Log.h>
 
 Render::Render(void)
   : mRenderList(*this)
@@ -44,6 +45,22 @@ Render::Render(void)
   s->SetUniform(0, "atlas");
 
   mShader = std::move(s);
+
+  int glVersion[2] = { -1, -1 };
+  int ntex, nuni, texss;
+  glGetIntegerv(GL_MAJOR_VERSION, &glVersion[0]);
+  glGetIntegerv(GL_MINOR_VERSION, &glVersion[1]);
+  glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &ntex);
+  glGetIntegerv(GL_MAX_UNIFORM_LOCATIONS, &nuni);
+  glGetIntegerv(GL_MAX_TEXTURE_SIZE, &texss);
+  LOG(info) << "Renderer: " << glGetString(GL_RENDERER);
+  LOG(info) << "Vendor: " << glGetString(GL_VENDOR);
+  LOG(info) << "Version: " << glGetString(GL_VERSION);
+  LOG(info) << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION);
+  LOG(info) << "using OpenGL: " << glVersion[0] << "." << glVersion[1];
+  LOG(info) << "GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS: " << ntex;
+  LOG(info) << "GL_MAX_UNIFORM_LOCATIONS: " << nuni;
+  LOG(info) << "GL_MAX_TEXTURE_SIZE: " << texss;
 }
 
 Render::~Render(void)
@@ -61,6 +78,8 @@ void Render::Initialize()
     throw "GLEW not initialized.";
   }
   glGetError();
+
+  LOG(info) << "GLEW: " << glewGetString(GLEW_VERSION);
 }
 
 const Render::Version &Render::GetVersion() const

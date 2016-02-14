@@ -37,10 +37,16 @@
     <ClCompile Include="Core\Sector.cpp" />
     <ClCompile Include="Core\SectorLoader.cpp" />
     <ClCompile Include="Core\World.cpp" />
+    <ClCompile Include="DemoWindow.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_demo.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="network\GameServer.cpp" />
     <ClCompile Include="network\network.cpp" />
     <ClCompile Include="network\packetholder.cpp" />
     <ClCompile Include="network\packetrequestplayers.cpp" />
@@ -62,6 +68,7 @@
     <ClCompile Include="tools\Bresenham3D.cpp" />
     <ClCompile Include="tools\Log.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
+    <ClCompile Include="Window\Gui\AppRoot.cpp" />
     <ClCompile Include="Window\Keyboard.cpp" />
     <ClCompile Include="Window\Mouse.cpp" />
     <ClCompile Include="Window\Window.cpp" />
@@ -88,9 +95,18 @@
     <ClInclude Include="Core\SectorLoader.h" />
     <ClInclude Include="Core\TemplateFactory.h" />
     <ClInclude Include="Core\World.h" />
+    <ClInclude Include="DemoWindow.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\stb_rect_pack.h" />
+    <ClInclude Include="imgui\stb_textedit.h" />
+    <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="lodepng\lodepng.h" />
+    <ClInclude Include="network\GameServer.h" />
     <ClInclude Include="network\network.h" />
     <ClInclude Include="network\packet.h" />
     <ClInclude Include="network\packetholder.h" />
@@ -121,6 +137,7 @@
     <ClInclude Include="tools\CoordSystem.h" />
     <ClInclude Include="tools\Log.h" />
     <ClInclude Include="tools\StringIntern.h" />
+    <ClInclude Include="Window\Gui\AppRoot.h" />
     <ClInclude Include="Window\Keyboard.h" />
     <ClInclude Include="Window\Mouse.h" />
     <ClInclude Include="Window\Window.h" />
@@ -180,11 +197,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)..\3rdparty\msvc14_x86\boost;$(SolutionDir)..\3rdparty\msvc14_x86\glew;$(SolutionDir)..\3rdparty\msvc14_x86\glfw;$(SolutionDir)..\3rdparty\msvc14_x86\glm;$(SolutionDir)\World;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\3rdparty\msvc14_x86\boost;$(SolutionDir)..\3rdparty\msvc14_x86\glew;$(SolutionDir)..\3rdparty\msvc14_x86\glfw;$(SolutionDir)..\3rdparty\msvc14_x86\glm;$(SolutionDir)\World;$(SolutionDir)\World\turbobadger\src\tb\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\..\3rdparty\msvc14_x86\boost\stage\lib;$(SolutionDir)\..\3rdparty\msvc14_x86\glew\lib;$(SolutionDir)\..\3rdparty\msvc14_x86\glfw\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)..\3rdparty\msvc14_x86\boost;$(SolutionDir)..\3rdparty\msvc14_x86\glew;$(SolutionDir)..\3rdparty\msvc14_x86\glfw;$(SolutionDir)..\3rdparty\msvc14_x86\glm;$(SolutionDir)\World;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\3rdparty\msvc14_x86\boost;$(SolutionDir)..\3rdparty\msvc14_x86\glew;$(SolutionDir)..\3rdparty\msvc14_x86\glfw;$(SolutionDir)..\3rdparty\msvc14_x86\glm;$(SolutionDir)\World;$(SolutionDir)\World\turbobadger\src\tb\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\..\3rdparty\msvc14_x86\boost\stage\lib;$(SolutionDir)\..\3rdparty\msvc14_x86\glew\lib;$(SolutionDir)\..\3rdparty\msvc14_x86\glfw\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -203,6 +220,7 @@
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <ExpandAttributedSource>false</ExpandAttributedSource>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AdditionalOptions> /D "_CRT_SECURE_NO_WARNINGS" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

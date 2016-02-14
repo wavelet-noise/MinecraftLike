@@ -37,8 +37,6 @@ Game::Game()
   Render::Initialize();
   mRender = std::make_unique<Render>();
 
-  LOG(info) << "Render created. Version: " << mRender->GetVersion().major << "." << mRender->GetVersion().minor;
-
   Initialized = true;
 
   //GL_CALL(glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y)); 

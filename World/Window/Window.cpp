@@ -6,6 +6,7 @@
 
 #include <assert.h>
 #include <iostream>
+#include <tools\Log.h>
 
 Window::Window(const glm::uvec2 &size)
   : mSize(size),
@@ -77,6 +78,8 @@ void Window::WindowSystemInitialize()
   {
     throw "GLFW not initialized.";
   }
+
+  LOG(info) << "GLFW: " << glfwGetVersionString();
 }
 
 void Window::WindowSystemFinally()
