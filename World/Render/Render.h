@@ -1,62 +1,105 @@
-п»ї// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ============================================================================
+// ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
 #pragma once
-#ifndef Render_h__
-#define Render_h__
+#ifndef RenderList_h__
+#define RenderList_h__
 
-#include "Camera.h"
-#include "Shader.h"
+#include <list>
+#include <glm/glm.hpp>
 #include "Model.h"
-#include "RenderList.h"
+#include <mutex>
+#include <memory>
 
+class RenderIterator;
 
-
+/// Список рисования (сцена):
+/// Внутри сцены есть список моделей(предположительно вектор),
+/// все они рисуются каждый кадр.
+/// Все модели в этом списке скомпилированы и не могут быть изменены.
+/// Добавление модели в сцену потокобезопасно.
+/// При добавлении модели в сцену на нее возвращается итератор.
+/// Итератор предоставляет потокобезопасный доступ к матрице модели.
+/// 
+/// При добавлении в сцену, модель помещается в список на добавление.
+/// В начале новой итерации рендера, все модели из списка на добавление 
+/// компилируются и перемещаются в список моделей.
+/// 
+/// Через итератор можно поменять модель.В этом случае новая модель добавится
+/// в список на добавление, старая модель добавится в список на удаление.
 class Render
 {
 public:
-  struct Version
-  {
-    int major = 0;
-    int minor = 0;
-  };
-
-public:
-
   Render();
   ~Render();
 
   static void Initialize();
 
-  const Version &GetVersion() const;
+  /// Добавить модель на отрисовку. 
+  RenderIterator PushModel(const Model &model, const glm::mat4 &matrix);
 
-  /// РќР°СЂРёСЃРѕРІР°С‚СЊ РјРѕРґРµР»СЊ.
-  /// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ СЂРёСЃРѕРІР°РЅРёСЏ Рё СЂРёСЃСѓРµС‚ РјРѕРґРµР»СЊ.
-  void Draw(const Model &model, const glm::mat4 &mat);
-
-  std::shared_ptr<Camera> GetCameta()
-  {
-    return mCamera;
-  }
-
-  void SetCamera(std::shared_ptr<Camera> &cam)
-  {
-    mCamera = cam;
-  }
-
-  void Draw();
+  void Draw(class Camera &camera);
 
 private:
+  void AddElements();
 
-  //TODO:shared
-  std::shared_ptr<Camera> mCamera;
-   
-  Version mVersion;
-  RenderList mRenderList;
+  void SwapMatrix();
 
+private:
+  friend RenderIterator;
+  struct Element
+  {
+    using Iterator = std::list<Element>::iterator;
+
+    Element(const Model &mod, const glm::mat4 &mat)
+      : model(mod), matrixBack(mat)
+    {}
+    Model model;
+    glm::mat4 matrix;
+    glm::mat4 matrixBack;
+    std::shared_ptr<Iterator> mIterator;
+  };
+  // Список элементов на отрисовку.
+  std::list<Element> mDrawList;
+  // Список элементов на добавление.
+  std::list<Element> mAddList;
+  // Список элементов на удаление.
+  std::list<Element> mRemoveList;
+
+  mutable std::mutex mMutex;
+
+  glm::ivec2 mVersion;
+};
+
+class RenderIterator
+{
+public:
+  using ElementType = Render::Element;
+  using IteratorType = std::weak_ptr<ElementType::Iterator>;
+
+  inline RenderIterator(const IteratorType &iterator, std::mutex &mutex) noexcept
+    : mIterator(iterator), mMutex(mutex)
+  {}
+
+  /// Получение модели. Мотокобезопасная операция.
+  inline const Model &GetModel() const noexcept
+  {
+    std::lock_guard<std::mutex> lock(mMutex);
+    return (*mIterator.lock())->model;
+  }
+
+  /// Установка матрицы модели. Потокобезопасная операция.
+  inline void SetMatrix(const glm::mat4 &matrix)
+  {
+    std::lock_guard<std::mutex> lock(mMutex);
+    (*mIterator.lock())->matrixBack = matrix;
+  }
+
+private:
+  IteratorType mIterator;
+  std::mutex &mMutex;
 };
 
 
-
-#endif // Render_h__
+#endif // RenderList_h__

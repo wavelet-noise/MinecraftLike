@@ -99,9 +99,6 @@
     <ClCompile Include="Render\OpenGLCall.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Render.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="Render\Texture.cpp">
       <Filter>Render</Filter>
     </ClCompile>
@@ -147,9 +144,6 @@
     <ClCompile Include="network\packetrequestplayers.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="Render\RenderList.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="network\packetrequestsector.cpp">
       <Filter>network</Filter>
     </ClCompile>
@@ -178,6 +172,9 @@
       <Filter>Core\RenderStrategy</Filter>
     </ClCompile>
     <ClCompile Include="Render\DBShaders.cpp" />
+    <ClCompile Include="Render\Render.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -260,9 +257,6 @@
     <ClInclude Include="Render\OpenGLCall.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Render.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Texture.h">
       <Filter>Render</Filter>
     </ClInclude>
@@ -317,9 +311,6 @@
     <ClInclude Include="Render\Shader.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Render\RenderList.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="Render\RenderMeshVao.h">
       <Filter>Render</Filter>
     </ClInclude>
@@ -369,6 +360,9 @@
       <Filter>Core\RenderStrategy</Filter>
     </ClInclude>
     <ClInclude Include="Render\DBShaders.h" />
+    <ClInclude Include="Render\Render.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json">

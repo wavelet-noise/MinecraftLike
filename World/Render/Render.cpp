@@ -1,9 +1,8 @@
-Ôªø// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ============================================================================
+// ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
 #include "Render.h"
-
 #include <GL/glew.h>
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,18 +11,19 @@
 #include "OpenGLCall.h"
 #include <tools\Log.h>
 #include "DBShaders.h"
+#include <assert.h>
+#include "Camera.h"
 
-Render::Render(void)
-  : mRenderList(*this)
+
+
+Render::Render()
 {
-  GL_CALL(glGetIntegerv(GL_MAJOR_VERSION, &mVersion.major));
-  GL_CALL(glGetIntegerv(GL_MINOR_VERSION, &mVersion.minor));
+  mVersion = { -1 , -1 };
+  GL_CALL(glGetIntegerv(GL_MAJOR_VERSION, &mVersion[0]));
+  GL_CALL(glGetIntegerv(GL_MINOR_VERSION, &mVersion[1]));
 
-  mVersion.major = 3;
-  mVersion.minor = 3;
-
-  // –ù–∞—Å—Ç—Ä–æ–π–∫–∏ –¥–ª—è —Å—Ç–∞—Ä–æ–≥–æ –æ–≥–ª.
-  if (mVersion.major < 3)
+  // Õ‡ÒÚÓÈÍË ‰Îˇ ÒÚ‡Ó„Ó Ó„Î.
+  if (mVersion[0] < 3)
   {
     GL_CALL(glEnable(GL_TEXTURE_2D));
   }
@@ -31,33 +31,34 @@ Render::Render(void)
   GL_CALL(glEnable(GL_CULL_FACE));
   GL_CALL(glCullFace(GL_BACK));
 
-  GL_CALL(glEnable(GL_DEPTH_TEST));            // –†–∞–∑—Ä–µ—à–∏—Ç—å —Ç–µ—Å—Ç –≥–ª—É–±–∏–Ω—ã
-  GL_CALL(glDepthFunc(GL_LEQUAL));            // –¢–∏–ø —Ç–µ—Å—Ç–∞ –≥–ª—É–±–∏–Ω—ã
+  GL_CALL(glEnable(GL_DEPTH_TEST));            // –‡ÁÂ¯ËÚ¸ ÚÂÒÚ „ÎÛ·ËÌ˚
+  GL_CALL(glDepthFunc(GL_LEQUAL));            // “ËÔ ÚÂÒÚ‡ „ÎÛ·ËÌ˚
 
   GL_CALL(glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f));
 
-  auto &s = std::make_unique<Shader>();
-
   DBShaders::Get().LoadShader("shaders/basic.glsl");
 
-  int glVersion[2] = { -1, -1 };
-  int ntex, nuni, texss;
-  glGetIntegerv(GL_MAJOR_VERSION, &glVersion[0]);
-  glGetIntegerv(GL_MINOR_VERSION, &glVersion[1]);
+  int ntex, texss;
   glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &ntex);
-  glGetIntegerv(GL_MAX_UNIFORM_LOCATIONS, &nuni);
   glGetIntegerv(GL_MAX_TEXTURE_SIZE, &texss);
   LOG(info) << "Renderer: " << glGetString(GL_RENDERER);
   LOG(info) << "Vendor: " << glGetString(GL_VENDOR);
   LOG(info) << "Version: " << glGetString(GL_VERSION);
   LOG(info) << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION);
-  LOG(info) << "using OpenGL: " << glVersion[0] << "." << glVersion[1];
+  LOG(info) << "using OpenGL: " << mVersion[0] << "." << mVersion[1];
   LOG(info) << "GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS: " << ntex;
-  LOG(info) << "GL_MAX_UNIFORM_LOCATIONS: " << nuni;
   LOG(info) << "GL_MAX_TEXTURE_SIZE: " << texss;
+
+  if (mVersion[0] >= 4 && mVersion[1] >= 3)
+  {
+    int nuni;
+    glGetIntegerv(GL_MAX_UNIFORM_LOCATIONS, &nuni);
+    LOG(info) << "GL_MAX_UNIFORM_LOCATIONS: " << nuni;
+  }
 }
 
-Render::~Render(void)
+
+Render::~Render()
 {
 }
 
@@ -66,7 +67,7 @@ void Render::Initialize()
   glewExperimental = true; // Needed in core profile
 
   GLenum error = glewInit();
-  if(error != GLEW_OK)
+  if (error != GLEW_OK)
   {
     std::cout << "glew error: " << glewGetErrorString(error) << std::endl;
     throw "GLEW not initialized.";
@@ -76,20 +77,62 @@ void Render::Initialize()
   LOG(info) << "GLEW: " << glewGetString(GLEW_VERSION);
 }
 
-const Render::Version &Render::GetVersion() const
+RenderIterator Render::PushModel(const Model &model, const glm::mat4 &matrix)
 {
-  return mVersion;
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  mAddList.push_back({ model, matrix });
+  mAddList.back().mIterator = std::make_shared<Element::Iterator>(--mAddList.end());
+
+  return{ mAddList.back().mIterator, mMutex };
 }
 
-void Render::Draw(const Model &model, const glm::mat4 &mat)
+void Render::Draw(Camera &camera)
 {
+  AddElements();
+  SwapMatrix();
 
-  mRenderList.PushModel(model, mat);
+  for (auto &i : mDrawList)
+  {
+    i.model.GetTexture()->Set(TEXTURE_SLOT_0);
+
+    auto &shader = i.model.GetShader();
+    shader->Use();
+    shader->SetUniform(TEXTURE_SLOT_0, "atlas");
+
+    //TODO: prebuild NVP
+    shader->SetUniform(camera.GetProject() * camera.GetView() * i.matrix, "transform_VP");
+
+    i.model.GetMesh()->Draw();
+  }
 }
 
-void Render::Draw()
+void Render::AddElements()
 {
-  mRenderList.Draw(*mCamera);
+  std::lock_guard<std::mutex> lock(mMutex);
+  if (mAddList.empty())
+  {
+    return;
+  }
+
+  for (auto &i : mAddList)
+  {
+    mDrawList.push_back(i);
+    auto &element = mDrawList.back();
+    *element.mIterator = --mDrawList.end();
+
+    element.model.GetMesh()->Compile(element.model.GetShader()->GetAttributeLocation(element.model.GetMesh()->GetAttribute()));
+    element.model.GetMesh()->Release();
+  }
+  mAddList.clear();
 }
 
-
+void Render::SwapMatrix()
+{
+  std::lock_guard<std::mutex> lock(mMutex);
+  for (auto &i : mDrawList)
+  {
+    //std::swap(i.matrix, i.matrixBack);
+    i.matrix = i.matrixBack;
+  }
+}

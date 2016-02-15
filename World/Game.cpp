@@ -65,7 +65,6 @@ int Game::Run()
   }
 
   mCamera->Resize(mWindow->GetSize());
-  mRender->SetCamera(mCamera);
 
   TextureManager::Get().LoadDirectory("Textures");
   TextureManager::Get().Compile();
@@ -276,7 +275,7 @@ void Game::Draw(double dt)
 
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));     // Очистка экрана
 
-  mRender->Draw();
+  mRender->Draw(*mCamera);
 
   if(0)
   {
