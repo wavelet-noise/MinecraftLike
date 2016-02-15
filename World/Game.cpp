@@ -73,7 +73,7 @@ int Game::Run()
 
   std::atomic<bool> close = false;
 
-  mWorld->GetPlayer()->SetPosition({ 0,0,30 });
+  mWorld->GetPlayer()->SetPosition({ 0,0,10 });
 
   boost::thread th([&close]() {
     while (!close)
@@ -83,26 +83,10 @@ int Game::Run()
     }
   });
 
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
+
   boost::thread thread([this, &close]
-  {
-    SPos offsets[] =
-    {
-      { -1,-1,0 },
-      { -1,0,0 },
-      { -1,1,0 },
-      { 0,-1,0 },
-      { 0,0,0 },
-      { 0,1,0 },
-      { 1,-1,0 },
-      { 1,0,0 },
-      { 1,1,0 },
-    };
-    for (auto i : offsets)
-    {
-      mWorld->GetSector(i);
-    }
-
-
+  { 
     auto currTime = glfwGetTime();
     while (!close)
     {
@@ -246,22 +230,7 @@ void Game::Update(double dt)
 
   SPos secPos = cs::WtoS(mWorld->GetPlayer()->GetPosition());
   secPos.z = 0;
-
-  SPos offsets[8] =
-  {
-    { -1,-1,0 },
-    { -1,0,0 },
-    { -1,1,0 },
-    { 0,-1,0 },
-    { 0,1,0 },
-    { 1,-1,0 },
-    { 1,0,0 },
-    { 1,1,0 },
-  };
-  for (auto i : offsets)
-  {
-    mWorld->GetSector(secPos + i);
-  }
+  mSectorLoader->SetPos(secPos);
 
   mWorld->Update(static_cast<float>(dt));
   mWorld->UpdateGraphic(*mRender);

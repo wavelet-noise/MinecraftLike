@@ -10,6 +10,7 @@
 #include "Render\Camera.h"
 #include "Render\Render.h"
 #include "Core\World.h"
+#include "Core\SectorLoader.h"
 
 
 class Game
@@ -34,6 +35,8 @@ private:
   std::unique_ptr<Render> mRender;
   std::shared_ptr<Camera> mCamera;
   std::unique_ptr<World> mWorld;
+
+  std::unique_ptr<SectorLoader> mSectorLoader;
 };
 
 #endif // GAME_H
