@@ -43,6 +43,24 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
     if (auto psec = WorldWorker::instance().GetSector(position))
     {
       mSectors[position] = psec;
+      // Добавлен новый сектор, сообщим соседним секторам, что б перестроились.
+      
+      SPos offset[] = 
+      {
+        {  1,  0,  0 },
+        { -1,  0,  0 },
+        {  0,  1,  0 },
+        {  0, -1,  0 },
+        {  0,  0,  1 },
+        {  0,  0, -1 },
+      };
+      for (const auto &i : offset)
+      {
+        if (auto &sector = FindSector(position + i))
+        {
+          sector->SayChanged();
+        }
+      }
       return psec;
     }
 

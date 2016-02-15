@@ -75,6 +75,9 @@ void PhysicAgent::Update(const GameObjectParams &params)
     }
   }
 
+  if (1)
+  pos += mDeltaPos;
+  if (0)
   if (glm::length(mDeltaPos) > 0)
   {
     auto dir = glm::normalize(mDeltaPos);
