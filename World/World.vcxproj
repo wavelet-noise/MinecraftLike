@@ -45,7 +45,6 @@
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="network\GameServer.cpp" />
     <ClCompile Include="network\network.cpp" />
     <ClCompile Include="network\packetholder.cpp" />
     <ClCompile Include="network\packetrequestplayers.cpp" />
@@ -103,7 +102,6 @@
     <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="lodepng\lodepng.h" />
-    <ClInclude Include="network\GameServer.h" />
     <ClInclude Include="network\network.h" />
     <ClInclude Include="network\packet.h" />
     <ClInclude Include="network\packetholder.h" />

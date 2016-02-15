@@ -163,9 +163,6 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="Core\IRenderBlockStrategy.cpp" />
-    <ClCompile Include="network\GameServer.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
     <ClCompile Include="imgui\imgui_draw.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -343,9 +340,6 @@
     </ClInclude>
     <ClInclude Include="Core\IRenderBlockStrategy.h" />
     <ClInclude Include="Render\ErrorImage.h" />
-    <ClInclude Include="network\GameServer.h">
-      <Filter>network</Filter>
-    </ClInclude>
     <ClInclude Include="imgui\imgui_internal.h">
       <Filter>imgui</Filter>
     </ClInclude>
