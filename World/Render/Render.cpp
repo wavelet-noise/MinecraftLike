@@ -11,6 +11,7 @@
 #include <iostream>
 #include "OpenGLCall.h"
 #include <tools\Log.h>
+#include "DBShaders.h"
 
 Render::Render(void)
   : mRenderList(*this)
@@ -37,14 +38,7 @@ Render::Render(void)
 
   auto &s = std::make_unique<Shader>();
 
-  s->BuildBody("shaders/basic.glsl");
-  s->BuildType(GL_FRAGMENT_SHADER);
-  s->BuildType(GL_VERTEX_SHADER);
-  s->Link();
-  s->Use();
-  s->SetUniform(0, "atlas");
-
-  mShader = std::move(s);
+  DBShaders::Get().LoadShader("shaders/basic.glsl");
 
   int glVersion[2] = { -1, -1 };
   int ntex, nuni, texss;
@@ -95,7 +89,7 @@ void Render::Draw(const Model &model, const glm::mat4 &mat)
 
 void Render::Draw()
 {
-  mRenderList.Draw(*this);
+  mRenderList.Draw(*mCamera);
 }
 
 

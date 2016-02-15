@@ -18,9 +18,7 @@ public:
 
 public:
 
-  void UseShader(const Shader *shader) override;
-
-  void SetAttribute(const std::vector<Attribute> &attribute) override;
+  void SetAttribute(const std::vector<Attribute> &attribute, const std::vector<int> &locations) override;
 
   void Compile(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount) override;
 

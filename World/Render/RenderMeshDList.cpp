@@ -26,12 +26,7 @@ RenderMeshDList::~RenderMeshDList()
   }
 }
 
-void RenderMeshDList::UseShader(const Shader *shader)
-{
-
-}
-
-void RenderMeshDList::SetAttribute(const std::vector<Attribute> &attribute)
+void RenderMeshDList::SetAttribute(const std::vector<Attribute> &attribute, const std::vector<int> &locations)
 {
   mVertexSize = 0;
   for (const auto &attr : attribute)

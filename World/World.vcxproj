@@ -54,6 +54,7 @@
     <ClCompile Include="Render\Bitmap.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Color.cpp" />
+    <ClCompile Include="Render\DBShaders.cpp" />
     <ClCompile Include="Render\OpenGLCall.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Render\RenderList.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Render\Bitmap.h" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Color.h" />
+    <ClInclude Include="Render\DBShaders.h" />
     <ClInclude Include="Render\ErrorImage.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="Render\Mesh.h" />

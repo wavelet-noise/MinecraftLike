@@ -37,7 +37,7 @@ public:
   /// Добавить модель на отрисовку. 
   RenderIterator PushModel(const Model &model, const glm::mat4 &matrix);
 
-  void Draw(class Render &render);
+  void Draw(class Camera &camera);
 
 private:
   void AddElements();

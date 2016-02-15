@@ -5,6 +5,7 @@
 #include "RenderList.h"
 #include "Render.h"
 #include <assert.h>
+#include "Camera.h"
 
 
 
@@ -28,21 +29,21 @@ RenderIterator RenderList::PushModel(const Model &model, const glm::mat4 &matrix
   return{ mAddList.back().mIterator, mMutex };
 }
 
-void RenderList::Draw(Render &render)
+void RenderList::Draw(Camera &camera)
 {
   AddElements();
   SwapMatrix();
 
   for (auto &i : mDrawList)
   {
-    render.GetShader()->Use();
-    if (i.model.GetTexture())
-    {
-      i.model.GetTexture()->Set(TEXTURE_SLOT_0);
-    }
+    i.model.GetTexture()->Set(TEXTURE_SLOT_0);
+
+    auto &shader = i.model.GetShader();
+    shader->Use();
+    shader->SetUniform(TEXTURE_SLOT_0, "atlas");
 
     //TODO: prebuild NVP
-    render.GetShader()->SetUniform(render.GetCameta()->GetProject() * render.GetCameta()->GetView() * i.matrix, "transform_VP");
+    shader->SetUniform(camera.GetProject() * camera.GetView() * i.matrix, "transform_VP");
 
     i.model.GetMesh()->Draw();
   }
@@ -62,8 +63,7 @@ void RenderList::AddElements()
     auto &element = mDrawList.back();
     *element.mIterator = --mDrawList.end();
 
-    element.model.GetMesh()->GetStrategy().UseShader(mRender.GetShader());
-    element.model.GetMesh()->Compile();
+    element.model.GetMesh()->Compile(element.model.GetShader()->GetAttributeLocation(element.model.GetMesh()->GetAttribute()));
     element.model.GetMesh()->Release();
   }
   mAddList.clear();

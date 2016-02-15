@@ -99,9 +99,9 @@ public:
   /// @param vertexSize количество элементов в буфере вершин.
   /// @param index указатель на начало буфера индексов.
   /// @param indexSize количество элементов в буфере индексов.
-  inline void Compile()
+  inline void Compile(const std::vector<int> &locations)
   {
-    mStrategy->SetAttribute(VertexType::Get());
+    mStrategy->SetAttribute(GetAttribute(), locations);
     mStrategy->Compile(reinterpret_cast<float *>(mVertex.data()), mVertex.size(),
       reinterpret_cast<size_t *>(mIndex.data()), mIndex.size());
   }
@@ -116,6 +116,12 @@ public:
   {
     return *mStrategy;
   }
+
+  inline const std::vector<Attribute> &GetAttribute() const noexcept
+  {
+    return VertexType::Get();
+  }
+
 
 private:
   std::vector<VertexType> mVertex;

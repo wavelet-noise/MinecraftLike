@@ -14,15 +14,12 @@ class IRenderMeshStrategy
 public:
   virtual ~IRenderMeshStrategy() {};
 
-  /// ”казывает с помощью какого шейдера рисовать.
-  virtual void UseShader(const Shader *shader) = 0;
-
   /// Ќастроить и включить атрибут.
   /// ƒл€ каждого типа атрибута определена фиксированна€ локаци€, 
   /// из которой шейдер будет брать поток данных.
   /// Attribute::size размер атрибута в байтах.
   /// Attribute::offset смещение атрибута в байтах.
-  virtual void SetAttribute(const std::vector<Attribute> &attribute) = 0;
+  virtual void SetAttribute(const std::vector<Attribute> &attribute, const std::vector<int> &locations) = 0;
 
   /// —оздать сетку в видеопам€ти.
   /// @param vertex указатель на начало буфера вершин.

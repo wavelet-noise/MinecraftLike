@@ -10,6 +10,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <unordered_map>
+#include "Vertex.h"
 
 class Shader;
 typedef std::shared_ptr<Shader> PShader;
@@ -24,10 +25,8 @@ public:
   /// Установить шейдер.
   void Use();
 
-  int GetId() const 
-  {
-    return mProgram;
-  }
+  /// Получить список локаций.
+  std::vector<int> GetAttributeLocation(const std::vector<Attribute> &attribute);
 
   template<class T>
   void SetUniform(const T &val, const char *name = "")

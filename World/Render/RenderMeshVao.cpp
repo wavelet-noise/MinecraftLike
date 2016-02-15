@@ -6,6 +6,7 @@
 
 #include <gl/glew.h>
 #include "OpenGLCall.h"
+#include <assert.h>
 
 
 RenderMeshVao::RenderMeshVao()
@@ -24,13 +25,9 @@ RenderMeshVao::~RenderMeshVao()
   }
 }
 
-void RenderMeshVao::UseShader(const Shader *shader)
+void RenderMeshVao::SetAttribute(const std::vector<Attribute> &attribute, const std::vector<int> &locations)
 {
-  mShader = shader;
-}
-
-void RenderMeshVao::SetAttribute(const std::vector<Attribute> &attribute)
-{
+  assert(attribute.size() == locations.size());
   if (!mCreated)
   {
     Create();
@@ -45,11 +42,11 @@ void RenderMeshVao::SetAttribute(const std::vector<Attribute> &attribute)
     mVertexSize += attr.size;
   }
 
-  for (const auto &attr : attribute)
+  for (size_t i = 0; i < attribute.size(); ++i)
   {
-    auto location = glGetAttribLocation(mShader->GetId() , attr.name);
-    glVertexAttribPointer(location, attr.size / sizeof(float), GL_FLOAT, GL_FALSE, mVertexSize, (char *)NULL + attr.offset);
-    glEnableVertexAttribArray(location);
+    glVertexAttribPointer(locations[i], attribute[i].size / sizeof(float), 
+      GL_FLOAT, GL_FALSE, mVertexSize, (char *)NULL + attribute[i].offset);
+    glEnableVertexAttribArray(locations[i]);
   }
 }
 

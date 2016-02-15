@@ -17,6 +17,8 @@ class Model
 public:
   using VertexType = VertexVTN;
 
+  Model();
+
   enum Type
   {
     Static,
@@ -47,9 +49,15 @@ public:
     return mType;
   }
 
+  PShader &GetShader()
+  {
+    return mShader;
+  }
+
 private:
   PMesh<VertexType> mMesh;
   PTexture mTexture;
+  PShader mShader;
 
   Type mType = Static;
 };

@@ -168,6 +168,20 @@ void Shader::Use()
   GL_CALL(glUseProgram(mProgram));
 }
 
+std::vector<int> Shader::GetAttributeLocation(const std::vector<Attribute> &attribute)
+{
+  std::vector<int> locations;
+  locations.reserve(attribute.size());
+
+  for (const auto &attr : attribute)
+  {
+    auto location = glGetAttribLocation(mProgram, attr.name);
+    locations.push_back(location);
+  }
+
+  return locations;
+}
+
 unsigned int Shader::CreateShader(const std::string &data, int type)
 {
   if (data.empty())
