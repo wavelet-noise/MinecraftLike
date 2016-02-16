@@ -61,13 +61,10 @@ public:
   template <class Factory>
   RegisterElement(Factory & factory, const typename Factory::IdTypeUsing & id)
   {
-    if (class_registered_++ == 0)
-      factory.Add(id, []() -> TPtr {
+    factory.Add(id, []() -> TPtr {
       return TPtr(new T());
     });
   }
-private:
-  static int class_registered_;
 };
 
 template<class T> int RegisterElement<T>::class_registered_ = 0;
