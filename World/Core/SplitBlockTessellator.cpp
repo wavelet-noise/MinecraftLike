@@ -2,7 +2,7 @@
 // ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
-#include "BlockRenderStratery.h"
+#include "SplitBlockTessellator.h"
 #include "..\Render\TextureManager.h"
 #include "Config.h"
 #include "Sector.h"
@@ -11,20 +11,13 @@
 #include "Block.h"
 
 
-const StringIntern BlockRenderStratery::mRenderAgentName = StringIntern("RenderAgent");
-
-
-BlockRenderStratery::BlockRenderStratery()
+SplitBlockTessellator::SplitBlockTessellator()
 {
   mModel.SetTexture(std::get<0>(TextureManager::Get().GetTexture("Textures/stone.png")));
 }
 
 
-BlockRenderStratery::~BlockRenderStratery()
-{
-}
-
-const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
+const Model & SplitBlockTessellator::GetModel(const GameObjectParams &params)
 {
   /*if (params.sector->GetRenderSector().IsNeedBuild())
   {
@@ -186,22 +179,27 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
   return mModel;
 }
 
-void BlockRenderStratery::Load(const rapidjson::Value & val)
+void SplitBlockTessellator::Load(const rapidjson::Value & val)
 {
-  if (val.HasMember("all"))
-  {
-    mGenerator.SetTexture(MeshBlockGenerator::ALL, val["all"].GetString());
-  }
-  if (val.HasMember("separate"))
-  {
-    const rapidjson::Value &arr = val["separate"];
-    mGenerator.SetTexture(MeshBlockGenerator::FRONT,  arr.Begin()->GetString());
-    mGenerator.SetTexture(MeshBlockGenerator::RIGHT,  arr[1].GetString());
-    mGenerator.SetTexture(MeshBlockGenerator::BACK,   arr[2].GetString());
-    mGenerator.SetTexture(MeshBlockGenerator::LEFT,   arr[3].GetString());
-    mGenerator.SetTexture(MeshBlockGenerator::TOP,    arr[4].GetString());
-    mGenerator.SetTexture(MeshBlockGenerator::BOTTOM, arr[5].GetString());
-  }
+//   if (val.HasMember("all"))
+//   {
+//     mGenerator.SetTexture(MeshBlockGenerator::ALL, val["all"].GetString());
+//   }
+//   if (val.HasMember("separate"))
+//   {
+//     const rapidjson::Value &arr = val["separate"];
+//     mGenerator.SetTexture(MeshBlockGenerator::FRONT,  arr.Begin()->GetString());
+//     mGenerator.SetTexture(MeshBlockGenerator::RIGHT,  arr[1].GetString());
+//     mGenerator.SetTexture(MeshBlockGenerator::BACK,   arr[2].GetString());
+//     mGenerator.SetTexture(MeshBlockGenerator::LEFT,   arr[3].GetString());
+//     mGenerator.SetTexture(MeshBlockGenerator::TOP,    arr[4].GetString());
+//     mGenerator.SetTexture(MeshBlockGenerator::BOTTOM, arr[5].GetString());
+//   }
+// 
+//   mGenerator.Generate();
+}
 
-  mGenerator.Generate();
+PBlockTessellator SplitBlockTessellator::Clone()
+{
+  return MakeBlockTessellator<SplitBlockTessellator>(*this);
 }

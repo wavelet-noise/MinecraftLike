@@ -7,7 +7,7 @@
 
 //possibly must be moved into <renderstrats> file
 //deserialize autoreg
-#include "BlockRenderStratery.h"
+#include "SplitBlockTessellator.h"
 
 
 void BlockTessellator::Load(const rapidjson::Value & val)
@@ -34,3 +34,8 @@ void BlockTessellator::Load(const rapidjson::Value & val)
 //   }
 }
 
+BlockTessellatorFactory::FactoryType & BlockTessellatorFactory::Get()
+{
+  static FactoryType object;
+  return object;
+}

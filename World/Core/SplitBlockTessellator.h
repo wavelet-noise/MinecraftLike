@@ -6,35 +6,30 @@
 #ifndef BlockRenderStratery_h__
 #define BlockRenderStratery_h__
 
-#include "IRenderBlockStrategy.h"
 #include "MeshBlockGenerator.h"
+#include "BlockTessellator.h"
 #include "..\Render\Model.h"
+#include "GameObjectParams.h"
 
 /// √енератор модели дл€ блока.
 /// ќтсекает невидимые стороны блока.
-class BlockRenderStratery : public IRenderBlockStrategy
+class SplitBlockTessellator : public BlockTessellator
 {
 public:
-  BlockRenderStratery();
-  ~BlockRenderStratery();
-
-  /// ƒанна€ стратеги€ всегда формирует статическую модель.
-  bool IsStatic() const override
-  {
-    return true;
-  };
+  SplitBlockTessellator();
+  ~SplitBlockTessellator() = default;
 
   void Load(const rapidjson::Value &val) override;
 
-  const Model &GetModel(const GameObjectParams &params) override;
+  PBlockTessellator Clone() override;
+
+  const Model &GetModel(const GameObjectParams &params);
 
 private:
-  static const StringIntern mRenderAgentName;
-
   Model mModel;
   MeshBlockGenerator mGenerator;
 };
 
-REGISTER_RENDER_STRATEGY(BlockRenderStratery)
+REGISTER_BLOCK_TESSELLATOR(SplitBlockTessellator)
 
 #endif // BlockRenderStratery_h__

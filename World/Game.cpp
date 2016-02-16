@@ -23,7 +23,7 @@
 #include "Core\MapGen\WorldWorker.h"
 #include "Render/TextureManager.h"
 #include "Core/DB.h"
-#include "Core/BlockRenderStratery.h"
+#include "Core/SplitBlockTessellator.h"
 #include "tools/Log.h"
 
 #include "gui\imgui_impl_glfw_gl3.h"

@@ -169,16 +169,13 @@
     <ClCompile Include="tools\QueuedThread.cpp">
       <Filter>tools</Filter>
     </ClCompile>
-    <ClCompile Include="Core\BlockRenderStratery.cpp">
-      <Filter>Core\splicer</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\IRenderBlockStrategy.cpp">
-      <Filter>Core\splicer</Filter>
-    </ClCompile>
     <ClCompile Include="Core\BlockTessellator.cpp">
       <Filter>Core\splicer</Filter>
     </ClCompile>
     <ClCompile Include="Core\Tessellator.cpp">
+      <Filter>Core\splicer</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SplitBlockTessellator.cpp">
       <Filter>Core\splicer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -363,16 +360,13 @@
     <ClInclude Include="tools\QueuedThread.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="Core\BlockRenderStratery.h">
-      <Filter>Core\splicer</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\IRenderBlockStrategy.h">
-      <Filter>Core\splicer</Filter>
-    </ClInclude>
     <ClInclude Include="Core\BlockTessellator.h">
       <Filter>Core\splicer</Filter>
     </ClInclude>
     <ClInclude Include="Core\Tessellator.h">
+      <Filter>Core\splicer</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SplitBlockTessellator.h">
       <Filter>Core\splicer</Filter>
     </ClInclude>
   </ItemGroup>

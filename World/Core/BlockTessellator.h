@@ -7,8 +7,13 @@
 #define RenderAgent_h__
 
 
-#include "Agent.h"
-#include "IRenderBlockStrategy.h"
+#include <memory>
+#include <type_traits>
+#include <boost/core/noncopyable.hpp>
+#include "TemplateFactory.h"
+#include "../tools/StringIntern.h"
+#include "../rapidjson/document.h"
+
 
 typedef std::shared_ptr<class BlockTessellator> PBlockTessellator;
 
@@ -19,6 +24,8 @@ inline std::shared_ptr<T> MakeBlockTessellator(Args&&... args)
 }
 
 
+/// Тесселятор блоков.
+/// Формирует модель блока.
 class BlockTessellator
 {
 public:
@@ -28,9 +35,17 @@ public:
 
   virtual void Load(const rapidjson::Value &val);
 
+  /// Прозрачен ли блок?
   inline bool IsTransparent() const noexcept
   {
     return mTransparent;
+  }
+
+  /// Статичен ли блок?
+  /// Данный параметр указывает тесселятору, можно ли склеивать блок.
+  inline bool IsStatic() const noexcept
+  {
+    return mStatic;
   }
 
   inline const StringIntern &GetName() const noexcept
@@ -39,10 +54,18 @@ public:
   }
 
 private:
+  bool mStatic = true;
   bool mTransparent = false;
-  PRenderStrategy mRenderStrategy;
   StringIntern mName;
 };
 
+
+#define REGISTER_BLOCK_TESSELLATOR(type) REGISTER_ELEMENT(type, BlockTessellatorFactory::Get(), StringIntern(#type))
+
+struct BlockTessellatorFactory : public boost::noncopyable
+{
+  using FactoryType = TemplateFactory<StringIntern, BlockTessellator>;
+  static FactoryType &Get();
+};
 
 #endif // RenderAgent_h__

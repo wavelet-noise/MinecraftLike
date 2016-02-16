@@ -14,6 +14,8 @@ int main()
 
   LogInit();
 
+  LOG(info) << "sizeof(StringIntern): " << sizeof(StringIntern);
+
   Game game;
   return game.Run();
 }
