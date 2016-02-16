@@ -67,8 +67,6 @@ public:
   }
 };
 
-template<class T> int RegisterElement<T>::class_registered_ = 0;
-
 
 #define REGISTER_ELEMENT(type, factory, id) \
 namespace                                           \
