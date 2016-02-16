@@ -229,7 +229,6 @@ void Game::Update(double dt)
   }
 
   SPos secPos = cs::WtoS(mWorld->GetPlayer()->GetPosition());
-  secPos.z = 0;
   mSectorLoader->SetPos(secPos);
 
   mWorld->Update(static_cast<float>(dt));

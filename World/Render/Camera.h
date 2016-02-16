@@ -51,6 +51,8 @@ public:
 
   void CalculateFrustum();
 
+  bool BoxWithinFrustum(const glm::vec4 & min, const glm::vec4 & max) const;
+
   bool BoxWithinFrustum(const glm::vec3 & min, const glm::vec3 & max) const;
 
 private:

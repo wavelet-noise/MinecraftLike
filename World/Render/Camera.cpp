@@ -81,6 +81,8 @@ void Camera::Update()
 
   mView = glm::translate(glm::mat4_cast(mQuat), -mPos);
   mDirection = glm::mat3_cast(mQuat);
+
+  CalculateFrustum();
 }
 
 glm::vec3 Camera::GetRay(const glm::vec2 &pos)
@@ -159,6 +161,23 @@ void Camera::CalculateFrustum() {
   m_frustum[5][2] = m_clipMatrix[11] + m_clipMatrix[10];
   m_frustum[5][3] = m_clipMatrix[15] + m_clipMatrix[14];
   NormalizePlane(m_frustum, 5);
+}
+
+bool Camera::BoxWithinFrustum(const glm::vec4 &min, const glm::vec4 &max) const {
+  for (int i = 0; i < 6; i++) {
+    if ((m_frustum[i][0] * min.x + m_frustum[i][1] * min.y + m_frustum[i][2] * min.z + m_frustum[i][3] <= 0.0F) &&
+      (m_frustum[i][0] * max.x + m_frustum[i][1] * min.y + m_frustum[i][2] * min.z + m_frustum[i][3] <= 0.0F) &&
+      (m_frustum[i][0] * min.x + m_frustum[i][1] * max.y + m_frustum[i][2] * min.z + m_frustum[i][3] <= 0.0F) &&
+      (m_frustum[i][0] * max.x + m_frustum[i][1] * max.y + m_frustum[i][2] * min.z + m_frustum[i][3] <= 0.0F) &&
+      (m_frustum[i][0] * min.x + m_frustum[i][1] * min.y + m_frustum[i][2] * max.z + m_frustum[i][3] <= 0.0F) &&
+      (m_frustum[i][0] * max.x + m_frustum[i][1] * min.y + m_frustum[i][2] * max.z + m_frustum[i][3] <= 0.0F) &&
+      (m_frustum[i][0] * min.x + m_frustum[i][1] * max.y + m_frustum[i][2] * max.z + m_frustum[i][3] <= 0.0F) &&
+      (m_frustum[i][0] * max.x + m_frustum[i][1] * max.y + m_frustum[i][2] * max.z + m_frustum[i][3] <= 0.0F))
+    {
+      return false;
+    }
+  }
+  return true;
 }
 
 bool Camera::BoxWithinFrustum(const glm::vec3 &min, const glm::vec3 &max) const {

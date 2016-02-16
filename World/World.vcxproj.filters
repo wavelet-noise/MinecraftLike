@@ -45,9 +45,6 @@
     <ClCompile Include="Core\World.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\MapGen\PerlinNoise.cpp">
-      <Filter>Core\MapGen</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Player.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -174,6 +171,9 @@
     <ClCompile Include="Render\DBShaders.cpp" />
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>Core\MapGen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
