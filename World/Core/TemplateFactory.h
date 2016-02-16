@@ -14,17 +14,15 @@ See "LICENSE.txt"
 #include <boost/noncopyable.hpp>
 #include "../tools/Log.h"
 
-class GameObject;
-
 template <class IdType, class Base>
 class TemplateFactory : boost::noncopyable
 {
 public:
-  typedef IdType IdTypeUsing;
+  using IdTypeUsing = IdType ;
 protected:
-  typedef std::shared_ptr<Base> BasePtr;
-  typedef std::function<BasePtr()> CreateFunc;
-  typedef std::map<IdType, CreateFunc> FactoryMap;
+  using BasePtr = std::shared_ptr<Base>;
+  using CreateFunc = std::function<BasePtr()>;
+  using FactoryMap = std::map<IdType, CreateFunc>;
 
 public:
   BasePtr Create(const IdType & id) const
@@ -56,21 +54,16 @@ template <class T>
 class RegisterElement
 {
 public:
-  typedef std::shared_ptr<T> TPtr;
+  using TPtr = std::shared_ptr<T>;
 public:
   template <class Factory>
   RegisterElement(Factory & factory, const typename Factory::IdTypeUsing & id)
   {
-    if (class_registered_++ == 0)
-      factory.Add(id, []() -> TPtr {
+    factory.Add(id, []() -> TPtr {
       return TPtr(new T());
     });
   }
-private:
-  static int class_registered_;
 };
-
-template<class T> int RegisterElement<T>::class_registered_ = 0;
 
 
 #define REGISTER_ELEMENT(type, factory, id) \
@@ -78,10 +71,5 @@ namespace                                           \
 {                                                   \
 RegisterElement<type> RegisterElement##type(factory, id);  \
 }
-
-
-
-
-
 
 #endif // AGENTFACTORY_H
