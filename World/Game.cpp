@@ -233,7 +233,6 @@ void Game::Update(double dt)
   mSectorLoader->SetPos(secPos);
 
   mWorld->Update(static_cast<float>(dt));
-  mWorld->UpdateGraphic(*mRender);
 }
 
 

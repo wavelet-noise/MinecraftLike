@@ -1,6 +1,6 @@
 #include "Block.h"
 #include <memory>
-#include "RenderAgent.h"
+#include "BlockTessellator.h"
 
 const StringIntern Block::mRenderAgentName = StringIntern("RenderAgent");
 

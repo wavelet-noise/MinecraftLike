@@ -27,13 +27,7 @@ void World::Update(float dt)
   mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt});
 }
 
-void World::UpdateGraphic(Render &render)
-{
-  for (auto &sector : mSectors)
-  {
-    sector.second->UpdateGraphic(this, render);
-  }
-}
+
 
 std::shared_ptr<Sector> World::GetSector(const SPos &position)
 {

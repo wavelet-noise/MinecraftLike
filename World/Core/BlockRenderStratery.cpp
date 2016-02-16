@@ -26,7 +26,7 @@ BlockRenderStratery::~BlockRenderStratery()
 
 const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
 {
-  if (params.sector->GetRenderSector().IsNeedBuild())
+  /*if (params.sector->GetRenderSector().IsNeedBuild())
   {
     const int32_t size = static_cast<int32_t>(SECTOR_SIZE);
 
@@ -37,7 +37,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       ++pos.x;
       if (auto block = params.sector->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::RIGHT;
         }
@@ -50,7 +50,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       ++pos.x;
       if (auto block = params.world->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::RIGHT;
         }
@@ -61,7 +61,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       --pos.x;
       if (auto block = params.sector->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::LEFT;
         }
@@ -74,7 +74,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       --pos.x;
       if (auto block = params.world->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::LEFT;
         }
@@ -86,7 +86,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       ++pos.y;
       if (auto block = params.sector->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::BACK;
         }
@@ -99,7 +99,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       ++pos.y;
       if (auto block = params.world->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::BACK;
         }
@@ -110,7 +110,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       --pos.y;
       if (auto block = params.sector->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::FRONT;
         }
@@ -123,7 +123,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       --pos.y;
       if (auto block = params.world->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::FRONT;
         }
@@ -135,7 +135,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       ++pos.z;
       if (auto block = params.sector->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::TOP;
         }
@@ -148,7 +148,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       ++pos.z;
       if (auto block = params.world->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::TOP;
         }
@@ -159,7 +159,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       --pos.z;
       if (auto block = params.sector->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::BOTTOM;
         }
@@ -172,7 +172,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
       --pos.z;
       if (auto block = params.world->GetBlock(pos))
       {
-        if (!block->GetFromFullName<RenderAgent>(mRenderAgentName)->IsTransparent())
+        if (!block->GetFromFullName<BlockTessellator>(mRenderAgentName)->IsTransparent())
         {
           sides &= ~MeshBlockGenerator::BOTTOM;
         }
@@ -181,6 +181,7 @@ const Model & BlockRenderStratery::GetModel(const GameObjectParams &params)
 
     mModel.GetMesh() = mGenerator.Create(static_cast<MeshBlockGenerator::Side>(sides));
   }
+*/
 
   return mModel;
 }

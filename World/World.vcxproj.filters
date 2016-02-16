@@ -22,14 +22,14 @@
     <Filter Include="lodepng">
       <UniqueIdentifier>{a032ce15-3102-4c85-951b-897c1582c372}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\RenderStrategy">
-      <UniqueIdentifier>{0f86c132-d989-40c3-9104-21a16b718a4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="network">
       <UniqueIdentifier>{5167f8a9-c11b-46f5-b8c4-6499054292af}</UniqueIdentifier>
     </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{7f7b3b83-cdc1-46e0-bdb7-ea19d9dc9138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\splicer">
+      <UniqueIdentifier>{2feb6842-a114-4c9f-a902-127e8c8d6473}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,12 +120,6 @@
     <ClCompile Include="Render\RenderMeshDList.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Core\RenderAgent.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\BlockRenderStratery.cpp">
-      <Filter>Core\RenderStrategy</Filter>
-    </ClCompile>
     <ClCompile Include="Core\MapGen\WorldWorker.cpp">
       <Filter>Core\MapGen</Filter>
     </ClCompile>
@@ -168,12 +162,24 @@
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Core\IRenderBlockStrategy.cpp">
-      <Filter>Core\RenderStrategy</Filter>
-    </ClCompile>
     <ClCompile Include="Render\DBShaders.cpp" />
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\QueuedThread.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\BlockRenderStratery.cpp">
+      <Filter>Core\splicer</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\IRenderBlockStrategy.cpp">
+      <Filter>Core\splicer</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\BlockTessellator.cpp">
+      <Filter>Core\splicer</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Tessellator.cpp">
+      <Filter>Core\splicer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,12 +290,6 @@
     <ClInclude Include="Render\RenderMeshDList.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Core\RenderAgent.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\BlockRenderStratery.h">
-      <Filter>Core\RenderStrategy</Filter>
-    </ClInclude>
     <ClInclude Include="TemplateFactory.h">
       <Filter>tools</Filter>
     </ClInclude>
@@ -356,12 +356,24 @@
     <ClInclude Include="Render\ErrorImage.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Core\IRenderBlockStrategy.h">
-      <Filter>Core\RenderStrategy</Filter>
-    </ClInclude>
     <ClInclude Include="Render\DBShaders.h" />
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\QueuedThread.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\BlockRenderStratery.h">
+      <Filter>Core\splicer</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\IRenderBlockStrategy.h">
+      <Filter>Core\splicer</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\BlockTessellator.h">
+      <Filter>Core\splicer</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Tessellator.h">
+      <Filter>Core\splicer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

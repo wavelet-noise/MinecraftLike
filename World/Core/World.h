@@ -22,8 +22,6 @@ public:
 
   void Update(float dt);
 
-  void UpdateGraphic(Render &render);
-
   /// ѕолучить сектор. ≈сли сектор не загружен, будет произведена попытка 
   /// загрузить сектор из загрузчика секторов.
   std::shared_ptr<Sector> GetSector(const SPos &position);

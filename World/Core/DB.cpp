@@ -9,7 +9,7 @@
 
 //possibly must be moved into <agents> file
 //deserialize autoreg
-#include "RenderAgent.h"
+#include "BlockTessellator.h"
 #include "PositionAgent.h"
 #include "PhysicAgent.h"
 #include "..\tools\Log.h"

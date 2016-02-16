@@ -7,7 +7,7 @@
 #define Block_h__
 
 #include "GameObject.h"
-#include "RenderAgent.h"
+#include "BlockTessellator.h"
 
 typedef std::shared_ptr<class Block> PBlock;
 
