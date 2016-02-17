@@ -11,6 +11,7 @@
 #include <queue>
 #include <mutex>
 #include <memory>
+#include <atomic>
 
 
 /// Необходимо определить следующие методы:
@@ -23,8 +24,8 @@ class QueuedThread
 public:
   using FunctorType = std::function<void()>;
 
-  /// Потокобезопасный конструктор.
-  QueuedThread()
+  /// Запустить поток.
+  void Run()
   {
     mThread = std::make_unique<decltype(mThread)::element_type>([this]
     {
@@ -39,7 +40,8 @@ public:
         // Меняем очереди местами, что бы работать с данными без синхронизации.
         {
           std::lock_guard<std::mutex> lock(mMutex);
-          std::swap(mQueueBack, mQueue);
+          //mQueue.swap(mQueueBack);
+          mQueue = mQueueBack;
         }
         // Обрабатываем входящие сообщения.
         while (!mQueue.empty())
@@ -58,8 +60,11 @@ public:
   /// Потокобезопасный деструктор.
   ~QueuedThread()
   {
-    mDummy = true;
-    mThread->join();
+    if (mThread)
+    {
+      mDummy = true;
+      mThread->join();
+    }
   }
 
   /// Отложенное выполнение функции в потоке. 

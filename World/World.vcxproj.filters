@@ -28,7 +28,7 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{7f7b3b83-cdc1-46e0-bdb7-ea19d9dc9138}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\splicer">
+    <Filter Include="Core\Tessellator">
       <UniqueIdentifier>{2feb6842-a114-4c9f-a902-127e8c8d6473}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -166,17 +166,17 @@
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="tools\QueuedThread.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
     <ClCompile Include="Core\BlockTessellator.cpp">
-      <Filter>Core\splicer</Filter>
+      <Filter>Core\Tessellator</Filter>
     </ClCompile>
     <ClCompile Include="Core\Tessellator.cpp">
-      <Filter>Core\splicer</Filter>
+      <Filter>Core\Tessellator</Filter>
     </ClCompile>
     <ClCompile Include="Core\SplitBlockTessellator.cpp">
-      <Filter>Core\splicer</Filter>
+      <Filter>Core\Tessellator</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SectorTessellator.cpp">
+      <Filter>Core\Tessellator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,13 +361,19 @@
       <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="Core\BlockTessellator.h">
-      <Filter>Core\splicer</Filter>
+      <Filter>Core\Tessellator</Filter>
     </ClInclude>
     <ClInclude Include="Core\Tessellator.h">
-      <Filter>Core\splicer</Filter>
+      <Filter>Core\Tessellator</Filter>
     </ClInclude>
     <ClInclude Include="Core\SplitBlockTessellator.h">
-      <Filter>Core\splicer</Filter>
+      <Filter>Core\Tessellator</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SectorTessellator.h">
+      <Filter>Core\Tessellator</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\TessellatorParams.h">
+      <Filter>Core\Tessellator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

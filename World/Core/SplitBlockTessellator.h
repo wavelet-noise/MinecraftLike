@@ -9,7 +9,7 @@
 #include "MeshBlockGenerator.h"
 #include "BlockTessellator.h"
 #include "..\Render\Model.h"
-#include "GameObjectParams.h"
+#include "TessellatorParams.h"
 
 /// Генератор модели для блока.
 /// Отсекает невидимые стороны блока.
@@ -23,7 +23,7 @@ public:
 
   PBlockTessellator Clone() override;
 
-  const Model &GetModel(const GameObjectParams &params);
+  const Model &GetModel(const TessellatorParams &params) override;
 
 private:
   Model mModel;

@@ -13,6 +13,8 @@
 #include "TemplateFactory.h"
 #include "../tools/StringIntern.h"
 #include "../rapidjson/document.h"
+#include "../Render/Model.h"
+#include "TessellatorParams.h"
 
 
 typedef std::shared_ptr<class BlockTessellator> PBlockTessellator;
@@ -34,6 +36,8 @@ public:
   virtual PBlockTessellator Clone() = 0;
 
   virtual void Load(const rapidjson::Value &val);
+
+  virtual const Model &GetModel(const TessellatorParams &params) = 0;
 
   /// Прозрачен ли блок?
   inline bool IsTransparent() const noexcept

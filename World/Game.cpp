@@ -85,8 +85,11 @@ int Game::Run()
 
   mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
 
+  mTessellator = std::make_unique<Tessellator>(*mRender);
+  mTessellator->Run();
+
   boost::thread thread([this, &close]
-  { 
+  {
     auto currTime = glfwGetTime();
     while (!close)
     {
@@ -131,6 +134,7 @@ int Game::Run()
   }
 
   close = true;
+  mTessellator.reset();
   thread.join();
   th.join();
 

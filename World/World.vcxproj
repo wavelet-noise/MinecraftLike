@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Block.cpp" />
+    <ClCompile Include="Core\SectorTessellator.cpp" />
     <ClCompile Include="Core\SplitBlockTessellator.cpp" />
     <ClCompile Include="Core\DB.cpp" />
     <ClCompile Include="Core\Creature.cpp" />
@@ -65,7 +66,6 @@
     <ClCompile Include="Render\TextureManager.cpp" />
     <ClCompile Include="tools\Bresenham3D.cpp" />
     <ClCompile Include="tools\Log.cpp" />
-    <ClCompile Include="tools\QueuedThread.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
     <ClCompile Include="Window\Keyboard.cpp" />
     <ClCompile Include="Window\Mouse.cpp" />
@@ -74,6 +74,7 @@
   <ItemGroup>
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\Block.h" />
+    <ClInclude Include="Core\SectorTessellator.h" />
     <ClInclude Include="Core\SplitBlockTessellator.h" />
     <ClInclude Include="Core\DB.h" />
     <ClInclude Include="Core\Config.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="Core\SectorLoader.h" />
     <ClInclude Include="Core\TemplateFactory.h" />
     <ClInclude Include="Core\Tessellator.h" />
+    <ClInclude Include="Core\TessellatorParams.h" />
     <ClInclude Include="Core\World.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
