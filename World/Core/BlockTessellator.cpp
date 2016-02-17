@@ -13,7 +13,9 @@
 
 void BlockTessellator::JsonLoad(const rapidjson::Value & val)
 {
-  JSONLOAD(sge::make_nvp("name", mName), sge::make_nvp("transparent", mTransparent));
+  std::string name;
+  JSONLOAD(NVP(name), sge::make_nvp("transparent", mTransparent));
+  mName = StringIntern(name);
 }
 
 BlockTessellatorFactory::FactoryType & BlockTessellatorFactory::Get()

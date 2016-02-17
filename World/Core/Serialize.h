@@ -23,19 +23,19 @@ namespace sge {
     return{ name, std::forward<T>(value) };
   }
 
-  void deserialize(const rapidjson::Value &val)
+  inline void deserialize(const rapidjson::Value &val)
   {
     (void)val;
   }
 
   template <typename Last>
-  void deserialize(const rapidjson::Value &val, const Last &last)
+  inline void deserialize(const rapidjson::Value &val, const Last &last)
   {
     __deserialize(val, last.first, last.second);
   }
 
   template <typename First, typename... Rest>
-  void deserialize(const rapidjson::Value &val, const First &first, const Rest&... rest)
+  inline void deserialize(const rapidjson::Value &val, const First &first, const Rest&... rest)
   {
     __deserialize(val, first.first, first.second);
     deserialize(val, rest...);
@@ -46,7 +46,7 @@ namespace {
   template<typename _Ty>
   void __deserialize_array_part(const rapidjson::Value &val, _Ty &target)
   {
-    target.LoadJson(val);
+    target.JsonLoad(val);
   }
 
   template<typename _Ty>
@@ -67,10 +67,10 @@ namespace {
   void __deserialize(const rapidjson::Value &val, const char *s, _Ty &target)
   {
     if (!val.HasMember(s))
-      throw std::invalid_argument(boost::lexical_cast(::string_format("value has no %s member", s));
+      throw std::invalid_argument((boost::format("value has no %1% member") % s).str());
 
     const rapidjson::Value &v = val[s];
-    target.LoadJson(v);
+    target.JsonLoad(v);
   }
 
   template<typename _Ty>

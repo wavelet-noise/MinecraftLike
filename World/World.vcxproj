@@ -75,6 +75,7 @@
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\Block.h" />
     <ClInclude Include="Core\SectorTessellator.h" />
+    <ClInclude Include="Core\Serialize.h" />
     <ClInclude Include="Core\SplitBlockTessellator.h" />
     <ClInclude Include="Core\DB.h" />
     <ClInclude Include="Core\Config.h" />
@@ -129,7 +130,6 @@
     <ClInclude Include="Render\TextureManager.h" />
     <ClInclude Include="Render\Vertex.h" />
     <ClInclude Include="Render\VertexTools.h" />
-    <ClInclude Include="Serialize.h" />
     <ClInclude Include="TemplateFactory.h" />
     <ClInclude Include="tools\Bresenham3D.h" />
     <ClInclude Include="tools\CoordSystem.h" />

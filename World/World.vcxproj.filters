@@ -290,9 +290,6 @@
     <ClInclude Include="TemplateFactory.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="Serialize.h">
-      <Filter>tools</Filter>
-    </ClInclude>
     <ClInclude Include="Core\MapGen\WorldWorker.h">
       <Filter>Core\MapGen</Filter>
     </ClInclude>
@@ -374,6 +371,9 @@
     </ClInclude>
     <ClInclude Include="Core\TessellatorParams.h">
       <Filter>Core\Tessellator</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Serialize.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

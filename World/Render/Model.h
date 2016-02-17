@@ -9,8 +9,7 @@
 #include "Texture.h"
 #include "Mesh.h"
 #include "Vertex.h"
-
-class Document;
+#include <rapidjson\document.h>
 
 /// Модель. Имеет всю информацию для рисования.
 class Model
@@ -55,7 +54,7 @@ public:
     return mShader;
   }
 
-  void JsonLoad(const rapidjson::Document &val);
+  void JsonLoad(const rapidjson::Value &val);
 
 private:
   PMesh<VertexType> mMesh;

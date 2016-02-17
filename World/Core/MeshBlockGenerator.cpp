@@ -151,7 +151,7 @@ void MeshBlockGenerator::Generate()
   }
 }
 
-void MeshBlockGenerator::JsonLoad(const rapidjson::Document & val)
+void MeshBlockGenerator::JsonLoad(const rapidjson::Value & val)
 {
   if (val.HasMember("all"))
   {

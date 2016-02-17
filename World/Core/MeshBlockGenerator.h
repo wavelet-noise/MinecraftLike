@@ -9,8 +9,7 @@
 #include <vector>
 #include "..\Render\Mesh.h"
 #include "..\Render\Vertex.h"
-
-class Document;
+#include <rapidjson\document.h>
 
 /// Генератор модели для блока.
 /// Меш формируется автоматически, для каждой стороны блока можно указать текстуру.
@@ -46,7 +45,7 @@ public:
 
   void Generate();
 
-  void JsonLoad(const rapidjson::Document & val);
+  void JsonLoad(const rapidjson::Value & val);
 
   inline const PMesh<VertexType> &Create(Side side) const
   {

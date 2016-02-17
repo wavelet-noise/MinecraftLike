@@ -12,6 +12,6 @@ Model::Model()
   mShader = DBShaders::Get().GetShader("shaders/basic.glsl");
 }
 
-void Model::JsonLoad(const rapidjson::Document & val)
+void Model::JsonLoad(const rapidjson::Value & val)
 {
 }
