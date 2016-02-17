@@ -13,6 +13,7 @@
 #include "DBShaders.h"
 #include <assert.h>
 #include "Camera.h"
+#include <GLFW/glfw3.h>
 
 
 
@@ -121,7 +122,10 @@ void Render::AddElements()
     auto &element = mDrawList.back();
     *element.mIterator = --mDrawList.end();
 
+    auto currentTime = glfwGetTime();
     element.model.GetMesh()->Compile(element.model.GetShader()->GetAttributeLocation(element.model.GetMesh()->GetAttribute()));
+    LOG(trace) << "SectorCompiled: " << glfwGetTime() - currentTime;
+    
     element.model.GetMesh()->Release();
   }
   mAddList.clear();

@@ -4,11 +4,13 @@
 // ============================================================================
 #include "SectorTessellator.h"
 
+#include <GLFW\glfw3.h>
 #include <glm\gtc\matrix_transform.hpp>
 #include <type_traits>
 #include "Tessellator.h"
 #include "TessellatorParams.h"
 #include "..\Render\Render.h"
+#include "..\tools\Log.h"
 
 SectorTessellator::SectorTessellator(const SPos &pos)
   : mPos(pos)
@@ -44,9 +46,11 @@ void SectorTessellator::Update(Tessellator *tesselator, Render &render)
 {
   if (!mChanged)
   {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     return;
   }
 
+  auto currentTime = glfwGetTime();
   TessellatorParams params{ tesselator, this, mPos,{} };
 
   for (size_t i = 0; i < mBlocks.size(); ++i)
@@ -58,8 +62,10 @@ void SectorTessellator::Update(Tessellator *tesselator, Render &render)
     }
   }
 
+  LOG(trace) << "SectorTessellated: " << glfwGetTime() - currentTime;
+
   render.PushModel(mModel, mModelMatrix);
-  mModel.GetMesh()->Release();
+  mChanged = false;
 }
 
 void SectorTessellator::Push(const Model &model, const WPos &pos)

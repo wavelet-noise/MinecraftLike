@@ -14,6 +14,8 @@
 #include "Player.h"
 #include "../Render/Render.h"
 
+class Tessellator;
+
 class World
 {
 public:
@@ -34,6 +36,10 @@ public:
 
   Player *GetPlayer();
 
+  Tessellator *GetTessellator();
+
+  void SetTessellator(Tessellator *tess);
+
 private:
   std::unordered_map<SPos, std::shared_ptr<Sector>> mSectors;
 
@@ -45,6 +51,7 @@ private:
   /// Найти сектор по позиции сектора.
   std::shared_ptr<Sector> FindSector(const SPos &position);
 
+  Tessellator *mTesselator;
 };
 
 

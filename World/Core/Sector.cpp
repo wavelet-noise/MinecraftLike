@@ -10,6 +10,7 @@
 #include "../tools/Log.h"
 #include "../Render/Render.h"
 #include "World.h"
+#include "Tessellator.h"
 
 Sector::Sector(const SPos &position)
   : mPos(position)
@@ -34,11 +35,24 @@ PBlock Sector::GetBlock(const SBPos &pos)
 
 void Sector::SetBlock(const SBPos &pos, PBlock block)
 {
+  assert(glm::clamp(pos, 0, static_cast<int32_t>(SECTOR_SIZE - 1)) == pos);
+  mPushTest.push_back(pos);
   mBlocks[pos.z * SECTOR_SIZE * SECTOR_SIZE + pos.y * SECTOR_SIZE + pos.x] = block;
 }
 
 void Sector::Update(World *world)
 {
+  for (auto &i : mPushTest)
+  {
+    world->GetTessellator()->Set(cs::SBtoWB(i, mPos), DB::Get().CreateTesselator(GetBlock(i)->GetId()));
+  }
+
+  if (!mPushTest.empty())
+  {
+    world->GetTessellator()->SayChanged(mPos);
+  }
+
+  mPushTest.clear();
   // Если рендер сектор давно не обновлялся, нужно его удалить.
 }
 

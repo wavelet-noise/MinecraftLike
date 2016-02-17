@@ -64,10 +64,10 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
       h = glm::min(h, float(SECTOR_SIZE));
       h = glm::max(h, 0.f);
 
-      s.mBlocks[int(h) * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("grass"));
+      s.SetBlock({ i, j, h }, DB::Get().Create(StringIntern("grass")));
       for (int k = 0; k < int(h); ++k)
       {
-        s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt"));
+        s.SetBlock({ i, j, k }, DB::Get().Create(StringIntern("dirt")));
       }
     }
   }
@@ -88,18 +88,18 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
 
     for (int i = 0; i < 1000; i++)
     {
-      int tx = rand() % 10 - 5;
-      int ty = rand() % 10 - 5;
-      int tz = rand() % 10 - 5;
+      int tx = rand() % 10 - 6;
+      int ty = rand() % 10 - 6;
+      int tz = rand() % 10 - 6;
       if (glm::length(glm::vec3(tx, ty, tz)) <= 3)
       {
-        s.mBlocks[(int(h) + top + tz) * SECTOR_SIZE * SECTOR_SIZE + (y + ty) * SECTOR_SIZE + x + tx] = DB::Get().Create(StringIntern("leaves"));
+//        s.SetBlock({ x + tx, y + ty, h + top + tz }, DB::Get().Create(StringIntern("leaves")));
       }
     }
 
     for (int j = 0; j < top; j++)
     {
-      s.mBlocks[(int(h) + j) * SECTOR_SIZE * SECTOR_SIZE + y * SECTOR_SIZE + x] = DB::Get().Create(StringIntern("log"));
+      s.SetBlock({ x, y, h + j }, DB::Get().Create(StringIntern("log")));
     }
   }
   psec->SayChanged();

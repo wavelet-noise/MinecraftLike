@@ -25,9 +25,11 @@ public:
   /// @param blockId Идентификатор блока.
   PBlock Create(const StringIntern &name);
 
+  PBlockTessellator CreateTesselator(const StringIntern &name);
+
 private:
   std::unordered_map<StringIntern, PBlock> mBlocks;
-  std::unordered_map<StringIntern, std::shared_ptr<BlockTessellator>> mTess;
+  std::unordered_map<StringIntern, PBlockTessellator> mTess;
 
 private:
   DB() {};

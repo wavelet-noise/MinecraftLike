@@ -8,7 +8,7 @@
 
 
 #include <functional>
-#include <queue>
+#include <list>
 #include <mutex>
 #include <memory>
 #include <atomic>
@@ -40,14 +40,13 @@ public:
         // Меняем очереди местами, что бы работать с данными без синхронизации.
         {
           std::lock_guard<std::mutex> lock(mMutex);
-          //mQueue.swap(mQueueBack);
-          mQueue = mQueueBack;
+          mQueue.swap(mQueueBack);
         }
         // Обрабатываем входящие сообщения.
         while (!mQueue.empty())
         {
           mQueue.front()();
-          mQueue.pop();
+          mQueue.pop_front();
         }
 
         // Запускаем процесс обработки.
@@ -76,15 +75,15 @@ public:
   void PushFunc(F func, Args... args)
   {
     std::lock_guard<std::mutex> lock(mMutex);
-    mQueueBack.push([=] { return func(args...); });
+    mQueueBack.push_back([=] { return func(args...); });
   }
 
 private:
   std::unique_ptr<std::thread> mThread;
   std::mutex mMutex;
   std::atomic<bool> mDummy = false;
-  std::queue<FunctorType> mQueue;
-  std::queue<FunctorType> mQueueBack;
+  std::list<FunctorType> mQueue;
+  std::list<FunctorType> mQueueBack;
 };
 
 
