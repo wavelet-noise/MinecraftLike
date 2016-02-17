@@ -15,32 +15,36 @@
 #include "rapidjson\document.h"
 
 #define NVP(T) sge::make_nvp(#T, T)
-#define JSONLOAD(...) sge::deserialize(val, __VA_ARGS__)
+#define JSONLOAD(...) DeserializeHelper::deserialize(val, __VA_ARGS__)
 
 namespace sge {
   template <class T>
-  inline std::pair<const char *, T> make_nvp(const char *name, T &&value) {
+  std::pair<const char *, T> make_nvp(const char *name, T &&value) {
     return{ name, std::forward<T>(value) };
   }
+}
 
-  inline void deserialize(const rapidjson::Value &val)
+class DeserializeHelper 
+{
+public:
+  static void deserialize(const rapidjson::Value &val)
   {
     (void)val;
   }
 
   template <typename Last>
-  inline void deserialize(const rapidjson::Value &val, const Last &last)
+  static void deserialize(const rapidjson::Value &val, const Last &last)
   {
     __deserialize(val, last.first, last.second);
   }
 
   template <typename First, typename... Rest>
-  inline void deserialize(const rapidjson::Value &val, const First &first, const Rest&... rest)
+  static void deserialize(const rapidjson::Value &val, const First &first, const Rest&... rest)
   {
     __deserialize(val, first.first, first.second);
     deserialize(val, rest...);
   }
-}
+};
 
 namespace {
   template<typename _Ty>
