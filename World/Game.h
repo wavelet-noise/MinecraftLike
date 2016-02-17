@@ -11,7 +11,7 @@
 #include "Render\Render.h"
 #include "Core\World.h"
 #include "Core\SectorLoader.h"
-
+#include "FpsCounter.h"
 
 class Game
 {
@@ -30,6 +30,7 @@ public:
 private:
 
   bool Initialized = false;
+  FpsCounter fps;
 
   std::unique_ptr<Window> mWindow;
   std::unique_ptr<Render> mRender;
