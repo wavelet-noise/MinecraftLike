@@ -173,3 +173,8 @@ PBlock DB::Create(const StringIntern &name)
 {
   return mBlocks[name];
 }
+
+PBlockTessellator DB::CreateTesselator(const StringIntern &name)
+{
+  return mTess[name];
+}

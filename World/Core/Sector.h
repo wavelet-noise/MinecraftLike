@@ -16,6 +16,7 @@
 #include "DB.h"
 
 #include <boost\serialization\serialization.hpp>
+#include <list>
 
 
 class Sector
@@ -47,6 +48,8 @@ private:
   SPos mPos;
 
   std::unique_ptr<RenderSector> mRenderSector;
+
+  std::list<SBPos> mPushTest;
 
   friend class boost::serialization::access;
 

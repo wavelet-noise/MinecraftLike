@@ -86,6 +86,7 @@ int Game::Run()
   mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 3);
 
   mTessellator = std::make_unique<Tessellator>(*mRender);
+  mWorld->SetTessellator(mTessellator.get());
   mTessellator->Run();
 
   boost::thread thread([this, &close]

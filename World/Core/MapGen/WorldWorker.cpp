@@ -64,29 +64,29 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
     {
       for (int k = 0; k < SECTOR_SIZE; ++k)
       {
-        float tx = static_cast<float>(i + s.mPos.x*SECTOR_SIZE);
-        float ty = static_cast<float>(j + s.mPos.y*SECTOR_SIZE);
+      float tx = static_cast<float>(i + s.mPos.x*SECTOR_SIZE);
+      float ty = static_cast<float>(j + s.mPos.y*SECTOR_SIZE);
         float tz = static_cast<float>(k + s.mPos.z*SECTOR_SIZE);
 
         if (solid(tx, ty, tz))
-        {
+      {
           if(!solid(tx, ty, tz + 1))
-            s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("grass"));
+            s.SetBlock({ i, j, k }, DB::Get().Create(StringIntern("grass")));
           else
           {
             if(solid(tx, ty, tz + 15))
-              s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt4"));
+              s.SetBlock({ i, j, k }, DB::Get().Create(StringIntern("dirt4")));
             else if (solid(tx, ty, tz + 10))
-              s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt3"));
+              s.SetBlock({ i, j, k }, DB::Get().Create(StringIntern("dirt3")));
             else if (solid(tx, ty, tz + 5))
-              s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt2"));
+              s.SetBlock({ i, j, k }, DB::Get().Create(StringIntern("dirt2")));
             else
-              s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt"));
-          }
-        }
+              s.SetBlock({ i, j, k }, DB::Get().Create(StringIntern("dirt")));
       }
     }
   }
+      }
+    }
 
   psec->SayChanged();
 

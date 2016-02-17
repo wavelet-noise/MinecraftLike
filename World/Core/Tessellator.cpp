@@ -16,11 +16,14 @@ void Tessellator::Set(const WBPos &pos, PBlockTessellator block)
 {
   PushFunc([this](const WBPos &pos, PBlockTessellator block)
   {
-    auto spos = cs::WBtoSB(pos);
-    if (auto sector = FindSector(spos))
+    auto spos = cs::WBtoS(pos);
+    auto sector = FindSector(spos);
+    if (!sector)
     {
-      sector->SetBlock(cs::WBtoSB(pos, spos), block);
+      sector = std::make_shared<SectorTessellator>(spos);
+      mSectors[spos] = sector;
     }
+    sector->SetBlock(cs::WBtoSB(pos, spos), block);
   }, pos, block);
 }
 

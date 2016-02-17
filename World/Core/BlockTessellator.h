@@ -52,15 +52,9 @@ public:
     return mStatic;
   }
 
-  inline const StringIntern &GetName() const noexcept
-  {
-    return mName;
-  }
-
 private:
   bool mStatic = true;
   bool mTransparent = false;
-  StringIntern mName;
 };
 
 

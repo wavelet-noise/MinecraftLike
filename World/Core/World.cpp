@@ -10,6 +10,7 @@
 #include "RenderSector.h"
 #include "MapGen\WorldWorker.h"
 #include "..\Render\Render.h"
+#include "Tessellator.h"
 
 
 World::World()
@@ -24,6 +25,10 @@ World::~World()
 
 void World::Update(float dt)
 {
+  for (auto &i : mSectors)
+  {
+    i.second->Update(this);
+  }
   mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt});
 }
 
@@ -99,4 +104,14 @@ void World::SetBlock(const WBPos &wbpos, PBlock block)
 Player *World::GetPlayer()
 {
   return mPlayer.get();
+}
+
+Tessellator * World::GetTessellator()
+{
+  return mTesselator;
+}
+
+void World::SetTessellator(Tessellator *tess)
+{
+  mTesselator = tess;
 }
