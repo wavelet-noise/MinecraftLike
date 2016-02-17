@@ -8,6 +8,7 @@
 
 #include "Block.h"
 #include <unordered_map>
+#include "BlockTessellator.h"
 
 class DB
 {
@@ -26,6 +27,7 @@ public:
 
 private:
   std::unordered_map<StringIntern, PBlock> mBlocks;
+  std::unordered_map<StringIntern, std::shared_ptr<BlockTessellator>> mTess;
 
 private:
   DB() {};

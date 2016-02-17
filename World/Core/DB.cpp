@@ -94,7 +94,7 @@ void DB::ReloadDirectory(const std::string & dir)
                     continue;
                   }
                   try {
-                    c->Load(part);
+                    c->JsonLoad(part);
                   }
                   catch ( ... ) {
                     LOG(error) << boost::current_exception_diagnostic_information(true);
@@ -114,8 +114,48 @@ void DB::ReloadDirectory(const std::string & dir)
             {
               LOG(error) << "record \"" << id << "\" parts is not valid agents array";
             }
+          }
 
+          if (val.HasMember("render"))
+          {
+            rapidjson::Value &arr = val["render"];
+            if (val["render"].IsArray())
+            {
+              for (decltype(arr.Size()) a = 0; a < arr.Size(); a++)
+              {
+                rapidjson::Value &part = arr[a];
+                if (part.HasMember("type")) {
+                  std::string tesstype = part["type"].GetString();
+                  auto bt = BlockTessellatorFactory::Get().Create(StringIntern(tesstype));
+                  if (!bt)
+                  {
+                    LOG(error) << "record \"" << id << "\" tesselator #" << a + 1 << " has unknown type = " << tesstype;
+                    continue;
+                  }
+                  try {
+                    bt->JsonLoad(part);
+                  }
+                  catch (...) {
+                    LOG(error) << boost::current_exception_diagnostic_information(true);
+                    LOG(error) << id << "'s tesselator " << tesstype << " json deserialize failed. See tesselators documentation";
+                    continue;
+                  }
 
+                  if(arr.Size() > 1)
+                    mTess[StringIntern(id + "_" + std::to_string(a))] = std::move(bt);
+                  else
+                    mTess[StringIntern(id)] = std::move(bt);
+                }
+                else
+                {
+                  LOG(error) << "record \"" << id << "\" tesselator #" << a + 1 << " has no type";
+                }
+              }
+            }
+            else
+            {
+              LOG(error) << "record \"" << id << "\" parts is not valid agents array";
+            }
           }
 
           mBlocks[StringIntern(id)] = b;

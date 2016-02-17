@@ -41,7 +41,7 @@ public:
 
   virtual void Update(const GameObjectParams &params) = 0;
 
-  virtual void Load(const rapidjson::Value &val);
+  virtual void JsonLoad(const rapidjson::Value &val);
 
   /// Вурнуть имя типа агента.
   const StringIntern &GetTypeName();
