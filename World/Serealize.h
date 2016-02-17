@@ -24,7 +24,7 @@ namespace sge {
   }
 }
 
-class DeserializeHelper 
+class DeserializeHelper
 {
 public:
   static void deserialize(const rapidjson::Value &val)
@@ -71,7 +71,7 @@ namespace {
   void __deserialize(const rapidjson::Value &val, const char *s, _Ty &target)
   {
     if (!val.HasMember(s))
-      throw std::invalid_argument((boost::format("value has no %1% member") % s).str());
+      return;
 
     const rapidjson::Value &v = val[s];
     target.JsonLoad(v);

@@ -372,9 +372,7 @@
     <ClInclude Include="Core\TessellatorParams.h">
       <Filter>Core\Tessellator</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Serialize.h">
-      <Filter>Core</Filter>
-    </ClInclude>
+    <ClInclude Include="Serealize.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json">

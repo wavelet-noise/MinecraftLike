@@ -5,7 +5,7 @@
 #include "MeshBlockGenerator.h"
 #include <type_traits>
 #include "..\Render\TextureManager.h"
-#include "Serialize.h"
+#include <Serealize.h>
 
 static glm::vec3 vertexCube[] =
 {
