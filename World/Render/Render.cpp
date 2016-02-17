@@ -106,7 +106,7 @@ void Render::Draw(Camera &camera)
     shader->SetUniform(TEXTURE_SLOT_0, "atlas");
 
     //TODO: prebuild NVP
-    shader->SetUniform(camera.GetProject() * camera.GetView() * i.matrix, "transform_VP");
+    shader->SetUniform(camera.GetViewProject() * i.matrix, "transform_VP");
 
     i.model.GetMesh()->Draw();
   }

@@ -28,6 +28,11 @@ Camera::~Camera(void)
 {
 }
 
+const glm::mat4 &Camera::GetViewProject() const
+{
+  return mViewProjection;
+}
+
 const glm::mat4 &Camera::GetView() const
 {
   return mView;
@@ -45,6 +50,7 @@ const glm::mat3 &Camera::GetDirection() const
 
 void Camera::SetPos(const glm::vec3 &pos)
 {
+  changed = true;
   mPos = pos;
 }
 
@@ -55,22 +61,27 @@ const glm::vec3 & Camera::GetPos() const
 
 void Camera::Resize(const glm::uvec2 &size)
 {
+  changed = true;
   mAspect = static_cast<float>(size.x) / static_cast<float>(size.y);
   mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
 }
 
 void Camera::Rotate(const glm::vec3 &degrees)
 {
+  changed = true;
   mDir += degrees;
 }
 
 void Camera::Move(const glm::vec3 &dist)
 {
+  changed = true;
   mPos += glm::vec3(dist.x, dist.z, -dist.y) * mQuat;
 }
 
 void Camera::Update()
 {
+  if (!changed)
+    return;
   const auto &pitch = glm::angleAxis(mDir.x, glm::vec3(1, 0, 0));
   const auto &yaw = glm::angleAxis(mDir.z, glm::vec3(0, 0, 1));
   const auto &roll = glm::angleAxis(mDir.y, glm::vec3(0, 1, 0));
@@ -80,9 +91,11 @@ void Camera::Update()
   mQuat = glm::normalize(mQuat);
 
   mView = glm::translate(glm::mat4_cast(mQuat), -mPos);
+  mViewProjection = mProjection * mView;
   mDirection = glm::mat3_cast(mQuat);
 
   CalculateFrustum();
+  changed = false;
 }
 
 glm::vec3 Camera::GetRay(const glm::vec2 &pos)

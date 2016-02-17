@@ -25,6 +25,8 @@ public:
   Camera();
   ~Camera();
 
+  const glm::mat4 & GetViewProject() const;
+
   /// Получить матрицу вида.
   const glm::mat4 &GetView() const;
 
@@ -59,6 +61,7 @@ private:
 
   glm::mat4 mView;
   glm::mat4 mProjection;
+  glm::mat4 mViewProjection;
   glm::mat3 mDirection;
 
   glm::quat mQuat;
@@ -73,6 +76,8 @@ private:
   float mAspect;
   float mNear;
   float mFar;
+
+  bool changed = true;
 };
 
 #endif // Camera_h__
