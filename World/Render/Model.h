@@ -19,6 +19,8 @@ public:
 
   Model();
 
+  void JsonLoad(const rapidjson::Value & val);
+
   enum Type
   {
     Static,
