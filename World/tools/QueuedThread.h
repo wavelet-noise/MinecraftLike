@@ -1,3 +1,7 @@
+// ============================================================================
+// ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
+// ==                  See license.txt for more information                  ==
+// ============================================================================
 #pragma once
 #ifndef QueuedThread_h__
 #define QueuedThread_h__
@@ -7,45 +11,80 @@
 #include <queue>
 #include <mutex>
 #include <memory>
+#include <atomic>
 
+
+/// Необходимо определить следующие методы:
+/// void Start();
+/// void Process();
+/// void Stop();
+template<class T>
 class QueuedThread
 {
 public:
   using FunctorType = std::function<void()>;
 
-  /// Потокобезопасный конструктор.
-  QueuedThread();
+  /// Запустить поток.
+  void Run()
+  {
+    mThread = std::make_unique<decltype(mThread)::element_type>([this]
+    {
+      static_cast<T*>(this)->Start();
+      while (true)
+      {
+        // Выходим если поток должен завершиться.
+        if (mDummy)
+        {
+          break;
+        }
+        // Меняем очереди местами, что бы работать с данными без синхронизации.
+        {
+          std::lock_guard<std::mutex> lock(mMutex);
+          //mQueue.swap(mQueueBack);
+          mQueue = mQueueBack;
+        }
+        // Обрабатываем входящие сообщения.
+        while (!mQueue.empty())
+        {
+          mQueue.front()();
+          mQueue.pop();
+        }
+
+        // Запускаем процесс обработки.
+        static_cast<T*>(this)->Process();
+      }
+      static_cast<T*>(this)->Stop();
+    });
+  }
+
   /// Потокобезопасный деструктор.
-  ~QueuedThread();
+  ~QueuedThread()
+  {
+    if (mThread)
+    {
+      mDummy = true;
+      mThread->join();
+    }
+  }
 
   /// Отложенное выполнение функции в потоке. 
+  /// Блокирующий вызов.
   /// Потокобезопасная операция.
   /// Все взаимодействие с потоком должно происходить 
   /// с помощью данного метода.
   template<class F, class ...Args>
-  FunctorType PushFunc(F func, Args... args)
+  void PushFunc(F func, Args... args)
   {
     std::lock_guard<std::mutex> lock(mMutex);
-    return [=] { return func(args...); };
+    mQueueBack.push([=] { return func(args...); });
   }
 
-protected:
-  /// Вызывается единожды при старте потока.
-  virtual void Start() = 0;
-
-  /// Постоянно вызывается в потоке.
-  virtual void Process() = 0;
-
-  /// Вызывается единожды при разрушении потока.
-  virtual void Stop() = 0;
-
-
 private:
-  std::queue<FunctorType> mQueue;
   std::unique_ptr<std::thread> mThread;
   std::mutex mMutex;
-
-  bool mClosed = false;
+  std::atomic<bool> mDummy = false;
+  std::queue<FunctorType> mQueue;
+  std::queue<FunctorType> mQueueBack;
 };
 
 
