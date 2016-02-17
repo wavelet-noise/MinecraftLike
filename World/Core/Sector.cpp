@@ -39,12 +39,12 @@ void Sector::SetBlock(const SBPos &pos, PBlock block)
 
 void Sector::Update(World *world)
 {
-  // Если рендер сектор давно не обновлялся, нужно его удалить.
+  // Г…Г±Г«ГЁ Г°ГҐГ­Г¤ГҐГ° Г±ГҐГЄГІГ®Г° Г¤Г ГўГ­Г® Г­ГҐ Г®ГЎГ­Г®ГўГ«ГїГ«Г±Гї, Г­ГіГ¦Г­Г® ГҐГЈГ® ГіГ¤Г Г«ГЁГІГј.
 }
 
 void Sector::UpdateGraphic(World *world, Render &render)
 {
-  // Если рендер сектор отсутствует, нужно его создать.
+  // Г…Г±Г«ГЁ Г°ГҐГ­Г¤ГҐГ° Г±ГҐГЄГІГ®Г° Г®ГІГ±ГіГІГ±ГІГўГіГҐГІ, Г­ГіГ¦Г­Г® ГҐГЈГ® Г±Г®Г§Г¤Г ГІГј.
   if (!mRenderSector)
   {
     mRenderSector = std::make_unique<RenderSector>(mPos);
@@ -71,7 +71,7 @@ void Sector::UpdateGraphic(World *world, Render &render)
 
 void Sector::SayChanged()
 {
-  if (!mRenderSector)
+  if (!mRenderSector) //TODO: РІРµСЂРѕСЏС‚РЅРѕ СЂР°Р·СѓРјРЅРµРµ РїРѕСЃС‚Рѕ РёРіРЅРѕСЂРёСЂРѕРІР°С‚СЊ РёР·РјРµРЅРµРЅРёСЏ, РµСЃР»Рё СЂРµРЅРґРµСЂР° РЅРµС‚
   {
     mRenderSector = std::make_unique<RenderSector>(mPos);
   }

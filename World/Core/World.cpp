@@ -39,7 +39,7 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
       mSectors[position] = psec;
       // Добавлен новый сектор, сообщим соседним секторам, что б перестроились.
       
-      SPos offset[] = 
+      /*SPos offset[] = 
       {
         {  1,  0,  0 },
         { -1,  0,  0 },
@@ -54,7 +54,7 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
         {
           sector->SayChanged();
         }
-      }
+      }*/
       return psec;
     }
 

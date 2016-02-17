@@ -68,6 +68,7 @@ void RenderSector::Update(Render &render)
   // Сектор должен был перестроиться. К этому моменту он уже перестроен.
   if (mIsNeedBuild)
   {
+    mModel.BuildAABB(&VertexVTN::vertex);
     render.PushModel(mModel, mModelMatrix);
     mIsNeedBuild = false;
   }

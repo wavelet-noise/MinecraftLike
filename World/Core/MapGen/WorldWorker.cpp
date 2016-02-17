@@ -31,9 +31,6 @@ std::shared_ptr<Sector> WorldWorker::GetSector(const SPos &v)
 	return nullptr;
 }
 
-static PerlinNoise noise(0);
-
-
 void place_tree(Sector &s, const glm::vec3 &pos)
 {
 
@@ -46,62 +43,51 @@ std::shared_ptr<Sector> WorldWorker::Generate(const SPos &spos)
 	Sector &s = *psec;
 
 	size_t blocksCount = 0;
+  auto dens = [](float tx, float ty, float tz) ->float {
+    if(tz > 30)
+      return PerlinNoise3D(tx / 100.f, ty / 100.f, tz / 100.f, 2, 2, 5)/(tz/30.f);
+    else if (tz < 0)
+      return 1;
+    else
+      return glm::abs(PerlinNoise3D(tx / 100.f, ty / 100.f, tz / 100.f, 2, 2, 5));
+  };
 
-  auto gen_01_from_xy = [](float x, float y) ->float {
-    return (noise.Noise2(x, y) + 1.0f) / 2.f;
+  auto solid = [&dens](float tx, float ty, float tz) -> bool {
+    return dens(tx, ty, tz) > 0.1;
   };
 
   const size_t size = static_cast<size_t>(SECTOR_SIZE);
+  if(spos.x != 0) // для того, чтоб смотреть что там в разрезе
   for (int i = 0; i < SECTOR_SIZE; ++i)
   {
     for (int j = 0; j < SECTOR_SIZE; ++j)
     {
-      float tx = static_cast<float>(i + s.mPos.x*SECTOR_SIZE);
-      float ty = static_cast<float>(j + s.mPos.y*SECTOR_SIZE);
-
-      float h = gen_01_from_xy(tx/10.f, ty/10.f) * SECTOR_SIZE / 2.f;
-
-      h = glm::min(h, float(SECTOR_SIZE));
-      h = glm::max(h, 0.f);
-
-      s.mBlocks[int(h) * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("grass"));
-      for (int k = 0; k < int(h); ++k)
+      for (int k = 0; k < SECTOR_SIZE; ++k)
       {
-        s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt"));
+        float tx = static_cast<float>(i + s.mPos.x*SECTOR_SIZE);
+        float ty = static_cast<float>(j + s.mPos.y*SECTOR_SIZE);
+        float tz = static_cast<float>(k + s.mPos.z*SECTOR_SIZE);
+
+        if (solid(tx, ty, tz))
+        {
+          if(!solid(tx, ty, tz + 1))
+            s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("grass"));
+          else
+          {
+            if(solid(tx, ty, tz + 15))
+              s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt4"));
+            else if (solid(tx, ty, tz + 10))
+              s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt3"));
+            else if (solid(tx, ty, tz + 5))
+              s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt2"));
+            else
+              s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = DB::Get().Create(StringIntern("dirt"));
+          }
+        }
       }
     }
   }
 
-
-  for (int i = 0; i <  rand()%20; ++i)
-  {
-    //test, must be no random!
-    int x = rand() % SECTOR_SIZE;
-    int y = rand() % SECTOR_SIZE;
-
-    float tx = static_cast<float>(x + s.mPos.x*SECTOR_SIZE);
-    float ty = static_cast<float>(y + s.mPos.y*SECTOR_SIZE);
-
-    float h = gen_01_from_xy(tx/10.f, ty/10.f) * SECTOR_SIZE / 2.f;
-
-    int top = rand()%3+4;
-
-    for (int i = 0; i < 1000; i++)
-    {
-      int tx = rand() % 10 - 5;
-      int ty = rand() % 10 - 5;
-      int tz = rand() % 10 - 5;
-      if (glm::length(glm::vec3(tx, ty, tz)) <= 3)
-      {
-        s.mBlocks[(int(h) + top + tz) * SECTOR_SIZE * SECTOR_SIZE + (y + ty) * SECTOR_SIZE + x + tx] = DB::Get().Create(StringIntern("leaves"));
-      }
-    }
-
-    for (int j = 0; j < top; j++)
-    {
-      s.mBlocks[(int(h) + j) * SECTOR_SIZE * SECTOR_SIZE + y * SECTOR_SIZE + x] = DB::Get().Create(StringIntern("log"));
-    }
-  }
   psec->SayChanged();
 
 	LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime << " blocks count: " << blocksCount;
