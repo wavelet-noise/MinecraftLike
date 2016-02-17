@@ -33,7 +33,7 @@ public:
 
   virtual PBlockTessellator Clone() = 0;
 
-  virtual void Load(const rapidjson::Value &val);
+  virtual void JsonLoad(const rapidjson::Value &val);
 
   /// Прозрачен ли блок?
   inline bool IsTransparent() const noexcept

@@ -19,7 +19,7 @@ public:
   SplitBlockTessellator();
   ~SplitBlockTessellator() = default;
 
-  void Load(const rapidjson::Value &val) override;
+  void JsonLoad(const rapidjson::Value &val) override;
 
   PBlockTessellator Clone() override;
 

@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "Vertex.h"
 
+class Document;
 
 /// Модель. Имеет всю информацию для рисования.
 class Model
@@ -53,6 +54,8 @@ public:
   {
     return mShader;
   }
+
+  void JsonLoad(const rapidjson::Document &val);
 
 private:
   PMesh<VertexType> mMesh;

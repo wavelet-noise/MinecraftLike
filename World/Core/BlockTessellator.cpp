@@ -4,34 +4,16 @@
 // ============================================================================
 #include "BlockTessellator.h"
 #include "Sector.h"
+#include "Serialize.h"
 
 //possibly must be moved into <renderstrats> file
 //deserialize autoreg
 #include "SplitBlockTessellator.h"
 
 
-void BlockTessellator::Load(const rapidjson::Value & val)
+void BlockTessellator::JsonLoad(const rapidjson::Value & val)
 {
-//   if (val.HasMember("strategy"))
-//   {
-//     const rapidjson::Value &stratVal = val["strategy"];
-//     if(stratVal.HasMember("type"))
-//     {
-//       std::string type = stratVal["type"].GetString();
-//       std::shared_ptr<IRenderBlockStrategy> irs = RenderBlockStrategyFactory::Get().Create(StringIntern(type));
-//       irs->Load(stratVal);
-//       SetStrategy(irs);
-//     }
-//     else
-//     {
-//       LOG(error) << "render strategy has no type";
-//     }
-// 
-//     if (stratVal.HasMember("transparent"))
-//     {
-//       mTransparent = stratVal["transparent"].GetBool_();
-//     }
-//   }
+  JSONLOAD(sge::make_nvp("name", mName), sge::make_nvp("transparent", mTransparent));
 }
 
 BlockTessellatorFactory::FactoryType & BlockTessellatorFactory::Get()

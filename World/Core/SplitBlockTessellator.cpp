@@ -9,7 +9,7 @@
 #include "World.h"
 #include "..\tools\CoordSystem.h"
 #include "Block.h"
-
+#include "Serialize.h"
 
 SplitBlockTessellator::SplitBlockTessellator()
 {
@@ -179,24 +179,9 @@ const Model & SplitBlockTessellator::GetModel(const GameObjectParams &params)
   return mModel;
 }
 
-void SplitBlockTessellator::Load(const rapidjson::Value & val)
+void SplitBlockTessellator::JsonLoad(const rapidjson::Value & val)
 {
-//   if (val.HasMember("all"))
-//   {
-//     mGenerator.SetTexture(MeshBlockGenerator::ALL, val["all"].GetString());
-//   }
-//   if (val.HasMember("separate"))
-//   {
-//     const rapidjson::Value &arr = val["separate"];
-//     mGenerator.SetTexture(MeshBlockGenerator::FRONT,  arr.Begin()->GetString());
-//     mGenerator.SetTexture(MeshBlockGenerator::RIGHT,  arr[1].GetString());
-//     mGenerator.SetTexture(MeshBlockGenerator::BACK,   arr[2].GetString());
-//     mGenerator.SetTexture(MeshBlockGenerator::LEFT,   arr[3].GetString());
-//     mGenerator.SetTexture(MeshBlockGenerator::TOP,    arr[4].GetString());
-//     mGenerator.SetTexture(MeshBlockGenerator::BOTTOM, arr[5].GetString());
-//   }
-// 
-//   mGenerator.Generate();
+  JSONLOAD(sge::make_nvp("model", mModel), sge::make_nvp("generator", mGenerator));
 }
 
 PBlockTessellator SplitBlockTessellator::Clone()

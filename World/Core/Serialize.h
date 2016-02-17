@@ -14,45 +14,43 @@
 
 #include "rapidjson\document.h"
 
-struct NvpHelper {
+#define NVP(T) sge::make_nvp(#T, T)
+#define JSONLOAD(...) sge::deserialize(val, __VA_ARGS__)
+
+namespace sge {
   template <class T>
-  inline static std::pair<const char *, T> make_nvp(const char *name, T &&value) {
+  inline std::pair<const char *, T> make_nvp(const char *name, T &&value) {
     return{ name, std::forward<T>(value) };
   }
-};
 
-#define NVP(T) NvpHelper::make_nvp(#T, T)
-#define JSONLOAD(...) DeserializeHelper::deserialize(val, __VA_ARGS__)
-
-struct DeserializeHelper {
-  static void deserialize(const rapidjson::Value &val)
+  void deserialize(const rapidjson::Value &val)
   {
     (void)val;
   }
 
   template <typename Last>
-  static void deserialize(const rapidjson::Value &val, const Last &last)
+  void deserialize(const rapidjson::Value &val, const Last &last)
   {
     __deserialize(val, last.first, last.second);
   }
 
   template <typename First, typename... Rest>
-  static void deserialize(const rapidjson::Value &val, const First &first, const Rest&... rest)
+  void deserialize(const rapidjson::Value &val, const First &first, const Rest&... rest)
   {
     __deserialize(val, first.first, first.second);
     deserialize(val, rest...);
   }
+}
 
-private:
-
+namespace {
   template<typename _Ty>
-  static void __deserialize_array_part(const rapidjson::Value &val, _Ty &target)
+  void __deserialize_array_part(const rapidjson::Value &val, _Ty &target)
   {
     target.Deserialize(val);
   }
 
   template<typename _Ty>
-  static void __deserialize_array_part(const rapidjson::Value &arr, std::vector<_Ty> &target)
+  void __deserialize_array_part(const rapidjson::Value &arr, std::vector<_Ty> &target)
   {
     if (arr.IsArray())
     {
@@ -66,7 +64,7 @@ private:
   }
 
   template<typename _Ty>
-  static void __deserialize(const rapidjson::Value &val, const char *s, _Ty &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, _Ty &target)
   {
     if (!val.HasMember(s))
       throw std::invalid_argument(boost::lexical_cast(::string_format("value has no %s member", s));
@@ -76,7 +74,7 @@ private:
   }
 
   template<typename _Ty>
-  static void __deserialize(const rapidjson::Value &val, const char *s, std::vector<_Ty> &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, std::vector<_Ty> &target)
   {
 
     if (val.HasMember(s) && val[s].IsArray())
@@ -92,7 +90,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, int &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, int &target)
   {
     if (val.HasMember(s))
     {
@@ -103,7 +101,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, std::string &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, std::string &target)
   {
     if (val.HasMember(s))
     {
@@ -114,7 +112,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, float &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, float &target)
   {
     if (val.HasMember(s))
     {
@@ -125,7 +123,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, bool &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, bool &target)
   {
     if (val.HasMember(s))
     {
@@ -136,7 +134,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, glm::vec2 &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, glm::vec2 &target)
   {
     if (val.HasMember(s) && val[s].IsArray())
     {
@@ -151,7 +149,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, glm::vec3 &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, glm::vec3 &target)
   {
     if (val.HasMember(s) && val[s].IsArray())
     {
@@ -168,7 +166,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, glm::vec4 &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, glm::vec4 &target)
   {
     if (val.HasMember(s) && val[s].IsArray())
     {
@@ -187,7 +185,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, std::vector<int> &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, std::vector<int> &target)
   {
     if (val.HasMember(s))
     {
@@ -195,14 +193,14 @@ private:
       for (decltype(arr.Size()) i = 0; i < arr.Size(); i++)
       {
         if (!arr[i].IsInt())
-          throw std::invalid_argument(sge::string_format("value %s[%d] is not a integer", s, i));
+          throw std::invalid_argument((boost::format("value %1%[%2%] is not a integer") % s % i).str());
         target.push_back(arr[i].GetInt());
       }
     }
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, std::vector<std::string> &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, std::vector<std::string> &target)
   {
     if (val.HasMember(s) && val[s].IsArray())
     {
@@ -217,7 +215,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, std::vector<bool> &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, std::vector<bool> &target)
   {
     if (val.HasMember(s) && val[s].IsArray())
     {
@@ -232,7 +230,7 @@ private:
   }
 
   template<>
-  static void __deserialize(const rapidjson::Value &val, const char *s, std::vector<float> &target)
+  void __deserialize(const rapidjson::Value &val, const char *s, std::vector<float> &target)
   {
     if (val.HasMember(s) && val[s].IsArray())
     {
@@ -245,6 +243,6 @@ private:
       }
     }
   }
-};
+}
 
 #endif // SERIALIZE_H

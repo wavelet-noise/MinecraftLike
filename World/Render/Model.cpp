@@ -5,8 +5,15 @@
 
 #include "Model.h"
 #include "DBShaders.h"
+#include <Core\Serialize.h>
 
 Model::Model()
 {
   mShader = DBShaders::Get().GetShader("shaders/basic.glsl");
+}
+
+void Model::JsonLoad(const rapidjson::Document & val)
+{
+  //TODO:no idea
+  static_assert(false, "not implemented");
 }

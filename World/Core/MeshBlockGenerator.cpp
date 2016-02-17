@@ -5,6 +5,7 @@
 #include "MeshBlockGenerator.h"
 #include <type_traits>
 #include "..\Render\TextureManager.h"
+#include "Serialize.h"
 
 static glm::vec3 vertexCube[] =
 {
@@ -148,4 +149,24 @@ void MeshBlockGenerator::Generate()
   {
     Create(*mMeshArray[i], static_cast<Side>(i));
   }
+}
+
+void MeshBlockGenerator::JsonLoad(const rapidjson::Document & val)
+{
+  if (val.HasMember("all"))
+  {
+    SetTexture(MeshBlockGenerator::ALL, val["all"].GetString());
+  }
+  if (val.HasMember("separate"))
+  {
+    const rapidjson::Value &arr = val["separate"];
+    SetTexture(MeshBlockGenerator::FRONT,  arr.Begin()->GetString());
+    SetTexture(MeshBlockGenerator::RIGHT,  arr[1].GetString());
+    SetTexture(MeshBlockGenerator::BACK,   arr[2].GetString());
+    SetTexture(MeshBlockGenerator::LEFT,   arr[3].GetString());
+    SetTexture(MeshBlockGenerator::TOP,    arr[4].GetString());
+    SetTexture(MeshBlockGenerator::BOTTOM, arr[5].GetString());
+  }
+  
+  Generate();
 }
