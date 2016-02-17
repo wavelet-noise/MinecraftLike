@@ -83,7 +83,7 @@ int Game::Run()
     }
   });
 
-  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 3);
 
   boost::thread thread([this, &close]
   { 
@@ -144,7 +144,7 @@ void Game::Update(double dt)
   if (mWindow->GetMouse().GetCentring())
   {
     auto moved = mWindow->GetMouse().GetMoved();
-    moved *= 0.07f * static_cast<float>(dt);
+    moved *= 0.001f;
     mWorld->GetPlayer()->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
     mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
   }

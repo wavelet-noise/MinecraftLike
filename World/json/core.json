@@ -31,6 +31,48 @@
   },  
   {
     "type":"Block",
+    "id":"dirt2",
+    "agents":[
+      {
+        "type":"RenderAgent",
+        "strategy":
+        {
+          "type":"BlockRenderStratery",
+          "all":"Textures\\dirt2.png"
+        }
+      }
+    ]
+  },  
+  {
+    "type":"Block",
+    "id":"dirt3",
+    "agents":[
+      {
+        "type":"RenderAgent",
+        "strategy":
+        {
+          "type":"BlockRenderStratery",
+          "all":"Textures\\dirt3.png"
+        }
+      }
+    ]
+  },  
+  {
+    "type":"Block",
+    "id":"dirt4",
+    "agents":[
+      {
+        "type":"RenderAgent",
+        "strategy":
+        {
+          "type":"BlockRenderStratery",
+          "all":"Textures\\dirt4.png"
+        }
+      }
+    ]
+  },  
+  {
+    "type":"Block",
     "id":"log",
     "agents":[
       {
