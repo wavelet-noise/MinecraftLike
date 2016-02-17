@@ -10,7 +10,7 @@
         "generator":
         {
           "all":"Textures\\grass.png"
-        }
+        },
 		"name":"vasyan",
 		"transparent":false
 	  }
@@ -27,7 +27,7 @@
         "generator":
         {
           "all":"Textures\\dirt.png"
-        }
+        },
 		"name":"vasyan",
 		"transparent":false
 	  }
@@ -44,7 +44,7 @@
         "generator":
         {
           "all":"Textures\\log.png"
-        }
+        },
 		"name":"vasyan",
 		"transparent":false
 	  }
@@ -61,7 +61,7 @@
         "generator":
         {
           "all":"Textures\\leaves.png"
-        }
+        },
 		"name":"vasyan",
 		"transparent":false
 	  }
@@ -78,7 +78,7 @@
         "generator":
         {
           "all":"Textures\\leaves_t.png"
-        }
+        },
 		"name":"vasyan",
 		"transparent":false
 	  }
