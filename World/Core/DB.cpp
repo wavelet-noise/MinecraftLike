@@ -102,15 +102,6 @@ void DB::ReloadDirectory(const std::string & dir)
                     continue;
                   }
 
-                  //if (agenttype == "Tags")
-                  //{
-                  //  for (const std::string &s : std::static_pointer_cast<Tags>(c)->tags)
-                  //  {
-                  //    LOG(trace) << "tagged as " << s;
-                  //    tags_ref[s].push_back(b.get());
-                  //  }
-                  //}
-
                   b->mAgents[StringIntern(agenttype)] = std::move(c);
                 }
                 else
@@ -123,6 +114,8 @@ void DB::ReloadDirectory(const std::string & dir)
             {
               LOG(error) << "record \"" << id << "\" parts is not valid agents array";
             }
+
+
           }
 
           mBlocks[StringIntern(id)] = b;

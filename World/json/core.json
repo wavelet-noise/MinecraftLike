@@ -3,73 +3,85 @@
     "type":"Block",
     "id":"grass",
     "agents":[
-      {
-        "type":"RenderAgent",
-        "strategy":
+    ],
+	"render":[
+	  {
+	    "type":"SplitBlockTessellator",
+        "generator":
         {
-          "type":"BlockRenderStratery",
-          "separate":["Textures\\grass_side.png", "Textures\\grass_side.png", "Textures\\grass_side.png", "Textures\\grass_side.png",
-		              "Textures\\grass_top.png",
-		              "Textures\\dirt.png"]
+          "all":"Textures\\grass.png"
         }
-      }
-    ]
+		"name":"vasyan",
+		"transparent":false
+	  }
+	]
   },  
   {
     "type":"Block",
     "id":"dirt",
     "agents":[
-      {
-        "type":"RenderAgent",
-        "strategy":
+    ],
+	"render":[
+	  {
+	    "type":"SplitBlockTessellator",
+        "generator":
         {
-          "type":"BlockRenderStratery",
           "all":"Textures\\dirt.png"
         }
-      }
-    ]
+		"name":"vasyan",
+		"transparent":false
+	  }
+	]
   },  
   {
     "type":"Block",
     "id":"log",
     "agents":[
-      {
-        "type":"RenderAgent",
-        "strategy":
+    ],
+	"render":[
+	  {
+	    "type":"SplitBlockTessellator",
+        "generator":
         {
-          "type":"BlockRenderStratery",
           "all":"Textures\\log.png"
         }
-      }
-    ]
+		"name":"vasyan",
+		"transparent":false
+	  }
+	]
   },  
   {
     "type":"Block",
     "id":"leaves",
     "agents":[
-      {
-        "type":"RenderAgent",
-        "strategy":
+    ],
+	"render":[
+	  {
+	    "type":"SplitBlockTessellator",
+        "generator":
         {
-          "type":"BlockRenderStratery",
           "all":"Textures\\leaves.png"
         }
-      }
-    ]
+		"name":"vasyan",
+		"transparent":false
+	  }
+	]
   },  
   {
     "type":"Block",
     "id":"leaves_t",
     "agents":[
-      {
-        "type":"RenderAgent",
-        "strategy":
+    ],
+	"render":[
+	  {
+	    "type":"SplitBlockTessellator",
+        "generator":
         {
-          "type":"BlockRenderStratery",
-          "all":"Textures\\leaves_t.png",
-		  "transparent":true
+          "all":"Textures\\leaves_t.png"
         }
-      }
-    ]
+		"name":"vasyan",
+		"transparent":false
+	  }
+	]
   }
 ]

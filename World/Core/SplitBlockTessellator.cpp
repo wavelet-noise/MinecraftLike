@@ -178,6 +178,7 @@ const Model & SplitBlockTessellator::GetModel(const TessellatorParams &params)
 void SplitBlockTessellator::JsonLoad(const rapidjson::Value & val)
 {
   JSONLOAD(sge::make_nvp("model", mModel), sge::make_nvp("generator", mGenerator));
+  BlockTessellator::JsonLoad(val);
 }
 
 PBlockTessellator SplitBlockTessellator::Clone()
