@@ -14,6 +14,4 @@ Model::Model()
 
 void Model::JsonLoad(const rapidjson::Document & val)
 {
-  //TODO:no idea
-  static_assert(false, "not implemented");
 }

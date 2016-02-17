@@ -46,7 +46,7 @@ namespace {
   template<typename _Ty>
   void __deserialize_array_part(const rapidjson::Value &val, _Ty &target)
   {
-    target.Deserialize(val);
+    target.LoadJson(val);
   }
 
   template<typename _Ty>
@@ -70,7 +70,7 @@ namespace {
       throw std::invalid_argument(boost::lexical_cast(::string_format("value has no %s member", s));
 
     const rapidjson::Value &v = val[s];
-    target.Deserialize(v);
+    target.LoadJson(v);
   }
 
   template<typename _Ty>
