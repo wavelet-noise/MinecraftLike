@@ -83,7 +83,7 @@ int Game::Run()
     }
   });
 
-  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 3);
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 7);
 
   boost::thread thread([this, &close]
   { 
