@@ -10,9 +10,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <boost/thread/thread.hpp>
+#include <boost\circular_buffer.hpp>
 
 #include <fstream>
-#include "FpsCounter.h"
 #include <memory>
 #include "Render/OpenGLCall.h"
 #include <vector>
@@ -83,7 +83,7 @@ int Game::Run()
     }
   });
 
-  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 3);
 
   mTessellator = std::make_unique<Tessellator>(*mRender);
   mWorld->SetTessellator(mTessellator.get());
@@ -101,31 +101,10 @@ int Game::Run()
     }
   });
 
-  FpsCounter fps;
   auto currTime = glfwGetTime();
   while (!mWindow->WindowShouldClose())
   {
     fps.Update();
-    glm::vec3 camPos = mCamera->GetPos();
-    
-    auto &moved = mWindow->GetMouse().GetPos();
-    auto ray = mCamera->GetRay(moved);
-    ray *= 10;
-
-    auto points = Bresenham3D(camPos, camPos + ray);
-
-    auto far = camPos + ray;
-    glm::vec3 blockPos;
-
-    mWindow->SetTitle(
-      std::to_string(fps.GetCount()) + std::string(" fps. pos: [x: ") +
-      std::to_string(camPos.x) + std::string(" y: ") +
-      std::to_string(camPos.y) + std::string(" z: ") +
-      std::to_string(camPos.z) + std::string("] block: [x: ") +
-      std::to_string(blockPos.x) + std::string(" y: ") +
-      std::to_string(blockPos.y) + std::string(" z: ") +
-      std::to_string(blockPos.z) + std::string("]")
-      );
 
     auto lastTime = currTime;
     currTime = glfwGetTime();
@@ -170,7 +149,7 @@ void Game::Update(double dt)
   if (mWindow->GetMouse().GetCentring())
   {
     auto moved = mWindow->GetMouse().GetMoved();
-    moved *= 0.07f * static_cast<float>(dt);
+    moved *= 0.001f;
     mWorld->GetPlayer()->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
     mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
   }
@@ -234,7 +213,6 @@ void Game::Update(double dt)
   }
 
   SPos secPos = cs::WtoS(mWorld->GetPlayer()->GetPosition());
-  secPos.z = 0;
   mSectorLoader->SetPos(secPos);
 
   mWorld->Update(static_cast<float>(dt));
@@ -250,37 +228,78 @@ void Game::Draw(double dt)
 
   mRender->Draw(*mCamera);
 
-  if(0)
+  ImGui_ImplGlfwGL3_NewFrame();
   {
-    ImGui_ImplGlfwGL3_NewFrame();
-    bool show_test_window = true, show_another_window = true;
+    static std::array<float, 100> fps_h, fps_m;
+    static float sec{}, minsec{};
+    sec += dt;
+    minsec += dt;
+    static int li = 0, lj = 0;
+
+    if (sec >= 1)
     {
-      static float f = 0.0f;
-      ImGui::Text("Hello, world!");
-      ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-      ImGui::ColorEdit3("clear color", (float*)&glm::vec4(1, 1, 1, 1)[0]);
-      if (ImGui::Button("Test Window")) show_test_window ^= 1;
-      if (ImGui::Button("Another Window")) show_another_window ^= 1;
-      ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+      fps_h[li++] = fps.GetCount();
+      if (li == 99)
+        li = 0;
+      sec -= 1;
     }
 
-    // 2. Show another simple window, this time using an explicit Begin/End pair
-    if (show_another_window)
+    if (minsec >= 0.1f)
     {
-      ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_FirstUseEver);
-      ImGui::Begin("Another Window", &show_another_window);
-      ImGui::Text("Hello");
-      ImGui::End();
+      fps_m[lj++] = fps.GetCount();
+      if (lj == 99)
+        lj = 0;
+      minsec -= 0.1;
     }
 
-    // 3. Show the ImGui test window. Most of the sample code is in ImGui::ShowTestWindow()
-    if (show_test_window)
-    {
-      ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-      ImGui::ShowTestWindow(&show_test_window);
-    }
+    ImGui::Text("Perfomance");
+    ImGui::SetWindowSize({ 100, 160 });
+    ImGui::SetWindowPos({500,0});
+    ImGui::PlotLines(
+      "",
+      &fps_h[0],
+      100,
+      li, std::to_string(fps.GetCount()).c_str(), 0, 4000, {100,50});
 
-    ImGui::Render();
+    ImGui::PlotLines(
+      "",
+      &fps_m[0],
+      100,
+      lj, std::to_string(fps.GetCount()).c_str(), 0, 4000, { 100,50 });
   }
+  ImGui::Render();
+
+  //if(0)
+  //{
+  //  ImGui_ImplGlfwGL3_NewFrame();
+  //  bool show_test_window = true, show_another_window = true;
+  //  {
+  //    static float f = 0.0f;
+  //    ImGui::Text("Hello, world!");
+  //    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+  //    ImGui::ColorEdit3("clear color", (float*)&glm::vec4(1, 1, 1, 1)[0]);
+  //    if (ImGui::Button("Test Window")) show_test_window ^= 1;
+  //    if (ImGui::Button("Another Window")) show_another_window ^= 1;
+  //    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+  //  }
+
+  //  // 2. Show another simple window, this time using an explicit Begin/End pair
+  //  if (show_another_window)
+  //  {
+  //    ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_FirstUseEver);
+  //    ImGui::Begin("Another Window", &show_another_window);
+  //    ImGui::Text("Hello");
+  //    ImGui::End();
+  //  }
+
+  //  // 3. Show the ImGui test window. Most of the sample code is in ImGui::ShowTestWindow()
+  //  if (show_test_window)
+  //  {
+  //    ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+  //    ImGui::ShowTestWindow(&show_test_window);
+  //  }
+
+  //  ImGui::Render();
+  //}
 }
 
