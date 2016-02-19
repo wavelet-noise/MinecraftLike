@@ -4,19 +4,10 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <sstream>
 
-PacketRequestSector::PacketRequestSector(const glm::ivec2 &p) :
-  pos(p),
-  Packet(GetId())
+PacketRequestSector::PacketRequestSector(const glm::ivec2 & p)
 {
-
 }
 
-PacketRequestSector::PacketRequestSector() : Packet(GetId())
+PacketRequestSector::PacketRequestSector()
 {
-
-}
-
-size_t PacketRequestSector::GetId()
-{
-  return 2;
 }

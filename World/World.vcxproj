@@ -46,9 +46,11 @@
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\network.cpp" />
+    <ClCompile Include="network\NetworkManager.cpp" />
     <ClCompile Include="network\packetholder.cpp" />
     <ClCompile Include="network\packetrequestplayers.cpp" />
     <ClCompile Include="network\packetrequestsector.cpp" />
+    <ClCompile Include="network\packetresponseplayers.cpp" />
     <ClCompile Include="network\packetresponsesector.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
@@ -98,6 +100,8 @@
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="network\NetworkManager.h" />
+    <ClInclude Include="network\packetresponseplayers.h" />
     <ClInclude Include="Serealize.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />

@@ -43,26 +43,46 @@ namespace boost
   }
 }
 
-class Packet
+class Packet : boost::noncopyable
 {
   friend class boost::serialization::access;
   template<class Archive>
   void serialize(Archive &ar, const unsigned int)
   {
-    ar & id;
   }
 
 public:
   virtual ~Packet() {}
-  Packet(size_t __id = 0) : id(__id)
+  Packet(size_t __id = 0)
   {
 
   }
 
-  size_t id;
   virtual size_t GetId()
   {
     return 0;
+  };
+};
+
+namespace
+{
+  size_t Nextid()
+  {
+    static size_t next_id(0);
+    return next_id++;
+  }
+
+  template <typename T_>
+  size_t Idfor()
+  {
+    static size_t result(Nextid());
+    return result;
+  }
+}
+
+template<typename T> struct NumberedPacket : Packet {
+  int getId() {
+    return Idfor<T>();
   }
 };
 

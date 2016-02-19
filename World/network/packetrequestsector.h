@@ -5,7 +5,7 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/base_object.hpp>
 
-class PacketRequestSector : public Packet
+class PacketRequestSector : public NumberedPacket<PacketRequestSector>
 {
   friend class boost::serialization::access;
   template<class Archive>
@@ -18,7 +18,6 @@ class PacketRequestSector : public Packet
 public:
   PacketRequestSector(const glm::ivec2 &p);
   PacketRequestSector();
-  size_t GetId();
 
   glm::ivec2 pos;
 };

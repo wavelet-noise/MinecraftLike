@@ -83,7 +83,7 @@ int Game::Run()
     }
   });
 
-  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 3);
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 7);
 
   mTessellator = std::make_unique<Tessellator>(*mRender);
   mWorld->SetTessellator(mTessellator.get());

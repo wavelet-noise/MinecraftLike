@@ -43,7 +43,8 @@ void SectorLoader::SetRadius(size_t radius)
   for (pos.y = begin; pos.y <= end; ++pos.y)
   for (pos.x = begin; pos.x <= end; ++pos.x)
   {
-    mSite.push_back(pos);
+    if(glm::length(glm::vec3(pos)) <= mRadius)
+      mSite.push_back(pos);
   }
 
 }
