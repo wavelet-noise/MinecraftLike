@@ -26,7 +26,6 @@
     <ClCompile Include="Core\DB.cpp" />
     <ClCompile Include="Core\Creature.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
-    <ClCompile Include="Core\MapGen\PerlinNoise.cpp" />
     <ClCompile Include="Core\MapGen\WorldWorker.cpp" />
     <ClCompile Include="Core\MeshBlockGenerator.cpp" />
     <ClCompile Include="Core\PhysicAgent.cpp" />
@@ -51,6 +50,7 @@
     <ClCompile Include="network\packetrequestplayers.cpp" />
     <ClCompile Include="network\packetrequestsector.cpp" />
     <ClCompile Include="network\packetresponsesector.cpp" />
+    <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
     <ClCompile Include="Render\Bitmap.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
@@ -118,7 +118,6 @@
     <ClInclude Include="Render\Color.h" />
     <ClInclude Include="Render\DBShaders.h" />
     <ClInclude Include="Render\ErrorImage.h" />
-    <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\OpenGLCall.h" />
     <ClInclude Include="Render\Render.h" />

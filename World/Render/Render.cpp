@@ -95,14 +95,19 @@ void Render::Draw(Camera &camera)
 
   for (auto &i : mDrawList)
   {
-    i.model.GetTexture()->Set(TEXTURE_SLOT_0);
+    auto aabb = i.model.GetAABB();
+    if (!camera.BoxWithinFrustum(i.matrix * std::get<0>(aabb), i.matrix * std::get<1>(aabb)))
+      continue;
+
+    if(auto t = i.model.GetTexture())
+      t->Set(TEXTURE_SLOT_0);
 
     auto &shader = i.model.GetShader();
     shader->Use();
     shader->SetUniform(TEXTURE_SLOT_0, "atlas");
 
     //TODO: prebuild NVP
-    shader->SetUniform(camera.GetProject() * camera.GetView() * i.matrix, "transform_VP");
+    shader->SetUniform(camera.GetViewProject() * i.matrix, "transform_VP");
 
     i.model.GetMesh()->Draw();
   }

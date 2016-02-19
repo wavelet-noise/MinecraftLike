@@ -25,6 +25,8 @@ public:
   Camera();
   ~Camera();
 
+  const glm::mat4 & GetViewProject() const;
+
   /// Получить матрицу вида.
   const glm::mat4 &GetView() const;
 
@@ -51,12 +53,15 @@ public:
 
   void CalculateFrustum();
 
+  bool BoxWithinFrustum(const glm::vec4 & min, const glm::vec4 & max) const;
+
   bool BoxWithinFrustum(const glm::vec3 & min, const glm::vec3 & max) const;
 
 private:
 
   glm::mat4 mView;
   glm::mat4 mProjection;
+  glm::mat4 mViewProjection;
   glm::mat3 mDirection;
 
   glm::quat mQuat;
@@ -71,6 +76,8 @@ private:
   float mAspect;
   float mNear;
   float mFar;
+
+  bool changed = true;
 };
 
 #endif // Camera_h__
