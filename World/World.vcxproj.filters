@@ -175,6 +175,12 @@
     <ClCompile Include="PerlinNoise.cpp">
       <Filter>Core\MapGen</Filter>
     </ClCompile>
+    <ClCompile Include="network\NetworkManager.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\packetresponseplayers.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -362,6 +368,12 @@
     <ClInclude Include="Render\DBShaders.h" />
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="network\NetworkManager.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packetresponseplayers.h">
+      <Filter>network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

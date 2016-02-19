@@ -5,7 +5,7 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/base_object.hpp>
 
-class PacketRequestPlayers : public Packet
+class PacketRequestPlayers : public NumberedPacket<PacketRequestPlayers>
 {
   friend class boost::serialization::access;
   template<class Archive>
@@ -20,7 +20,6 @@ class PacketRequestPlayers : public Packet
 public:
   PacketRequestPlayers();
   PacketRequestPlayers(const glm::vec3 & pos, float phi, size_t i);
-  size_t GetId();
 
   glm::vec3 our_pos;
   float our_phi;
