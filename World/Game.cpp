@@ -23,7 +23,7 @@
 #include "Core\MapGen\WorldWorker.h"
 #include "Render/TextureManager.h"
 #include "Core/DB.h"
-#include "Core/BlockRenderStratery.h"
+#include "Core/SplitBlockTessellator.h"
 #include "tools/Log.h"
 
 #include "gui\imgui_impl_glfw_gl3.h"
@@ -85,8 +85,12 @@ int Game::Run()
 
   mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 7);
 
+  mTessellator = std::make_unique<Tessellator>(*mRender);
+  mWorld->SetTessellator(mTessellator.get());
+  mTessellator->Run();
+
   boost::thread thread([this, &close]
-  { 
+  {
     auto currTime = glfwGetTime();
     while (!close)
     {
@@ -110,6 +114,7 @@ int Game::Run()
   }
 
   close = true;
+  mTessellator.reset();
   thread.join();
   th.join();
 
@@ -211,7 +216,6 @@ void Game::Update(double dt)
   mSectorLoader->SetPos(secPos);
 
   mWorld->Update(static_cast<float>(dt));
-  mWorld->UpdateGraphic(*mRender);
 }
 
 

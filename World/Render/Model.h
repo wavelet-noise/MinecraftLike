@@ -9,7 +9,7 @@
 #include "Texture.h"
 #include "Mesh.h"
 #include "Vertex.h"
-
+#include <rapidjson\document.h>
 
 /// Модель. Имеет всю информацию для рисования.
 class Model
@@ -18,6 +18,8 @@ public:
   using VertexType = VertexVTN;
 
   Model();
+
+  void JsonLoad(const rapidjson::Value & val);
 
   enum Type
   {

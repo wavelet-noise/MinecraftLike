@@ -83,11 +83,11 @@ bool solid(float tx, float ty, float tz)
 
 inline std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
 {
-  auto currentTime = glfwGetTime(); //TODO: totally unnecessary
-  std::shared_ptr<Sector> psec = std::make_shared<Sector>(spos);
-  Sector &s = *psec;
+	auto currentTime = glfwGetTime(); //TODO: totally unnecessary
+	std::shared_ptr<Sector> psec = std::make_shared<Sector>(spos);
+	Sector &s = *psec;
 
-  size_t blocksCount = 0;
+	size_t blocksCount = 0;
   const size_t size = static_cast<size_t>(SECTOR_SIZE);
 
   auto bg = DB::Get().Create(StringIntern("grass"));
@@ -97,38 +97,60 @@ inline std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
   auto bd = DB::Get().Create(StringIntern("dirt"));
 
   if (spos.x != 0) // для того, чтоб смотреть что там в разрезе
-    for (int i = 0; i < SECTOR_SIZE; ++i)
+  for (int i = 0; i < SECTOR_SIZE; ++i)
+  {
+    for (int j = 0; j < SECTOR_SIZE; ++j)
     {
-      for (int j = 0; j < SECTOR_SIZE; ++j)
+      for (int k = 0; k < SECTOR_SIZE; ++k)
       {
-        for (int k = 0; k < SECTOR_SIZE; ++k)
-        {
-          float tx = static_cast<float>(i + s.mPos.x*SECTOR_SIZE);
-          float ty = static_cast<float>(j + s.mPos.y*SECTOR_SIZE);
-          float tz = static_cast<float>(k + s.mPos.z*SECTOR_SIZE);
+        float tx = static_cast<float>(i + s.mPos.x*SECTOR_SIZE);
+        float ty = static_cast<float>(j + s.mPos.y*SECTOR_SIZE);
+        float tz = static_cast<float>(k + s.mPos.z*SECTOR_SIZE);
 
-          if (solid(tx, ty, tz))
-          {
+        if (solid(tx, ty, tz))
+        {
             if (!solid(tx, ty, tz + 1))
               s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = bg;
-            else
-            {
+          else
+          {
               if (solid(tx, ty, tz + 15))
                 s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = bd4;
-              else if (solid(tx, ty, tz + 10))
+            else if (solid(tx, ty, tz + 10))
                 s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = bd3;
-              else if (solid(tx, ty, tz + 5))
+            else if (solid(tx, ty, tz + 5))
                 s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = bd2;
-              else
+            else
                 s.mBlocks[k * SECTOR_SIZE * SECTOR_SIZE + j * SECTOR_SIZE + i] = bd;
-            }
           }
         }
       }
     }
+  }
 
   psec->SayChanged();
 
-  LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime << " blocks count: " << blocksCount;
+	LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime << " blocks count: " << blocksCount;
   return psec;
+}
+
+void WorldWorker::Process()
+{
+  mQueueMutex.lock();
+	if (!mRequested.empty())
+	{
+    SPos last = mLast;
+    auto r = mRequested.find(last);
+    if(r == mRequested.end())
+      r = mRequested.begin();
+    mQueueMutex.unlock();
+
+    auto gen = Generate(*r);
+
+    mQueueMutex.lock();
+    mReady[*r] = gen;
+    mRequested.erase(r);
+    mQueueMutex.unlock();
+	}
+  else
+    mQueueMutex.unlock();
 }

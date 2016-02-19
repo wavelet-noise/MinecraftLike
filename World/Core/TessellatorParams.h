@@ -2,12 +2,20 @@
 // ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
-#include "IRenderBlockStrategy.h"
+#pragma once
+#ifndef TessellatorParams_h__
+#define TessellatorParams_h__
 
+#include <glm/glm.hpp>
+#include "../tools/CoordSystem.h"
 
-
-RenderBlockStrategyFactory::FactoryType & RenderBlockStrategyFactory::Get()
+struct TessellatorParams
 {
-  static FactoryType object;
-  return object;
-}
+  class Tessellator *tesselator;
+  class SectorTessellator *sector;
+  SPos spos;
+  WBPos wbpos;
+};
+
+
+#endif // TessellatorParams_h__

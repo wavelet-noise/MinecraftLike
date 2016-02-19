@@ -23,7 +23,7 @@ public:
 
   PAgent Clone(GameObject *parent, const std::string &name = "") override;
 
-  void Load(const rapidjson::Value &val) override;
+  void JsonLoad(const rapidjson::Value &val) override;
 
   void Update(const GameObjectParams &params) override;
 

@@ -16,7 +16,7 @@ Agent::~Agent()
 {
 }
 
-void Agent::Load(const rapidjson::Value & val)
+void Agent::JsonLoad(const rapidjson::Value & val)
 {
   if (val.HasMember("name"))
     mAgentName = StringIntern(val["name"].GetString());

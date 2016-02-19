@@ -118,6 +118,23 @@ namespace cs
 
     return pos * size;
   }
+
+  /// »ндекс блока в секторе в позицию блока в секторе.
+  inline SBPos ItoSB(size_t i)
+  {
+    const size_t size = static_cast<size_t>(SECTOR_SIZE);
+    return SBPos{ i % size, (i / size) % size, i / (size * size) };
+  }
+
+  /// ѕозици€ блока в секторе в индекс блока в секторе.
+  inline size_t SBtoI(const SBPos &pos)
+  {
+    using size_type = size_t;
+    const size_type size = static_cast<size_type>(SECTOR_SIZE);
+    return static_cast<size_type>(pos.z) * size * size + 
+           static_cast<size_type>(pos.y) * size + 
+           static_cast<size_type>(pos.x);
+  }
 }
 
 namespace std

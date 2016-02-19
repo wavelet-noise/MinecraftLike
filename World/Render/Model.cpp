@@ -5,8 +5,13 @@
 
 #include "Model.h"
 #include "DBShaders.h"
+#include <Serealize.h>
 
 Model::Model()
 {
   mShader = DBShaders::Get().GetShader("shaders/basic.glsl");
+}
+
+void Model::JsonLoad(const rapidjson::Value & val)
+{
 }
