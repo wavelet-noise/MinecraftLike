@@ -45,7 +45,7 @@ private:
 
 private:
 
-  void Push(const Model &model, const WPos &pos);
+  void Push(const Model &model, const SBPos &pos);
 
 };
 
