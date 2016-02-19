@@ -57,18 +57,20 @@ void SectorTessellator::Update(Tessellator *tesselator, Render &render)
   {
     if (mBlocks[i])
     {
-      params.wbpos = cs::SBtoWB(cs::ItoSB(i), mPos);
-      Push(mBlocks[i]->GetModel(params), params.wbpos);
+      auto sbpos = cs::ItoSB(i);
+      params.wbpos = cs::SBtoWB(sbpos, mPos);
+      Push(mBlocks[i]->GetModel(params), sbpos);
     }
   }
 
   LOG(trace) << "SectorTessellated: " << glfwGetTime() - currentTime;
+  LOG(trace) << "SectorTessellated: [" << mPos.x << "," << mPos.y << "," << mPos.z << "]";
 
   render.PushModel(mModel, mModelMatrix);
   mChanged = false;
 }
 
-void SectorTessellator::Push(const Model &model, const WPos &pos)
+void SectorTessellator::Push(const Model &model, const SBPos &pos)
 {
   auto &dst = mModel.GetMesh();
   const auto &src = model.GetMesh();
