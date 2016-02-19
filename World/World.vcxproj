@@ -100,6 +100,8 @@
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="network\NetworkManager.h" />
+    <ClInclude Include="network\packetresponseplayers.h" />
     <ClInclude Include="Serealize.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
@@ -109,12 +111,10 @@
     <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="lodepng\lodepng.h" />
     <ClInclude Include="network\network.h" />
-    <ClInclude Include="network\NetworkManager.h" />
     <ClInclude Include="network\packet.h" />
     <ClInclude Include="network\packetholder.h" />
     <ClInclude Include="network\packetrequestplayers.h" />
     <ClInclude Include="network\packetrequestsector.h" />
-    <ClInclude Include="network\packetresponseplayers.h" />
     <ClInclude Include="network\packetresponsesector.h" />
     <ClInclude Include="Render\Atlas.h" />
     <ClInclude Include="Render\Bitmap.h" />

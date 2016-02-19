@@ -376,6 +376,12 @@
       <Filter>Core\Tessellator</Filter>
     </ClInclude>
     <ClInclude Include="Serealize.h" />
+    <ClInclude Include="network\NetworkManager.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packetresponseplayers.h">
+      <Filter>network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json">

@@ -132,25 +132,3 @@ inline std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
 	LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime << " blocks count: " << blocksCount;
   return psec;
 }
-
-void WorldWorker::Process()
-{
-  mQueueMutex.lock();
-	if (!mRequested.empty())
-	{
-    SPos last = mLast;
-    auto r = mRequested.find(last);
-    if(r == mRequested.end())
-      r = mRequested.begin();
-    mQueueMutex.unlock();
-
-    auto gen = Generate(*r);
-
-    mQueueMutex.lock();
-    mReady[*r] = gen;
-    mRequested.erase(r);
-    mQueueMutex.unlock();
-	}
-  else
-    mQueueMutex.unlock();
-}
