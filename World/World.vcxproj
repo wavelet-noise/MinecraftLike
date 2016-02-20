@@ -68,7 +68,10 @@
     <ClCompile Include="Render\TextureManager.cpp" />
     <ClCompile Include="tools\Bresenham3D.cpp" />
     <ClCompile Include="tools\Log.cpp" />
+    <ClCompile Include="tools\order_casters.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
+    <ClCompile Include="tools\wset.cpp" />
+    <ClCompile Include="tools\wset.h" />
     <ClCompile Include="Window\Keyboard.cpp" />
     <ClCompile Include="Window\Mouse.cpp" />
     <ClCompile Include="Window\Window.cpp" />
@@ -137,6 +140,7 @@
     <ClInclude Include="tools\Bresenham3D.h" />
     <ClInclude Include="tools\CoordSystem.h" />
     <ClInclude Include="tools\Log.h" />
+    <ClInclude Include="tools\order_casters.h" />
     <ClInclude Include="tools\QueuedThread.h" />
     <ClInclude Include="tools\StringIntern.h" />
     <ClInclude Include="Window\Keyboard.h" />

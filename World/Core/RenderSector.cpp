@@ -15,7 +15,7 @@ RenderSector::RenderSector(const SPos &pos)
 {
   using MeshType = std::remove_reference_t<decltype(mModel.GetMesh())>::element_type;
   mModel.GetMesh() = std::make_shared<MeshType>();
-  mModel.GetMesh()->Reserve(100000, 100000);
+  mModel.GetMesh()->Reserve(1, 1);
 
   mModelMatrix = glm::translate(mModelMatrix, cs::StoW(pos));
 }

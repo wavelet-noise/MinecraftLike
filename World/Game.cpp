@@ -25,6 +25,8 @@
 #include "Core/DB.h"
 #include "Core/SplitBlockTessellator.h"
 #include "tools/Log.h"
+#include "tools\wset.h"
+#include "tools\order_casters.h"
 
 #include "gui\imgui_impl_glfw_gl3.h"
 
@@ -236,12 +238,15 @@ void Game::Draw(double dt)
     minsec += dt;
     static int li = 0, lj = 0;
 
+    static std::string mems;
     if (sec >= 1)
     {
       fps_h[li++] = fps.GetCount();
       if (li == 99)
         li = 0;
       sec -= 1;
+
+      //mems = GetMemoryString(memory_used());
     }
 
     if (minsec >= 0.1f)
@@ -255,6 +260,8 @@ void Game::Draw(double dt)
     ImGui::Text("Perfomance");
     ImGui::SetWindowSize({ 100, 160 });
     ImGui::SetWindowPos({500,0});
+
+    ImGui::LabelText("Mem:", "%s", mems.c_str());
     ImGui::PlotLines(
       "",
       &fps_h[0],
