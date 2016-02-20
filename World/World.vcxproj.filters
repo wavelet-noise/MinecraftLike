@@ -28,7 +28,7 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{7f7b3b83-cdc1-46e0-bdb7-ea19d9dc9138}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Tessellator">
+    <Filter Include="Core\splicer">
       <UniqueIdentifier>{2feb6842-a114-4c9f-a902-127e8c8d6473}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -163,27 +163,6 @@
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Core\BlockTessellator.cpp">
-      <Filter>Core\Tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Tessellator.cpp">
-      <Filter>Core\Tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\SplitBlockTessellator.cpp">
-      <Filter>Core\Tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\SectorTessellator.cpp">
-      <Filter>Core\Tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="PerlinNoise.cpp">
-      <Filter>Core\MapGen</Filter>
-    </ClCompile>
-    <ClCompile Include="network\NetworkManager.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="network\packetresponseplayers.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -257,6 +236,9 @@
     <ClInclude Include="Render\Color.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="Render\IRenderMeshStrategy.h">
+      <Filter>Render</Filter>
+    </ClInclude>
     <ClInclude Include="Render\Mesh.h">
       <Filter>Render</Filter>
     </ClInclude>
@@ -291,6 +273,9 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="TemplateFactory.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize.h">
       <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="Core\MapGen\WorldWorker.h">
@@ -356,31 +341,6 @@
     <ClInclude Include="Render\DBShaders.h" />
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\QueuedThread.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\BlockTessellator.h">
-      <Filter>Core\Tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Tessellator.h">
-      <Filter>Core\Tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SplitBlockTessellator.h">
-      <Filter>Core\Tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SectorTessellator.h">
-      <Filter>Core\Tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\TessellatorParams.h">
-      <Filter>Core\Tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Serealize.h" />
-    <ClInclude Include="network\NetworkManager.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="network\packetresponseplayers.h">
-      <Filter>network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
