@@ -27,3 +27,4 @@ World.VC.opendb
 /rapidjson/
 /textures
 *.orig
+*.~vsd
