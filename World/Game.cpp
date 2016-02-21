@@ -75,17 +75,17 @@ int Game::Run()
 
   std::atomic<bool> close = false;
 
-  mWorld->GetPlayer()->SetPosition({ 0,0,10 });
+  mWorld->GetPlayer()->SetPosition({ 0,0,50 });
 
   boost::thread th([&close]() {
     while (!close)
     {
-      WorldWorker::instance().Process();
+      WorldWorker::Get().Process();
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
   });
 
-  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 7);
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 1);
 
   mTessellator = std::make_unique<Tessellator>(*mRender);
   mWorld->SetTessellator(mTessellator.get());

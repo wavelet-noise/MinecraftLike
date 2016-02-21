@@ -36,8 +36,6 @@ public:
 
   Player *GetPlayer();
 
-  Tessellator *GetTessellator();
-
   void SetTessellator(Tessellator *tess);
 
 private:

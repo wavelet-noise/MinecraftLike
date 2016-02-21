@@ -20,9 +20,13 @@ void SectorLoader::Reload()
   // Загружаем нужные сектора.
   for (const auto &site : mSite)
   {
-    auto a = mWorld.GetSector(mPos + site);
+    auto pos = mPos + site;
+    pos.z = 0;
+    auto a = mWorld.GetSector(pos);
     if (!a)
-      return;
+    {
+      //return;
+    }
   }
 }
 
@@ -39,12 +43,15 @@ void SectorLoader::SetRadius(size_t radius)
   int begin = -static_cast<int>(mRadius);
   int end = static_cast<int>(mRadius);
   glm::ivec3 pos(begin); 
-  for (pos.z = begin; pos.z <= end; ++pos.z)
+  pos.z = 0;
+//  for (pos.z = begin; pos.z <= end; ++pos.z)
   for (pos.y = begin; pos.y <= end; ++pos.y)
   for (pos.x = begin; pos.x <= end; ++pos.x)
   {
-    if(glm::length(glm::vec3(pos)) <= mRadius)
+    //if(glm::length(glm::vec3(pos)) <= mRadius)
+    {
       mSite.push_back(pos);
+    }
   }
 
 }

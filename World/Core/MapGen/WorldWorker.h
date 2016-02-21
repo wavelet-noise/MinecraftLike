@@ -12,19 +12,14 @@
 #include <glm/glm.hpp>
 #include "tools\CoordSystem.h"
 #include <mutex>
+#include "WorldGenFlat.h"
 
 class Sector;
 
 class WorldWorker : public boost::noncopyable
 {
 public:
-	WorldWorker();
-
-	static WorldWorker &instance()
-	{
-    static auto lw = std::make_unique<WorldWorker>();
-		return *lw;
-	}
+  static WorldWorker &Get();
 
 	std::shared_ptr<Sector> GetSector(const SPos &v);
 	void Process();
@@ -36,5 +31,7 @@ private:
   std::mutex mQueueMutex;
 	std::unordered_map<SPos, std::shared_ptr<Sector>> mReady;
 	std::unordered_set<SPos> mRequested;
+
+  WorldGenFlat mGenerator;
 };
 #endif //WorldWorker_h_

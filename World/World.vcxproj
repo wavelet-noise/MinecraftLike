@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Block.cpp" />
+    <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
     <ClCompile Include="Core\SectorTessellator.cpp" />
     <ClCompile Include="Core\SplitBlockTessellator.cpp" />
     <ClCompile Include="Core\DB.cpp" />
@@ -79,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\Block.h" />
+    <ClInclude Include="Core\MapGen\WorldGenFlat.h" />
     <ClInclude Include="Core\SectorTessellator.h" />
     <ClInclude Include="Core\SplitBlockTessellator.h" />
     <ClInclude Include="Core\DB.h" />

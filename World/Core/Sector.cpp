@@ -22,7 +22,7 @@ Sector::~Sector()
 {
 }
 
-const SPos & Sector::GetSectorPosition() const
+const SPos & Sector::GetPos() const
 {
   return mPos;
 }
@@ -36,63 +36,36 @@ PBlock Sector::GetBlock(const SBPos &pos)
 void Sector::SetBlock(const SBPos &pos, PBlock block)
 {
   assert(glm::clamp(pos, 0, static_cast<int32_t>(SECTOR_SIZE - 1)) == pos);
-  mPushTest.push_back(pos);
   mBlocks[pos.z * SECTOR_SIZE * SECTOR_SIZE + pos.y * SECTOR_SIZE + pos.x] = block;
+
+  if (mTessellator && block)
+  {
+    mTessellator->Set(cs::SBtoWB(pos, mPos), DB::Get().CreateTesselator(block->GetId()));
+    mTessellator->SayChanged(mPos);
+  }
 }
 
 void Sector::Update(World *world)
 {
-  for (auto &i : mPushTest)
-  {
-    world->GetTessellator()->Set(cs::SBtoWB(i, mPos), DB::Get().CreateTesselator(GetBlock(i)->GetId()));
-  }
 
-  if (!mPushTest.empty())
-  {
-    world->GetTessellator()->SayChanged(mPos);
-  }
-
-  mPushTest.clear();
-  // Если рендер сектор давно не обновлялся, нужно его удалить.
 }
 
-void Sector::UpdateGraphic(World *world, Render &render)
+
+
+void Sector::Draw(class Tessellator *tess)
 {
-  // Åñëè ðåíäåð ñåêòîð îòñóòñòâóåò, íóæíî åãî ñîçäàòü.
-  if (!mRenderSector)
+  mTessellator = tess;
+  if (mTessellator)
   {
-    mRenderSector = std::make_unique<RenderSector>(mPos);
-  }
-
-  auto currentTime = glfwGetTime();
-  GameObjectParams params{ world , this,{} };
-
-  if (mRenderSector->IsNeedBuild())
-  {
-    const size_t size = static_cast<size_t>(SECTOR_SIZE);
+    auto currentTime = glfwGetTime();
     for (size_t i = 0; i < mBlocks.size(); ++i)
     {
       if (mBlocks[i])
       {
-        params.pos = cs::SBtoWB({ i % size, (i / size) % size, i / (size * size) }, mPos);
-        mBlocks[i]->Draw(params);
+        mTessellator->Set(cs::SBtoWB(cs::ItoSB(i), mPos), DB::Get().CreateTesselator(mBlocks[i]->GetId()));
       }
     }
-    LOG(trace) << "SectorBuild: " << glfwGetTime() - currentTime;
+    mTessellator->SayChanged(mPos);
+    LOG(trace) << "SectorOnDraw: " << glfwGetTime() - currentTime;
   }
-  mRenderSector->Update(render);
-}
-
-void Sector::SayChanged()
-{
-  if (!mRenderSector) //TODO: вероятно разумнее посто игнорировать изменения, если рендера нет
-  {
-    mRenderSector = std::make_unique<RenderSector>(mPos);
-  }
-  mRenderSector->SayChanged();
-}
-
-RenderSector &Sector::GetRenderSector()
-{
-  return *mRenderSector;
 }

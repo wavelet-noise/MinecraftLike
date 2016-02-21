@@ -25,7 +25,7 @@ public:
   Sector(const SPos &position);
   ~Sector();
 
-  const SPos &GetSectorPosition() const;
+  const SPos &GetPos() const;
 
   /// ¬ернуть блок в локальных координатах сектора.
   PBlock GetBlock(const SBPos &pos);
@@ -36,20 +36,14 @@ public:
 
   void Update(class World *world);
 
-  void UpdateGraphic(class World *world, class Render &render);
+  void Draw(class Tessellator *tess);
 
-  void SayChanged();
-
-  RenderSector &GetRenderSector();
 private:
-  friend class WorldWorker;
   std::array<PBlock, SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE> mBlocks;
 
   SPos mPos;
 
-  std::unique_ptr<RenderSector> mRenderSector;
-
-  std::list<SBPos> mPushTest;
+  class Tessellator *mTessellator = nullptr;
 
   friend class boost::serialization::access;
 
@@ -83,7 +77,7 @@ namespace boost {
     template<class Archive>
     inline void save_construct_data(Archive &ar, const Sector *t, const unsigned int)
     {
-      ar << t->GetSectorPosition();
+      ar << t->GetPos();
     }
 
     template<class Archive>

@@ -39,11 +39,12 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
   auto it = mSectors.find(position);
   if (it == mSectors.end())
   {
-    if (auto psec = WorldWorker::instance().GetSector(position))
+    if (auto psec = WorldWorker::Get().GetSector(position))
     {
       mSectors[position] = psec;
+      psec->Draw(mTesselator);
+
       // Добавлен новый сектор, сообщим соседним секторам, что б перестроились.
-      
       /*SPos offset[] = 
       {
         {  1,  0,  0 },
@@ -97,18 +98,12 @@ void World::SetBlock(const WBPos &wbpos, PBlock block)
   if (auto sector = FindSector(spos))
   {
     sector->SetBlock(cs::WBtoSB(wbpos, spos), block);
-    sector->SayChanged();
   }
 }
 
 Player *World::GetPlayer()
 {
   return mPlayer.get();
-}
-
-Tessellator * World::GetTessellator()
-{
-  return mTesselator;
 }
 
 void World::SetTessellator(Tessellator *tess)
