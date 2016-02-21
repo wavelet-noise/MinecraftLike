@@ -81,6 +81,7 @@
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\Block.h" />
     <ClInclude Include="Core\MapGen\WorldGenFlat.h" />
+    <ClInclude Include="Core\SectorBase.h" />
     <ClInclude Include="Core\SectorTessellator.h" />
     <ClInclude Include="Core\SplitBlockTessellator.h" />
     <ClInclude Include="Core\DB.h" />

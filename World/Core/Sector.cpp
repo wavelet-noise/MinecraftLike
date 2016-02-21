@@ -11,10 +11,13 @@
 #include "../Render/Render.h"
 #include "World.h"
 #include "Tessellator.h"
+#include "SectorBase.h"
 
 Sector::Sector(const SPos &position)
   : mPos(position)
 {
+  SectorBase<PBlock> t;
+  t.SetBlock({}, nullptr);
 }
 
 

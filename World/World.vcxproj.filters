@@ -19,17 +19,20 @@
     <Filter Include="Window">
       <UniqueIdentifier>{24067ff2-83f3-44f5-8544-3e03654695a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lodepng">
-      <UniqueIdentifier>{a032ce15-3102-4c85-951b-897c1582c372}</UniqueIdentifier>
-    </Filter>
     <Filter Include="network">
       <UniqueIdentifier>{5167f8a9-c11b-46f5-b8c4-6499054292af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{7f7b3b83-cdc1-46e0-bdb7-ea19d9dc9138}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\tessellator">
       <UniqueIdentifier>{2feb6842-a114-4c9f-a902-127e8c8d6473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty">
+      <UniqueIdentifier>{064589c8-2a89-44ab-8cbc-9a6b22869bbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\lodepng">
+      <UniqueIdentifier>{a032ce15-3102-4c85-951b-897c1582c372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\imgui">
+      <UniqueIdentifier>{7f7b3b83-cdc1-46e0-bdb7-ea19d9dc9138}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +115,7 @@
       <Filter>Window</Filter>
     </ClCompile>
     <ClCompile Include="lodepng\lodepng.cpp">
-      <Filter>lodepng</Filter>
+      <Filter>3rdparty\lodepng</Filter>
     </ClCompile>
     <ClCompile Include="Render\RenderMeshDList.cpp">
       <Filter>Render</Filter>
@@ -148,16 +151,16 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui_demo.cpp">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui.cpp">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
@@ -299,7 +302,7 @@
       <Filter>Window</Filter>
     </ClInclude>
     <ClInclude Include="lodepng\lodepng.h">
-      <Filter>lodepng</Filter>
+      <Filter>3rdparty\lodepng</Filter>
     </ClInclude>
     <ClInclude Include="Render\RenderMeshDList.h">
       <Filter>Render</Filter>
@@ -344,25 +347,25 @@
       <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imgui_internal.h">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imgui.h">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="imgui\stb_truetype.h">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="imgui\stb_textedit.h">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="imgui\stb_rect_pack.h">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h">
-      <Filter>imgui</Filter>
+      <Filter>3rdparty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Render\ErrorImage.h">
       <Filter>Render</Filter>
@@ -403,6 +406,9 @@
     </ClInclude>
     <ClInclude Include="Core\MapGen\WorldGenFlat.h">
       <Filter>Core\MapGen</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SectorBase.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
