@@ -12,6 +12,7 @@
 #include <mutex>
 #include <memory>
 #include <atomic>
+#include <tuple>
 
 
 /// Необходимо определить следующие методы:
@@ -75,7 +76,10 @@ public:
   void PushFunc(F func, Args... args)
   {
     std::lock_guard<std::mutex> lock(mMutex);
-    mQueueBack.push_back([=] { return func(args...); });
+    mQueueBack.push_back([func = func, pargs = std::make_tuple(std::move(args)...)]
+    { 
+      func(pargs);
+    });
   }
 
 private:

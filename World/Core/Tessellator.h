@@ -12,6 +12,9 @@
 #include "BlockTessellator.h"
 #include "SectorTessellator.h"
 #include <unordered_map>
+#include "..\tools\StringIntern.h"
+#include <tuple>
+#include <vector>
 
 
 class Tessellator : public QueuedThread<Tessellator>
@@ -23,6 +26,8 @@ public:
 
   /// Установить тесселятор в указанную позицию.
   void Set(const WBPos &pos, PBlockTessellator block);
+
+  void Set(const SPos &spos, std::vector<std::tuple<size_t, StringIntern>> &&blocks);
 
   /// Сообщить сектору, что он изменился.
   void SayChanged(const SPos &pos);

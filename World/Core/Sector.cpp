@@ -12,12 +12,13 @@
 #include "World.h"
 #include "Tessellator.h"
 #include "SectorBase.h"
+#include <tuple>
 
 Sector::Sector(const SPos &position)
   : mPos(position)
 {
-  SectorBase<PBlock> t;
-  t.SetBlock({}, nullptr);
+  //SectorBase<PBlock> t;
+  //t.SetBlock({}, nullptr);
 }
 
 
@@ -61,13 +62,16 @@ void Sector::Draw(class Tessellator *tess)
   if (mTessellator)
   {
     auto currentTime = glfwGetTime();
+    std::vector<std::tuple<size_t, StringIntern>> blocks;
+    blocks.reserve(mBlocks.size() / 2);
     for (size_t i = 0; i < mBlocks.size(); ++i)
     {
       if (mBlocks[i])
       {
-        mTessellator->Set(cs::SBtoWB(cs::ItoSB(i), mPos), DB::Get().CreateTesselator(mBlocks[i]->GetId()));
+        blocks.emplace_back(i, mBlocks[i]->GetId());
       }
     }
+    mTessellator->Set(mPos, std::move(blocks));
     mTessellator->SayChanged(mPos);
     LOG(trace) << "SectorOnDraw: " << glfwGetTime() - currentTime;
   }

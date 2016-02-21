@@ -4,6 +4,8 @@
 // ============================================================================
 #include "Tessellator.h"
 #include "..\Render\Render.h"
+#include "DB.h"
+#include <utility>
 
 
 
@@ -14,24 +16,44 @@ Tessellator::Tessellator(Render &render)
 
 void Tessellator::Set(const WBPos &pos, PBlockTessellator block)
 {
-  PushFunc([this](const WBPos &pos, PBlockTessellator block)
+//   PushFunc([this](const WBPos &pos, PBlockTessellator block)
+//   {
+//     auto spos = cs::WBtoS(pos);
+//     auto sector = FindSector(spos);
+//     if (!sector)
+//     {
+//       sector = std::make_shared<SectorTessellator>(spos);
+//       mSectors[spos] = sector;
+//     }
+//     sector->SetBlock(cs::WBtoSB(pos, spos), block);
+//   }, pos, block);
+}
+
+void Tessellator::Set(const SPos &spos, std::vector<std::tuple<size_t, StringIntern>> &&blocks)
+{
+  PushFunc([&, this](const std::tuple<SPos, std::vector<std::tuple<size_t, StringIntern>>> &tuple)
   {
-    auto spos = cs::WBtoS(pos);
+    const auto &spos = std::get<0>(tuple);
+    auto &blocks = std::get<1>(tuple);
+
     auto sector = FindSector(spos);
     if (!sector)
     {
       sector = std::make_shared<SectorTessellator>(spos);
       mSectors[spos] = sector;
     }
-    sector->SetBlock(cs::WBtoSB(pos, spos), block);
-  }, pos, block);
+    for (size_t i = 0; i < blocks.size(); ++i)
+    {
+      sector->SetBlock(cs::ItoSB(std::get<0>(blocks[i])), DB::Get().CreateTesselator(std::get<1>(blocks[i])));
+    }
+  }, spos, std::move(blocks));
 }
 
 void Tessellator::SayChanged(const SPos &pos)
 {
-  PushFunc([this](const SPos &pos)
+  PushFunc([this](const std::tuple<SPos> &tuple)
   {
-    if (auto sector = FindSector(pos))
+    if (auto sector = FindSector(std::get<0>(tuple)))
     {
       sector->SayChanged();
     }

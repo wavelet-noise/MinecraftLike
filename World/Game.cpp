@@ -75,7 +75,7 @@ int Game::Run()
 
   std::atomic<bool> close = false;
 
-  mWorld->GetPlayer()->SetPosition({ 0,0,50 });
+  mWorld->GetPlayer()->SetPosition({ 0,0,800 });
 
   boost::thread th([&close]() {
     while (!close)
@@ -85,7 +85,7 @@ int Game::Run()
     }
   });
 
-  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 1);
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 10);
 
   mTessellator = std::make_unique<Tessellator>(*mRender);
   mWorld->SetTessellator(mTessellator.get());
