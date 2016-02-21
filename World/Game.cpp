@@ -113,6 +113,7 @@ int Game::Run()
     Draw(currTime - lastTime);
 
     mWindow->Update();
+	std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
 
   close = true;

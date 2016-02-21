@@ -72,7 +72,7 @@ inline std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
     sector.SetBlock(sbpos, mGenerator.Create(cs::SBtoWB(sbpos, spos)));
   }
 
-  LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime;
+  //LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime;
   return psec;
 }
 

@@ -63,7 +63,7 @@ void SectorTessellator::Update(Tessellator *tesselator, Render &render)
     }
   }
 
-  LOG(trace) << "SectorTessellated: " << glfwGetTime() - currentTime;
+  //LOG(trace) << "SectorTessellated: " << glfwGetTime() - currentTime;
   //LOG(trace) << "SectorTessellated: [" << mPos.x << "," << mPos.y << "," << mPos.z << "]";
 
   render.PushModel(mModel, mModelMatrix);

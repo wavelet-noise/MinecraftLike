@@ -73,6 +73,6 @@ void Sector::Draw(class Tessellator *tess)
     }
     mTessellator->Set(mPos, std::move(blocks));
     mTessellator->SayChanged(mPos);
-    LOG(trace) << "SectorOnDraw: " << glfwGetTime() - currentTime;
+    //LOG(trace) << "SectorOnDraw: " << glfwGetTime() - currentTime;
   }
 }

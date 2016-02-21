@@ -132,7 +132,7 @@ void Render::AddElements()
 
     auto currentTime = glfwGetTime();
     element.model.GetMesh()->Compile(element.model.GetShader()->GetAttributeLocation(element.model.GetMesh()->GetAttribute()));
-    LOG(trace) << "SectorCompiled: " << glfwGetTime() - currentTime;
+    //LOG(trace) << "SectorCompiled: " << glfwGetTime() - currentTime;
     
     element.model.GetMesh()->Release();
   }
