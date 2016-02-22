@@ -16,9 +16,17 @@ template<class BlockType>
 class SectorBase
 {
 public:
+  SectorBase()
+  {
+    mUniqueBlocks.emplace_back(nullptr);
+  }
 
   BlockType GetBlock(const SBPos &pos)
   {
+    if (mCountBlocks == 0)
+    {
+      return mUniqueBlocks[0];
+    }
     return GetBlock(cs::SBtoI(pos));
   }
 
@@ -34,29 +42,14 @@ public:
     }
   }
 
-  void Foreach(const std::function<void(size_t index, BlockType &block)> &func)
-  {
-    if (mCountBlocks == 0)
-    {
-      return;
-    }
-    for (size_t i = 0; i < mBlocks.size(); ++i)
-    {
-      if (mBlocks[i] != 0)
-      {
-        func(i, mUniqueBlocks[mBlocks[i] - 1]);
-      }
-    }
-  }
 
-
-private:
+protected:
   std::vector<uint16_t> mBlocks;
   std::vector<BlockType> mUniqueBlocks;
 
   size_t mCountBlocks = 0;
 
-private:
+protected:
   inline void AddBlock(size_t index, BlockType block)
   {
     // Блок не должен быть пустым.
@@ -79,7 +72,7 @@ private:
           findedUnique = true;
         }
       }
-      else
+      else if (i != 0)
       {
         empty = i;
         findedEmpty = true;
@@ -91,7 +84,7 @@ private:
       if (!findedEmpty)
       {
         empty = mUniqueBlocks.size();
-        mUniqueBlocks.resize(empty + 1, block);
+        mUniqueBlocks.push_back(block);
       }
       unique = empty;
     }
@@ -103,7 +96,7 @@ private:
     }
 
     ++mCountBlocks;
-    mBlocks[index] = unique + 1;
+    mBlocks[index] = unique;
   }
 
   inline void RemoveBlock(size_t index)
@@ -135,7 +128,7 @@ private:
 
     if (isUnique)
     {
-      mUniqueBlocks[unique - 1] = nullptr;
+      mUniqueBlocks[unique] = nullptr;
       auto oldSize = mUniqueBlocks.size();
       size_t eraseCount = 0;
       for (auto &it = mUniqueBlocks.rbegin(); it != mUniqueBlocks.rend(); ++it)
@@ -164,17 +157,8 @@ private:
 
   inline BlockType GetBlock(size_t index)
   {
-    if (mCountBlocks == 0)
-    {
-      return nullptr;
-    }
-
-    if (mBlocks[index] == 0)
-    {
-      return nullptr;
-    }
-
-    return mUniqueBlocks[mBlocks[index] - 1];
+    assert(!mBlocks.empty());
+    return mUniqueBlocks[mBlocks[index]];
   }
 
 };

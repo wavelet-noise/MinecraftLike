@@ -19,21 +19,6 @@ SectorTessellator::SectorTessellator(const SPos &pos)
   mModel.GetMesh() = std::make_shared<MeshType>();
 }
 
-
-SectorTessellator::~SectorTessellator()
-{
-}
-
-// void SectorTessellator::SetBlock(const SBPos &pos, PBlockTessellator block)
-// {
-//   mBlocks[cs::SBtoI(pos)] = block;
-// }
-// 
-// PBlockTessellator SectorTessellator::GetBlock(const SBPos &pos)
-// {
-//   return mBlocks[cs::SBtoI(pos)];
-// }
-
 void SectorTessellator::SayChanged()
 {
   mChanged = true;
@@ -51,22 +36,15 @@ void SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
   auto currentTime = glfwGetTime();
   TessellatorParams params{ tesselator, this, mPos,{} };
 
-//   for (size_t i = 0; i < mBlocks.size(); ++i)
-//   {
-//     if (mBlocks[i])
-//     {
-//       auto sbpos = cs::ItoSB(i);
-//       params.wbpos = cs::SBtoWB(sbpos, mPos);
-//       Push(mBlocks[i]->GetModel(params), sbpos);
-//     }
-//   }
-
-  Foreach([this, &params](size_t index, PBlockTessellator &block)
+  for (size_t i = 0; i < mBlocks.size(); ++i)
   {
-      auto sbpos = cs::ItoSB(index);
+    if (mBlocks[i])
+    {
+      auto sbpos = cs::ItoSB(i);
       params.wbpos = cs::SBtoWB(sbpos, mPos);
-      Push(block->GetModel(params), sbpos);
-  });
+      Push(GetBlock(i)->GetModel(params), sbpos);
+    }
+  };
 
   //LOG(trace) << "SectorTessellated: " << glfwGetTime() - currentTime;
   //LOG(trace) << "SectorTessellated: [" << mPos.x << "," << mPos.y << "," << mPos.z << "]";
