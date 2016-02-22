@@ -9,7 +9,7 @@
 #include <type_traits>
 #include "Tessellator.h"
 #include "TessellatorParams.h"
-#include "..\Render\Render.h"
+#include "..\Render\RenderSector.h"
 #include "..\tools\Log.h"
 
 SectorTessellator::SectorTessellator(const SPos &pos)
@@ -17,9 +17,6 @@ SectorTessellator::SectorTessellator(const SPos &pos)
 {
   using MeshType = std::remove_reference_t<decltype(mModel.GetMesh())>::element_type;
   mModel.GetMesh() = std::make_shared<MeshType>();
-  mModel.GetMesh()->Reserve(100000, 100000);
-
-  mModelMatrix = glm::translate(mModelMatrix, cs::StoW(mPos));
 }
 
 
@@ -42,13 +39,14 @@ void SectorTessellator::SayChanged()
   mChanged = true;
 }
 
-void SectorTessellator::Update(Tessellator *tesselator, Render &render)
+void SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
 {
   if (!mChanged)
   {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     return;
   }
+
+  mModel.GetMesh()->Reserve(100000, 100000);
 
   auto currentTime = glfwGetTime();
   TessellatorParams params{ tesselator, this, mPos,{} };
@@ -66,7 +64,7 @@ void SectorTessellator::Update(Tessellator *tesselator, Render &render)
   //LOG(trace) << "SectorTessellated: " << glfwGetTime() - currentTime;
   //LOG(trace) << "SectorTessellated: [" << mPos.x << "," << mPos.y << "," << mPos.z << "]";
 
-  render.PushModel(mModel, mModelMatrix);
+  render.Push(mModel, mPos);
   mChanged = false;
 }
 

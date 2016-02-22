@@ -7,7 +7,6 @@
 #include <utility>
 #include <GLFW\glfw3.h>
 #include "..\tools\CoordSystem.h"
-#include "RenderSector.h"
 #include "MapGen\WorldWorker.h"
 #include "..\Render\Render.h"
 #include "Tessellator.h"

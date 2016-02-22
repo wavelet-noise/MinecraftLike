@@ -14,6 +14,7 @@
 #include "Core\Tessellator.h"
 
 #include "FpsCounter.h"
+#include "Render\RenderSector.h"
 
 class Game
 {
@@ -36,6 +37,7 @@ private:
 
   std::unique_ptr<Window> mWindow;
   std::unique_ptr<Render> mRender;
+  std::unique_ptr<RenderSector> mRenderSector;
   std::shared_ptr<Camera> mCamera;
   std::unique_ptr<World> mWorld;
   std::unique_ptr<Tessellator> mTessellator;

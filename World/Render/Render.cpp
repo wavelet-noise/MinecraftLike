@@ -98,8 +98,7 @@ void Render::Draw(Camera &camera)
     auto aabb = i.model.GetAABB();
     if (!camera.BoxWithinFrustum(i.matrix * std::get<0>(aabb), i.matrix * std::get<1>(aabb)))
     {
-      //TODO: не работает.
-      //continue;
+      continue;
     }
 
     if(auto t = i.model.GetTexture())
@@ -129,6 +128,8 @@ void Render::AddElements()
     mDrawList.push_back(i);
     auto &element = mDrawList.back();
     *element.mIterator = --mDrawList.end();
+
+    element.model.BuildAABB(&VertexVTN::vertex);
 
     auto currentTime = glfwGetTime();
     element.model.GetMesh()->Compile(element.model.GetShader()->GetAttributeLocation(element.model.GetMesh()->GetAttribute()));

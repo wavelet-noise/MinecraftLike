@@ -31,7 +31,7 @@ public:
   void SayChanged();
 
   /// Если сектор был изменен, обновляет геометрию и посылает в рендер.
-  void Update(class Tessellator *tesselator, class Render &render);
+  void Update(class Tessellator *tesselator, class RenderSector &render);
 
 private:
   std::array<PBlockTessellator, SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE> mBlocks;
@@ -39,7 +39,6 @@ private:
   SPos mPos;
 
   Model mModel;
-  glm::mat4 mModelMatrix;
 
   bool mChanged = false;
 

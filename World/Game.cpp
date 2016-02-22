@@ -40,6 +40,7 @@ Game::Game()
 
   Render::Initialize();
   mRender = std::make_unique<Render>();
+  mRenderSector = std::make_unique<RenderSector>();
 
   ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
 
@@ -52,6 +53,7 @@ Game::Game()
 
 Game::~Game()
 {
+  mRenderSector.reset();
   mRender.reset();
   mWindow.reset();
   Window::WindowSystemFinally();
@@ -87,7 +89,7 @@ int Game::Run()
 
   mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 10);
 
-  mTessellator = std::make_unique<Tessellator>(*mRender);
+  mTessellator = std::make_unique<Tessellator>(*mRenderSector);
   mWorld->SetTessellator(mTessellator.get());
   mTessellator->Run();
 
@@ -123,6 +125,7 @@ int Game::Run()
 
   return 0;
 }
+
 
 void Game::Update(double dt)
 {
@@ -229,7 +232,7 @@ void Game::Draw(double dt)
 
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));     // Очистка экрана
 
-  mRender->Draw(*mCamera);
+  mRenderSector->Draw(*mCamera);
 
   ImGui_ImplGlfwGL3_NewFrame();
   {

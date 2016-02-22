@@ -3,13 +3,13 @@
 // ==                  See license.txt for more information                  ==
 // ============================================================================
 #include "Tessellator.h"
-#include "..\Render\Render.h"
+#include "..\Render\RenderSector.h"
 #include "DB.h"
 #include <utility>
 
 
 
-Tessellator::Tessellator(Render &render)
+Tessellator::Tessellator(RenderSector &render)
   : mRender(render)
 {
 }

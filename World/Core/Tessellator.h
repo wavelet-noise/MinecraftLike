@@ -20,7 +20,7 @@
 class Tessellator : public QueuedThread<Tessellator>
 {
 public:
-  Tessellator(class Render &render);
+  Tessellator(class RenderSector &render);
 
   /// Потокобезопасные методы.
 
@@ -46,7 +46,7 @@ public:
 private:
   std::unordered_map<SPos, std::shared_ptr<SectorTessellator>> mSectors;
 
-  class Render &mRender;
+  class RenderSector &mRender;
 
 private:
   /// Найти сектор по позиции сектора.

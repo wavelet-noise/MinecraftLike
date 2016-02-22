@@ -8,7 +8,6 @@
 #include "tools\CoordSystem.h"
 #include "Core\Sector.h"
 #include "Core\MapGen\PerlinNoise.h"
-#include "Core\RenderSector.h"
 #include "..\DB.h"
 #include "..\..\tools\Log.h"
 

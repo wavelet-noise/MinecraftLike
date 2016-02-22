@@ -6,33 +6,33 @@
 #ifndef RenderSector_h__
 #define RenderSector_h__
 
-#include <atomic>
-#include "..\Render\Render.h"
-#include <glm/glm.hpp>
+#include <unordered_map>
 #include "..\tools\CoordSystem.h"
+#include "Model.h"
+#include <list>
+#include <tuple>
+#include <mutex>
 
-
+/// Хранит список моделей секторов на рендер.
 class RenderSector
 {
 public:
-  RenderSector(const SPos &pos);
-  ~RenderSector();
+  void Push(const Model &model, const SPos &pos);
 
-  /// Сообщить, что геометрия изменилась.
-  void SayChanged();
+  void Remove(const SPos &pos);
 
-  /// Нужно ли перестроить сектор?
-  bool IsNeedBuild() const;
+  void Draw(class Camera &camera);
 
-  void Push(const Model &model, const WPos &pos);
-
-  void Update(Render &render);
 private:
-  Model mModel;
-  glm::mat4 mModelMatrix;
+  std::unordered_map<SPos, Model> mModels;
 
-  bool mIsChanged = true;
-  bool mIsNeedBuild = false;
+  std::list<std::tuple<Model, SPos>> mPushList;
+
+  std::mutex mMutex;
+private:
+  void AddElements();
+    
+
 };
 
 

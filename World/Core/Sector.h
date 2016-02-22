@@ -12,7 +12,6 @@
 #include "../tools/CoordSystem.h"
 #include "Block.h"
 #include "Config.h"
-#include "RenderSector.h"
 #include "DB.h"
 
 #include <boost\serialization\serialization.hpp>
