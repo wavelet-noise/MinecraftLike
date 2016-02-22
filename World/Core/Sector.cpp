@@ -17,8 +17,7 @@
 Sector::Sector(const SPos &position)
   : mPos(position)
 {
-  //SectorBase<PBlock> t;
-  //t.SetBlock({}, nullptr);
+
 }
 
 
@@ -31,16 +30,10 @@ const SPos & Sector::GetPos() const
   return mPos;
 }
 
-PBlock Sector::GetBlock(const SBPos &pos)
-{
-  assert(glm::clamp(pos, 0, static_cast<int32_t>(SECTOR_SIZE - 1)) == pos);
-  return mBlocks[pos.z * SECTOR_SIZE * SECTOR_SIZE + pos.y * SECTOR_SIZE + pos.x];
-}
 
 void Sector::SetBlock(const SBPos &pos, PBlock block)
 {
-  assert(glm::clamp(pos, 0, static_cast<int32_t>(SECTOR_SIZE - 1)) == pos);
-  mBlocks[pos.z * SECTOR_SIZE * SECTOR_SIZE + pos.y * SECTOR_SIZE + pos.x] = block;
+  SectorBase<PBlock>::SetBlock(pos, block);
 
   if (mTessellator && block)
   {
@@ -59,16 +52,16 @@ void Sector::Update(World *world)
 void Sector::Draw(class Tessellator *tess)
 {
   mTessellator = tess;
-  if (mTessellator)
+  if (mTessellator /*&& !mBlocks.empty()*/)
   {
     auto currentTime = glfwGetTime();
     std::vector<std::tuple<size_t, StringIntern>> blocks;
-    blocks.reserve(mBlocks.size() / 2);
+    blocks.reserve(mCountBlocks);
     for (size_t i = 0; i < mBlocks.size(); ++i)
     {
       if (mBlocks[i])
       {
-        blocks.emplace_back(i, mBlocks[i]->GetId());
+        blocks.emplace_back(i, GetBlock(i)->GetId());
       }
     }
     mTessellator->Set(mPos, std::move(blocks));

@@ -10,8 +10,8 @@ std::vector<uint8_t> PacketHolder::Serialize() const
   std::stringstream ss;
   boost::archive::text_oarchive oa(ss);
 
-  oa.register_type<PacketRequestSector>();
-  oa.register_type<PacketResponseSector>();
+//  oa.register_type<PacketRequestSector>();
+//  oa.register_type<PacketResponseSector>();
   oa.register_type<Packet>();
 
   oa << packet;
@@ -38,8 +38,8 @@ void PacketHolder::Deserialize(const std::vector<uint8_t> &d)
 
   boost::archive::text_iarchive ia(ss);
 
-  ia.register_type<PacketRequestSector>();
-  ia.register_type<PacketResponseSector>();
+//   ia.register_type<PacketRequestSector>();
+//   ia.register_type<PacketResponseSector>();
   ia.register_type<Packet>();
 
   try
