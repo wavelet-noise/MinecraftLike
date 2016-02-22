@@ -21,11 +21,11 @@ void SectorLoader::Reload()
   for (const auto &site : mSite)
   {
     auto pos = mPos + site;
-    pos.z = 0;
+//    pos.z = 0;
     auto a = mWorld.GetSector(pos);
     if (!a)
     {
-      //return;
+      return;
     }
   }
 }
@@ -43,8 +43,8 @@ void SectorLoader::SetRadius(size_t radius)
   int begin = -static_cast<int>(mRadius);
   int end = static_cast<int>(mRadius);
   glm::ivec3 pos(begin); 
-  pos.z = 0;
-//  for (pos.z = begin; pos.z <= end; ++pos.z)
+  //pos.z = 0;
+  for (pos.z = -2; pos.z <= 2; ++pos.z)
   for (pos.y = begin; pos.y <= end; ++pos.y)
   for (pos.x = begin; pos.x <= end; ++pos.x)
   {

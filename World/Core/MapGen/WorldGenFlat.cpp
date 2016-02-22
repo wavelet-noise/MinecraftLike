@@ -19,7 +19,8 @@ PBlock WorldGenFlat::Create(const WBPos &pos)
   if (pos.z <= 10)
   {
     if (sbpos.x == 0 || sbpos.x == size - 1 ||
-        sbpos.y == 0 || sbpos.y == size - 1)
+        sbpos.y == 0 || sbpos.y == size - 1 ||
+        sbpos.z == 0 || sbpos.z == size - 1)
     {
       return nullptr;
     }

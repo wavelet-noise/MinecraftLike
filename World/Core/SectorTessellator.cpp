@@ -49,7 +49,14 @@ void SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
   //LOG(trace) << "SectorTessellated: " << glfwGetTime() - currentTime;
   //LOG(trace) << "SectorTessellated: [" << mPos.x << "," << mPos.y << "," << mPos.z << "]";
 
-  render.Push(mModel, mPos);
+  if (!mModel.GetMesh()->Empty())
+  {
+    render.Push(mModel, mPos);
+  }
+  else
+  {
+    mModel.GetMesh()->Release();
+  }
   mChanged = false;
 }
 

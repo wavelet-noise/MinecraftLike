@@ -77,7 +77,7 @@ int Game::Run()
 
   std::atomic<bool> close = false;
 
-  mWorld->GetPlayer()->SetPosition({ 0,0,800 });
+  mWorld->GetPlayer()->SetPosition({ 0,0,50 });
 
   boost::thread th([&close]() {
     while (!close)
@@ -87,7 +87,7 @@ int Game::Run()
     }
   });
 
-  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 10);
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 7);
 
   mTessellator = std::make_unique<Tessellator>(*mRenderSector);
   mWorld->SetTessellator(mTessellator.get());
@@ -258,7 +258,7 @@ void Game::Draw(float dt)
       fps_m[lj++] = static_cast<float>(fps.GetCount());
       if (lj == 99)
         lj = 0;
-      minsec -= 0.1;
+      minsec -= 0.1f;
     }
 
     ImGui::Text("Perfomance");
