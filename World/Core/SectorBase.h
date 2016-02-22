@@ -17,7 +17,7 @@ class SectorBase
 {
 public:
 
-  BlockType &GetBlock(const SBPos &pos)
+  BlockType GetBlock(const SBPos &pos)
   {
     return GetBlock(cs::SBtoI(pos));
   }
@@ -34,83 +34,29 @@ public:
     }
   }
 
+  void Foreach(const std::function<void(size_t index, BlockType &block)> &func)
+  {
+    if (mCountBlocks == 0)
+    {
+      return;
+    }
+    for (size_t i = 0; i < mBlocks.size(); ++i)
+    {
+      if (mBlocks[i] != 0)
+      {
+        func(i, mUniqueBlocks[mBlocks[i] - 1]);
+      }
+    }
+  }
+
+
 private:
-  std::vector<uint8_t> mBlocks8;
-  std::vector<uint16_t> mBlocks16;
+  std::vector<uint16_t> mBlocks;
+  std::vector<BlockType> mUniqueBlocks;
 
   size_t mCountBlocks = 0;
 
-  std::vector<BlockType> mUniqueBlocks;
-
 private:
-  inline size_t GetUnique(size_t index)
-  {
-    const auto size_max = std::numeric_limits<uint8_t>::max() - 1;
-    return (mUniqueBlocks.size() <= size_max) ? mBlocks8[index] : mBlocks16[index];
-  }
-
-  inline void SetUnique(size_t index, size_t unique)
-  {
-    const auto size_max = std::numeric_limits<uint8_t>::max() - 1;
-    if (mUniqueBlocks.size() <= size_max)
-    {
-      mBlocks8[index] = static_cast<uint8_t>(unique);
-    }
-    else
-    {
-      mBlocks16[index] = static_cast<uint16_t>(unique);
-    }
-  }
-
-  /// Выделить память под блоки.
-  inline void Create()
-  {
-    assert(mCountBlocks == 0);
-    const size_t size_max = std::numeric_limits<uint8_t>::max() - 1;
-    const size_t size_sec = SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE;
-    if (mUniqueBlocks.size() <= size_max)
-    {
-      mBlocks8.resize(size_sec);
-    }
-    else
-    {
-      mBlocks16.resize(size_sec);
-    }
-  }
-
-  /// Очистить память под блоки.
-  inline void Clear()
-  {
-    assert(mCountBlocks == 0);
-    const size_t size_max = std::numeric_limits<uint8_t>::max() - 1;
-    if (mUniqueBlocks.size() <= size_max)
-    {
-      mBlocks8.clear();
-      mBlocks8.shrink_to_fit();
-    }
-    else
-    {
-      mBlocks16.clear();
-      mBlocks16.shrink_to_fit();
-    }
-  }
-
-  void CheckResize(size_t oldSize)
-  {
-    // TODO. Необходимо перейти на другую индексация блоков.
-    size_t currSize = mUniqueBlocks.size();
-
-    const auto size_max = std::numeric_limits<uint8_t>::max() - 1;
-    if (oldSize <= size_max && currSize > size_max)
-    {
-
-    }
-    if (currSize <= size_max && oldSize > size_max)
-    {
-
-    }
-  }
-
   inline void AddBlock(size_t index, BlockType block)
   {
     // Блок не должен быть пустым.
@@ -146,17 +92,18 @@ private:
       {
         empty = mUniqueBlocks.size();
         mUniqueBlocks.resize(empty + 1, block);
-        CheckResize(empty);
       }
       unique = empty;
     }
 
     if (!mCountBlocks)
     {
-      Create();
+      const size_t size = SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE;
+      mBlocks.resize(size);
     }
+
     ++mCountBlocks;
-    SetUnique(index, unique + 1);
+    mBlocks[index] = unique + 1;
   }
 
   inline void RemoveBlock(size_t index)
@@ -167,15 +114,19 @@ private:
     {
       return;
     }
-    auto unique = GetUnique(index);
-    SetUnique(index, 0);
+    auto unique = mBlocks[index];
+    if (unique == 0)
+    {
+      return;
+    }
+    mBlocks[index] = 0;
 
     bool isUnique = true;
 
     const size_t size_sec = SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE;
     for (size_t i = 0; i < size_sec; ++i)
     {
-      if (unique == GetUnique(i))
+      if (unique == mBlocks[i])
       {
         isUnique = false;
         break;
@@ -184,7 +135,7 @@ private:
 
     if (isUnique)
     {
-      mUniqueBlocks[unique] = nullptr;
+      mUniqueBlocks[unique - 1] = nullptr;
       auto oldSize = mUniqueBlocks.size();
       size_t eraseCount = 0;
       for (auto &it = mUniqueBlocks.rbegin(); it != mUniqueBlocks.rend(); ++it)
@@ -197,26 +148,33 @@ private:
       }
       if (eraseCount)
       {
+        // TODO. Освобождать память, если capacity > size на N %.
         mUniqueBlocks.resize(mUniqueBlocks.size() - eraseCount);
-        CheckResize(oldSize);
+        mUniqueBlocks.shrink_to_fit();
       }
     }
 
     --mCountBlocks;
     if (!mCountBlocks)
     {
-      Clear();
+      mBlocks.clear();
+      mBlocks.shrink_to_fit();
     }
   }
 
-  inline BlockType &GetBlock(size_t index)
+  inline BlockType GetBlock(size_t index)
   {
     if (mCountBlocks == 0)
     {
       return nullptr;
     }
 
-    return mUniqueBlocks[GetUnique(index)];
+    if (mBlocks[index] == 0)
+    {
+      return nullptr;
+    }
+
+    return mUniqueBlocks[mBlocks[index] - 1];
   }
 
 };

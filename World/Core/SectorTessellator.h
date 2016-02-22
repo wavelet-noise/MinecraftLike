@@ -13,19 +13,20 @@
 #include "..\tools\CoordSystem.h"
 #include "..\Render\Model.h"
 #include <glm/glm.hpp>
+#include "SectorBase.h"
 
 
-class SectorTessellator
+class SectorTessellator : public SectorBase<PBlockTessellator>
 {
 public:
   SectorTessellator(const SPos &pos);
   ~SectorTessellator();
 
-  /// Установить тесселятор в блок.
-  void SetBlock(const SBPos &pos, PBlockTessellator tesselator);
-
-  /// Получить тесселятор блока.
-  PBlockTessellator GetBlock(const SBPos &pos);
+//   /// Установить тесселятор в блок.
+//   void SetBlock(const SBPos &pos, PBlockTessellator tesselator);
+// 
+//   /// Получить тесселятор блока.
+//   PBlockTessellator GetBlock(const SBPos &pos);
 
   /// Сообщить сектору, что он изменен.
   void SayChanged();
@@ -34,7 +35,7 @@ public:
   void Update(class Tessellator *tesselator, class RenderSector &render);
 
 private:
-  std::array<PBlockTessellator, SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE> mBlocks;
+  //std::array<PBlockTessellator, SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE> mBlocks;
 
   SPos mPos;
 
