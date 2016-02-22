@@ -63,9 +63,9 @@ inline std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
   std::shared_ptr<Sector> psec = std::make_shared<Sector>(spos);
   Sector &sector = *psec;
 
-  const size_t size = static_cast<size_t>(SECTOR_SIZE);
+  const size_t size = static_cast<size_t>(SECTOR_CAPACITY);
 
-  for (size_t i = 0; i < size * size * size; ++i)
+  for (size_t i = 0; i < size; ++i)
   {
     const auto &sbpos = cs::ItoSB(i);
     sector.SetBlock(sbpos, mGenerator.Create(cs::SBtoWB(sbpos, spos)));

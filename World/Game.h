@@ -26,9 +26,9 @@ public:
 
   void Initialize();
 
-  void Update(double dt);
+  void Update(float dt);
 
-  void Draw(double dt);
+  void Draw(float dt);
 
 private:
 

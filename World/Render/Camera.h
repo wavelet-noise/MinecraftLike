@@ -58,13 +58,12 @@ public:
   bool BoxWithinFrustum(const glm::vec3 & min, const glm::vec3 & max) const;
 
 private:
-
+  glm::quat mQuat;
+  
   glm::mat4 mView;
   glm::mat4 mProjection;
   glm::mat4 mViewProjection;
   glm::mat3 mDirection;
-
-  glm::quat mQuat;
 
   glm::vec3 mDir;
   glm::vec3 mPos;

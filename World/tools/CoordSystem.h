@@ -122,7 +122,8 @@ namespace cs
   /// Индекс блока в секторе в позицию блока в секторе.
   inline SBPos ItoSB(size_t i)
   {
-    const size_t size = static_cast<size_t>(SECTOR_SIZE);
+    using size_type = size_t;
+    const size_type size = static_cast<size_type>(SECTOR_SIZE);
     return SBPos{ i % size, (i / size) % size, i / (size * size) };
   }
 

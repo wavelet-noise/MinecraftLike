@@ -81,10 +81,10 @@ public:
   }
 
 private:
+  glm::vec4 min, max;
   PMesh<VertexType> mMesh;
   PTexture mTexture;
   PShader mShader;
-  glm::vec4 min, max;
 
   Type mType = Static;
 };

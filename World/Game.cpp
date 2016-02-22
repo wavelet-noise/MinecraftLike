@@ -95,27 +95,27 @@ int Game::Run()
 
   boost::thread thread([this, &close]
   {
-    auto currTime = glfwGetTime();
+    auto currTime = static_cast<float>(glfwGetTime());
     while (!close)
     {
       auto lastTime = currTime;
-      currTime = glfwGetTime();
+      currTime = static_cast<float>(glfwGetTime());
       Update(currTime - lastTime);
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
   });
 
-  auto currTime = glfwGetTime();
+  auto currTime = static_cast<float>(glfwGetTime());
   while (!mWindow->WindowShouldClose())
   {
     fps.Update();
 
     auto lastTime = currTime;
-    currTime = glfwGetTime();
+    currTime = static_cast<float>(glfwGetTime());
     Draw(currTime - lastTime);
 
     mWindow->Update();
-	std::this_thread::sleep_for(std::chrono::milliseconds(1));
+	  std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
 
   close = true;
@@ -127,7 +127,7 @@ int Game::Run()
 }
 
 
-void Game::Update(double dt)
+void Game::Update(float dt)
 {
   float speedRot = static_cast<float>(3.0 * dt);
 
@@ -225,7 +225,7 @@ void Game::Update(double dt)
 }
 
 
-void Game::Draw(double dt)
+void Game::Draw(float dt)
 {
   mCamera->SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
   mCamera->Update();
@@ -245,7 +245,7 @@ void Game::Draw(double dt)
     static std::string mems;
     if (sec >= 1)
     {
-      fps_h[li++] = fps.GetCount();
+      fps_h[li++] = static_cast<float>(fps.GetCount());
       if (li == 99)
         li = 0;
       sec -= 1;
@@ -255,7 +255,7 @@ void Game::Draw(double dt)
 
     if (minsec >= 0.1f)
     {
-      fps_m[lj++] = fps.GetCount();
+      fps_m[lj++] = static_cast<float>(fps.GetCount());
       if (lj == 99)
         lj = 0;
       minsec -= 0.1;

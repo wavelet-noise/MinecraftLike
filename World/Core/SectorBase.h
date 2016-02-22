@@ -44,7 +44,7 @@ public:
 
 
 protected:
-  std::vector<uint16_t> mBlocks;
+  std::vector<IndexType> mBlocks;
   std::vector<BlockType> mUniqueBlocks;
 
   size_t mCountBlocks = 0;
@@ -91,12 +91,11 @@ protected:
 
     if (!mCountBlocks)
     {
-      const size_t size = SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE;
-      mBlocks.resize(size);
+      mBlocks.resize(SECTOR_CAPACITY);
     }
 
     ++mCountBlocks;
-    mBlocks[index] = unique;
+    mBlocks[index] = static_cast<IndexType>(unique);
   }
 
   inline void RemoveBlock(size_t index)
@@ -116,7 +115,7 @@ protected:
 
     bool isUnique = true;
 
-    const size_t size_sec = SECTOR_SIZE * SECTOR_SIZE * SECTOR_SIZE;
+    const size_t size_sec = SECTOR_CAPACITY;
     for (size_t i = 0; i < size_sec; ++i)
     {
       if (unique == mBlocks[i])
