@@ -80,7 +80,7 @@ void TextureManager::Compile()
 {
   for (unsigned int i = 0; i < mMultiAtlas.size(); ++i)
   {
-    mMultiAtlas[i].texture = std::make_shared<Texture>(mMultiAtlas[i].atlas.GetAtlas(), true);
+    mMultiAtlas[i].texture = std::make_shared<Texture>(mMultiAtlas[i].atlas.GetAtlas(), false);
     mMultiAtlas[i].texture->GenMipmap();
 //    mMultiAtlas[i].atlas.GetAtlas().Save("Atlas_" + std::to_string(i) + ".png");
   }

@@ -10,12 +10,19 @@
 #include "Core\MapGen\PerlinNoise.h"
 #include "..\DB.h"
 #include "..\..\tools\Log.h"
-
+#include <gui\WindowPerfomance.h>
+#include "WorldGenFlat.h"
+#include "..\..\WorldGenMountains.h"
 
 WorldWorker &WorldWorker::Get()
 {
   static WorldWorker object;
   return object;
+}
+
+WorldWorker::WorldWorker()
+{
+  mGenerator = std::make_unique<WorldGenMountains>();
 }
 
 std::shared_ptr<Sector> WorldWorker::GetSector(const SPos &v)
@@ -35,6 +42,7 @@ std::shared_ptr<Sector> WorldWorker::GetSector(const SPos &v)
 
 void WorldWorker::Process()
 {
+  auto start = glfwGetTime();
   mQueueMutex.lock();
   if (!mRequested.empty())
   {
@@ -53,25 +61,19 @@ void WorldWorker::Process()
   }
   else
     mQueueMutex.unlock();
+  auto end = glfwGetTime();
+  WindowPerfomance::Get().GeneratorDt(end - start);
 }
 
 
 
 inline std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
 {
-  auto currentTime = glfwGetTime(); //TODO: totally unnecessary
   std::shared_ptr<Sector> psec = std::make_shared<Sector>(spos);
   Sector &sector = *psec;
 
-  const size_t size = static_cast<size_t>(SECTOR_CAPACITY);
+  mGenerator->Generate(sector);
 
-  for (size_t i = 0; i < size; ++i)
-  {
-    const auto &sbpos = cs::ItoSB(i);
-    sector.SetBlock(sbpos, mGenerator.Create(cs::SBtoWB(sbpos, spos)));
-  }
-
-  //LOG(trace) << "SectorGen: " << glfwGetTime() - currentTime;
   return psec;
 }
 

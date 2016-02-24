@@ -23,6 +23,7 @@ public:
   /// Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
   /// Если блок динамический, создается копия блока.
   /// @param blockId Идентификатор блока.
+  PBlock Create(const std::string & name);
   PBlock Create(const StringIntern &name);
 
   PBlockTessellator CreateTesselator(const StringIntern &name);

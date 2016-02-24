@@ -55,6 +55,7 @@ Window::Window(const glm::uvec2 &size)
   glfwSetMouseButtonCallback(mWindow.get(), ImGui_ImplGlfwGL3_MouseButtonCallback);
   glfwSetScrollCallback(mWindow.get(), ImGui_ImplGlfwGL3_ScrollCallback);
   glfwSetCharCallback(mWindow.get(), ImGui_ImplGlfwGL3_CharCallback);
+  glfwSetWindowSizeCallback(mWindow.get(), ResizeCallback);
 
   std::cout << "Window created" << std::endl;
 }
@@ -62,16 +63,6 @@ Window::Window(const glm::uvec2 &size)
 Window::~Window()
 {
 }
-
-
-// void Window::GlfwResizeCallback(GLFWwindow* window, int width, int height)
-// {
-//   Window *windowGL = static_cast<Window *>(glfwGetWindowUserPointer(window));
-//   if(windowGL && windowGL->mResizeCallback)
-//   {
-//     windowGL->mResizeCallback(glm::uvec2(width, height));
-//   }
-// }
 
 void Window::WindowSystemInitialize()
 {
@@ -131,11 +122,6 @@ Keyboard &Window::GetKeyboard()
   return *mKeyboard;
 }
 
-void Window::SetResizeCallback(std::function<void(glm::uvec2)> callback)
-{
-  mResizeCallback = callback;
-}
-
 void Window::SetTitle(const std::string &title)
 {
   assert(mWindow);
@@ -152,7 +138,18 @@ GLFWwindow * Window::Get()
   return mWindow.get();
 }
 
+void Window::SetResizeCallback(const std::function<void(int, int)>& f)
+{
+  mResf = f;
+}
 
+void Window::ResizeCallback(GLFWwindow *, int x, int y)
+{
+  if (mResf)
+    mResf(x, y);
+}
+
+std::function<void(int, int)> Window::mResf;
 
 
 

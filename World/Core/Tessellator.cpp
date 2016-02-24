@@ -6,8 +6,7 @@
 #include "..\Render\RenderSector.h"
 #include "DB.h"
 #include <utility>
-
-
+#include <gui\WindowPerfomance.h>
 
 Tessellator::Tessellator(RenderSector &render)
   : mRender(render)
@@ -62,15 +61,18 @@ void Tessellator::SayChanged(const SPos &pos)
 
 void Tessellator::Start()
 {
-
+  //TODO:???
 }
 
 void Tessellator::Process()
 {
+  auto start = glfwGetTime();
   for (auto it = mSectors.begin(); it != mSectors.end(); ++it)
   {
     it->second->Update(this, mRender);
   }
+  auto end = glfwGetTime();
+  WindowPerfomance::Get().TesselatorDt(end - start);
   std::this_thread::sleep_for(std::chrono::milliseconds(1));
 }
 

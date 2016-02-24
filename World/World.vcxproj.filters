@@ -34,6 +34,9 @@
     <Filter Include="3rdparty\imgui">
       <UniqueIdentifier>{7f7b3b83-cdc1-46e0-bdb7-ea19d9dc9138}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gui">
+      <UniqueIdentifier>{e3552fd7-a7b1-461a-8ffe-513546b9cae2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsCounter.cpp" />
@@ -165,9 +168,6 @@
     <ClCompile Include="tools\wset.h">
       <Filter>tools</Filter>
     </ClCompile>
-    <ClCompile Include="tools\wset.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
     <ClCompile Include="Core\BlockTessellator.cpp">
       <Filter>Core\tessellator</Filter>
     </ClCompile>
@@ -199,6 +199,18 @@
       <Filter>Core\MapGen</Filter>
     </ClCompile>
     <ClCompile Include="Render\RenderSector.cpp" />
+    <ClCompile Include="gui\WindowPerfomance.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\WindowBase.h">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GenStrategy.cpp">
+      <Filter>Core\MapGen</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldGenMountains.cpp">
+      <Filter>Core\MapGen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -406,6 +418,15 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Render\RenderSector.h" />
+    <ClInclude Include="gui\WindowPerfomance.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GenStrategy.h">
+      <Filter>Core\MapGen</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldGenMountains.h">
+      <Filter>Core\MapGen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json">

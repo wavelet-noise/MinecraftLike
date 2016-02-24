@@ -174,6 +174,11 @@ PBlock DB::Create(const StringIntern &name)
   return mBlocks[name];
 }
 
+PBlock DB::Create(const std::string &name)
+{
+  return mBlocks[StringIntern(name)];
+}
+
 PBlockTessellator DB::CreateTesselator(const StringIntern &name)
 {
   return mTess[name];

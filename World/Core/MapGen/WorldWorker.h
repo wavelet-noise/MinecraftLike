@@ -12,7 +12,7 @@
 #include <glm/glm.hpp>
 #include "tools\CoordSystem.h"
 #include <mutex>
-#include "WorldGenFlat.h"
+#include "GenStrategy.h"
 
 class Sector;
 
@@ -20,6 +20,7 @@ class WorldWorker : public boost::noncopyable
 {
 public:
   static WorldWorker &Get();
+  WorldWorker();
 
 	std::shared_ptr<Sector> GetSector(const SPos &v);
 	void Process();
@@ -32,6 +33,6 @@ private:
 	std::unordered_map<SPos, std::shared_ptr<Sector>> mReady;
 	std::unordered_set<SPos> mRequested;
 
-  WorldGenFlat mGenerator;
+  std::unique_ptr<GenStrategy> mGenerator;
 };
 #endif //WorldWorker_h_

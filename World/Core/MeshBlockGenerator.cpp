@@ -101,7 +101,7 @@ void MeshBlockGenerator::Create(Mesh<VertexType> &mesh, Side side)
   }
 }
 
-void MeshBlockGenerator::SetTexture(int side, std::string texture)
+void MeshBlockGenerator::SetTexture(int side, const std::string &texture)
 {
   auto mActiveTexture = std::get<0>(TextureManager::Get().GetTexture(texture));
 

@@ -9,23 +9,22 @@
 
 WorldGenFlat::WorldGenFlat()
 {
-  mGrassName = StringIntern("grass");
 }
 
-PBlock WorldGenFlat::Create(const WBPos &pos)
+void WorldGenFlat::Generate(Sector & s)
 {
-  const auto sbpos = cs::WBtoSB(pos);
-  const size_t size = SECTOR_SIZE;
-  if (pos.z <= 10)
-  {
-    if (sbpos.x == 0 || sbpos.x == size - 1 ||
-        sbpos.y == 0 || sbpos.y == size - 1 ||
-        sbpos.z == 0 || sbpos.z == size - 1)
-    {
-      return nullptr;
-    }
-    return DB::Get().Create(mGrassName);
-  }
+  const size_t size = static_cast<size_t>(SECTOR_SIZE);
+  static auto gr = DB::Get().Create("grass");
 
-  return nullptr;
+  for (size_t i = 1; i < size; ++i)
+  {
+    for (size_t j = 1; j < size; ++j)
+    {
+      for (size_t k = 1; k < size; ++k)
+      {
+        if (k + s.GetPos().z*size <= 10)
+          s.SetBlock({ i,j,k }, gr);
+      }
+    }
+  }
 }

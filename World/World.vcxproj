@@ -39,7 +39,10 @@
     <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GenStrategy.cpp" />
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="gui\WindowBase.h" />
+    <ClCompile Include="gui\WindowPerfomance.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -71,11 +74,11 @@
     <ClCompile Include="tools\Log.cpp" />
     <ClCompile Include="tools\order_casters.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
-    <ClCompile Include="tools\wset.cpp" />
     <ClCompile Include="tools\wset.h" />
     <ClCompile Include="Window\Keyboard.cpp" />
     <ClCompile Include="Window\Mouse.cpp" />
     <ClCompile Include="Window\Window.cpp" />
+    <ClCompile Include="WorldGenMountains.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Agent.h" />
@@ -104,7 +107,9 @@
     <ClInclude Include="Core\World.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GenStrategy.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="network\NetworkManager.h" />
     <ClInclude Include="network\packetresponseplayers.h" />
     <ClInclude Include="Render\RenderSector.h" />
@@ -149,6 +154,7 @@
     <ClInclude Include="Window\Keyboard.h" />
     <ClInclude Include="Window\Mouse.h" />
     <ClInclude Include="Window\Window.h" />
+    <ClInclude Include="WorldGenMountains.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json" />

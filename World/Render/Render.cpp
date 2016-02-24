@@ -97,9 +97,7 @@ void Render::Draw(Camera &camera)
   {
     auto aabb = i.model.GetAABB();
     if (!camera.BoxWithinFrustum(i.matrix * std::get<0>(aabb), i.matrix * std::get<1>(aabb)))
-    {
       continue;
-    }
 
     if(auto t = i.model.GetTexture())
       t->Set(TEXTURE_SLOT_0);

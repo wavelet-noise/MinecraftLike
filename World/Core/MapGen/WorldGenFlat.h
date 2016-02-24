@@ -10,17 +10,19 @@
 #include "..\Block.h"
 #include "..\..\tools\CoordSystem.h"
 #include "..\..\tools\StringIntern.h"
+#include "..\..\GenStrategy.h"
 
-
-class WorldGenFlat
+class WorldGenFlat : public GenStrategy
 {
 public:
   WorldGenFlat();
 
-  PBlock Create(const WBPos &pos);
-
 private:
   StringIntern mGrassName;
+
+
+  // Унаследовано через GenStrategy
+  virtual void Generate(Sector & s) override;
 
 };
 

@@ -39,7 +39,7 @@ public:
 
   void Create(Mesh<VertexType> &mesh, Side side);
 
-  void SetTexture(int side, std::string texture);
+  void SetTexture(int side, const std::string &texture);
 
   void Enable(int side, bool enabled);
 

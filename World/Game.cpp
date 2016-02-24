@@ -29,6 +29,7 @@
 #include "tools\order_casters.h"
 
 #include "gui\imgui_impl_glfw_gl3.h"
+#include "gui\WindowPerfomance.h"
 
 Game::Game()
 {
@@ -69,6 +70,14 @@ int Game::Run()
   }
 
   mCamera->Resize(mWindow->GetSize());
+  mWindow->SetResizeCallback([&](int x, int y) {
+    if (y == 0)
+      y = 1;
+    mCamera->Resize({x,y});
+    int width, height;
+    glfwGetFramebufferSize(mWindow->Get(), &width, &height);
+    glViewport(0, 0, width, height);
+  });
 
   TextureManager::Get().LoadDirectory("Textures");
   TextureManager::Get().Compile();
@@ -115,7 +124,7 @@ int Game::Run()
     Draw(currTime - lastTime);
 
     mWindow->Update();
-	  std::this_thread::sleep_for(std::chrono::milliseconds(1));
+	  //std::this_thread::sleep_for(std::chrono::milliseconds(1)); ?!
   }
 
   close = true;
@@ -234,50 +243,10 @@ void Game::Draw(float dt)
 
   mRenderSector->Draw(*mCamera);
 
+  WindowPerfomance &wp = WindowPerfomance::Get();
   ImGui_ImplGlfwGL3_NewFrame();
-  {
-    static std::array<float, 100> fps_h, fps_m;
-    static float sec{}, minsec{};
-    sec += dt;
-    minsec += dt;
-    static int li = 0, lj = 0;
-
-    static std::string mems;
-    if (sec >= 1)
-    {
-      fps_h[li++] = static_cast<float>(fps.GetCount());
-      if (li == 99)
-        li = 0;
-      sec -= 1;
-
-      //mems = GetMemoryString(memory_used());
-    }
-
-    if (minsec >= 0.1f)
-    {
-      fps_m[lj++] = static_cast<float>(fps.GetCount());
-      if (lj == 99)
-        lj = 0;
-      minsec -= 0.1f;
-    }
-
-    ImGui::Text("Perfomance");
-    ImGui::SetWindowSize({ 100, 160 });
-    ImGui::SetWindowPos({500,0});
-
-    ImGui::LabelText("Mem:", "%s", mems.c_str());
-    ImGui::PlotLines(
-      "",
-      &fps_h[0],
-      100,
-      li, std::to_string(fps.GetCount()).c_str(), 0, 4000, {100,50});
-
-    ImGui::PlotLines(
-      "",
-      &fps_m[0],
-      100,
-      lj, std::to_string(fps.GetCount()).c_str(), 0, 4000, { 100,50 });
-  }
+  wp.DtUpdate(dt, fps.GetCount());
+  wp.Draw();
   ImGui::Render();
 
   //if(0)
