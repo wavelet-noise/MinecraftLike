@@ -84,15 +84,13 @@ int Game::Run()
 
   DB::Get().ReloadDirectory("json/");
 
-  std::atomic<bool> close = false;
-
   mWorld->GetPlayer()->SetPosition({ 0,0,50 });
 
-  boost::thread th([&close]() {
-    while (!close)
+  boost::thread gen_thread([]() {
+    while (true)
     {
       WorldWorker::Get().Process();
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
     }
   });
 
@@ -102,15 +100,15 @@ int Game::Run()
   mWorld->SetTessellator(mTessellator.get());
   mTessellator->Run();
 
-  boost::thread thread([this, &close]
+  boost::thread update_thread([this]
   {
     auto currTime = static_cast<float>(glfwGetTime());
-    while (!close)
+    while (true)
     {
       auto lastTime = currTime;
       currTime = static_cast<float>(glfwGetTime());
       Update(currTime - lastTime);
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
     }
   });
 
@@ -127,10 +125,18 @@ int Game::Run()
 	  //std::this_thread::sleep_for(std::chrono::milliseconds(1)); ?!
   }
 
-  close = true;
   mTessellator.reset();
-  thread.join();
-  th.join();
+
+  update_thread.interrupt();
+  gen_thread.interrupt();
+
+  LOG(trace) << "update joining";
+  update_thread.join();
+
+  LOG(trace) << "generate joining";
+  gen_thread.join();
+
+  LOG(trace) << "quit";
 
   return 0;
 }
