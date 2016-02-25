@@ -10,6 +10,7 @@
 #include <vector>
 #include "RenderMeshDList.h"
 #include "RenderMeshVao.h"
+#include <Serealize.h>
 
 template<class V>
 class Mesh;
@@ -122,8 +123,13 @@ public:
     return VertexType::Get();
   }
 
+  void JsonLoad(const rapidjson::Value &val)
+  {
+    JSONLOAD(sge::make_nvp("vertex", mVertex), sge::make_nvp("index", mIndex));
+  }
 
 private:
+
   std::vector<VertexType> mVertex;
   std::vector<size_t> mIndex;
 
@@ -133,3 +139,5 @@ private:
 
 
 #endif // Mesh_h__
+
+

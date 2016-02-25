@@ -132,20 +132,8 @@
     <ClCompile Include="Render\Shader.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="network\packetholder.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="network\packetrequestplayers.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="network\packetrequestsector.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
     <ClCompile Include="Render\RenderMeshVao.cpp">
       <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="network\packetresponsesector.cpp">
-      <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="network\network.cpp">
       <Filter>network</Filter>
@@ -189,9 +177,6 @@
     <ClCompile Include="network\NetworkManager.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="network\packetresponseplayers.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
     <ClCompile Include="Render\DBShaders.cpp">
       <Filter>Render</Filter>
     </ClCompile>
@@ -211,6 +196,7 @@
     <ClCompile Include="Core\MapGen\WorldGenMountains.cpp">
       <Filter>Core\MapGen</Filter>
     </ClCompile>
+    <ClCompile Include="network\packet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -335,16 +321,7 @@
     <ClInclude Include="Render\RenderMeshVao.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="network\packetholder.h">
-      <Filter>network</Filter>
-    </ClInclude>
     <ClInclude Include="network\packetrequestplayers.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="network\packetrequestsector.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="network\packetresponsesector.h">
       <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="network\packet.h">
@@ -398,9 +375,6 @@
     </ClInclude>
     <ClInclude Include="tools\order_casters.h">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="network\packetresponseplayers.h">
-      <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="network\NetworkManager.h">
       <Filter>network</Filter>

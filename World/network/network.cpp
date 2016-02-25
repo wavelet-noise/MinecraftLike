@@ -355,11 +355,6 @@ void Connection::Send(const std::vector< uint8_t > & buffer)
   m_io_strand.post(boost::bind(&Connection::DispatchSend, shared_from_this(), buffer));
 }
 
-void Connection::Send(const PacketHolder &ph)
-{
-  m_io_strand.post(boost::bind(&Connection::DispatchSend, shared_from_this(), ph.Serialize()));
-}
-
 boost::asio::ip::tcp::socket & Connection::GetSocket()
 {
   return m_socket;

@@ -6,6 +6,10 @@
 #include <boost/serialization/export.hpp>
 #include <memory>
 #include <glm/glm.hpp>
+#include <boost/interprocess/streams/bufferstream.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost\noncopyable.hpp>
 
 namespace boost
 {
@@ -43,45 +47,39 @@ namespace boost
   }
 }
 
-class Packet : boost::noncopyable
-{
-  friend class boost::serialization::access;
-  template<class Archive>
-  void serialize(Archive &ar, const unsigned int)
-  {
-  }
-
-public:
-  virtual ~Packet() {}
-  Packet(size_t __id = 0)
-  {
-
-  }
-
-  virtual size_t GetId()
-  {
-    return 0;
-  };
-};
-
-namespace
-{
+namespace {
   size_t Nextid()
   {
     static size_t next_id(0);
     return next_id++;
   }
+}
+
+class Packet
+{
+public:
+  virtual ~Packet() {}
 
   template <typename T_>
-  size_t Idfor()
+  inline static size_t Idfor()
   {
     static size_t result(Nextid());
     return result;
   }
-}
+
+  friend class boost::serialization::access;
+
+  virtual size_t GetId() {
+    return -1;
+  }
+
+  virtual void serialize(boost::archive::text_iarchive & ar, const unsigned int)
+  {
+  }
+};
 
 template<typename T> struct NumberedPacket : Packet {
-  int getId() {
+  virtual size_t GetId() {
     return Idfor<T>();
   }
 };

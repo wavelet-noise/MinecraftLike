@@ -15,6 +15,7 @@
 
 #include "FpsCounter.h"
 #include "Render\RenderSector.h"
+#include "network\NetworkManager.h"
 
 class Game
 {

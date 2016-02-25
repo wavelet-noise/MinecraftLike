@@ -10,7 +10,6 @@
 #include <vector>
 #include <list>
 #include <boost/cstdint.hpp>
-#include "packetholder.h"
 
 class Hive;
 class Acceptor;
@@ -114,7 +113,6 @@ public:
 
   // Posts data to be sent to the connection.
   void Send(const std::vector< uint8_t > & buffer);
-  void Send(const PacketHolder &ph);
 
   // Posts a recv for the connection to process. If total_bytes is 0, then 
   // as many bytes as possible up to GetReceiveBufferSize() will be 

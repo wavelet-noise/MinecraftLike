@@ -51,11 +51,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\network.cpp" />
     <ClCompile Include="network\NetworkManager.cpp" />
-    <ClCompile Include="network\packetholder.cpp" />
-    <ClCompile Include="network\packetrequestplayers.cpp" />
-    <ClCompile Include="network\packetrequestsector.cpp" />
-    <ClCompile Include="network\packetresponseplayers.cpp" />
-    <ClCompile Include="network\packetresponsesector.cpp" />
+    <ClCompile Include="network\packet.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
     <ClCompile Include="Render\Bitmap.cpp" />
@@ -112,7 +108,6 @@
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="network\NetworkManager.h" />
-    <ClInclude Include="network\packetresponseplayers.h" />
     <ClInclude Include="Render\RenderSector.h" />
     <ClInclude Include="Serealize.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -124,10 +119,7 @@
     <ClInclude Include="lodepng\lodepng.h" />
     <ClInclude Include="network\network.h" />
     <ClInclude Include="network\packet.h" />
-    <ClInclude Include="network\packetholder.h" />
     <ClInclude Include="network\packetrequestplayers.h" />
-    <ClInclude Include="network\packetrequestsector.h" />
-    <ClInclude Include="network\packetresponsesector.h" />
     <ClInclude Include="Render\Atlas.h" />
     <ClInclude Include="Render\Bitmap.h" />
     <ClInclude Include="Render\Camera.h" />
