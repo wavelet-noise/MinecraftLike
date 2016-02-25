@@ -150,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json" />
+    <None Include="json\items.json" />
+    <None Include="json\materials.json" />
+    <None Include="json\model.json" />
     <None Include="shaders\basic.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

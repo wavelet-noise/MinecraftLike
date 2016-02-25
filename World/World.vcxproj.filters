@@ -407,5 +407,14 @@
       <Filter>Core</Filter>
     </None>
     <None Include="shaders\basic.glsl" />
+    <None Include="json\items.json">
+      <Filter>Core</Filter>
+    </None>
+    <None Include="json\materials.json">
+      <Filter>Core</Filter>
+    </None>
+    <None Include="json\model.json">
+      <Filter>Core</Filter>
+    </None>
   </ItemGroup>
 </Project>

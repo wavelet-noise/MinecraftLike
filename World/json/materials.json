@@ -1,0 +1,237 @@
+[
+{
+	"type":"dummy",
+	"id":"material_brass",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8525
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_aluminum",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":2712
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_beryllium",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":1840
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_beryllium_copper",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8100
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_vanadium",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":5494
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_tungsten",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":19600
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_iron",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":7850
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_gold",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":19320
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_cobolt",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8746
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_magnesium",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":1738
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_copper",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8930
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_cupronickel",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8940
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_molybdenum",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":10188
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_stainless_steel",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8000
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_nickel",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8800
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_tin",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":7280
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_platinum",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":21400
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_plutonium",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":19816
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_solder",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8885
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_silver",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":10490
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_lead",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":11340
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_titanium",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":4500
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_steel",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":7850
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_uranium",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":18900
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_zinc",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":7135
+		}
+	]
+},{
+	"type":"dummy",
+	"id":"material_electrum",
+    "agents":[
+		{
+		"type":"Material",
+		"dens":8900
+		}
+	]
+}
+]

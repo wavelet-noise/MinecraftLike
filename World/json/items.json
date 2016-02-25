@@ -1,0 +1,25 @@
+[
+{
+	"type":"Item",
+    "id":"bar",
+    "agents":[
+		{
+		"type":"MaterialDictionary"
+		"data":["material_iron"]
+		}
+    ],
+	"render":[
+	  {
+	    "type":"SplitBlockTessellator",
+        "generator":
+        {
+          "separate":[
+		  "Textures\\grass_side.png","Textures\\grass_side.png","Textures\\grass_side.png","Textures\\grass_side.png",
+		  "Textures\\grass_top.png","Textures\\dirt.png"
+		  ]
+        },
+		"transparent":false
+	  }
+	]
+}
+]
