@@ -248,38 +248,5 @@ void Game::Draw(float dt)
   wp.DtUpdate(dt, fps.GetCount());
   wp.Draw();
   ImGui::Render();
-
-  //if(0)
-  //{
-  //  ImGui_ImplGlfwGL3_NewFrame();
-  //  bool show_test_window = true, show_another_window = true;
-  //  {
-  //    static float f = 0.0f;
-  //    ImGui::Text("Hello, world!");
-  //    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-  //    ImGui::ColorEdit3("clear color", (float*)&glm::vec4(1, 1, 1, 1)[0]);
-  //    if (ImGui::Button("Test Window")) show_test_window ^= 1;
-  //    if (ImGui::Button("Another Window")) show_another_window ^= 1;
-  //    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-  //  }
-
-  //  // 2. Show another simple window, this time using an explicit Begin/End pair
-  //  if (show_another_window)
-  //  {
-  //    ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_FirstUseEver);
-  //    ImGui::Begin("Another Window", &show_another_window);
-  //    ImGui::Text("Hello");
-  //    ImGui::End();
-  //  }
-
-  //  // 3. Show the ImGui test window. Most of the sample code is in ImGui::ShowTestWindow()
-  //  if (show_test_window)
-  //  {
-  //    ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-  //    ImGui::ShowTestWindow(&show_test_window);
-  //  }
-
-  //  ImGui::Render();
-  //}
 }
 

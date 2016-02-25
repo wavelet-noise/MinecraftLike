@@ -205,10 +205,10 @@
     <ClCompile Include="gui\WindowBase.h">
       <Filter>gui</Filter>
     </ClCompile>
-    <ClCompile Include="GenStrategy.cpp">
+    <ClCompile Include="Core\MapGen\GenStrategy.cpp">
       <Filter>Core\MapGen</Filter>
     </ClCompile>
-    <ClCompile Include="WorldGenMountains.cpp">
+    <ClCompile Include="Core\MapGen\WorldGenMountains.cpp">
       <Filter>Core\MapGen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -421,10 +421,10 @@
     <ClInclude Include="gui\WindowPerfomance.h">
       <Filter>gui</Filter>
     </ClInclude>
-    <ClInclude Include="GenStrategy.h">
+    <ClInclude Include="Core\MapGen\GenStrategy.h">
       <Filter>Core\MapGen</Filter>
     </ClInclude>
-    <ClInclude Include="WorldGenMountains.h">
+    <ClInclude Include="Core\MapGen\WorldGenMountains.h">
       <Filter>Core\MapGen</Filter>
     </ClInclude>
   </ItemGroup>

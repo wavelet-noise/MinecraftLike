@@ -7,10 +7,10 @@
 #define WorldGenFlat_h__
 
 
-#include "..\Block.h"
-#include "..\..\tools\CoordSystem.h"
-#include "..\..\tools\StringIntern.h"
-#include "..\..\GenStrategy.h"
+#include <core\Block.h>
+#include <tools\CoordSystem.h>
+#include <tools\StringIntern.h>
+#include "GenStrategy.h"
 
 class WorldGenFlat : public GenStrategy
 {

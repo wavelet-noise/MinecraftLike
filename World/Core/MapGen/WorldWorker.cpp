@@ -12,7 +12,7 @@
 #include "..\..\tools\Log.h"
 #include <gui\WindowPerfomance.h>
 #include "WorldGenFlat.h"
-#include "..\..\WorldGenMountains.h"
+#include "WorldGenMountains.h"
 
 WorldWorker &WorldWorker::Get()
 {
