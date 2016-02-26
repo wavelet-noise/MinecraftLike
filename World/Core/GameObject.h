@@ -13,15 +13,13 @@
 #include "Agent.h"
 #include "..\tools\StringIntern.h"
 
-
-using PGameObject = std::shared_ptr<class GameObject>;
+using PGameObject = std::shared_ptr<GameObject>;
 
 template<class T, class... Args>
 inline std::shared_ptr<T> MakeGameObject(Args&&... args)
 {
   return std::make_shared<T>(std::forward<Args>(args)...);
 }
-
 
 class GameObject
 {
@@ -31,7 +29,7 @@ public:
 
   virtual void Update(GameObjectParams &params);
 
-  virtual PGameObject Clone() = 0;
+  virtual PGameObject Clone();
 
   Agent *GetFromFullName(const StringIntern &name);
 
@@ -52,6 +50,7 @@ public:
   StringIntern GetId();
 
 protected:
+  friend class DB;
   std::map<StringIntern, PAgent> mAgents;
   StringIntern id;
 };

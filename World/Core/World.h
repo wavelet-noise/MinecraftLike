@@ -28,11 +28,11 @@ public:
   /// загрузить сектор из загрузчика секторов.
   std::shared_ptr<Sector> GetSector(const SPos &position);
 
-  PBlock GetBlock(const WBPos &position);
+  PGameObject GetBlock(const WBPos &position);
 
   /// Установить блок в заданную позицию.
   /// Существующий блок будет удален.
-  void SetBlock(const WBPos &pos, PBlock block);
+  void SetBlock(const WBPos &pos, PGameObject block);
 
   Player *GetPlayer();
 

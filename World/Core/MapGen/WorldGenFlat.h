@@ -7,7 +7,7 @@
 #define WorldGenFlat_h__
 
 
-#include <core\Block.h>
+#include <core\GameObject.h>
 #include <tools\CoordSystem.h>
 #include <tools\StringIntern.h>
 #include "GenStrategy.h"

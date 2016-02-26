@@ -8,7 +8,7 @@
 #include "Tessellator.h"
 #include "SectorTessellator.h"
 #include "..\tools\CoordSystem.h"
-#include "Block.h"
+#include "GameObject.h"
 #include <Serealize.h>
 
 SplitBlockTessellator::SplitBlockTessellator()
@@ -181,7 +181,7 @@ void SplitBlockTessellator::JsonLoad(const rapidjson::Value & val)
   BlockTessellator::JsonLoad(val);
 }
 
-PBlockTessellator SplitBlockTessellator::Clone()
+PGameObjectTessellator SplitBlockTessellator::Clone()
 {
   return MakeBlockTessellator<SplitBlockTessellator>(*this);
 }

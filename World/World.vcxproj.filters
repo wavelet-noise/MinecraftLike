@@ -69,9 +69,6 @@
     <ClCompile Include="Core\Creature.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Block.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\PhysicAgent.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
@@ -234,9 +231,6 @@
       <Filter>Core\Agents</Filter>
     </ClInclude>
     <ClInclude Include="Core\Creature.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Block.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\PhysicAgent.h">

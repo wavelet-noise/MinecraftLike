@@ -17,7 +17,7 @@
 #include "TessellatorParams.h"
 
 
-typedef std::shared_ptr<class BlockTessellator> PBlockTessellator;
+typedef std::shared_ptr<class BlockTessellator> PGameObjectTessellator;
 
 template<class T, class... Args>
 inline std::shared_ptr<T> MakeBlockTessellator(Args&&... args)
@@ -33,7 +33,7 @@ class BlockTessellator
 public:
   virtual ~BlockTessellator() = default;
 
-  virtual PBlockTessellator Clone() = 0;
+  virtual PGameObjectTessellator Clone() = 0;
 
   virtual void JsonLoad(const rapidjson::Value &val);
 

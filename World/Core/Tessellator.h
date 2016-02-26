@@ -25,7 +25,7 @@ public:
   /// Потокобезопасные методы.
 
   /// Установить тесселятор в указанную позицию.
-  void Set(const WBPos &pos, PBlockTessellator block);
+  void Set(const WBPos &pos, PGameObjectTessellator block);
 
   void Set(const SPos &spos, std::vector<std::tuple<size_t, StringIntern>> &&blocks);
 
@@ -41,7 +41,7 @@ public:
 
   void Stop();
 
-  PBlockTessellator GetBlock(const WBPos &pos);
+  PGameObjectTessellator GetBlock(const WBPos &pos);
   
 private:
   std::unordered_map<SPos, std::shared_ptr<SectorTessellator>> mSectors;

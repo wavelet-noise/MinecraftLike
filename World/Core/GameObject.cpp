@@ -23,6 +23,11 @@ void GameObject::Update(GameObjectParams &params)
   }
 }
 
+PGameObject GameObject::Clone()
+{
+  return MakeGameObject<GameObject>(id);
+}
+
 StringIntern GameObject::GetId()
 {
   return id;

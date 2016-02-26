@@ -21,7 +21,7 @@ public:
 
   void JsonLoad(const rapidjson::Value &val) override;
 
-  PBlockTessellator Clone() override;
+  PGameObjectTessellator Clone() override;
 
   const Model &GetModel(const TessellatorParams &params) override;
 

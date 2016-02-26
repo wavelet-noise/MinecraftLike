@@ -20,14 +20,14 @@ DB &DB::Get()
   return obj;
 }
 
-void DB::Registry(const StringIntern &name, PBlock block, bool isStatic)
+void DB::Registry(const StringIntern &name, PGameObject block, bool isStatic)
 {
-  mBlocks[name] = block;
+  mObjects[name] = block;
 }
 
 void DB::ReloadDirectory(const std::string & dir)
 {
-  mBlocks.clear();
+  mObjects.clear();
 
   boost::filesystem::path targetDir(dir);
   boost::filesystem::recursive_directory_iterator iter(targetDir);
@@ -75,7 +75,7 @@ void DB::ReloadDirectory(const std::string & dir)
           std::string id = val["id"].GetString();
           LOG(trace) << "\"" << id << "\" parsing";
 
-          auto b = std::make_shared<Block>(StringIntern(id));
+          auto b = std::make_shared<GameObject>(StringIntern(id));
 
           if (val.HasMember("agents")) 
           {
@@ -158,7 +158,7 @@ void DB::ReloadDirectory(const std::string & dir)
             }
           }
 
-          mBlocks[StringIntern(id)] = b;
+          mObjects[StringIntern(id)] = b;
           loaded++;
         }
         
@@ -169,17 +169,17 @@ void DB::ReloadDirectory(const std::string & dir)
   LOG(info) << loaded << " loaded";
 }
 
-PBlock DB::Create(const StringIntern &name)
+PGameObject DB::Create(const StringIntern &name)
 {
-  return mBlocks[name];
+  return mObjects[name];
 }
 
-PBlock DB::Create(const std::string &name)
+PGameObject DB::Create(const std::string &name)
 {
-  return mBlocks[StringIntern(name)];
+  return mObjects[StringIntern(name)];
 }
 
-PBlockTessellator DB::CreateTesselator(const StringIntern &name)
+PGameObjectTessellator DB::CreateTesselator(const StringIntern &name)
 {
   return mTess[name];
 }

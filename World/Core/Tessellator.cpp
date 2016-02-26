@@ -13,9 +13,9 @@ Tessellator::Tessellator(RenderSector &render)
 {
 }
 
-void Tessellator::Set(const WBPos &pos, PBlockTessellator block)
+void Tessellator::Set(const WBPos &pos, PGameObjectTessellator block)
 {
-//   PushFunc([this](const WBPos &pos, PBlockTessellator block)
+//   PushFunc([this](const WBPos &pos, PGameObjectTessellator block)
 //   {
 //     auto spos = cs::WBtoS(pos);
 //     auto sector = FindSector(spos);
@@ -81,7 +81,7 @@ void Tessellator::Stop()
 
 }
 
-PBlockTessellator Tessellator::GetBlock(const WBPos &pos)
+PGameObjectTessellator Tessellator::GetBlock(const WBPos &pos)
 {
   auto spos = cs::WBtoS(pos);
   if (auto sector = FindSector(spos))
