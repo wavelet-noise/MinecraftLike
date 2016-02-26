@@ -1,18 +1,20 @@
 // ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                   Copyright (c) 2016, VASYAN                           ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
-#include "DB.h"
 #include <boost\filesystem.hpp>
-#include "..\rapidjson\document.h"
 #include <boost\exception\diagnostic_information.hpp>
+#include <rapidjson\document.h>
+#include <tools\Log.h>
+
+#include "DB.h"
 
 //possibly must be moved into <agents> file
 //deserialize autoreg
 #include "BlockTessellator.h"
 #include "PositionAgent.h"
 #include "PhysicAgent.h"
-#include "..\tools\Log.h"
+#include "Tags.h"
 
 DB &DB::Get()
 {
@@ -100,6 +102,16 @@ void DB::ReloadDirectory(const std::string & dir)
                     LOG(error) << boost::current_exception_diagnostic_information(true);
                     LOG(error) << id << "'s agent " << agenttype << " json deserialize failed. See agents documentation";
                     continue;
+                  }
+
+                  if (agenttype == "Tags")
+                  {
+                    LOG(trace) << "tagged as";
+                    for (const std::string &s : std::static_pointer_cast<Tags>(c)->tags)
+                    {
+                      LOG(trace) << "   " << s;
+                      tags_ref[StringIntern(s)].push_back(b);
+                    }
                   }
 
                   b->mAgents[StringIntern(agenttype)] = std::move(c);

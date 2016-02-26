@@ -7,7 +7,7 @@
 		"type":"Material",
 		"dens":8525
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -19,7 +19,7 @@
 		"type":"Material",
 		"dens":2712
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -31,7 +31,7 @@
 		"type":"Material",
 		"dens":1840
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -43,7 +43,7 @@
 		"type":"Material",
 		"dens":8100
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -55,7 +55,7 @@
 		"type":"Material",
 		"dens":5494
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -67,7 +67,7 @@
 		"type":"Material",
 		"dens":19600
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -79,7 +79,7 @@
 		"type":"Material",
 		"dens":7850
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -91,7 +91,7 @@
 		"type":"Material",
 		"dens":19320
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -103,7 +103,7 @@
 		"type":"Material",
 		"dens":8746
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -115,7 +115,7 @@
 		"type":"Material",
 		"dens":1738
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -127,7 +127,7 @@
 		"type":"Material",
 		"dens":8930
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -139,7 +139,7 @@
 		"type":"Material",
 		"dens":8940
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -151,7 +151,7 @@
 		"type":"Material",
 		"dens":10188
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -163,7 +163,7 @@
 		"type":"Material",
 		"dens":8000
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -175,7 +175,7 @@
 		"type":"Material",
 		"dens":8800
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -187,7 +187,7 @@
 		"type":"Material",
 		"dens":7280
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -199,7 +199,7 @@
 		"type":"Material",
 		"dens":21400
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -211,7 +211,7 @@
 		"type":"Material",
 		"dens":19816
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -223,7 +223,7 @@
 		"type":"Material",
 		"dens":8885
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -235,7 +235,7 @@
 		"type":"Material",
 		"dens":10490
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -247,7 +247,7 @@
 		"type":"Material",
 		"dens":11340
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -259,7 +259,7 @@
 		"type":"Material",
 		"dens":4500
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -271,7 +271,7 @@
 		"type":"Material",
 		"dens":7850
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -283,7 +283,7 @@
 		"type":"Material",
 		"dens":18900
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -295,7 +295,7 @@
 		"type":"Material",
 		"dens":7135
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
@@ -307,7 +307,7 @@
 		"type":"Material",
 		"dens":8900
 		},{
-		"type":"Tag",
+		"type":"Tags",
 		"tags":"material_metal"
 		}
 	]
