@@ -51,7 +51,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\network.cpp" />
     <ClCompile Include="network\NetworkManager.cpp" />
-    <ClCompile Include="network\packet.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
     <ClCompile Include="Render\Bitmap.cpp" />

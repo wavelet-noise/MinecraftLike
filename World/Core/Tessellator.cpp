@@ -72,7 +72,7 @@ void Tessellator::Process()
     it->second->Update(this, mRender);
   }
   auto end = glfwGetTime();
-  WindowPerfomance::Get().TesselatorDt(end - start);
+  WindowPerfomance::Get().TesselatorDt(static_cast<float>(end - start));
   std::this_thread::sleep_for(std::chrono::milliseconds(1));
 }
 
