@@ -183,7 +183,6 @@
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp">
       <Filter>Core\MapGen</Filter>
     </ClCompile>
-    <ClCompile Include="Render\RenderSector.cpp" />
     <ClCompile Include="gui\WindowPerfomance.cpp">
       <Filter>gui</Filter>
     </ClCompile>
@@ -195,6 +194,15 @@
     </ClCompile>
     <ClCompile Include="Core\MapGen\WorldGenMountains.cpp">
       <Filter>Core\MapGen</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderSector.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GameEvent.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\KeyBinder.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -390,7 +398,6 @@
     <ClInclude Include="Core\SectorBase.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Render\RenderSector.h" />
     <ClInclude Include="gui\WindowPerfomance.h">
       <Filter>gui</Filter>
     </ClInclude>
@@ -399,6 +406,15 @@
     </ClInclude>
     <ClInclude Include="Core\MapGen\WorldGenMountains.h">
       <Filter>Core\MapGen</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderSector.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GameEvent.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\KeyBinder.h">
+      <Filter>Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

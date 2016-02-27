@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Block.cpp" />
+    <ClCompile Include="Core\GameEvent.cpp" />
     <ClCompile Include="Core\MapGen\GenStrategy.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenMountains.cpp" />
@@ -71,6 +72,7 @@
     <ClCompile Include="tools\order_casters.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
     <ClCompile Include="tools\wset.h" />
+    <ClCompile Include="Window\KeyBinder.cpp" />
     <ClCompile Include="Window\Keyboard.cpp" />
     <ClCompile Include="Window\Mouse.cpp" />
     <ClCompile Include="Window\Window.cpp" />
@@ -78,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\Block.h" />
+    <ClInclude Include="Core\GameEvent.h" />
     <ClInclude Include="Core\MapGen\GenStrategy.h" />
     <ClInclude Include="Core\MapGen\WorldGenFlat.h" />
     <ClInclude Include="Core\MapGen\WorldGenMountains.h" />
@@ -143,6 +146,7 @@
     <ClInclude Include="tools\order_casters.h" />
     <ClInclude Include="tools\QueuedThread.h" />
     <ClInclude Include="tools\StringIntern.h" />
+    <ClInclude Include="Window\KeyBinder.h" />
     <ClInclude Include="Window\Keyboard.h" />
     <ClInclude Include="Window\Mouse.h" />
     <ClInclude Include="Window\Window.h" />
