@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Block.cpp" />
+    <ClCompile Include="Core\EventBus.cpp" />
     <ClCompile Include="Core\GameEvent.cpp" />
     <ClCompile Include="Core\MapGen\GenStrategy.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
@@ -80,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\Block.h" />
+    <ClInclude Include="Core\EventBus.h" />
     <ClInclude Include="Core\GameEvent.h" />
     <ClInclude Include="Core\MapGen\GenStrategy.h" />
     <ClInclude Include="Core\MapGen\WorldGenFlat.h" />

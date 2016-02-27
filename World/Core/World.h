@@ -13,6 +13,7 @@
 #include "Sector.h"
 #include "Player.h"
 #include "../Render/Render.h"
+#include "EventBus.h"
 
 class Tessellator;
 
@@ -38,6 +39,8 @@ public:
 
   void SetTessellator(Tessellator *tess);
 
+  void PushEvent(std::unique_ptr<GameEvent> event);
+
 private:
   std::unordered_map<SPos, std::shared_ptr<Sector>> mSectors;
 
@@ -50,6 +53,8 @@ private:
   std::shared_ptr<Sector> FindSector(const SPos &position);
 
   Tessellator *mTesselator;
+
+  EventBus mEventBus;
 };
 
 

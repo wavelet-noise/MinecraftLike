@@ -24,6 +24,8 @@ World::~World()
 
 void World::Update(float dt)
 {
+  mEventBus.Update(this);
+
   for (auto &i : mSectors)
   {
     i.second->Update(this);
@@ -108,4 +110,9 @@ Player *World::GetPlayer()
 void World::SetTessellator(Tessellator *tess)
 {
   mTesselator = tess;
+}
+
+void World::PushEvent(std::unique_ptr<GameEvent> event)
+{
+  mEventBus.Push(std::move(event));
 }

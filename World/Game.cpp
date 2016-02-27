@@ -50,10 +50,18 @@ Game::Game()
   //GL_CALL(glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y)); 
 
   mWorld = std::make_unique<World>();
+  mKeyBinder = std::make_unique<KeyBinder>(mWindow->GetKeyboard(), mWindow->GetMouse());
+
+  mKeyBinder->SetCallback([world=mWorld.get()](std::unique_ptr<GameEvent> event)
+  {
+    world->PushEvent(std::move(event));
+  });
 }
 
 Game::~Game()
 {
+  mKeyBinder.reset();
+  mWorld.reset();
   mRenderSector.reset();
   mRender.reset();
   mWindow.reset();
@@ -144,27 +152,26 @@ int Game::Run()
 
 void Game::Update(float dt)
 {
+  mKeyBinder->Update();
+
   float speedRot = static_cast<float>(3.0 * dt);
 
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
   {
     mWorld->GetPlayer()->Rotate({ 0.0f, 0.0f, -speedRot });
-    //mCamera->Rotate({ 0.0f, 0.0f, -speedRot });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
   {
     mWorld->GetPlayer()->Rotate({ 0.0f, 0.0f, speedRot });
-    //mCamera->Rotate({ 0.0f, 0.0f, speedRot });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
   {
     mWorld->GetPlayer()->Rotate({ speedRot, 0.0f, 0.0f });
-    //mCamera->Rotate({ speedRot, 0.0f, 0.0f });
+
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_UP))
   {
     mWorld->GetPlayer()->Rotate({ -speedRot, 0.0f, 0.0f });
-    //mCamera->Rotate({ -speedRot, 0.0f, 0.0f });
   }
 
   if (mWindow->GetMouse().GetCentring())
@@ -172,7 +179,6 @@ void Game::Update(float dt)
     auto moved = mWindow->GetMouse().GetMoved();
     moved *= 0.001f;
     mWorld->GetPlayer()->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
-    //mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
   }
 
   static float k = 1.0f;
@@ -200,7 +206,7 @@ void Game::Update(float dt)
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_W))
   {
-    mWorld->GetPlayer()->Move({ 0.0f, speedMov, 0.0f });
+    //mWorld->GetPlayer()->Move({ 0.0f, speedMov, 0.0f });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_S))
   {

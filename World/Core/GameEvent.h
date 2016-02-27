@@ -22,7 +22,7 @@ class GameEventMove : public GameEvent
 {
 public:
   GameEventMove(const glm::vec3 &moved)
-    : mMoved(mMoved)
+    : mMoved(moved)
   {
   }
 

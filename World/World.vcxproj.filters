@@ -204,6 +204,7 @@
     <ClCompile Include="Window\KeyBinder.cpp">
       <Filter>Window</Filter>
     </ClCompile>
+    <ClCompile Include="Core\EventBus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -416,6 +417,7 @@
     <ClInclude Include="Window\KeyBinder.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="Core\EventBus.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="json\core.json">
