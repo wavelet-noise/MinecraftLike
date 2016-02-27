@@ -61,9 +61,11 @@ public:
       other.mData.begin(),
       mData.begin(),
       [](unsigned char a, unsigned char b) -> unsigned char {
-      return ((a / static_cast<float>(std::numeric_limits<unsigned char>::max())) *
-        (b / static_cast<float>(std::numeric_limits<unsigned char>::max()))) *
-        std::numeric_limits<unsigned char>::max();
+      return static_cast<unsigned char>(
+          ((a / static_cast<float>(std::numeric_limits<unsigned char>::max())) *
+          (b / static_cast<float>(std::numeric_limits<unsigned char>::max()))) *
+          std::numeric_limits<unsigned char>::max()
+        );
     });
 
     return *this;
