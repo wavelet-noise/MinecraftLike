@@ -1,6 +1,11 @@
 #include "Tags.h"
 #include <Serealize.h>
 
+Tags::Tags()
+  : Agent(nullptr, "Tags", "")
+{
+}
+
 void Tags::JsonLoad(const rapidjson::Value &val)
 {
   std::vector<std::string> tags;
@@ -10,7 +15,7 @@ void Tags::JsonLoad(const rapidjson::Value &val)
     this->tags.push_back(StringIntern(s));
 }
 
-PAgent Tags::Clone(GameObject * parent, const std::string & name = "")
+PAgent Tags::Clone(GameObject * parent, const std::string & name)
 {
   return PAgent();
 }

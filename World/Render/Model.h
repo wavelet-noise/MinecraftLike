@@ -10,6 +10,9 @@
 #include "Mesh.h"
 #include "Vertex.h"
 #include <rapidjson\document.h>
+#include <tools\StringIntern.h>
+
+using PModel = std::shared_ptr<class Model>;
 
 /// Модель. Имеет всю информацию для рисования.
 class Model
@@ -56,6 +59,13 @@ public:
     return mShader;
   }
 
+  StringIntern GetSpriteName()
+  {
+    return mSprite;
+  }
+
+  void SetSprite(const StringIntern &s);
+
   void BuildAABB(glm::vec3 VertexType::* p)
   {
     glm::vec3 _min{}, _max{};
@@ -85,6 +95,8 @@ private:
   PMesh<VertexType> mMesh;
   PTexture mTexture;
   PShader mShader;
+
+  StringIntern mSprite; //используется для восстановлении связи с атласом
 
   Type mType = Static;
 };

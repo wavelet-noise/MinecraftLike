@@ -40,6 +40,7 @@ public:
   virtual PAgent Clone(GameObject *parent, const std::string &name = "") = 0;
 
   virtual void Update(const GameObjectParams &params) = 0;
+  virtual void Afterload(GameObject * parent);
 
   virtual void JsonLoad(const rapidjson::Value &val);
 

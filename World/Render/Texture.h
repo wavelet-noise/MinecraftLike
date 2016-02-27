@@ -43,6 +43,11 @@ public:
     return mSize;
   }
 
+  inline unsigned int GetId()
+  {
+    return mTextureId;
+  }
+
   void GenMipmap();
 
   /// Установить текстуру на заданный текстурный слот.

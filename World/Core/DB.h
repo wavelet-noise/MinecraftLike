@@ -17,7 +17,10 @@ public:
 
   void Registry(const StringIntern &name, PGameObject block, bool isStatic = true);
   void ReloadDirectory(const std::string &dir);
+  const std::vector<StringIntern> &Taglist(const StringIntern &name);
 
+  void PushModel(const StringIntern &s, PModel &m);
+  PModel GetModel(const StringIntern &s);
 
   /// Создать блок.
   /// Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
@@ -29,9 +32,11 @@ public:
   PGameObjectTessellator CreateTesselator(const StringIntern &name);
 
 private:
+  friend class WindowDb;
   std::unordered_map<StringIntern, PGameObject> mObjects;
   std::unordered_map<StringIntern, PGameObjectTessellator> mTess;
-  std::unordered_map<StringIntern, std::vector<PGameObject>> tags_ref;
+  std::unordered_map<StringIntern, PModel> mModel;
+  std::unordered_map<StringIntern, std::vector<StringIntern>> mTags;
 
 private:
   DB() {};

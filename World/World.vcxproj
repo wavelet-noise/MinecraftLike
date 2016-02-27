@@ -24,6 +24,7 @@
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenMountains.cpp" />
     <ClCompile Include="Core\Material.cpp" />
+    <ClCompile Include="Core\MaterialDictionary.cpp" />
     <ClCompile Include="Core\Metaitem.cpp" />
     <ClCompile Include="Core\SectorTessellator.cpp" />
     <ClCompile Include="Core\SplitBlockTessellator.cpp" />
@@ -45,9 +46,9 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="gui\WindowBase.h" />
+    <ClCompile Include="gui\WindowDb.cpp" />
     <ClCompile Include="gui\WindowPerfomance.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
-    <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
@@ -83,6 +84,7 @@
     <ClInclude Include="Core\MapGen\WorldGenFlat.h" />
     <ClInclude Include="Core\MapGen\WorldGenMountains.h" />
     <ClInclude Include="Core\Material.h" />
+    <ClInclude Include="Core\MaterialDictionary.h" />
     <ClInclude Include="Core\Metaitem.h" />
     <ClInclude Include="Core\SectorBase.h" />
     <ClInclude Include="Core\SectorTessellator.h" />
@@ -109,6 +111,7 @@
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="gui\WindowDb.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="network\NetworkManager.h" />
     <ClInclude Include="Render\RenderSector.h" />

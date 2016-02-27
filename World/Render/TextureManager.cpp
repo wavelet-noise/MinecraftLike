@@ -63,6 +63,7 @@ void TextureManager::LoadTexture(const std::initializer_list<std::string> &names
   }
 }
 
+//TODO:лучше использовать сразу текстурные координаты, вместо отступа и размера в пикселях
 std::tuple<PTexture, glm::uvec4> TextureManager::GetTexture(const std::string &name) const
 {
   auto itTexture = mTextures.find(name);
@@ -102,7 +103,9 @@ bool TextureManager::LoadToAtlas(size_t atlas, const std::initializer_list<std::
       continue;
     }
     auto pos = mMultiAtlas[atlas].atlas.Add(name, bitmap);
-    mTextures[name] = { atlas, pos };
+
+    boost::filesystem::path p(name);
+    mTextures[p.stem().string()] = { atlas, pos };
   }
 
   return true;

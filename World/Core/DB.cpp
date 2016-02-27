@@ -15,6 +15,9 @@
 #include "PositionAgent.h"
 #include "PhysicAgent.h"
 #include "Tags.h"
+#include "Metaitem.h"
+#include "MaterialDictionary.h"
+#include "Material.h"
 
 DB &DB::Get()
 {
@@ -110,7 +113,7 @@ void DB::ReloadDirectory(const std::string & dir)
                     for (const std::string &s : std::static_pointer_cast<Tags>(c)->tags)
                     {
                       LOG(trace) << "   " << s;
-                      tags_ref[StringIntern(s)].push_back(b);
+                      mTags[StringIntern(s)].push_back(StringIntern(id));
                     }
                   }
 
@@ -128,10 +131,10 @@ void DB::ReloadDirectory(const std::string & dir)
             }
           }
 
-          if (val.HasMember("render"))
+          if (val.HasMember("tesselator"))
           {
-            rapidjson::Value &arr = val["render"];
-            if (val["render"].IsArray())
+            rapidjson::Value &arr = val["tesselator"];
+            if (val["tesselator"].IsArray())
             {
               for (decltype(arr.Size()) a = 0; a < arr.Size(); a++)
               {
@@ -170,6 +173,15 @@ void DB::ReloadDirectory(const std::string & dir)
             }
           }
 
+          if (val.HasMember("model"))
+          {
+            rapidjson::Value &part = val["model"];
+            auto m = std::make_shared<Model>();
+            m->JsonLoad(part);
+
+            mModel[StringIntern(id)] = std::move(m);
+          }
+
           mObjects[StringIntern(id)] = b;
           loaded++;
         }
@@ -178,7 +190,29 @@ void DB::ReloadDirectory(const std::string & dir)
     }
   }
 
-  LOG(info) << loaded << " loaded";
+  LOG(info) << loaded << " loaded, afterload start";
+
+  for (auto &o : mObjects)
+  {
+    o.second->Afterload();
+  }
+
+  LOG(info) << "afterload end, db done";
+}
+
+const std::vector<StringIntern>& DB::Taglist(const StringIntern & name)
+{
+  return mTags[name];
+}
+
+void DB::PushModel(const StringIntern & s, PModel & m)
+{
+  mModel[s] = m;
+}
+
+PModel DB::GetModel(const StringIntern & s)
+{
+  return mModel[s];
 }
 
 PGameObject DB::Create(const StringIntern &name)

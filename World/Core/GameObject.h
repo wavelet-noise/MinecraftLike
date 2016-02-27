@@ -29,6 +29,9 @@ public:
 
   virtual void Update(GameObjectParams &params);
 
+  ///Выполняется для всех агентов всех блоков после полной заргузки базы данных
+  virtual void Afterload();
+
   virtual PGameObject Clone();
 
   Agent *GetFromFullName(const StringIntern &name);
@@ -45,6 +48,18 @@ public:
   const T *GetFromFullName(const StringIntern &name) const
   {
     return static_cast<const T*>(GetFromFullName(name));
+  }
+
+  template<class T>
+  T *GetFromFullName(const std::string &name)
+  {
+    return static_cast<T*>(GetFromFullName(StringIntern(name)));
+  }
+
+  template<class T>
+  const T *GetFromFullName(const std::string &name) const
+  {
+    return static_cast<T*>(GetFromFullName(StringIntern(name)));
   }
 
   StringIntern GetId();

@@ -13,7 +13,7 @@
 
 SplitBlockTessellator::SplitBlockTessellator()
 {
-  mModel.SetTexture(std::get<0>(TextureManager::Get().GetTexture("Textures/stone.png")));
+  mModel.SetTexture(std::get<0>(TextureManager::Get().GetTexture("stone")));//TODO:remove
 }
 
 

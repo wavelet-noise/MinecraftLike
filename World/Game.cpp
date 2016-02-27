@@ -30,6 +30,7 @@
 
 #include "gui\imgui_impl_glfw_gl3.h"
 #include "gui\WindowPerfomance.h"
+#include "gui\WindowDb.h"
 
 Game::Game()
 {
@@ -249,29 +250,13 @@ void Game::Draw(float dt)
 
   mRenderSector->Draw(*mCamera);
 
-  glMatrixMode(GL_PROJECTION);
-  glLoadMatrixf((const GLfloat*)&mCamera->GetProject());
-  glMatrixMode(GL_MODELVIEW);
-  glLoadMatrixf((const GLfloat*)&mCamera->GetView());
-  glUseProgram(0);
-  glBegin(GL_LINES);
-  glColor3f(1, 0, 0);
-  glVertex3f(0, 0, 0);
-  glVertex3f(10, 0, 0);
-
-  glColor3f(0, 1, 0);
-  glVertex3f(0, 0, 0);
-  glVertex3f(0, 10, 0);
-
-  glColor3f(0, 0, 1);
-  glVertex3f(0, 0, 0);
-  glVertex3f(0, 0, 10);
-  glEnd();
-
   WindowPerfomance &wp = WindowPerfomance::Get();
+  static WindowDb wdb;
+
   ImGui_ImplGlfwGL3_NewFrame();
   wp.DtUpdate(dt, fps.GetCount());
   wp.Draw();
+  wdb.Draw();
   ImGui::Render();
 }
 

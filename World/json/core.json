@@ -4,14 +4,14 @@
     "id":"grass",
     "agents":[
     ],
-	"render":[
+	"tesselator":[
 	  {
 	    "type":"SplitBlockTessellator",
         "generator":
         {
           "separate":[
-		  "Textures\\grass_side.png","Textures\\grass_side.png","Textures\\grass_side.png","Textures\\grass_side.png",
-		  "Textures\\grass_top.png","Textures\\dirt.png"
+		  "grass_side","grass_side","grass_side","grass_side",
+		  "grass_top","dirt"
 		  ]
         },
 		"transparent":false
@@ -23,12 +23,12 @@
     "id":"dirt",
     "agents":[
     ],
-	"render":[
+	"tesselator":[
 	  {
 	    "type":"SplitBlockTessellator",
         "generator":
         {
-          "all":"Textures\\dirt.png"
+          "all":"dirt"
         },
 		"transparent":false
 	  }
@@ -39,12 +39,12 @@
     "id":"dirt2",
     "agents":[
     ],
-	"render":[
+	"tesselator":[
 	  {
 	    "type":"SplitBlockTessellator",
         "generator":
         {
-          "all":"Textures\\dirt2.png"
+          "all":"dirt2"
         },
 		"transparent":false
 	  }
@@ -54,12 +54,12 @@
     "id":"dirt3",
     "agents":[
     ],
-	"render":[
+	"tesselator":[
 	  {
 	    "type":"SplitBlockTessellator",
         "generator":
         {
-          "all":"Textures\\dirt3.png"
+          "all":"dirt3"
         },
 		"transparent":false
 	  }
@@ -69,12 +69,12 @@
     "id":"dirt4",
     "agents":[
     ],
-	"render":[
+	"tesselator":[
 	  {
 	    "type":"SplitBlockTessellator",
         "generator":
         {
-          "all":"Textures\\dirt4.png"
+          "all":"dirt4"
         },
 		"transparent":false
 	  }
@@ -85,12 +85,12 @@
     "id":"log",
     "agents":[
     ],
-	"render":[
+	"tesselator":[
 	  {
 	    "type":"SplitBlockTessellator",
         "generator":
         {
-          "all":"Textures\\log.png"
+          "all":"log"
         },
 		"transparent":false
 	  }
@@ -101,12 +101,12 @@
     "id":"leaves",
     "agents":[
     ],
-	"render":[
+	"tesselator":[
 	  {
 	    "type":"SplitBlockTessellator",
         "generator":
         {
-          "all":"Textures\\leaves.png"
+          "all":"leaves"
         },
 		"transparent":false
 	  }
@@ -117,12 +117,12 @@
     "id":"leaves_t",
     "agents":[
     ],
-	"render":[
+	"tesselator":[
 	  {
 	    "type":"SplitBlockTessellator",
         "generator":
         {
-          "all":"Textures\\leaves_t.png"
+          "all":"leaves_t"
         },
 		"transparent":false
 	  }

@@ -1,21 +1,22 @@
-#ifndef TAGS_H
-#define TAGS_H
+#ifndef MaterialDictionary_H
+#define MaterialDictionary_H
 #include "Agent.h"
 #include <vector>
 
-class Tags : public Agent
+class MaterialDictionary : public Agent
 {
 
 public:
-    std::vector<StringIntern> tags;
-
     // Унаследовано через Agent
     virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
     virtual void Update(const GameObjectParams & params) override;
-    Tags();
+    virtual void Afterload(GameObject * parent) override;
+    MaterialDictionary();
     void JsonLoad(const rapidjson::Value &val) override;
+
+    std::vector<StringIntern> materials;
 };
 
-REGISTER_AGENT(Tags)
+REGISTER_AGENT(MaterialDictionary)
 
-#endif // TAGS_H
+#endif // MaterialDictionary_H

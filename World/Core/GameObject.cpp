@@ -23,6 +23,14 @@ void GameObject::Update(GameObjectParams &params)
   }
 }
 
+void GameObject::Afterload()
+{
+  for (auto &agent : mAgents)
+  {
+    agent.second->Afterload(this);
+  }
+}
+
 PGameObject GameObject::Clone()
 {
   return MakeGameObject<GameObject>(id);
