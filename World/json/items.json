@@ -15,5 +15,90 @@
 	  {
 	    "sprite":"ingot"
 	  }
+},
+{
+	"type":"Item",
+    "id":"gear",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"gear"
+	  }
+},
+{
+	"type":"Item",
+    "id":"bar",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"bar"
+	  }
+},
+{
+	"type":"Item",
+    "id":"dust",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"dust"
+	  }
+},
+{
+	"type":"Item",
+    "id":"ball",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"ball"
+	  }
+},
+{
+	"type":"Item",
+    "id":"wire",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"wire"
+	  }
 }
 ]

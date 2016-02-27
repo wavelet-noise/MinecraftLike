@@ -26,6 +26,11 @@ void MaterialDictionary::Update(const GameObjectParams & params)
 {
 }
 
+void metaitemSpriteGenerator(const StringIntern &mask, const StringIntern &mat)
+{
+
+}
+
 void MaterialDictionary::Afterload(GameObject * parent)
 {
   std::vector<StringIntern> expanded;
@@ -52,7 +57,8 @@ void MaterialDictionary::Afterload(GameObject * parent)
   {
     auto basemodel = DB::Get().GetModel(parent->GetId());
     auto nmodel = std::make_shared<Model>(*basemodel);
-    nmodel->SetSprite(StringIntern(parent->GetId()) + s);
-    DB::Get().PushModel(StringIntern(parent->GetId()) + s, nmodel);
+    TextureManager::Get().LoadTextureMultiplied(parent->GetId(), s);
+    nmodel->SetSprite(parent->GetId() + s);
+    DB::Get().PushModel(parent->GetId() + s, nmodel);
   }
 }

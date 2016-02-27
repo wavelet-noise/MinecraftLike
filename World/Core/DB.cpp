@@ -18,6 +18,7 @@
 #include "Metaitem.h"
 #include "MaterialDictionary.h"
 #include "Material.h"
+#include <render\TextureManager.h>
 
 DB &DB::Get()
 {
@@ -196,6 +197,8 @@ void DB::ReloadDirectory(const std::string & dir)
   {
     o.second->Afterload();
   }
+
+  TextureManager::Get().Compile();
 
   LOG(info) << "afterload end, db done";
 }

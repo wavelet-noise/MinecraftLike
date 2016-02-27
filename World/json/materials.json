@@ -1,7 +1,7 @@
 [
 {
 	"type":"dummy",
-	"id":"_material_brass",
+	"id":"-material_brass",
     "agents":[
 		{
 		"type":"Material",
@@ -13,7 +13,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_aluminum",
+	"id":"-material_aluminum",
     "agents":[
 		{
 		"type":"Material",
@@ -25,7 +25,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_beryllium",
+	"id":"-material_beryllium",
     "agents":[
 		{
 		"type":"Material",
@@ -37,7 +37,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_beryllium_copper",
+	"id":"-material_beryllium_copper",
     "agents":[
 		{
 		"type":"Material",
@@ -49,7 +49,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_vanadium",
+	"id":"-material_vanadium",
     "agents":[
 		{
 		"type":"Material",
@@ -61,7 +61,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_tungsten",
+	"id":"-material_tungsten",
     "agents":[
 		{
 		"type":"Material",
@@ -73,7 +73,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_iron",
+	"id":"-material_iron",
     "agents":[
 		{
 		"type":"Material",
@@ -85,7 +85,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_gold",
+	"id":"-material_gold",
     "agents":[
 		{
 		"type":"Material",
@@ -97,7 +97,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_cobolt",
+	"id":"-material_cobolt",
     "agents":[
 		{
 		"type":"Material",
@@ -109,7 +109,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_magnesium",
+	"id":"-material_magnesium",
     "agents":[
 		{
 		"type":"Material",
@@ -121,11 +121,12 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_copper",
+	"id":"-material_copper",
     "agents":[
 		{
 		"type":"Material",
-		"dens":8930
+		"dens":8930,
+		"tex":"-material_copper"
 		},{
 		"type":"Tags",
 		"tags":["tag_material_metal"]
@@ -133,7 +134,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_cupronickel",
+	"id":"-material_cupronickel",
     "agents":[
 		{
 		"type":"Material",
@@ -145,7 +146,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_molybdenum",
+	"id":"-material_molybdenum",
     "agents":[
 		{
 		"type":"Material",
@@ -157,7 +158,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_stainless_steel",
+	"id":"-material_stainless_steel",
     "agents":[
 		{
 		"type":"Material",
@@ -169,7 +170,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_nickel",
+	"id":"-material_nickel",
     "agents":[
 		{
 		"type":"Material",
@@ -181,7 +182,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_tin",
+	"id":"-material_tin",
     "agents":[
 		{
 		"type":"Material",
@@ -193,7 +194,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_platinum",
+	"id":"-material_platinum",
     "agents":[
 		{
 		"type":"Material",
@@ -205,7 +206,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_plutonium",
+	"id":"-material_plutonium",
     "agents":[
 		{
 		"type":"Material",
@@ -217,7 +218,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_solder",
+	"id":"-material_solder",
     "agents":[
 		{
 		"type":"Material",
@@ -229,7 +230,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_silver",
+	"id":"-material_silver",
     "agents":[
 		{
 		"type":"Material",
@@ -241,7 +242,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_lead",
+	"id":"-material_lead",
     "agents":[
 		{
 		"type":"Material",
@@ -253,7 +254,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_titanium",
+	"id":"-material_titanium",
     "agents":[
 		{
 		"type":"Material",
@@ -265,7 +266,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_steel",
+	"id":"-material_steel",
     "agents":[
 		{
 		"type":"Material",
@@ -277,7 +278,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_uranium",
+	"id":"-material_uranium",
     "agents":[
 		{
 		"type":"Material",
@@ -289,7 +290,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_zinc",
+	"id":"-material_zinc",
     "agents":[
 		{
 		"type":"Material",
@@ -301,7 +302,7 @@
 	]
 },{
 	"type":"dummy",
-	"id":"_material_electrum",
+	"id":"-material_electrum",
     "agents":[
 		{
 		"type":"Material",

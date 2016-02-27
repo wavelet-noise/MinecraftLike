@@ -11,31 +11,7 @@
 #include <vector>
 #include <string>
 #include "Color.h"
-
-
-class BitmapException : public std::exception
-{
-public:
-  BitmapException(unsigned int id)
-    : mId(id)
-  {
-  }
-  virtual const char *what() const throw()
-  {
-    return "Bitmap exception";
-  }
-
-  enum
-  {
-    FILE_NOT_FOUND,
-    FILE_NOT_SAVE,
-
-    COUNT,
-  };
-
-private:
-  const unsigned int mId;
-};
+#include <algorithm>
 
 /// Битовое изображение в оперативной памяти.
 class Bitmap
@@ -75,6 +51,23 @@ public:
   /// Зеркалирование.
   /// direction Направление. true - по горизонтали. false - по вертикали.
   void Mirror(bool direction = true);
+
+  Bitmap &operator *=(const Bitmap &other)
+  {
+    if (glm::length(glm::vec2(other.GetSize())) == 0)
+      return *this;
+
+    std::transform(mData.begin(), mData.end(),
+      other.mData.begin(),
+      mData.begin(),
+      [](unsigned char a, unsigned char b) -> unsigned char {
+      return ((a / static_cast<float>(std::numeric_limits<unsigned char>::max())) *
+        (b / static_cast<float>(std::numeric_limits<unsigned char>::max()))) *
+        std::numeric_limits<unsigned char>::max();
+    });
+
+    return *this;
+  }
 
 private:
 
