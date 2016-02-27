@@ -31,6 +31,8 @@ public:
 
   void SetPosition(const glm::vec3 &pos);
 
+  const glm::quat &GetRot() const;
+
 private:
   static const StringIntern mPhysicAgentName;
 

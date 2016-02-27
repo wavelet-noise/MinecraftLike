@@ -44,6 +44,8 @@ public:
   /// Повернуть камеру относительно текущей ориентации на заданный угол по трем осям.
   void Rotate(const glm::vec3 &angle);
 
+  void SetRot(const glm::quat &quat);
+
   /// Переместиться, относительно текущего положения и ориентации.
   void Move(const glm::vec3 &dist);
 

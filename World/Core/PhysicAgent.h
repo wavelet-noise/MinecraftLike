@@ -38,6 +38,11 @@ public:
 
   const WPos &GetPos() const;
 
+  const glm::quat &GetRot() const
+  {
+    return mQuat;
+  }
+
   /// Повернуть камеру относительно текущей ориентации на заданный угол по трем осям.
   void Rotate(const glm::vec3 &degrees);
 

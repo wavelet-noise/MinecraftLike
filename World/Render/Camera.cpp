@@ -72,6 +72,14 @@ void Camera::Rotate(const glm::vec3 &degrees)
   mDir += degrees;
 }
 
+void Camera::SetRot(const glm::quat &quat)
+{
+  changed = true;
+  mQuat = quat;
+  mDir = {};
+  Update();
+}
+
 void Camera::Move(const glm::vec3 &dist)
 {
   changed = true;

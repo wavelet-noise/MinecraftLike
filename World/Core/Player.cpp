@@ -51,3 +51,8 @@ void Player::SetPosition(const glm::vec3 &pos)
 {
   GetFromFullName<PhysicAgent>(mPhysicAgentName)->SetPos(pos);
 }
+
+const glm::quat & Player::GetRot() const
+{
+  return GetFromFullName<PhysicAgent>(mPhysicAgentName)->GetRot();
+}

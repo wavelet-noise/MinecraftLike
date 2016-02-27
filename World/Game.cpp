@@ -149,22 +149,22 @@ void Game::Update(float dt)
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_LEFT))
   {
     mWorld->GetPlayer()->Rotate({ 0.0f, 0.0f, -speedRot });
-    mCamera->Rotate({ 0.0f, 0.0f, -speedRot });
+    //mCamera->Rotate({ 0.0f, 0.0f, -speedRot });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_RIGHT))
   {
     mWorld->GetPlayer()->Rotate({ 0.0f, 0.0f, speedRot });
-    mCamera->Rotate({ 0.0f, 0.0f, speedRot });
+    //mCamera->Rotate({ 0.0f, 0.0f, speedRot });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_DOWN))
   {
     mWorld->GetPlayer()->Rotate({ speedRot, 0.0f, 0.0f });
-    mCamera->Rotate({ speedRot, 0.0f, 0.0f });
+    //mCamera->Rotate({ speedRot, 0.0f, 0.0f });
   }
   if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_UP))
   {
     mWorld->GetPlayer()->Rotate({ -speedRot, 0.0f, 0.0f });
-    mCamera->Rotate({ -speedRot, 0.0f, 0.0f });
+    //mCamera->Rotate({ -speedRot, 0.0f, 0.0f });
   }
 
   if (mWindow->GetMouse().GetCentring())
@@ -172,7 +172,7 @@ void Game::Update(float dt)
     auto moved = mWindow->GetMouse().GetMoved();
     moved *= 0.001f;
     mWorld->GetPlayer()->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
-    mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
+    //mCamera->Rotate(glm::vec3(moved.y, 0.0f, moved.x));
   }
 
   static float k = 1.0f;
@@ -243,6 +243,7 @@ void Game::Update(float dt)
 void Game::Draw(float dt)
 {
   mCamera->SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
+  mCamera->SetRot(mWorld->GetPlayer()->GetRot());
   mCamera->Update();
 
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));     // Очистка экрана
