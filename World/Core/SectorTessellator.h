@@ -16,7 +16,7 @@
 #include "SectorBase.h"
 
 
-class SectorTessellator : public SectorBase<PBlockTessellator>
+class SectorTessellator : public SectorBase<PGameObjectTessellator>
 {
 public:
   SectorTessellator(const SPos &pos);

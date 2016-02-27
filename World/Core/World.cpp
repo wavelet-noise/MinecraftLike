@@ -82,7 +82,7 @@ std::shared_ptr<Sector> World::FindSector(const SPos &position)
   return nullptr;
 }
 
-PBlock World::GetBlock(const WBPos &wbpos)
+PGameObject World::GetBlock(const WBPos &wbpos)
 {
   auto spos = cs::WBtoS(wbpos);
   if (auto sector = FindSector(spos))
@@ -93,7 +93,7 @@ PBlock World::GetBlock(const WBPos &wbpos)
   return nullptr;
 }
 
-void World::SetBlock(const WBPos &wbpos, PBlock block)
+void World::SetBlock(const WBPos &wbpos, PGameObject block)
 {
   auto spos = cs::WBtoS(wbpos);
   if (auto sector = FindSector(spos))

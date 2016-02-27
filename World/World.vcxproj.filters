@@ -69,9 +69,6 @@
     <ClCompile Include="Core\Creature.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Block.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\PhysicAgent.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
@@ -141,9 +138,6 @@
     <ClCompile Include="imgui\imgui_draw.cpp">
       <Filter>3rdparty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_demo.cpp">
-      <Filter>3rdparty\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="imgui\imgui.cpp">
       <Filter>3rdparty\imgui</Filter>
     </ClCompile>
@@ -198,13 +192,28 @@
     <ClCompile Include="Render\RenderSector.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Tags.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Material.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
     <ClCompile Include="Core\GameEvent.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Metaitem.cpp">
+      <Filter>Core\Agents</Filter>
     </ClCompile>
     <ClCompile Include="Window\KeyBinder.cpp">
       <Filter>Window</Filter>
     </ClCompile>
     <ClCompile Include="Core\EventBus.cpp" />
+    <ClCompile Include="gui\WindowDb.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\MaterialDictionary.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -243,9 +252,6 @@
       <Filter>Core\Agents</Filter>
     </ClInclude>
     <ClInclude Include="Core\Creature.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Block.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\PhysicAgent.h">
@@ -407,6 +413,21 @@
     </ClInclude>
     <ClInclude Include="Core\MapGen\WorldGenMountains.h">
       <Filter>Core\MapGen</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Tags.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Material.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Metaitem.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\WindowDb.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MaterialDictionary.h">
+      <Filter>Core\Agents</Filter>
     </ClInclude>
     <ClInclude Include="Render\RenderSector.h">
       <Filter>Render</Filter>

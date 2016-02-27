@@ -5,6 +5,7 @@
 void WindowPerfomance::Draw()
 {
   ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
+  ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
   ImGui::SetNextWindowCollapsed(true, ImGuiSetCond_FirstUseEver);
   
   ImGui::Begin("Perfomance monitor", &mOpen);

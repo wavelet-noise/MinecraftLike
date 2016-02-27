@@ -8,12 +8,12 @@
 #include "Tessellator.h"
 #include "SectorTessellator.h"
 #include "..\tools\CoordSystem.h"
-#include "Block.h"
+#include "GameObject.h"
 #include <Serealize.h>
 
 SplitBlockTessellator::SplitBlockTessellator()
 {
-  mModel.SetTexture(std::get<0>(TextureManager::Get().GetTexture("Textures/stone.png")));
+  mModel.SetTexture(std::get<0>(TextureManager::Get().GetTexture("stone")));//TODO:remove
 }
 
 
@@ -181,7 +181,7 @@ void SplitBlockTessellator::JsonLoad(const rapidjson::Value & val)
   BlockTessellator::JsonLoad(val);
 }
 
-PBlockTessellator SplitBlockTessellator::Clone()
+PGameObjectTessellator SplitBlockTessellator::Clone()
 {
   return MakeBlockTessellator<SplitBlockTessellator>(*this);
 }

@@ -17,10 +17,9 @@ Bitmap::Bitmap(const std::string &fileName)
   unsigned error = lodepng::decode(mData, mSize.x, mSize.y, fileName);
 
   Mirror();
-
   if(error)
   {
-    throw new BitmapException(BitmapException::FILE_NOT_FOUND);
+    throw std::logic_error(std::string(lodepng_error_text(error)) + " while opening \"" + fileName + "\"");
   }
 }
 
@@ -64,7 +63,7 @@ void Bitmap::Save(const std::string &fileName) const
 
   if(error)
   {
-    throw new BitmapException(BitmapException::FILE_NOT_SAVE);
+    throw std::logic_error(std::string(lodepng_error_text(error)) + " while saving \"" + fileName + "\"");
   }
 }
 

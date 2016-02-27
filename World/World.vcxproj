@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Agent.cpp" />
-    <ClCompile Include="Core\Block.cpp" />
     <ClCompile Include="Core\EventBus.cpp" />
     <ClCompile Include="Core\GameEvent.cpp" />
     <ClCompile Include="Core\MapGen\GenStrategy.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenMountains.cpp" />
+    <ClCompile Include="Core\Material.cpp" />
+    <ClCompile Include="Core\MaterialDictionary.cpp" />
+    <ClCompile Include="Core\Metaitem.cpp" />
     <ClCompile Include="Core\SectorTessellator.cpp" />
     <ClCompile Include="Core\SplitBlockTessellator.cpp" />
     <ClCompile Include="Core\DB.cpp" />
@@ -39,15 +41,16 @@
     <ClCompile Include="Core\BlockTessellator.cpp" />
     <ClCompile Include="Core\Sector.cpp" />
     <ClCompile Include="Core\SectorLoader.cpp" />
+    <ClCompile Include="Core\Tags.cpp" />
     <ClCompile Include="Core\Tessellator.cpp" />
     <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="gui\WindowBase.h" />
+    <ClCompile Include="gui\WindowDb.cpp" />
     <ClCompile Include="gui\WindowPerfomance.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
-    <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
@@ -80,12 +83,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Agent.h" />
-    <ClInclude Include="Core\Block.h" />
     <ClInclude Include="Core\EventBus.h" />
     <ClInclude Include="Core\GameEvent.h" />
     <ClInclude Include="Core\MapGen\GenStrategy.h" />
     <ClInclude Include="Core\MapGen\WorldGenFlat.h" />
     <ClInclude Include="Core\MapGen\WorldGenMountains.h" />
+    <ClInclude Include="Core\Material.h" />
+    <ClInclude Include="Core\MaterialDictionary.h" />
+    <ClInclude Include="Core\Metaitem.h" />
     <ClInclude Include="Core\SectorBase.h" />
     <ClInclude Include="Core\SectorTessellator.h" />
     <ClInclude Include="Core\SplitBlockTessellator.h" />
@@ -103,6 +108,7 @@
     <ClInclude Include="Core\BlockTessellator.h" />
     <ClInclude Include="Core\Sector.h" />
     <ClInclude Include="Core\SectorLoader.h" />
+    <ClInclude Include="Core\Tags.h" />
     <ClInclude Include="Core\TemplateFactory.h" />
     <ClInclude Include="Core\Tessellator.h" />
     <ClInclude Include="Core\TessellatorParams.h" />
@@ -110,6 +116,7 @@
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="gui\WindowDb.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="network\NetworkManager.h" />
     <ClInclude Include="Render\RenderSector.h" />

@@ -10,7 +10,7 @@
 #include <glm/glm.hpp>
 
 #include "../tools/CoordSystem.h"
-#include "Block.h"
+#include "GameObject.h"
 #include "Config.h"
 #include "DB.h"
 
@@ -19,7 +19,7 @@
 #include "SectorBase.h"
 
 
-class Sector : public SectorBase<PBlock>
+class Sector : public SectorBase<PGameObject>
 {
 public:
   Sector(const SPos &position);
@@ -29,7 +29,7 @@ public:
 
   /// Установить блок в заданную позицию.
   /// Существующий блок будет удален.
-  void SetBlock(const SBPos &pos, PBlock block);
+  void SetBlock(const SBPos &pos, PGameObject block);
 
   void Update(class World *world);
 

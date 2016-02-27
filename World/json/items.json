@@ -1,25 +1,104 @@
 [
 {
 	"type":"Item",
+    "id":"ingot",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"ingot"
+	  }
+},
+{
+	"type":"Item",
+    "id":"gear",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"gear"
+	  }
+},
+{
+	"type":"Item",
     "id":"bar",
     "agents":[
 		{
-		"type":"MaterialDictionary"
-		"data":["material_iron"]
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
 		}
     ],
-	"render":[
+	"model":
 	  {
-	    "type":"SplitBlockTessellator",
-        "generator":
-        {
-          "separate":[
-		  "Textures\\grass_side.png","Textures\\grass_side.png","Textures\\grass_side.png","Textures\\grass_side.png",
-		  "Textures\\grass_top.png","Textures\\dirt.png"
-		  ]
-        },
-		"transparent":false
+	    "sprite":"bar"
 	  }
-	]
+},
+{
+	"type":"Item",
+    "id":"dust",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"dust"
+	  }
+},
+{
+	"type":"Item",
+    "id":"ball",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"ball"
+	  }
+},
+{
+	"type":"Item",
+    "id":"wire",
+    "agents":[
+		{
+		"type":"MaterialDictionary",
+		"materials":["tag_material_metal"]
+		},
+		{
+		"type":"Metaitem"
+		}
+    ],
+	"model":
+	  {
+	    "sprite":"wire"
+	  }
 }
 ]

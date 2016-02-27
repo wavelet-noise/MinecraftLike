@@ -31,9 +31,9 @@ const SPos & Sector::GetPos() const
 }
 
 
-void Sector::SetBlock(const SBPos &pos, PBlock block)
+void Sector::SetBlock(const SBPos &pos, PGameObject block)
 {
-  SectorBase<PBlock>::SetBlock(pos, block);
+  SectorBase<PGameObject>::SetBlock(pos, block);
 
   if (mTessellator && block)
   {

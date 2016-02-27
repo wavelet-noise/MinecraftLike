@@ -16,6 +16,10 @@ Agent::~Agent()
 {
 }
 
+void Agent::Afterload(GameObject * parent)
+{
+}
+
 void Agent::JsonLoad(const rapidjson::Value & val)
 {
   if (val.HasMember("name"))

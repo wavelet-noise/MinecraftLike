@@ -1,8 +1,4 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
-#pragma once
+﻿#pragma once
 #ifndef PerlinNoise_h__
 #define PerlinNoise_h__
 

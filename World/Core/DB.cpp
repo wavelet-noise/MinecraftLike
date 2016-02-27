@@ -1,18 +1,24 @@
 // ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
+// ==                   Copyright (c) 2016, VASYAN                           ==
 // ==                  See license.txt for more information                  ==
 // ============================================================================
-#include "DB.h"
 #include <boost\filesystem.hpp>
-#include "..\rapidjson\document.h"
 #include <boost\exception\diagnostic_information.hpp>
+#include <rapidjson\document.h>
+#include <tools\Log.h>
+
+#include "DB.h"
 
 //possibly must be moved into <agents> file
 //deserialize autoreg
 #include "BlockTessellator.h"
 #include "PositionAgent.h"
 #include "PhysicAgent.h"
-#include "..\tools\Log.h"
+#include "Tags.h"
+#include "Metaitem.h"
+#include "MaterialDictionary.h"
+#include "Material.h"
+#include <render\TextureManager.h>
 
 DB &DB::Get()
 {
@@ -20,14 +26,14 @@ DB &DB::Get()
   return obj;
 }
 
-void DB::Registry(const StringIntern &name, PBlock block, bool isStatic)
+void DB::Registry(const StringIntern &name, PGameObject block, bool isStatic)
 {
-  mBlocks[name] = block;
+  mObjects[name] = block;
 }
 
 void DB::ReloadDirectory(const std::string & dir)
 {
-  mBlocks.clear();
+  mObjects.clear();
 
   boost::filesystem::path targetDir(dir);
   boost::filesystem::recursive_directory_iterator iter(targetDir);
@@ -75,7 +81,7 @@ void DB::ReloadDirectory(const std::string & dir)
           std::string id = val["id"].GetString();
           LOG(trace) << "\"" << id << "\" parsing";
 
-          auto b = std::make_shared<Block>(StringIntern(id));
+          auto b = std::make_shared<GameObject>(StringIntern(id));
 
           if (val.HasMember("agents")) 
           {
@@ -102,6 +108,16 @@ void DB::ReloadDirectory(const std::string & dir)
                     continue;
                   }
 
+                  if (agenttype == "Tags")
+                  {
+                    LOG(trace) << "tagged as";
+                    for (const std::string &s : std::static_pointer_cast<Tags>(c)->tags)
+                    {
+                      LOG(trace) << "   " << s;
+                      mTags[StringIntern(s)].push_back(StringIntern(id));
+                    }
+                  }
+
                   b->mAgents[StringIntern(agenttype)] = std::move(c);
                 }
                 else
@@ -116,10 +132,10 @@ void DB::ReloadDirectory(const std::string & dir)
             }
           }
 
-          if (val.HasMember("render"))
+          if (val.HasMember("tesselator"))
           {
-            rapidjson::Value &arr = val["render"];
-            if (val["render"].IsArray())
+            rapidjson::Value &arr = val["tesselator"];
+            if (val["tesselator"].IsArray())
             {
               for (decltype(arr.Size()) a = 0; a < arr.Size(); a++)
               {
@@ -158,7 +174,16 @@ void DB::ReloadDirectory(const std::string & dir)
             }
           }
 
-          mBlocks[StringIntern(id)] = b;
+          if (val.HasMember("model"))
+          {
+            rapidjson::Value &part = val["model"];
+            auto m = std::make_shared<Model>();
+            m->JsonLoad(part);
+
+            mModel[StringIntern(id)] = std::move(m);
+          }
+
+          mObjects[StringIntern(id)] = b;
           loaded++;
         }
         
@@ -166,20 +191,44 @@ void DB::ReloadDirectory(const std::string & dir)
     }
   }
 
-  LOG(info) << loaded << " loaded";
+  LOG(info) << loaded << " loaded, afterload start";
+
+  for (auto &o : mObjects)
+  {
+    o.second->Afterload();
+  }
+
+  TextureManager::Get().Compile();
+
+  LOG(info) << "afterload end, db done";
 }
 
-PBlock DB::Create(const StringIntern &name)
+const std::vector<StringIntern>& DB::Taglist(const StringIntern & name)
 {
-  return mBlocks[name];
+  return mTags[name];
 }
 
-PBlock DB::Create(const std::string &name)
+void DB::PushModel(const StringIntern & s, PModel & m)
 {
-  return mBlocks[StringIntern(name)];
+  mModel[s] = m;
 }
 
-PBlockTessellator DB::CreateTesselator(const StringIntern &name)
+PModel DB::GetModel(const StringIntern & s)
+{
+  return mModel[s];
+}
+
+PGameObject DB::Create(const StringIntern &name)
+{
+  return mObjects[name];
+}
+
+PGameObject DB::Create(const std::string &name)
+{
+  return mObjects[StringIntern(name)];
+}
+
+PGameObjectTessellator DB::CreateTesselator(const StringIntern &name)
 {
   return mTess[name];
 }

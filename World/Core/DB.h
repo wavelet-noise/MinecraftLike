@@ -6,7 +6,7 @@
 #ifndef BlocksLibrary_h__
 #define BlocksLibrary_h__
 
-#include "Block.h"
+#include "GameObject.h"
 #include <unordered_map>
 #include "BlockTessellator.h"
 
@@ -15,22 +15,28 @@ class DB
 public:
   static DB &Get();
 
-  void Registry(const StringIntern &name, PBlock block, bool isStatic = true);
+  void Registry(const StringIntern &name, PGameObject block, bool isStatic = true);
   void ReloadDirectory(const std::string &dir);
+  const std::vector<StringIntern> &Taglist(const StringIntern &name);
 
+  void PushModel(const StringIntern &s, PModel &m);
+  PModel GetModel(const StringIntern &s);
 
   /// Создать блок.
   /// Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
   /// Если блок динамический, создается копия блока.
   /// @param blockId Идентификатор блока.
-  PBlock Create(const std::string & name);
-  PBlock Create(const StringIntern &name);
+  PGameObject Create(const std::string & name);
+  PGameObject Create(const StringIntern &name);
 
-  PBlockTessellator CreateTesselator(const StringIntern &name);
+  PGameObjectTessellator CreateTesselator(const StringIntern &name);
 
 private:
-  std::unordered_map<StringIntern, PBlock> mBlocks;
-  std::unordered_map<StringIntern, PBlockTessellator> mTess;
+  friend class WindowDb;
+  std::unordered_map<StringIntern, PGameObject> mObjects;
+  std::unordered_map<StringIntern, PGameObjectTessellator> mTess;
+  std::unordered_map<StringIntern, PModel> mModel;
+  std::unordered_map<StringIntern, std::vector<StringIntern>> mTags;
 
 private:
   DB() {};

@@ -28,6 +28,7 @@ public:
   const static Color red;
   const static Color green;
   const static Color blue;
+  const static Color transparent;
 };
 
 
