@@ -52,6 +52,7 @@ public:
   /// direction Направление. true - по горизонтали. false - по вертикали.
   void Mirror(bool direction = true);
 
+
   Bitmap &operator *=(const Bitmap &other)
   {
     if (glm::length(glm::vec2(other.GetSize())) == 0)
@@ -60,12 +61,12 @@ public:
     std::transform(mData.begin(), mData.end(),
       other.mData.begin(),
       mData.begin(),
-      [](unsigned char a, unsigned char b) -> unsigned char 
-    {
+      [](unsigned char a, unsigned char b) -> unsigned char {
       return static_cast<unsigned char>(
-        ((static_cast<float>(a) / static_cast<float>(std::numeric_limits<unsigned char>::max())) *
-         (static_cast<float>(b) / static_cast<float>(std::numeric_limits<unsigned char>::max()))) *
-              static_cast<float>(std::numeric_limits<unsigned char>::max()));
+          ((a / static_cast<float>(std::numeric_limits<unsigned char>::max())) *
+          (b / static_cast<float>(std::numeric_limits<unsigned char>::max()))) *
+          std::numeric_limits<unsigned char>::max()
+        );
     });
 
     return *this;
