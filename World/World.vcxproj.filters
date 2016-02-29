@@ -37,6 +37,9 @@
     <Filter Include="gui">
       <UniqueIdentifier>{e3552fd7-a7b1-461a-8ffe-513546b9cae2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Template">
+      <UniqueIdentifier>{9ff9d70a-f382-4254-8b00-4189a4d797ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsCounter.cpp" />
@@ -192,17 +195,11 @@
     <ClCompile Include="Render\RenderSector.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Tags.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Material.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
     <ClCompile Include="Core\GameEvent.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Metaitem.cpp">
-      <Filter>Core\Agents</Filter>
     </ClCompile>
     <ClCompile Include="Window\KeyBinder.cpp">
       <Filter>Window</Filter>
@@ -210,11 +207,14 @@
     <ClCompile Include="gui\WindowDb.cpp">
       <Filter>gui</Filter>
     </ClCompile>
-    <ClCompile Include="Core\MaterialDictionary.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
     <ClCompile Include="Core\EventBus.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="template\TemplateItemMaterial.cpp">
+      <Filter>Core\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\Template.cpp">
+      <Filter>Core\Template</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,20 +416,11 @@
     <ClInclude Include="Core\MapGen\WorldGenMountains.h">
       <Filter>Core\MapGen</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Tags.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Material.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Metaitem.h">
       <Filter>Core\Agents</Filter>
     </ClInclude>
     <ClInclude Include="gui\WindowDb.h">
       <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MaterialDictionary.h">
-      <Filter>Core\Agents</Filter>
     </ClInclude>
     <ClInclude Include="Render\RenderSector.h">
       <Filter>Render</Filter>
@@ -442,6 +433,12 @@
     </ClInclude>
     <ClInclude Include="Core\EventBus.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="template\TemplateItemMaterial.h">
+      <Filter>Core\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\Template.h">
+      <Filter>Core\Template</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

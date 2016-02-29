@@ -10,6 +10,8 @@
 #include <unordered_map>
 #include "BlockTessellator.h"
 
+class Template;
+
 class DB
 {
 public:
@@ -37,6 +39,7 @@ private:
   std::unordered_map<StringIntern, PGameObjectTessellator> mTess;
   std::unordered_map<StringIntern, PModel> mModel;
   std::unordered_map<StringIntern, std::vector<StringIntern>> mTags;
+  std::list<std::shared_ptr<Template>> mTempl;
 
 private:
   DB() {};

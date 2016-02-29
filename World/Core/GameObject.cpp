@@ -33,7 +33,14 @@ void GameObject::Afterload()
 
 PGameObject GameObject::Clone()
 {
-  return MakeGameObject<GameObject>(id);
+  auto a = MakeGameObject<GameObject>(id);
+
+  for (const auto &ag : mAgents)
+  {
+    a->mAgents[ag.first] = ag.second->Clone(a.get());
+  }
+
+  return a;
 }
 
 StringIntern GameObject::GetId()

@@ -67,6 +67,8 @@ public:
 protected:
   friend class DB;
   std::map<StringIntern, PAgent> mAgents;
+
+  friend class TemplateItemMaterial;
   StringIntern id;
 };
 

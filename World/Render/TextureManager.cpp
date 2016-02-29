@@ -151,7 +151,7 @@ bool TextureManager::LoadToAtlasMultiplied(size_t atlas, const std::string &mask
   
   auto pos = mMultiAtlas[atlas].atlas.Add(mask, bitmap_mask);
 
-  mTextures[mask+mat] = { atlas, pos };
+  mTextures[mask+"_"+mat] = { atlas, pos };
 
   return true;
 }

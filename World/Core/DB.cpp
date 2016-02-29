@@ -6,6 +6,7 @@
 #include <boost\exception\diagnostic_information.hpp>
 #include <rapidjson\document.h>
 #include <tools\Log.h>
+#include <render\TextureManager.h>
 
 #include "DB.h"
 
@@ -14,11 +15,15 @@
 #include "BlockTessellator.h"
 #include "PositionAgent.h"
 #include "PhysicAgent.h"
-#include "Tags.h"
-#include "Metaitem.h"
-#include "MaterialDictionary.h"
 #include "Material.h"
-#include <render\TextureManager.h>
+
+//possibly must be moved into <templates> file
+//deserialize autoreg
+#include <template\TemplateItemMaterial.h>
+
+//possibly must be moved into <tesselators> file
+//deserialize autoreg
+#include <Core\SplitBlockTessellator.h>
 
 DB &DB::Get()
 {
@@ -38,7 +43,6 @@ void DB::ReloadDirectory(const std::string & dir)
   boost::filesystem::path targetDir(dir);
   boost::filesystem::recursive_directory_iterator iter(targetDir);
 
-  int loaded = 0;
   for (const boost::filesystem::path &file : iter) {
     if (boost::filesystem::is_regular_file(file) && boost::filesystem::extension(file) == ".json")
     {
@@ -108,16 +112,6 @@ void DB::ReloadDirectory(const std::string & dir)
                     continue;
                   }
 
-                  if (agenttype == "Tags")
-                  {
-                    LOG(trace) << "tagged as";
-                    for (const std::string &s : std::static_pointer_cast<Tags>(c)->tags)
-                    {
-                      LOG(trace) << "   " << s;
-                      mTags[StringIntern(s)].push_back(StringIntern(id));
-                    }
-                  }
-
                   b->mAgents[StringIntern(agenttype)] = std::move(c);
                 }
                 else
@@ -183,24 +177,58 @@ void DB::ReloadDirectory(const std::string & dir)
             mModel[StringIntern(id)] = std::move(m);
           }
 
+          std::vector<std::string> tags;
+          JSONLOAD(NVP(tags));
+          if (!tags.empty())
+          {
+
+            LOG(trace) << "tagged as";
+            for (const std::string &s : tags)
+            {
+              LOG(trace) << "   " << s;
+              mTags[StringIntern(s)].push_back(StringIntern(id));
+            }
+          }
+
+          if (val.HasMember("template"))
+          {
+            rapidjson::Value &part = val["template"];
+            if (part.HasMember("type")) {
+              std::string temptype = part["type"].GetString();
+              auto c = ObjectTemplateFactory::Get().Create(StringIntern(temptype));
+              c->JsonLoad(part);
+              c->go = b.get();
+
+              mTempl.insert(mTempl.end(), c);
+            }
+          }
+
           mObjects[StringIntern(id)] = b;
-          loaded++;
         }
         
       }
     }
   }
 
-  LOG(info) << loaded << " loaded, afterload start";
+  LOG(info) << mObjects.size() << " loaded, afterload start";
 
   for (auto &o : mObjects)
   {
     o.second->Afterload();
   }
 
+  LOG(info) "afterload done, template expansion";
+
+  for (auto &t : mTempl)
+  {
+    t->Generate();
+  }
+
+  LOG(info) "expanded to " << mObjects.size() << " objects";
+
   TextureManager::Get().Compile();
 
-  LOG(info) << "afterload end, db done";
+  LOG(info) << "db done";
 }
 
 const std::vector<StringIntern>& DB::Taglist(const StringIntern & name)

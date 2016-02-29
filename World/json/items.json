@@ -3,102 +3,84 @@
 	"type":"Item",
     "id":"ingot",
     "agents":[
-		{
-		"type":"MaterialDictionary",
-		"materials":["tag_material_metal"]
-		},
-		{
-		"type":"Metaitem"
-		}
     ],
 	"model":
 	  {
 	    "sprite":"ingot"
-	  }
+	  },
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
 },
 {
 	"type":"Item",
     "id":"gear",
     "agents":[
-		{
-		"type":"MaterialDictionary",
-		"materials":["tag_material_metal"]
-		},
-		{
-		"type":"Metaitem"
-		}
     ],
 	"model":
 	  {
 	    "sprite":"gear"
-	  }
+	  },
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
 },
 {
 	"type":"Item",
     "id":"bar",
     "agents":[
-		{
-		"type":"MaterialDictionary",
-		"materials":["tag_material_metal"]
-		},
-		{
-		"type":"Metaitem"
-		}
     ],
 	"model":
 	  {
 	    "sprite":"bar"
-	  }
+	  },
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
 },
 {
 	"type":"Item",
     "id":"dust",
     "agents":[
-		{
-		"type":"MaterialDictionary",
-		"materials":["tag_material_metal"]
-		},
-		{
-		"type":"Metaitem"
-		}
     ],
 	"model":
 	  {
 	    "sprite":"dust"
-	  }
+	  },
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
 },
 {
 	"type":"Item",
     "id":"ball",
     "agents":[
-		{
-		"type":"MaterialDictionary",
-		"materials":["tag_material_metal"]
-		},
-		{
-		"type":"Metaitem"
-		}
     ],
 	"model":
-	  {
-	    "sprite":"ball"
-	  }
+	{
+	"sprite":"ball"
+	},
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
 },
 {
 	"type":"Item",
     "id":"wire",
     "agents":[
-		{
-		"type":"MaterialDictionary",
-		"materials":["tag_material_metal"]
-		},
-		{
-		"type":"Metaitem"
-		}
     ],
 	"model":
 	  {
 	    "sprite":"wire"
-	  }
+	  },
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
 }
 ]
