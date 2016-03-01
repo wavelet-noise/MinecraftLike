@@ -14,14 +14,16 @@ KeyBinder::KeyBinder(Keyboard &keyboard, Mouse &mouse)
 
 void KeyBinder::Update()
 {
-  if (float val = mMouse.IsMoveX())
+  float val = mMouse.DeltaX();
+  if (mMouse.GetCentring())
   {
-    mCallback(std::make_unique<GameEventRotate>(glm::vec3(0.0f, 0.0f, val)));
+    mCallback(std::make_unique<GameEventRotate>(glm::vec3(0.0f, 0.0f, val / 100.f)));
   }
 
-  if (float val = mMouse.IsMoveY())
+  val = mMouse.DeltaY();
+  if (mMouse.GetCentring())
   {
-    mCallback(std::make_unique<GameEventRotate>(glm::vec3(val, 0.0f, 0.0f)));
+    mCallback(std::make_unique<GameEventRotate>(glm::vec3(val / 100.f, 0.0f, 0.0f)));
   }
 
   for (auto &i : mMap)

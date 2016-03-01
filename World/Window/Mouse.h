@@ -16,9 +16,9 @@ public:
   Mouse(struct GLFWwindow &window);
   ~Mouse(void);
 
-  float IsMoveX();
+  float DeltaX();
 
-  float IsMoveY();
+  float DeltaY();
 
   glm::vec2 GetMoved();
 

@@ -41,10 +41,5 @@ void TemplateItemMaterial::Generate()
 
 void TemplateItemMaterial::JsonLoad(const rapidjson::Value & val)
 {
-  std::vector<std::string> t;
-  JSONLOAD(sge::make_nvp("materials", t));
-  for (const auto &s : t)
-  {
-    materials.push_back(StringIntern(s));
-  }
+  JSONLOAD(NVP(materials));
 }

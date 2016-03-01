@@ -59,6 +59,11 @@ Agent *GameObject::GetFromFullName(const StringIntern &name)
   return nullptr;
 }
 
+void GameObject::PushAgent(PAgent go)
+{
+  mAgents[go->GetFullName()] = go;
+}
+
 const Agent *GameObject::GetFromFullName(const StringIntern &name) const
 {
   auto it = mAgents.find(name);

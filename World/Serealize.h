@@ -13,6 +13,7 @@
 #include <glm\glm.hpp>
 
 #include "rapidjson\document.h"
+#include <tools\StringIntern.h>
 
 #define NVP(T) sge::make_nvp(#T, T)
 #define JSONLOAD(...) DeserializeHelper::deserialize(val, __VA_ARGS__)
@@ -116,6 +117,17 @@ namespace {
   }
 
   template<>
+  void __deserialize(const rapidjson::Value &val, const char *s, StringIntern &target)
+  {
+    if (val.HasMember(s))
+    {
+      if (!val[s].IsString())
+        throw std::invalid_argument((boost::format("value %1% is not a string") % s).str());
+      target = StringIntern(val[s].GetString());
+    }
+  }
+
+  template<>
   void __deserialize(const rapidjson::Value &val, const char *s, float &target)
   {
     if (val.HasMember(s))
@@ -214,6 +226,21 @@ namespace {
         if (!arr[i].IsString())
           throw std::invalid_argument((boost::format("value %1%[%2%] is not a string") % s % i).str());
         target.push_back(arr[i].GetString());
+      }
+    }
+  }
+
+  template<>
+  void __deserialize(const rapidjson::Value &val, const char *s, std::vector<StringIntern> &target)
+  {
+    if (val.HasMember(s) && val[s].IsArray())
+    {
+      const rapidjson::Value &arr = val[s];
+      for (decltype(arr.Size()) i = 0; i < arr.Size(); i++)
+      {
+        if (!arr[i].IsString())
+          throw std::invalid_argument((boost::format("value %1%[%2%] is not a string") % s % i).str());
+        target.push_back(StringIntern(arr[i].GetString()));
       }
     }
   }

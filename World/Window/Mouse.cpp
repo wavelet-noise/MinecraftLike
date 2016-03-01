@@ -28,13 +28,13 @@ Mouse::~Mouse(void)
 {
 }
 
-float Mouse::IsMoveX()
+float Mouse::DeltaX()
 {
   std::lock_guard<std::mutex> lock(mMutex);
   return mMoved.x;
 }
 
-float Mouse::IsMoveY()
+float Mouse::DeltaY()
 {
   std::lock_guard<std::mutex> lock(mMutex);
   return mMoved.y;

@@ -3,23 +3,16 @@
 #include <glm\glm.hpp>
 #include <Core\DB.h>
 #include <Render\TextureManager.h>
-
-WindowDb::WindowDb()
-{
-  tid = new int(1);
-}
-
-WindowDb::~WindowDb()
-{
-  delete tid;
-}
+#include "WindowInventory.h"
+#include <Core\World.h>
+#include <Core\Chest.h>
 
 void WindowDb::Draw()
 {
   ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
   ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
 
-  int jj = 10;
+  int jj = 666;
   ImGui::Begin("Database", &mOpen);
   {
     ImDrawList* draw_list = ImGui::GetWindowDrawList();
@@ -39,15 +32,18 @@ void WindowDb::Draw()
         auto uv2 = uv + glm::vec2(std::get<1>(atl).z, std::get<1>(atl).w) / glm::vec2(tex->GetSize());
         std::swap(uv.x, uv2.x);
 
-        if (jj < 10)
+        if (jj < 9)
           ImGui::SameLine(), jj++;
         else
           jj = 0;
+
         ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
         if (ImGui::IsItemHovered())
         {
-          auto s = a.first.get();
-          ImGui::SetTooltip("%s", s.c_str());
+          ImGui::SetTooltip("%s", a.first.get().c_str());
+
+          if(ImGui::IsMouseClicked(0))
+            WindowInventory::Get().w->GetPlayer()->GetFromFullName<Chest>("Chest")->Push( DB::Get().Create(a.first) );
         }
       }
     }

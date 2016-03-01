@@ -10,11 +10,12 @@
 #include "MapGen\WorldWorker.h"
 #include "..\Render\Render.h"
 #include "Tessellator.h"
-
+#include <Core\Chest.h>
 
 World::World()
 {
   mPlayer = std::make_unique<Player>(StringIntern(std::string("player")));
+  mPlayer->PushAgent(std::make_shared<Chest>());
 }
 
 

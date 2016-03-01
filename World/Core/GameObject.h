@@ -62,6 +62,8 @@ public:
     return static_cast<T*>(GetFromFullName(StringIntern(name)));
   }
 
+  void PushAgent(PAgent go);
+
   StringIntern GetId();
 
 protected:

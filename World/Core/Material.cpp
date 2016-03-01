@@ -8,12 +8,12 @@ Material::Material()
 
 void Material::JsonLoad(const rapidjson::Value &val)
 {
-
+  JSONLOAD(NVP(mtex), NVP(dens));
 }
 
 PAgent Material::Clone(GameObject * parent, const std::string &)
 {
-  return PAgent();
+  return std::make_shared<Material>(*this);
 }
 
 void Material::Update(const GameObjectParams & params)

@@ -216,6 +216,18 @@
     <ClCompile Include="template\Template.cpp">
       <Filter>Core\Template</Filter>
     </ClCompile>
+    <ClCompile Include="core\Recipe.h">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Chest.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Recipe.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\WindowInventory.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -439,6 +451,12 @@
     </ClInclude>
     <ClInclude Include="template\Template.h">
       <Filter>Core\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\WindowInventory.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Chest.h">
+      <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
