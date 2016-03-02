@@ -93,8 +93,54 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
   return mGenId++;
 }
 
+void Render::EraseModel(size_t id)
+{
+  if (id >= mModels.size() || !mModels[id])
+  {
+    LOG(warning) << "Модуль уже удалена. id: " << id;
+    return;
+  }
+
+  mModels[id].reset();
+}
+
+void Render::SetModelMatrix(size_t id, const glm::mat4 &matrix)
+{
+  if (id >= mModels.size() || !mModels[id])
+  {
+    LOG(warning) << "Установка матрицы на неизвестную модель. id: " << id;
+    return;
+  }
+  auto &model = *mModels[id];
+
+  model.mModel = matrix;
+}
+
 void Render::Draw(Camera &camera)
 {
+  for (auto &i : mModels)
+  {
+    if (!i)
+    {
+      continue;
+    }
+    auto &model = *i;
 
+    const auto &aabb = model.mMesh->GetAABB();
+    if (!camera.BoxWithinFrustum(model.mModel * std::get<Mesh::MinAABB>(aabb), model.mModel * std::get<Mesh::MaxAABB>(aabb)))
+    {
+      continue;
+    }
+
+    model.mTexture->Set(TEXTURE_SLOT_0);
+
+    auto &shader = model.mShader;
+    shader->Use();
+    shader->SetUniform(TEXTURE_SLOT_0, "atlas");
+
+    shader->SetUniform(camera.GetViewProject() * model.mModel, "transform_VP");
+
+    model.mMesh->Draw();
+  }
 }
 

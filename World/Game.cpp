@@ -111,17 +111,17 @@ int Game::Run()
   mWorld->SetTessellator(mTessellator.get());
   mTessellator->Run();
 
-  boost::thread update_thread([this]
-  {
-    auto currTime = static_cast<float>(glfwGetTime());
-    while (true)
-    {
-      auto lastTime = currTime;
-      currTime = static_cast<float>(glfwGetTime());
-      Update(currTime - lastTime);
-      boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
-    }
-  });
+//   boost::thread update_thread([this]
+//   {
+//     auto currTime = static_cast<float>(glfwGetTime());
+//     while (true)
+//     {
+//       auto lastTime = currTime;
+//       currTime = static_cast<float>(glfwGetTime());
+//       Update(currTime - lastTime);
+//       boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
+//     }
+//   });
 
   auto currTime = static_cast<float>(glfwGetTime());
   while (!mWindow->WindowShouldClose())
@@ -130,6 +130,8 @@ int Game::Run()
 
     auto lastTime = currTime;
     currTime = static_cast<float>(glfwGetTime());
+    
+    Update(currTime - lastTime);
     Draw(currTime - lastTime);
 
     mWindow->Update();
@@ -138,11 +140,11 @@ int Game::Run()
 
   mTessellator.reset();
 
-  update_thread.interrupt();
+  //update_thread.interrupt();
   gen_thread.interrupt();
 
-  LOG(trace) << "update joining";
-  update_thread.join();
+  //LOG(trace) << "update joining";
+  //update_thread.join();
 
   LOG(trace) << "generate joining";
   gen_thread.join();
@@ -191,6 +193,7 @@ void Game::Draw(float dt)
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));     // Очистка экрана
 
   mRenderSector->Draw(*mCamera);
+  mRender->Draw(*mCamera);
 
   WindowPerfomance &wp = WindowPerfomance::Get();
   WindowInventory &winv = WindowInventory::Get();
