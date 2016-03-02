@@ -14,6 +14,8 @@
 #include <assert.h>
 #include "Camera.h"
 #include <GLFW/glfw3.h>
+#include "RenderMeshVao.h"
+#include "TextureManager.h"
 
 
 
@@ -78,72 +80,21 @@ void Render::Initialize()
   LOG(info) << "GLEW: " << glewGetString(GLEW_VERSION);
 }
 
-RenderIterator Render::PushModel(const Model &model, const glm::mat4 &matrix)
+uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, const std::string &shader)
 {
-  std::lock_guard<std::mutex> lock(mMutex);
+  mModels.push_back(std::move(std::make_unique<RenderModel>()));
 
-  mAddList.push_back({ model, matrix });
-  mAddList.back().mIterator = std::make_shared<Element::Iterator>(--mAddList.end());
+  auto &model = *mModels.back();
 
-  return{ mAddList.back().mIterator, mMutex };
+  model.mMesh = std::make_shared<Mesh>();
+  model.mTexture = std::get<0>(TextureManager::Get().GetTexture(texture));
+  model.mShader = DBShaders::Get().GetShader("shaders/basic.glsl");
+
+  return mGenId++;
 }
 
 void Render::Draw(Camera &camera)
 {
-  AddElements();
-  SwapMatrix();
 
-  for (auto &i : mDrawList)
-  {
-    auto aabb = i.model.GetAABB();
-    if (!camera.BoxWithinFrustum(i.matrix * std::get<0>(aabb), i.matrix * std::get<1>(aabb)))
-      continue;
-
-    if(auto t = i.model.GetTexture())
-      t->Set(TEXTURE_SLOT_0);
-
-    auto &shader = i.model.GetShader();
-    shader->Use();
-    shader->SetUniform(TEXTURE_SLOT_0, "atlas");
-
-    //TODO: prebuild NVP
-    shader->SetUniform(camera.GetViewProject() * i.matrix, "transform_VP");
-
-    i.model.GetMesh()->Draw();
-  }
 }
 
-void Render::AddElements()
-{
-  std::lock_guard<std::mutex> lock(mMutex);
-  if (mAddList.empty())
-  {
-    return;
-  }
-
-  for (auto &i : mAddList)
-  {
-    mDrawList.push_back(i);
-    auto &element = mDrawList.back();
-    *element.mIterator = --mDrawList.end();
-
-    element.model.BuildAABB(&VertexVTN::vertex);
-
-    auto currentTime = glfwGetTime();
-    element.model.GetMesh()->Compile(element.model.GetShader()->GetAttributeLocation(element.model.GetMesh()->GetAttribute()));
-    //LOG(trace) << "SectorCompiled: " << glfwGetTime() - currentTime;
-    
-    element.model.GetMesh()->Release();
-  }
-  mAddList.clear();
-}
-
-void Render::SwapMatrix()
-{
-  std::lock_guard<std::mutex> lock(mMutex);
-  for (auto &i : mDrawList)
-  {
-    //std::swap(i.matrix, i.matrixBack);
-    i.matrix = i.matrixBack;
-  }
-}

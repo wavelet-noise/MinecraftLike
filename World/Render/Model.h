@@ -7,7 +7,7 @@
 #define Model_h__
 
 #include "Texture.h"
-#include "Mesh.h"
+#include "TemplateMesh.h"
 #include "Vertex.h"
 #include <rapidjson\document.h>
 #include <tools\StringIntern.h>
@@ -34,12 +34,12 @@ public:
     mTexture = texture;
   }
 
-  inline PMesh<VertexType> &GetMesh() noexcept
+  inline PTemplateMesh<VertexType> &GetMesh() noexcept
   {
     return mMesh;
   }
 
-  inline const PMesh<VertexType> &GetMesh() const noexcept
+  inline const PTemplateMesh<VertexType> &GetMesh() const noexcept
   {
     return mMesh;
   }
@@ -92,7 +92,7 @@ public:
 
 private:
   glm::vec4 min, max;
-  PMesh<VertexType> mMesh;
+  PTemplateMesh<VertexType> mMesh;
   PTexture mTexture;
   PShader mShader;
 

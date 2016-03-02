@@ -49,7 +49,7 @@ MeshBlockGenerator::MeshBlockGenerator()
   }
 }
 
-void MeshBlockGenerator::Create(Mesh<VertexType> &mesh, Side side)
+void MeshBlockGenerator::Create(TemplateMesh<VertexType> &mesh, Side side)
 {
   enum 
   {

@@ -228,6 +228,12 @@
     <ClCompile Include="gui\WindowInventory.cpp">
       <Filter>gui</Filter>
     </ClCompile>
+    <ClCompile Include="Render\RenderModel.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Mesh.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -293,9 +299,6 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Color.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Mesh.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\OpenGLCall.h">
@@ -457,6 +460,18 @@
     </ClInclude>
     <ClInclude Include="core\Chest.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderModel.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IRenderMeshStrategy.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\TemplateMesh.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Mesh.h">
+      <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

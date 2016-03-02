@@ -7,7 +7,7 @@
 #define ModelBlockGenerator_h__
 
 #include <vector>
-#include "..\Render\Mesh.h"
+#include "..\Render\TemplateMesh.h"
 #include "..\Render\Vertex.h"
 #include <rapidjson\document.h>
 
@@ -37,7 +37,7 @@ public:
 public:
   MeshBlockGenerator();
 
-  void Create(Mesh<VertexType> &mesh, Side side);
+  void Create(TemplateMesh<VertexType> &mesh, Side side);
 
   void SetTexture(int side, const std::string &texture);
 
@@ -47,7 +47,7 @@ public:
 
   void JsonLoad(const rapidjson::Value & val);
 
-  inline const PMesh<VertexType> &Create(Side side) const
+  inline const PTemplateMesh<VertexType> &Create(Side side) const
   {
     return mMeshArray[side];
   }
@@ -56,7 +56,7 @@ private:
   /// —писок координат текстур дл€ сторон куба в атласе.
   std::vector<glm::vec4> mTextures;
 
-  std::vector<PMesh<VertexType>> mMeshArray;
+  std::vector<PTemplateMesh<VertexType>> mMeshArray;
 };
 
 

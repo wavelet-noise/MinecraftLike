@@ -63,11 +63,13 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Color.cpp" />
     <ClCompile Include="Render\DBShaders.cpp" />
+    <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\OpenGLCall.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Render\RenderMeshDList.cpp" />
     <ClCompile Include="Render\RenderMeshVao.cpp" />
     <ClCompile Include="Render\Model.cpp" />
+    <ClCompile Include="Render\RenderModel.cpp" />
     <ClCompile Include="Render\RenderSector.cpp" />
     <ClCompile Include="Render\Shader.cpp" />
     <ClCompile Include="Render\Texture.cpp" />
@@ -121,6 +123,9 @@
     <ClInclude Include="gui\WindowInventory.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="network\NetworkManager.h" />
+    <ClInclude Include="Render\IRenderMeshStrategy.h" />
+    <ClInclude Include="Render\Mesh.h" />
+    <ClInclude Include="Render\RenderModel.h" />
     <ClInclude Include="Render\RenderSector.h" />
     <ClInclude Include="Serealize.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -139,7 +144,7 @@
     <ClInclude Include="Render\Color.h" />
     <ClInclude Include="Render\DBShaders.h" />
     <ClInclude Include="Render\ErrorImage.h" />
-    <ClInclude Include="Render\Mesh.h" />
+    <ClInclude Include="Render\TemplateMesh.h" />
     <ClInclude Include="Render\OpenGLCall.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Render\RenderMeshDList.h" />

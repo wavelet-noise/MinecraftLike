@@ -6,28 +6,12 @@
 #ifndef RenderList_h__
 #define RenderList_h__
 
-#include <list>
 #include <glm/glm.hpp>
-#include "Model.h"
-#include <mutex>
 #include <memory>
+#include <vector>
+#include "RenderModel.h"
 
-class RenderIterator;
 
-/// Список рисования (сцена):
-/// Внутри сцены есть список моделей(предположительно вектор),
-/// все они рисуются каждый кадр.
-/// Все модели в этом списке скомпилированы и не могут быть изменены.
-/// Добавление модели в сцену потокобезопасно.
-/// При добавлении модели в сцену на нее возвращается итератор.
-/// Итератор предоставляет потокобезопасный доступ к матрице модели.
-/// 
-/// При добавлении в сцену, модель помещается в список на добавление.
-/// В начале новой итерации рендера, все модели из списка на добавление 
-/// компилируются и перемещаются в список моделей.
-/// 
-/// Через итератор можно поменять модель.В этом случае новая модель добавится
-/// в список на добавление, старая модель добавится в список на удаление.
 class Render
 {
 public:
@@ -36,70 +20,19 @@ public:
 
   static void Initialize();
 
-  /// Добавить модель на отрисовку. 
-  RenderIterator PushModel(const Model &model, const glm::mat4 &matrix);
+
+  size_t AddModel(const std::string &mesh, const std::string &texture, const std::string &shader);
 
   void Draw(class Camera &camera);
 
 private:
-  void AddElements();
-
-  void SwapMatrix();
-
-private:
-  friend RenderIterator;
-  struct Element
-  {
-    using Iterator = std::list<Element>::iterator;
-
-    Element(const Model &mod, const glm::mat4 &mat)
-      : model(mod), matrixBack(mat)
-    {}
-    Model model;
-    glm::mat4 matrix;
-    glm::mat4 matrixBack;
-    std::shared_ptr<Iterator> mIterator;
-  };
-  // Список элементов на отрисовку.
-  std::list<Element> mDrawList;
-  // Список элементов на добавление.
-  std::list<Element> mAddList;
-  // Список элементов на удаление.
-  std::list<Element> mRemoveList;
-
-  mutable std::mutex mMutex;
-
   glm::ivec2 mVersion;
+
+  std::vector<std::unique_ptr<RenderModel>> mModels;
+
+  // TODO: Сделать список пустых id.
+  size_t mGenId = 0;
+
 };
-
-class RenderIterator
-{
-public:
-  using ElementType = Render::Element;
-  using IteratorType = std::weak_ptr<ElementType::Iterator>;
-
-  inline RenderIterator(const IteratorType &iterator, std::mutex &mutex) noexcept
-    : mIterator(iterator), mMutex(mutex)
-  {}
-
-  /// Получение модели. Мотокобезопасная операция.
-  inline const Model &GetModel() const noexcept
-  {
-    std::lock_guard<std::mutex> lock(mMutex);
-    return (*mIterator.lock())->model;
-  }
-
-  /// Установка матрицы модели. Потокобезопасная операция.
-  inline void SetMatrix(const glm::mat4 &matrix)
-  {
-    std::lock_guard<std::mutex> lock(mMutex);
-    (*mIterator.lock())->matrixBack = matrix;
-  }
-
-private:
-  IteratorType mIterator;
-  std::mutex &mMutex;
-};
-
 
 #endif // RenderList_h__
