@@ -118,7 +118,7 @@ bool TextureManager::LoadToAtlas(size_t atlas, const std::initializer_list<std::
     Bitmap bitmap;
     try
     {
-      bitmap = Bitmap(std::string("textures\\") + name + ".png");
+      bitmap = Bitmap(std::string("data\\textures\\") + name + ".png");
     }
     catch (char *msg)
     {
@@ -139,8 +139,8 @@ bool TextureManager::LoadToAtlasMultiplied(size_t atlas, const std::string &mask
   Bitmap bitmap_mask, bitmap_mat;
   try
   {
-    bitmap_mask = Bitmap(std::string("textures\\") + mask + ".png");
-    bitmap_mat = Bitmap(std::string("textures\\") + mat + ".png");
+    bitmap_mask = Bitmap(std::string("data\\textures\\") + mask + ".png");
+    bitmap_mat = Bitmap(std::string("data\\textures\\") + mat + ".png");
   }
   catch (const std::exception &e)
   {

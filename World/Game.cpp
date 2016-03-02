@@ -90,10 +90,10 @@ int Game::Run()
     glViewport(0, 0, width, height);
   });
 
-  TextureManager::Get().LoadDirectory("Textures");
+  TextureManager::Get().LoadDirectory("data\\textures\\");
   TextureManager::Get().Compile();
 
-  DB::Get().ReloadDirectory("json/");
+  DB::Get().ReloadDirectory("data\\json\\");
 
   mWorld->GetPlayer()->SetPosition({ 0,0,50 });
 
