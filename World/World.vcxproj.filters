@@ -40,6 +40,9 @@
     <Filter Include="Core\Template">
       <UniqueIdentifier>{9ff9d70a-f382-4254-8b00-4189a4d797ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdparty\tiny_obj_load">
+      <UniqueIdentifier>{a62715c2-bd5f-452a-8720-2774cb9b1254}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsCounter.cpp" />
@@ -233,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="Render\Mesh.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="tiny_obj_loader.cpp">
+      <Filter>3rdparty\tiny_obj_load</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,6 +478,9 @@
     </ClInclude>
     <ClInclude Include="Render\Mesh.h">
       <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="tiny_obj_loader.h">
+      <Filter>3rdparty\tiny_obj_load</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

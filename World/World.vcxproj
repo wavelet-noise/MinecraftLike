@@ -76,6 +76,7 @@
     <ClCompile Include="Render\TextureManager.cpp" />
     <ClCompile Include="template\Template.cpp" />
     <ClCompile Include="template\TemplateItemMaterial.cpp" />
+    <ClCompile Include="tiny_obj_loader.cpp" />
     <ClCompile Include="tools\Bresenham3D.cpp" />
     <ClCompile Include="tools\Log.cpp" />
     <ClCompile Include="tools\order_casters.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="TemplateFactory.h" />
     <ClInclude Include="template\Template.h" />
     <ClInclude Include="template\TemplateItemMaterial.h" />
+    <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="tools\Bresenham3D.h" />
     <ClInclude Include="tools\CoordSystem.h" />
     <ClInclude Include="tools\Log.h" />
