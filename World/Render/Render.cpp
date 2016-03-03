@@ -10,7 +10,7 @@
 #include <iostream>
 #include "OpenGLCall.h"
 #include <tools\Log.h>
-#include "DBShaders.h"
+#include "Resourses.h"
 #include <assert.h>
 #include "Camera.h"
 #include <GLFW/glfw3.h>
@@ -39,7 +39,8 @@ Render::Render()
 
   GL_CALL(glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f));
 
-  DBShaders::Get().LoadShader("shaders/basic.glsl");
+  Resourses::Get().LoadShader("shaders/basic.glsl");
+  Resourses::Get().LoadMesh("data/models/selection.mtl");
 
   int ntex, texss;
   glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &ntex);
@@ -86,9 +87,9 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
 
   auto &model = *mModels.back();
 
-  model.mMesh = std::make_shared<Mesh>();
+  model.mMesh = Resourses::Get().GetMesh("data/models/selection.mtl");
   model.mTexture = std::get<0>(TextureManager::Get().GetTexture("dirt"));
-  model.mShader = DBShaders::Get().GetShader("shaders/basic.glsl");
+  model.mShader = Resourses::Get().GetShader("shaders/basic.glsl");
 
   model.Compile();
 

@@ -177,9 +177,6 @@
     <ClCompile Include="network\NetworkManager.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="Render\DBShaders.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp">
       <Filter>Core\MapGen</Filter>
     </ClCompile>
@@ -239,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="tiny_obj_loader.cpp">
       <Filter>3rdparty\tiny_obj_load</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Resourses.cpp">
+      <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,9 +416,6 @@
     <ClInclude Include="network\NetworkManager.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="Render\DBShaders.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="tools\QueuedThread.h">
       <Filter>tools</Filter>
     </ClInclude>
@@ -481,6 +478,9 @@
     </ClInclude>
     <ClInclude Include="tiny_obj_loader.h">
       <Filter>3rdparty\tiny_obj_load</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Resourses.h">
+      <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
