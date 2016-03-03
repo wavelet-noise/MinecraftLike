@@ -13,6 +13,7 @@
 void Mesh::Compile(Shader &shader)
 {
   // TEST:
+  if (0)
   {
     MeshBlockGenerator meshGen;
     meshGen.SetTexture(MeshBlockGenerator::ALL, "dirt");
@@ -82,6 +83,9 @@ void Mesh::Load(const std::string & s)
     mVertex.push_back(shapes[0].mesh.texcoords[i * 3]); mVertex.push_back(shapes[0].mesh.texcoords[i * 3 + 1]);
     mVertex.push_back(shapes[0].mesh.normals[i * 3]); mVertex.push_back(shapes[0].mesh.normals[i * 3 + 1]); mVertex.push_back(shapes[0].mesh.normals[i * 3 + 2]);
   }
+  mIndex = shapes[0].mesh.indices;
+
+  mAttribute = VertexVTN::Get();
 }
 
 void Mesh::BuildAABB(const Attribute &attributeVertex)

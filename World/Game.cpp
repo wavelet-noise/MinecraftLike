@@ -123,7 +123,7 @@ int Game::Run()
 //     }
 //   });
 
-  mRender->AddModel("", "", "");
+  mRender->AddModel("data/models/selection.mtl", "", "");
   
   auto currTime = static_cast<float>(glfwGetTime());
   while (!mWindow->WindowShouldClose())
