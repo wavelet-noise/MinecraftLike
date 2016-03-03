@@ -38,6 +38,7 @@ public:
   Player *GetPlayer();
 
   void SetTessellator(Tessellator *tess);
+  Tessellator * GetTessellator();
 
   void PushEvent(std::unique_ptr<GameEvent> event);
 

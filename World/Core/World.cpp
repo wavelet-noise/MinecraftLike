@@ -113,6 +113,11 @@ void World::SetTessellator(Tessellator *tess)
   mTesselator = tess;
 }
 
+Tessellator * World::GetTessellator()
+{
+  return mTesselator;
+}
+
 void World::PushEvent(std::unique_ptr<GameEvent> event)
 {
   mEventBus.Push(std::move(event));

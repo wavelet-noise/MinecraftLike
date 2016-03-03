@@ -237,11 +237,15 @@
     <ClCompile Include="tiny_obj_loader.cpp">
       <Filter>3rdparty\tiny_obj_load</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Resourses.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="Core\WaterBlockTesselator.cpp">
       <Filter>Core\tessellator</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Resourses.cpp" />
+    <ClCompile Include="Core\MeshPartialBlockGenerator.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Water.cpp">
+      <Filter>Core\Agents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -485,14 +489,15 @@
     <ClInclude Include="Core\WaterBlockTesselator.h">
       <Filter>Core\tessellator</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Resourses.h">
-      <Filter>Render</Filter>
+    <ClInclude Include="Render\Resourses.h" />
+    <ClInclude Include="Core\MeshPartialBlockGenerator.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Water.h">
+      <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="json\core.json">
-      <Filter>Core</Filter>
-    </None>
     <None Include="shaders\basic.glsl" />
     <None Include="json\items.json">
       <Filter>Core</Filter>

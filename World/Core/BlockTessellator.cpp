@@ -9,7 +9,7 @@
 //possibly must be moved into <renderstrats> file
 //deserialize autoreg
 #include "SplitBlockTessellator.h"
-
+#include "WaterBlockTesselator.h"
 
 void BlockTessellator::JsonLoad(const rapidjson::Value & val)
 {

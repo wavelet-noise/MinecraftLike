@@ -29,7 +29,7 @@ void WorldGenMountains::Generate(Sector & s)
   const size_t size = static_cast<size_t>(SECTOR_SIZE);
   auto spos = s.GetPos();
 
-  auto bg = DB::Get().Create(StringIntern("grass"));
+  auto bg = DB::Get().Create(StringIntern("water"));
   auto bd4 = DB::Get().Create(StringIntern("dirt4"));
   auto bd3 = DB::Get().Create(StringIntern("dirt3"));
   auto bd2 = DB::Get().Create(StringIntern("dirt2"));

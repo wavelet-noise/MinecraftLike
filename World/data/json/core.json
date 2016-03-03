@@ -127,5 +127,24 @@
 		"transparent":false
 	  }
 	]
+  },
+  {
+    "type":"Block",
+    "id":"water",
+    "agents":[
+	 {
+		"type":"Water"
+	 }
+    ],
+	"tesselator":[
+	  {
+	    "type":"WaterBlockTessellator",
+        "generator":
+        {
+          "all":"material_cobolt"
+        },
+		"transparent":true
+	  }
+	]
   }
 ]

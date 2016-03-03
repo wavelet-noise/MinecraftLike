@@ -21,7 +21,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
 {
   const int32_t size = static_cast<int32_t>(SECTOR_SIZE);
 
-  size_t sides = MeshBlockGenerator::ALL;
+  size_t sides = MeshPartialBlockGenerator::ALL;
   auto pos = cs::WBtoSB(params.wbpos, params.spos);
   if (pos.x < size - 1)
   {
@@ -30,7 +30,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::RIGHT;
+        sides &= ~MeshPartialBlockGenerator::RIGHT;
       }
     }
     --pos.x;
@@ -43,7 +43,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::RIGHT;
+        sides &= ~MeshPartialBlockGenerator::RIGHT;
       }
     }
   }
@@ -54,7 +54,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::LEFT;
+        sides &= ~MeshPartialBlockGenerator::LEFT;
       }
     }
     ++pos.x;
@@ -67,7 +67,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::LEFT;
+        sides &= ~MeshPartialBlockGenerator::LEFT;
       }
     }
   }
@@ -79,7 +79,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::BACK;
+        sides &= ~MeshPartialBlockGenerator::BACK;
       }
     }
     --pos.y;
@@ -92,7 +92,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::BACK;
+        sides &= ~MeshPartialBlockGenerator::BACK;
       }
     }
   }
@@ -103,7 +103,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::FRONT;
+        sides &= ~MeshPartialBlockGenerator::FRONT;
       }
     }
     ++pos.y;
@@ -116,7 +116,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::FRONT;
+        sides &= ~MeshPartialBlockGenerator::FRONT;
       }
     }
   }
@@ -128,7 +128,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::TOP;
+        sides &= ~MeshPartialBlockGenerator::TOP;
       }
     }
     --pos.z;
@@ -141,7 +141,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::TOP;
+        sides &= ~MeshPartialBlockGenerator::TOP;
       }
     }
   }
@@ -152,7 +152,7 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::BOTTOM;
+        sides &= ~MeshPartialBlockGenerator::BOTTOM;
       }
     }
     ++pos.z;
@@ -165,14 +165,19 @@ const Model & WaterBlockTessellator::GetModel(const TessellatorParams &params)
     {
       if (!block->IsTransparent())
       {
-        sides &= ~MeshBlockGenerator::BOTTOM;
+        sides &= ~MeshPartialBlockGenerator::BOTTOM;
       }
     }
   }
 
-  mModel.GetMesh() = mGenerator.Create(static_cast<MeshBlockGenerator::Side>(sides));
+  mModel.GetMesh() = mGenerator.Create(static_cast<MeshPartialBlockGenerator::Side>(sides), percent);
 
   return mModel;
+}
+
+void WaterBlockTessellator::SayDepth(float d)
+{
+  percent = d;
 }
 
 void WaterBlockTessellator::JsonLoad(const rapidjson::Value & val)

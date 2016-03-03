@@ -80,7 +80,7 @@ void Mesh::Load(const std::string & s)
   for (size_t i = 0; i < shapes[0].mesh.positions.size() / 3; ++i)
   {
     mVertex.push_back(shapes[0].mesh.positions[i * 3]); mVertex.push_back(shapes[0].mesh.positions[i * 3 + 1]); mVertex.push_back(shapes[0].mesh.positions[i * 3 + 2]);
-    mVertex.push_back(shapes[0].mesh.texcoords[i * 3]); mVertex.push_back(shapes[0].mesh.texcoords[i * 3 + 1]);
+    mVertex.push_back(shapes[0].mesh.texcoords[i * 2]); mVertex.push_back(shapes[0].mesh.texcoords[i * 2 + 1]);
     mVertex.push_back(shapes[0].mesh.normals[i * 3]); mVertex.push_back(shapes[0].mesh.normals[i * 3 + 1]); mVertex.push_back(shapes[0].mesh.normals[i * 3 + 2]);
   }
   mIndex = shapes[0].mesh.indices;
