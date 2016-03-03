@@ -123,6 +123,8 @@ int Game::Run()
 //     }
 //   });
 
+  mRender->AddModel("", "", "");
+  
   auto currTime = static_cast<float>(glfwGetTime());
   while (!mWindow->WindowShouldClose())
   {

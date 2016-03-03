@@ -5,9 +5,42 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "RenderMeshVao.h"
+#include "..\Core\MeshBlockGenerator.h"
+#include "TemplateMesh.h"
 
 void Mesh::Compile(Shader &shader)
 {
+  // TEST:
+  {
+    MeshBlockGenerator meshGen;
+    meshGen.SetTexture(MeshBlockGenerator::ALL, "dirt");
+    meshGen.Generate();
+
+    auto tmesh = meshGen.Create(MeshBlockGenerator::ALL);
+
+    for (size_t i = 0; i < tmesh->SizeVertex(); ++i)
+    {
+      auto &vertex = tmesh->Vertex(i);
+      mVertex.push_back(vertex.vertex[0]);
+      mVertex.push_back(vertex.vertex[1]);
+      mVertex.push_back(vertex.vertex[2]);
+
+      mVertex.push_back(vertex.texture[0]);
+      mVertex.push_back(vertex.texture[1]);
+
+      mVertex.push_back(vertex.normal[0]);
+      mVertex.push_back(vertex.normal[1]);
+      mVertex.push_back(vertex.normal[2]);
+    }
+    
+    for (size_t i = 0; i < tmesh->SizeIndex(); ++i)
+    {
+      mIndex.push_back(tmesh->Index(i));
+    }
+
+    mAttribute = VertexVTN::Get();
+  }
+
   BuildAABB(mAttribute[0]);
 
   mStrategy = std::make_unique<RenderMeshVao>();
