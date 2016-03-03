@@ -240,6 +240,9 @@
     <ClCompile Include="tiny_obj_loader.cpp">
       <Filter>3rdparty\tiny_obj_load</Filter>
     </ClCompile>
+    <ClCompile Include="Core\WaterBlockTesselator.cpp">
+      <Filter>Core\tessellator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -481,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="tiny_obj_loader.h">
       <Filter>3rdparty\tiny_obj_load</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\WaterBlockTesselator.h">
+      <Filter>Core\tessellator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

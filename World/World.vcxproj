@@ -43,6 +43,7 @@
     <ClCompile Include="Core\Sector.cpp" />
     <ClCompile Include="Core\SectorLoader.cpp" />
     <ClCompile Include="Core\Tessellator.cpp" />
+    <ClCompile Include="Core\WaterBlockTesselator.cpp" />
     <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Core\TemplateFactory.h" />
     <ClInclude Include="Core\Tessellator.h" />
     <ClInclude Include="Core\TessellatorParams.h" />
+    <ClInclude Include="Core\WaterBlockTesselator.h" />
     <ClInclude Include="Core\World.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
