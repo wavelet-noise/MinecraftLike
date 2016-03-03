@@ -15,17 +15,19 @@ Tessellator::Tessellator(RenderSector &render)
 
 void Tessellator::Set(const WBPos &pos, PGameObjectTessellator block)
 {
-//   PushFunc([this](const WBPos &pos, PGameObjectTessellator block)
-//   {
-//     auto spos = cs::WBtoS(pos);
-//     auto sector = FindSector(spos);
-//     if (!sector)
-//     {
-//       sector = std::make_shared<SectorTessellator>(spos);
-//       mSectors[spos] = sector;
-//     }
-//     sector->SetBlock(cs::WBtoSB(pos, spos), block);
-//   }, pos, block);
+  PushFunc([this](const std::tuple<WBPos, PGameObjectTessellator> &tuple)
+  {
+    auto &pos = std::get<0>(tuple);
+    auto &block = std::get<1>(tuple);
+    auto spos = cs::WBtoS(pos);
+    auto sector = FindSector(spos);
+    if (!sector)
+    {
+      sector = std::make_shared<SectorTessellator>(spos);
+      mSectors[spos] = sector;
+    }
+    sector->SetBlock(cs::WBtoSB(pos, spos), block);
+  }, pos, block);
 }
 
 void Tessellator::Set(const SPos &spos, std::vector<std::tuple<size_t, StringIntern>> &&blocks)
