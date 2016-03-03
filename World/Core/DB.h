@@ -35,7 +35,7 @@ public:
 
 private:
   friend class WindowDb;
-  std::unordered_map<StringIntern, PGameObject> mObjects;
+  std::unordered_map<StringIntern, std::tuple<PGameObject, bool>> mObjects;
   std::unordered_map<StringIntern, PGameObjectTessellator> mTess;
   std::unordered_map<StringIntern, PModel> mModel;
   std::unordered_map<StringIntern, std::vector<StringIntern>> mTags;

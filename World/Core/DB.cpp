@@ -33,7 +33,7 @@ DB &DB::Get()
 
 void DB::Registry(const StringIntern &name, PGameObject block, bool isStatic)
 {
-  mObjects[name] = block;
+  mObjects[name] = std::make_tuple(block, isStatic);
 }
 
 void DB::ReloadDirectory(const std::string & dir)
@@ -75,6 +75,12 @@ void DB::ReloadDirectory(const std::string & dir)
           {
             LOG(error) << "record #" << i + 1 << " from " << file << " has no \"type\"";
             continue;
+          }
+
+          bool dyn = false;
+          if (val.HasMember("dynamic"))
+          {
+            dyn = val["dynamic"].GetBool_();;
           }
 
           if (!val.HasMember("id"))
@@ -203,7 +209,7 @@ void DB::ReloadDirectory(const std::string & dir)
             }
           }
 
-          mObjects[StringIntern(id)] = b;
+          mObjects[StringIntern(id)] = std::make_tuple(b, dyn);
         }
         
       }
@@ -214,7 +220,7 @@ void DB::ReloadDirectory(const std::string & dir)
 
   for (auto &o : mObjects)
   {
-    o.second->Afterload();
+    std::get<0>(o.second)->Afterload();
   }
 
   LOG(info) "afterload done, template expansion";
@@ -248,12 +254,20 @@ PModel DB::GetModel(const StringIntern & s)
 
 PGameObject DB::Create(const StringIntern &name)
 {
-  return mObjects[name];
+  auto t = mObjects[name];
+  if(std::get<1>(t))
+    return std::get<0>(t)->Clone();
+  else
+    return std::get<0>(t);
 }
 
 PGameObject DB::Create(const std::string &name)
 {
-  return mObjects[StringIntern(name)];
+  auto t = mObjects[StringIntern(name)];
+  if (std::get<1>(t))
+    return std::get<0>(t)->Clone();
+  else
+    return std::get<0>(t);
 }
 
 PGameObjectTessellator DB::CreateTesselator(const StringIntern &name)

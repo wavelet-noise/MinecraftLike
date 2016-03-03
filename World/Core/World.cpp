@@ -29,7 +29,7 @@ void World::Update(float dt)
 
   for (auto &i : mSectors)
   {
-    i.second->Update(this);
+    i.second->Update(this, dt);
   }
   mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt});
 }

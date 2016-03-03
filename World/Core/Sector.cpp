@@ -42,9 +42,14 @@ void Sector::SetBlock(const SBPos &pos, PGameObject block)
   }
 }
 
-void Sector::Update(World *world)
+void Sector::Update(World *world, float dt)
 {
-
+  GameObjectParams gop{ world, this, {}, dt };
+  for (size_t i = 0; i < mUniqueBlocks.size(); ++i)
+  {
+    gop.pos = cs::SBtoWB(cs::ItoSB(i), mPos);
+    if(mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);
+  }
 }
 
 

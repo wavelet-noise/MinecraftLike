@@ -145,6 +145,7 @@
         },
 		"transparent":true
 	  }
-	]
+	],
+	"dynamic":true
   }
 ]

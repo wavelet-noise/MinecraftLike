@@ -31,7 +31,7 @@ public:
   /// Существующий блок будет удален.
   void SetBlock(const SBPos &pos, PGameObject block);
 
-  void Update(class World *world);
+  void Update(class World *world, float dt);
 
   void Draw(class Tessellator *tess);
 
