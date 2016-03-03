@@ -88,8 +88,8 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
   auto &model = *mModels.back();
 
   model.mMesh = Resourses::Get().GetMesh("data/models/selection.obj");
-  model.mTexture = std::get<0>(TextureManager::Get().GetTexture("dirt"));
-  model.mShader = Resourses::Get().GetShader("shaders/basic.glsl");
+  model.mTexture = std::get<0>(TextureManager::Get().GetTexture(texture));
+  model.mShader = Resourses::Get().GetShader(shader);
 
   model.Compile();
 

@@ -123,7 +123,7 @@ int Game::Run()
 //     }
 //   });
 
-  mRender->AddModel("data/models/selection.obj", "", "");
+  mRender->AddModel("data/models/selection.obj", "dirt", "shaders/basic.glsl");
   
   auto currTime = static_cast<float>(glfwGetTime());
   while (!mWindow->WindowShouldClose())
