@@ -41,8 +41,6 @@ public:
 
   void SetTexture(int side, const std::string &texture);
 
-  void Enable(int side, bool enabled);
-
   void Generate();
 
   void JsonLoad(const rapidjson::Value & val);

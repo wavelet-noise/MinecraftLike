@@ -87,8 +87,12 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
   auto &model = *mModels.back();
 
   model.mMesh = std::make_shared<Mesh>();
-  model.mTexture = std::get<0>(TextureManager::Get().GetTexture(texture));
+  model.mTexture = std::get<0>(TextureManager::Get().GetTexture("dirt"));
   model.mShader = DBShaders::Get().GetShader("shaders/basic.glsl");
+
+  model.Compile();
+
+  model.mModel = glm::translate({}, glm::vec3(0, 3, 50));
 
   return mGenId++;
 }
