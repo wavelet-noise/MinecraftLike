@@ -44,6 +44,8 @@ public:
     return mAABB;
   }
 
+  void Load(const std::string &s);
+
 private:
   std::vector<float> mVertex;
   std::vector<size_t> mIndex;

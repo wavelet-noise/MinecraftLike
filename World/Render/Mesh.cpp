@@ -5,6 +5,8 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "RenderMeshVao.h"
+#include <tiny_obj_loader.h>
+#include <tools\Log.h>
 
 void Mesh::Compile(Shader &shader)
 {
@@ -26,6 +28,27 @@ void Mesh::Compile(Shader &shader)
 void Mesh::Draw()
 {
   mStrategy->Draw();
+}
+
+void Mesh::Load(const std::string & s)
+{
+  std::vector<tinyobj::shape_t> shapes;
+  std::vector<tinyobj::material_t> mats;
+  std::string err;
+
+  bool ok = tinyobj::LoadObj(shapes, mats, err, s.c_str());
+  if (!ok)
+  {
+    LOG(error) << err;
+  }
+
+  mVertex.reserve((shapes[0].mesh.positions.size() / 3) * (3 + 2 + 3));
+  for (size_t i = 0; i < shapes[0].mesh.positions.size() / 3; ++i)
+  {
+    mVertex.push_back(shapes[0].mesh.positions[i * 3]); mVertex.push_back(shapes[0].mesh.positions[i * 3 + 1]); mVertex.push_back(shapes[0].mesh.positions[i * 3 + 2]);
+    mVertex.push_back(shapes[0].mesh.texcoords[i * 3]); mVertex.push_back(shapes[0].mesh.texcoords[i * 3 + 1]);
+    mVertex.push_back(shapes[0].mesh.normals[i * 3]); mVertex.push_back(shapes[0].mesh.normals[i * 3 + 1]); mVertex.push_back(shapes[0].mesh.normals[i * 3 + 2]);
+  }
 }
 
 void Mesh::BuildAABB(const Attribute &attributeVertex)
