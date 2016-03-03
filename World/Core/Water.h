@@ -15,7 +15,7 @@ public:
   virtual void Update(const GameObjectParams & params) override;
 
 private:
-  float fill = 1;
+  float fill = 0.5;
 };
 
 REGISTER_AGENT(Water)

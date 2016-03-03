@@ -9,7 +9,10 @@
 KeyBinder::KeyBinder(Keyboard &keyboard, Mouse &mouse)
   : mKeyboard(keyboard), mMouse(mouse)
 {
-  Register("MOVE_FORWARD", GLFW_KEY_W, GameEventMove({ 0, 1, 0 }), KeyHandlerPress());
+  Register("MOVE_FORWARD",  GLFW_KEY_W, GameEventMove({    0,  0.5, 0 }), KeyHandlerPress());
+  Register("MOVE_BACKWARD", GLFW_KEY_S, GameEventMove({    0, -0.5, 0 }), KeyHandlerPress());
+  Register("MOVE_LEFT",     GLFW_KEY_A, GameEventMove({ -0.5,    0, 0 }), KeyHandlerPress());
+  Register("MOVE_RIGHT",    GLFW_KEY_D, GameEventMove({  0.5,    0, 0 }), KeyHandlerPress());
 }
 
 void KeyBinder::Update()
@@ -28,7 +31,7 @@ void KeyBinder::Update()
 
   for (auto &i : mMap)
   {
-    if (std::get<3>(i)(mKeyboard.IsKeyPress(std::get<1>(i))))
+    if (std::get<3>(i)(mKeyboard.IsKeyDown(std::get<1>(i))))
     {
       mCallback(std::get<2>(i)());
     }

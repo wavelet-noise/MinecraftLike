@@ -8,6 +8,8 @@
 #include "..\Render\Model.h"
 #include "TessellatorParams.h"
 
+class Water;
+
 /// Генератор модели для блока.
 /// Отсекает невидимые стороны блока.
 class WaterBlockTessellator : public BlockTessellator
@@ -25,6 +27,7 @@ public:
   void SayDepth(float d);
 
 private:
+  friend Water;
   Model mModel;
   MeshPartialBlockGenerator mGenerator;
   float percent = 0.5;

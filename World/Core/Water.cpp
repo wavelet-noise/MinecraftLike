@@ -26,25 +26,34 @@ void Water::Update(const GameObjectParams & params)
   auto mixer = [&](const glm::vec3 &off) -> bool {
     if (fill > 0)
     {
-      auto down = params.world->GetBlock(params.pos + off);
-      if (down->GetId() == water)
+      if (auto down = params.world->GetBlock(params.pos + off))
       {
-        auto dwater = down->GetFromFullName<Water>("Water");
-        if (float t = dwater->fill < 1)
+        if (down->GetId() == water)
         {
-          if (t + fill > 1)
+          auto dwater = down->GetFromFullName<Water>("Water");
+          float t = dwater->fill;
+          if (t < 1)
           {
-            fill -= 1 - t;
-            dwater->fill = 1;
-          }
-          else
-          {
-            dwater->fill += fill;
-            fill = 0;
+            if (t + fill > 1)
+            {
+              fill -= 1 - t;
+              dwater->fill = 1;
+            }
+            else
+            {
+              dwater->fill += fill;
+              fill = 0;
+              params.world->SetBlock(params.pos, nullptr);
+            }
           }
         }
+        else
+        {
+          params.world->SetBlock(params.pos + off, DB::Get().Create("water"));
+          params.world->SetBlock(params.pos, DB::Get().Create("dirt"));
+        }
+        return true;
       }
-      return true;
     }
     return false;
   };
@@ -57,10 +66,15 @@ void Water::Update(const GameObjectParams & params)
 
   if (edited)
   {
-    params.world->GetTessellator()->SayChanged(params.sector->GetPos());
-    auto wbt = std::make_shared<WaterBlockTessellator>();
-    wbt->SayDepth(fill);
-    params.world->GetTessellator()->Set(params.pos, wbt);
+    //if (fill > 0)
+    //{
+    //  auto wbt = std::make_shared<WaterBlockTessellator>();
+    //  wbt->SayDepth(fill);
+    //  wbt->mGenerator.SetTexture(MeshPartialBlockGenerator::ALL, "material_cobolt");
+    //  params.world->GetTessellator()->Set(params.pos, wbt);
+    //}
+
+    //params.sector->Draw(params.world->GetTessellator());
   }
 }
 
