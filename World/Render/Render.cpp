@@ -40,7 +40,7 @@ Render::Render()
   GL_CALL(glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f));
 
   Resourses::Get().LoadShader("shaders/basic.glsl");
-  Resourses::Get().LoadMesh("data/models/selection.mtl");
+  Resourses::Get().LoadMesh("data/models/selection.obj");
 
   int ntex, texss;
   glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &ntex);
@@ -87,9 +87,9 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
 
   auto &model = *mModels.back();
 
-  model.mMesh = Resourses::Get().GetMesh("data/models/selection.mtl");
-  model.mTexture = std::get<0>(TextureManager::Get().GetTexture("dirt"));
-  model.mShader = Resourses::Get().GetShader("shaders/basic.glsl");
+  model.mMesh = Resourses::Get().GetMesh("data/models/selection.obj");
+  model.mTexture = std::get<0>(TextureManager::Get().GetTexture(texture));
+  model.mShader = Resourses::Get().GetShader(shader);
 
   model.Compile();
 
