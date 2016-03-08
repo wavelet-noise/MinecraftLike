@@ -25,6 +25,11 @@ public:
   Camera();
   ~Camera();
 
+  enum Type {
+    ORTHO,
+    PERSPECTIVE
+  };
+
   const glm::mat4 & GetViewProject() const;
 
   /// Получить матрицу вида.
@@ -59,6 +64,11 @@ public:
 
   bool BoxWithinFrustum(const glm::vec3 & min, const glm::vec3 & max) const;
 
+  void SetPerspective();
+  void SetOrtho();
+  void RebuildProjection();
+  Type type = PERSPECTIVE;
+
 private:
   glm::quat mQuat;
   
@@ -73,10 +83,10 @@ private:
   float m_clipMatrix[16];
   float m_frustum[6][4];
 
-  float mFov;
-  float mAspect;
-  float mNear;
-  float mFar;
+  float mFov = 45.0f;
+  float mAspect = 1.0f;
+  float mNear = 0.01f;
+  float mFar = 2000.f;
 
   bool changed = true;
 };

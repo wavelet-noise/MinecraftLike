@@ -9,11 +9,7 @@
 
 Camera::Camera(void)
 {
-  mFov = 45.0f;
-  mAspect = 1.0f;
-  mNear = 0.01f;
-  mFar = 2000.0f;
-  mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
+  RebuildProjection();
 
   mQuat = glm::quat_cast(glm::lookAt
     (
@@ -23,6 +19,30 @@ Camera::Camera(void)
       ));
 }
 
+void Camera::RebuildProjection()
+{
+  switch (type)
+  {
+  case Camera::ORTHO:
+    mProjection = glm::ortho(-1.f, 1.f, 1.f, -1.f, mNear, mFar);
+    break;
+  case Camera::PERSPECTIVE:
+    mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
+    break;
+  }
+}
+
+void Camera::SetOrtho()
+{
+  type = Camera::ORTHO;
+  RebuildProjection();
+}
+
+void Camera::SetPerspective()
+{
+  type = Camera::PERSPECTIVE;
+  RebuildProjection();
+}
 
 Camera::~Camera(void)
 {
@@ -63,7 +83,7 @@ void Camera::Resize(const glm::uvec2 &size)
 {
   changed = true;
   mAspect = static_cast<float>(size.x) / static_cast<float>(size.y);
-  mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
+  RebuildProjection();
 }
 
 void Camera::Rotate(const glm::vec3 &degrees)
@@ -90,6 +110,7 @@ void Camera::Update()
 {
   if (!changed)
     return;
+
   const auto &pitch = glm::angleAxis(mDir.x, glm::vec3(1, 0, 0));
   const auto &yaw = glm::angleAxis(mDir.z, glm::vec3(0, 0, 1));
   const auto &roll = glm::angleAxis(mDir.y, glm::vec3(0, 1, 0));
