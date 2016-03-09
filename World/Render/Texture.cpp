@@ -44,6 +44,11 @@ Texture::Texture(const Bitmap &bitmap, bool mip)
   GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mSize.x, mSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, &bitmap.GetRaw()[0]));
 }
 
+Texture::Texture()
+{
+  GL_CALL(glGenTextures(1, &mTextureId));
+}
+
 void Texture::GenMipmap()
 {
   if (mMip)
@@ -53,6 +58,21 @@ void Texture::GenMipmap()
 Texture::~Texture()
 {
   GL_CALL(glDeleteTextures(1, &mTextureId));
+}
+
+void Texture::DepthTexture(const glm::vec2 &size)
+{
+  mSize = size;
+  glBindTexture(GL_TEXTURE_2D, mTextureId);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, mSize.x, mSize.y, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+  glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Texture::Set(TextureSlot slot)

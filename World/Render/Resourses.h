@@ -20,7 +20,7 @@ public:
   PShader GetShader(const std::string &name) const;
 
   /// «агрузить шейдер с указанным именем.
-  void LoadShader(const std::string &name);
+  PShader LoadShader(const std::string &name);
 
   PMesh GetMesh(const std::string &name);
 

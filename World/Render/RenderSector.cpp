@@ -21,7 +21,7 @@ void RenderSector::Remove(const SPos &pos)
 
 }
 
-void RenderSector::Draw(Camera &camera)
+void RenderSector::Draw(Camera &camera, Camera &light)
 {
   AddElements();
 
@@ -43,7 +43,31 @@ void RenderSector::Draw(Camera &camera)
       
     auto &shader = model.GetShader();
     shader->Use();
-    shader->SetUniform(TEXTURE_SLOT_0, "atlas");
+
+    shader->SetUniform(camera.GetViewProject() * matrix, "transform_VP");
+    shader->SetUniform(light.GetShadow() * matrix, "shadow_VP");
+    shader->SetUniform(1, "shadowmap");
+
+    model.GetMesh()->Draw();
+  }
+}
+
+void RenderSector::ShadowDraw(Camera &camera, PShader shader)
+{
+  AddElements();
+
+  for (auto &i : mModels)
+  {
+    auto &model = i.second;
+    glm::mat4 matrix = glm::translate({}, cs::StoW(i.first));
+
+    const auto &aabb = model.GetAABB();
+    if (!camera.BoxWithinFrustum(matrix * std::get<0>(aabb), matrix * std::get<1>(aabb)))
+    {
+      continue;
+    }
+
+    shader->Use();
 
     shader->SetUniform(camera.GetViewProject() * matrix, "transform_VP");
 

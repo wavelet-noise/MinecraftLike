@@ -193,12 +193,6 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
   //GL_CALL(shader = glCreateShader(type));
   shader = glCreateShader(type);
 
-  if (int er = glGetError())
-  {
-    LOG(fatal) << "glCreateShader error " << er;
-    throw;
-  }
-
   LOG(trace) << "compile type " << type;
 
   char const *sourcePointer = data.c_str();
@@ -209,7 +203,7 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
   GLint compiled = GL_FALSE;
   GL_CALL(glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled));
 
-  if (compiled != GL_TRUE || glGetError())
+  if (compiled != GL_TRUE)
   {
     LogDumpError(shaderfile_name, data, shader);
 

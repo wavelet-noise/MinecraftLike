@@ -34,8 +34,13 @@ public:
   /// Создать текстуру на основе битмапы.
   Texture(const Bitmap &bitmap, bool mip = false);
 
+  /// id  only texture
+  Texture();
+
   /// Разрушить текстуру.
   ~Texture();
+
+  void DepthTexture(const glm::vec2 &size);
 
   /// Вернуть размер текстуры.
   inline const glm::uvec2 &GetSize() const

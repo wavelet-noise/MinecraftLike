@@ -21,7 +21,9 @@ public:
 
   void Remove(const SPos &pos);
 
-  void Draw(class Camera &camera);
+  void Draw(class Camera &camera, Camera &light);
+
+  void ShadowDraw(Camera & camera, PShader shader);
 
 private:
   std::unordered_map<SPos, Model> mModels;

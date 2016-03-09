@@ -3,7 +3,7 @@
 // ==                  See license.txt for more information                  ==
 // ============================================================================
 #include "Camera.h"
-
+#include <tools\Log.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -19,17 +19,36 @@ Camera::Camera(void)
       ));
 }
 
+void Camera::LookAt(const glm::vec3 &point)
+{
+  mQuat = glm::quat_cast(glm::lookAt
+    (
+      mPos, 
+      point, 
+      glm::vec3(0.0f, 0.0f, 1.0f)
+      ));
+  changed = true;
+}
+
 void Camera::RebuildProjection()
 {
   switch (type)
   {
   case Camera::ORTHO:
-    mProjection = glm::ortho(-1.f, 1.f, 1.f, -1.f, mNear, mFar);
+  case Camera::SHADOW:
+    mProjection = glm::ortho(-mSize.x / 2.f, mSize.x / 2.f, mSize.y / 2.f, -mSize.y / 2.f, 1.f, 300.f);
     break;
   case Camera::PERSPECTIVE:
     mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
     break;
   }
+  changed = true;
+}
+
+void Camera::SetShadow()
+{
+  type = Camera::SHADOW;
+  RebuildProjection();
 }
 
 void Camera::SetOrtho()
@@ -51,6 +70,11 @@ Camera::~Camera(void)
 const glm::mat4 &Camera::GetViewProject() const
 {
   return mViewProjection;
+}
+
+const glm::mat4 & Camera::GetShadow() const
+{
+  return mShadow;
 }
 
 const glm::mat4 &Camera::GetView() const
@@ -81,6 +105,7 @@ const glm::vec3 & Camera::GetPos() const
 
 void Camera::Resize(const glm::uvec2 &size)
 {
+  mSize = size;
   changed = true;
   mAspect = static_cast<float>(size.x) / static_cast<float>(size.y);
   RebuildProjection();
@@ -106,6 +131,12 @@ void Camera::Move(const glm::vec3 &dist)
   mPos += glm::vec3(dist.x, dist.z, -dist.y) * mQuat;
 }
 
+const glm::mat4 bias{
+  0.5f, 0.0f, 0.0f, 0.0f,
+  0.0f, 0.5f, 0.0f, 0.0f,
+  0.0f, 0.0f, 0.5f, 0.0f,
+  0.5f, 0.5f, 0.5f, 1.0f };
+
 void Camera::Update()
 {
   if (!changed)
@@ -122,6 +153,8 @@ void Camera::Update()
   mView = glm::translate(glm::mat4_cast(mQuat), -mPos);
   mViewProjection = mProjection * mView;
   mDirection = glm::mat3_cast(mQuat);
+
+  mShadow = bias * mViewProjection;
 
   CalculateFrustum();
   changed = false;

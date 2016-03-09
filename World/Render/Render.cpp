@@ -39,7 +39,13 @@ Render::Render()
 
   GL_CALL(glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f));
 
-  Resourses::Get().LoadShader("shaders/basic.glsl");
+  auto bs = Resourses::Get().LoadShader("shaders/basic.glsl");
+  bs->SetUniform(TEXTURE_SLOT_0, "atlas");
+  bs->SetUniform(TEXTURE_SLOT_1, "shadowmap");
+
+  auto bs2 = Resourses::Get().LoadShader("shaders/shadow.glsl");
+  bs2->SetUniform(TEXTURE_SLOT_0, "atlas");
+
   Resourses::Get().LoadMesh("data/models/selection.obj");
 
   int ntex, texss;
@@ -141,7 +147,6 @@ void Render::Draw(Camera &camera)
 
     auto &shader = model.mShader;
     shader->Use();
-    shader->SetUniform(TEXTURE_SLOT_0, "atlas");
 
     shader->SetUniform(camera.GetViewProject() * model.mModel, "transform_VP");
 

@@ -27,10 +27,13 @@ public:
 
   enum Type {
     ORTHO,
+    SHADOW,
     PERSPECTIVE
   };
 
   const glm::mat4 & GetViewProject() const;
+
+  const glm::mat4 & GetShadow() const;
 
   /// Получить матрицу вида.
   const glm::mat4 &GetView() const;
@@ -41,6 +44,8 @@ public:
   const glm::mat3 &GetDirection() const;
 
   void SetPos(const glm::vec3 &pos);
+
+  void LookAt(const glm::vec3 & point);
 
   const glm::vec3 &GetPos() const;
 
@@ -67,6 +72,7 @@ public:
   void SetPerspective();
   void SetOrtho();
   void RebuildProjection();
+  void SetShadow();
   Type type = PERSPECTIVE;
 
 private:
@@ -75,6 +81,7 @@ private:
   glm::mat4 mView;
   glm::mat4 mProjection;
   glm::mat4 mViewProjection;
+  glm::mat4 mShadow;
   glm::mat3 mDirection;
 
   glm::vec3 mDir;
@@ -87,6 +94,7 @@ private:
   float mAspect = 1.0f;
   float mNear = 0.01f;
   float mFar = 2000.f;
+  glm::vec2 mSize = {800, 600};
 
   bool changed = true;
 };

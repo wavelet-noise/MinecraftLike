@@ -30,6 +30,8 @@ public:
 
   void Update(float dt);
 
+  void generateShadowFBO();
+
   void Draw(float dt);
 
 private:
@@ -41,11 +43,15 @@ private:
   std::unique_ptr<Render> mRender;
   std::unique_ptr<RenderSector> mRenderSector;
   std::shared_ptr<Camera> mCamera;
+  std::shared_ptr<Camera> mSun;
   std::unique_ptr<World> mWorld;
   std::unique_ptr<KeyBinder> mKeyBinder;
   std::unique_ptr<Tessellator> mTessellator;
 
   std::unique_ptr<SectorLoader> mSectorLoader;
+
+  PTexture depthTextureId;
+  unsigned fboId;
 };
 
 #endif // GAME_H

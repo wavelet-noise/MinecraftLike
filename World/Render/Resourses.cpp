@@ -9,7 +9,7 @@ Resourses &Resourses::Get()
 }
 
 
-void Resourses::LoadShader(const std::string &name)
+PShader Resourses::LoadShader(const std::string &name)
 {
   auto &shader = std::make_shared<Shader>();
   shader->BuildBody(name);
@@ -18,6 +18,7 @@ void Resourses::LoadShader(const std::string &name)
   shader->Link();
 
   mShaders[name] = shader;
+  return shader;
 }
 
 PShader Resourses::GetShader(const std::string &name) const
