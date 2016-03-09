@@ -51,7 +51,7 @@ private:
   std::unique_ptr<SectorLoader> mSectorLoader;
 
   PTexture depthTextureId;
-  unsigned fboId;
+  unsigned fboId = 0;
 };
 
 #endif // GAME_H

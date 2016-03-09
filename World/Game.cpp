@@ -44,10 +44,6 @@ Game::Game()
 
   mSun = std::make_shared<Camera>();
   mSun->SetShadow();
-  mSun->SetPos({0,0,100});
-  mSun->LookAt({10,10,-100});
-  depthTextureId = std::make_shared<Texture>();
-  depthTextureId->DepthTexture({ 600, 600 });
 
   Render::Initialize();
   mRender = std::make_unique<Render>();
@@ -63,7 +59,7 @@ Game::Game()
   WindowInventory::Get().w = mWorld.get();
   mKeyBinder = std::make_unique<KeyBinder>(mWindow->GetKeyboard(), mWindow->GetMouse());
 
-  mKeyBinder->SetCallback([world=mWorld.get()](std::unique_ptr<GameEvent> event)
+  mKeyBinder->SetCallback([world = mWorld.get()](std::unique_ptr<GameEvent> event)
   {
     world->PushEvent(std::move(event));
   });
@@ -94,10 +90,12 @@ int Game::Run()
   mWindow->SetResizeCallback([&](int x, int y) {
     if (y == 0)
       y = 1;
-    mCamera->Resize({x,y});
+    mCamera->Resize({ x,y });
+    mSun->Resize({ x,y });
     int width, height;
     glfwGetFramebufferSize(mWindow->Get(), &width, &height);
     glViewport(0, 0, width, height);
+    generateShadowFBO();
   });
 
   TextureManager::Get().LoadDirectory("data\\textures\\");
@@ -121,20 +119,20 @@ int Game::Run()
   mWorld->SetTessellator(mTessellator.get());
   mTessellator->Run();
 
-//   boost::thread update_thread([this]
-//   {
-//     auto currTime = static_cast<float>(glfwGetTime());
-//     while (true)
-//     {
-//       auto lastTime = currTime;
-//       currTime = static_cast<float>(glfwGetTime());
-//       Update(currTime - lastTime);
-//       boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
-//     }
-//   });
+  //   boost::thread update_thread([this]
+  //   {
+  //     auto currTime = static_cast<float>(glfwGetTime());
+  //     while (true)
+  //     {
+  //       auto lastTime = currTime;
+  //       currTime = static_cast<float>(glfwGetTime());
+  //       Update(currTime - lastTime);
+  //       boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
+  //     }
+  //   });
 
   mRender->AddModel("data/models/selection.obj", "dirt", "shaders/basic.glsl");
-  
+
   auto currTime = static_cast<float>(glfwGetTime());
   while (!mWindow->WindowShouldClose())
   {
@@ -142,12 +140,12 @@ int Game::Run()
 
     auto lastTime = currTime;
     currTime = static_cast<float>(glfwGetTime());
-    
+
     Update(currTime - lastTime);
     Draw(currTime - lastTime);
 
     mWindow->Update();
-	  //std::this_thread::sleep_for(std::chrono::milliseconds(1)); ?!
+    //std::this_thread::sleep_for(std::chrono::milliseconds(1)); ?!
   }
 
   mTessellator.reset();
@@ -176,17 +174,10 @@ void Game::Update(float dt)
     mWindow->GetMouse().SetCentring(!mWindow->GetMouse().GetCentring());
   }
 
-  if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_F5))
+  if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_F5))
   {
-    static int i = -20;
-    static int j = 0;
-    i++;
-    if (i > 20)
-    {
-      j++;
-      i = -20;
-    }
-    mWorld->GetSector(glm::vec3(i, j, 0));
+    auto p = mCamera->GetPos();
+    mWorld->GetPlayer()->SetPosition(p + glm::vec3(300));
   }
 
   SPos secPos = cs::WtoS(mWorld->GetPlayer()->GetPosition());
@@ -200,7 +191,13 @@ void Game::generateShadowFBO()
   int shadowMapWidth = mWindow->GetSize().x;
   int shadowMapHeight = mWindow->GetSize().y;
 
+  depthTextureId = std::make_shared<Texture>();
+  depthTextureId->DepthTexture({ shadowMapWidth, shadowMapHeight });
+
   GLenum FBOstatus;
+
+  if (fboId)
+    glDeleteFramebuffers(1, &fboId);
 
   glGenFramebuffers(1, &fboId);
   glBindFramebuffer(GL_FRAMEBUFFER, fboId);
@@ -223,11 +220,12 @@ void Game::Draw(float dt)
   mCamera->SetRot(mWorld->GetPlayer()->GetRot());
   mCamera->Update();
 
+  mSun->SetPos(mCamera->GetPos() + glm::vec3{ 300 });
   mSun->LookAt(mCamera->GetPos());
   mSun->Update();
 
-  
-  
+
+
   GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, fboId));
   GL_CALL(glClear(GL_DEPTH_BUFFER_BIT));
   GL_CALL(glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE));

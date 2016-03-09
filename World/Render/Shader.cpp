@@ -108,6 +108,7 @@ void Shader::LogDumpError(const std::string &filename, const std::string &str, i
     int infologLength = 0;
     glGetShaderInfoLog(shader, 1024, &infologLength, infoLog);
     out_file << std::endl << "=======ERROR======" << std::endl << infoLog << std::endl;
+    LOG(error) << infoLog;
   }
   SaveTxtFile(f_name, out_file.str());
 }

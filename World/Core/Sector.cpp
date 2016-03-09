@@ -31,15 +31,22 @@ const SPos & Sector::GetPos() const
 }
 
 
-void Sector::SetBlock(const SBPos &pos, PGameObject block)
+void Sector::SetBlock(const SBPos &pos, PGameObject block, bool silent)
 {
   SectorBase<PGameObject>::SetBlock(pos, block);
 
   if (mTessellator && block)
   {
     mTessellator->Set(cs::SBtoWB(pos, mPos), DB::Get().CreateTesselator(block->GetId()));
-    mTessellator->SayChanged(mPos);
+    if(!silent)
+      mTessellator->SayChanged(mPos);
   }
+}
+
+void Sector::SayChanged()
+{
+  if(mTessellator)
+    mTessellator->SayChanged(mPos);
 }
 
 void Sector::Update(World *world, float dt)

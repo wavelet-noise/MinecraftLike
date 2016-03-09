@@ -36,7 +36,7 @@ void Camera::RebuildProjection()
   {
   case Camera::ORTHO:
   case Camera::SHADOW:
-    mProjection = glm::ortho(-mSize.x / 2.f, mSize.x / 2.f, mSize.y / 2.f, -mSize.y / 2.f, 1.f, 300.f);
+    mProjection = glm::ortho(-500.f, 500.f, -500.f, 500.f, 1.f, 10000.f);
     break;
   case Camera::PERSPECTIVE:
     mProjection = glm::perspective(mFov, mAspect, mNear, mFar);
@@ -162,6 +162,7 @@ void Camera::Update()
 
 glm::vec3 Camera::GetRay(const glm::vec2 &pos)
 {
+  //TOTO:remake
   glm::vec3 near = glm::unProject(glm::vec3(pos.x, 600.0f - pos.y, 0.0f), mView, mProjection, glm::vec4(0, 0, 600.0, 600));
   glm::vec3 far = glm::unProject(glm::vec3(pos.x, 600.0f - pos.y, 1.0f), mView, mProjection, glm::vec4(0, 0, 600.0, 600));
   return glm::normalize(far - near);

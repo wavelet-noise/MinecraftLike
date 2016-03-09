@@ -49,17 +49,18 @@ void WorldGenMountains::Generate(Sector & s)
           if (solid(tx, ty, tz))
           {
             if (solid(tx, ty, tz + 15))
-              s.SetBlock({ i, j, k }, bd4);
+              s.SetBlock({ i, j, k }, bd4, true);
             else if (solid(tx, ty, tz + 10))
-              s.SetBlock({ i, j, k }, bd3);
+              s.SetBlock({ i, j, k }, bd3, true);
             else if (solid(tx, ty, tz + 5))
-              s.SetBlock({ i, j, k }, bd2);
+              s.SetBlock({ i, j, k }, bd2, true);
             else if (!solid(tx, ty, tz + 1))
-              s.SetBlock({ i, j, k }, bg);
+              s.SetBlock({ i, j, k }, bg, true);
             else
-              s.SetBlock({ i, j, k }, bd);
+              s.SetBlock({ i, j, k }, bd, true);
           }
         }
       }
     }
+  s.SayChanged();
 }

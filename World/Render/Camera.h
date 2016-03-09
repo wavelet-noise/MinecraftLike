@@ -94,7 +94,7 @@ private:
   float mAspect = 1.0f;
   float mNear = 0.01f;
   float mFar = 2000.f;
-  glm::vec2 mSize = {800, 600};
+  glm::vec2 mSize = {600, 600};
 
   bool changed = true;
 };
