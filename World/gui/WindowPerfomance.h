@@ -32,9 +32,10 @@ private:
     void Draw();
     void Update(float dt);
     void Set(float tes_dt);
+    float Get();
 
   private:
-    float tes_dt{}, tes_dt_shown{};
+    float tes_dt{}, tes_dt_shown{}, tes_dt_mean{}, tes_dt_max{};
     int tes_last{}, tes_cur{};
     std::string label;
 

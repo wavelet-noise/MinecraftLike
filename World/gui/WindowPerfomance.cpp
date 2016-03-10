@@ -94,7 +94,7 @@ WindowPerfomance::PerfHelper::PerfHelper(const std::string & s) : label(s)
 
 void WindowPerfomance::PerfHelper::Draw()
 {
-  ImGui::LabelText(label.c_str(), "%g ms, %d/sec", tes_dt_shown * 1000, tes_last);
+  ImGui::LabelText(label.c_str(), "%g ms\t%g mean\t%g max\t%d/sec", tes_dt_shown * 1000, tes_dt_mean * 1000, tes_dt_max * 1000, tes_last);
 }
 
 void WindowPerfomance::PerfHelper::Update(float dt)
@@ -113,6 +113,14 @@ void WindowPerfomance::PerfHelper::Update(float dt)
 
 void WindowPerfomance::PerfHelper::Set(float _tes_dt)
 {
+  static unsigned count{1};
   tes_dt = _tes_dt;
   tes_cur++;
+  tes_dt_max = max(tes_dt_max, _tes_dt);
+  count++;
+}
+
+float WindowPerfomance::PerfHelper::Get()
+{
+  return tes_dt;
 }
