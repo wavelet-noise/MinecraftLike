@@ -44,7 +44,7 @@ public:
   //выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
   virtual void Afterload(GameObject * parent);
 
-  virtual void DrawGui(const GameObjectParams &params);
+  virtual void DrawGui(const InteractParams &params);
 
   virtual void JsonLoad(const rapidjson::Value &val);
 

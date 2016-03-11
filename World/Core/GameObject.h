@@ -29,6 +29,8 @@ public:
 
   virtual void Update(GameObjectParams &params);
 
+  virtual void DrawGui(InteractParams &params);
+
   ///Выполняется для всех агентов всех блоков после полной заргузки базы данных
   virtual void Afterload();
 

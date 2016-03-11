@@ -16,4 +16,11 @@ struct GameObjectParams
   float dt;
 };
 
+struct InteractParams
+{
+  class World *world;
+  glm::vec3 pos;
+  float dt;
+};
+
 #endif // GameObjectParams_h__

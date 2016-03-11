@@ -147,5 +147,25 @@
 	  }
 	],
 	"dynamic":true
+  },
+  {
+    "type":"Block",
+    "id":"furnance",
+    "agents":[
+	 {
+		"type":"Furnance"
+	 }
+    ],
+	"tesselator":[
+	  {
+	    "type":"SplitBlockTessellator",
+        "generator":
+        {
+          "all":"material_cobolt"
+        },
+		"transparent":false
+	  }
+	],
+	"dynamic":true
   }
 ]

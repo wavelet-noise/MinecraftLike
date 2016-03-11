@@ -34,6 +34,7 @@ void WorldGenMountains::Generate(Sector & s)
   auto bd3 = DB::Get().Create(StringIntern("dirt3"));
   auto bd2 = DB::Get().Create(StringIntern("dirt2"));
   auto bd = DB::Get().Create(StringIntern("dirt"));
+  auto bf = DB::Get().Create(StringIntern("furnance"));
 
   if (spos.x != 0)
     for (int i = 0; i < SECTOR_SIZE; ++i)
@@ -58,6 +59,11 @@ void WorldGenMountains::Generate(Sector & s)
               s.SetBlock({ i, j, k }, bg);
             else
               s.SetBlock({ i, j, k }, bd);
+          }
+          else
+          {
+            if (solid(tx, ty, tz - 1) && rand() % 100 == 1)
+              s.SetBlock({ i, j, k }, bf);
           }
         }
       }

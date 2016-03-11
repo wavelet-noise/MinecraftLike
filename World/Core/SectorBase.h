@@ -11,7 +11,6 @@
 #include <vector>
 #include <limits>
 
-
 template<class BlockType>
 class SectorBase
 {
@@ -41,7 +40,6 @@ public:
       RemoveBlock(cs::SBtoI(pos));
     }
   }
-
 
 protected:
   std::vector<IndexType> mBlocks;

@@ -248,15 +248,26 @@ void Game::Draw(float dt)
   }();
 
   int iii = 0;
+  static std::unordered_map<glm::ivec3, PGameObject> opened_w;
   for (const auto &c : cells)
   {
     if (auto &b = mWorld->GetBlock(c))
     {
       mRender->SetModelMatrix(models[iii], glm::translate(glm::mat4(1), glm::vec3(c)));
-      if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_SPACE))
+      if (!ImGui::IsAnyItemHovered())
       {
-        mWorld->SetBlock(c, nullptr);
+        if (ImGui::IsMouseDown(0))
+        {
+          mWorld->SetBlock(c, nullptr);
+        }
+        if (ImGui::IsMouseDown(1)) {
+          if (auto b = mWorld->GetBlock(c))
+          {
+            opened_w[c] = b;
+          }
+        }
       }
+      break;
       iii++;
       if(iii >= 10)
         break;
@@ -272,6 +283,10 @@ void Game::Draw(float dt)
   wp.Draw();
   wdb.Draw();
   winv.Draw();
+  for (auto &w : opened_w)
+  {
+    std::get<1>(w)->DrawGui(InteractParams{ mWorld.get(), std::get<0>(w), dt });
+  }
   ImGui::Render();
 }
 

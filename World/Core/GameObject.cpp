@@ -23,6 +23,14 @@ void GameObject::Update(GameObjectParams &params)
   }
 }
 
+void GameObject::DrawGui(InteractParams &params)
+{
+  for (auto &agent : mAgents)
+  {
+    agent.second->DrawGui(params);
+  }
+}
+
 void GameObject::Afterload()
 {
   for (auto &agent : mAgents)

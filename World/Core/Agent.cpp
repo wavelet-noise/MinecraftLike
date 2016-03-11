@@ -20,7 +20,7 @@ void Agent::Afterload(GameObject * parent)
 {
 }
 
-void Agent::DrawGui(const GameObjectParams & params)
+void Agent::DrawGui(const InteractParams & params)
 {
 }
 

@@ -1,5 +1,6 @@
 #include "Furnance.h"
 #include <imgui.h>
+#include <glm\gtx\string_cast.hpp>
 
 Furnance::Furnance()
   : Agent(nullptr, "Furnance", "")
@@ -20,10 +21,10 @@ void Furnance::Update(const GameObjectParams & params)
 {
 }
 
-void Furnance::DrawGui(const GameObjectParams & params)
+void Furnance::DrawGui(const InteractParams & params)
 {
   static bool opened = false;
-  ImGui::Begin("Furnance", &opened);
+  ImGui::Begin((std::string("Furnance##")+glm::to_string(params.pos)).c_str());
 
   ImGui::LabelText("Temp: ", "%g", T);
 
