@@ -247,6 +247,10 @@
     <ClCompile Include="Core\Water.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Furnance.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\ray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -495,6 +499,15 @@
     </ClInclude>
     <ClInclude Include="Core\Water.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Furnance.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="core\ChestSlot.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\ray.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

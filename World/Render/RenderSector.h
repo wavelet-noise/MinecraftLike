@@ -29,6 +29,7 @@ private:
   std::unordered_map<SPos, Model> mModels;
 
   std::list<std::tuple<Model, SPos>> mPushList;
+  std::list<SPos> mRemoveList;
 
   std::mutex mMutex;
 private:

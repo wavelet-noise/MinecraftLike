@@ -10,56 +10,37 @@
 #include <tiny_obj_loader.h>
 #include <tools\Log.h>
 
+//presend + send + clear
 void Mesh::Compile(Shader &shader)
 {
-  // TEST:
-  if (0)
-  {
-    MeshBlockGenerator meshGen;
-    meshGen.SetTexture(MeshBlockGenerator::ALL, "dirt");
-    meshGen.Generate();
+  BuildAABB();
+  Presend(shader);
+  Send(shader);
+  Clear();
+}
 
-    auto tmesh = meshGen.Create(MeshBlockGenerator::ALL);
-
-    for (size_t i = 0; i < tmesh->SizeVertex(); ++i)
-    {
-      auto &vertex = tmesh->Vertex(i);
-      mVertex.push_back(vertex.vertex[0]);
-      mVertex.push_back(vertex.vertex[1]);
-      mVertex.push_back(vertex.vertex[2]);
-
-      mVertex.push_back(vertex.texture[0]);
-      mVertex.push_back(vertex.texture[1]);
-
-      mVertex.push_back(vertex.normal[0]);
-      mVertex.push_back(vertex.normal[1]);
-      mVertex.push_back(vertex.normal[2]);
-    }
-    
-    for (size_t i = 0; i < tmesh->SizeIndex(); ++i)
-    {
-      mIndex.push_back(tmesh->Index(i));
-    }
-
-    mAttribute = VertexVTN::Get();
-  }
-
-  BuildAABB(mAttribute[0]);
-
+void Mesh::Presend(Shader &shader) const
+{
   mStrategy = std::make_unique<RenderMeshVao>();
 
   auto locations = shader.GetAttributeLocation(mAttribute);
   mStrategy->SetAttribute(mAttribute, locations);
+}
 
+void Mesh::Send(Shader &shader) const
+{
   mStrategy->Compile(mVertex.data(), mVertex.size(), mIndex.data(), mIndex.size());
+}
 
+void Mesh::Clear()
+{
   mVertex.clear();
   mVertex.shrink_to_fit();
   mIndex.clear();
   mIndex.shrink_to_fit();
 }
 
-void Mesh::Draw()
+void Mesh::Draw() const
 {
   mStrategy->Draw();
 }
@@ -86,6 +67,11 @@ void Mesh::Load(const std::string & s)
   mIndex = shapes[0].mesh.indices;
 
   mAttribute = VertexVTN::Get();
+}
+
+void Mesh::BuildAABB()
+{
+  BuildAABB(mAttribute[0]);
 }
 
 void Mesh::BuildAABB(const Attribute &attributeVertex)

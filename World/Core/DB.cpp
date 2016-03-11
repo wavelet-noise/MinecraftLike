@@ -36,11 +36,11 @@ void DB::Registry(const StringIntern &name, PGameObject block, bool isStatic)
   mObjects[name] = std::make_tuple(block, isStatic);
 }
 
-void DB::ReloadDirectory(const std::string & dir)
+void DB::ReloadDirectory(const std::string & mDir)
 {
   mObjects.clear();
 
-  boost::filesystem::path targetDir(dir);
+  boost::filesystem::path targetDir(mDir);
   boost::filesystem::recursive_directory_iterator iter(targetDir);
 
   for (const boost::filesystem::path &file : iter) {

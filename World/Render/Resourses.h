@@ -22,7 +22,7 @@ public:
   /// «агрузить шейдер с указанным именем.
   PShader LoadShader(const std::string &name);
 
-  PMesh GetMesh(const std::string &name);
+  PCMesh GetMesh(const std::string &name) const;
 
   void LoadMesh(const std::string &name);
 

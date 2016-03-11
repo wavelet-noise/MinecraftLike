@@ -4,21 +4,20 @@
 #include <vector>
 #include "ChestSlot.h"
 
-class Chest : public Agent
+class Furnance : public Agent
 {
 public:
-  Chest();
+  Furnance();
 
   void JsonLoad(const rapidjson::Value &val) override;
 
   // Унаследовано через Agent
   virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
   virtual void Update(const GameObjectParams & params) override;
-  bool Push(PGameObject go, int count = 1, int pos = -1);
+  virtual void DrawGui(const GameObjectParams &params) override;
 
-  int columns = 10;
-  int size = 40;
-  std::vector<ChestSlot> slots;
+  float T;
+  ChestSlot fuel;
 };
 
-REGISTER_AGENT(Chest)
+REGISTER_AGENT(Furnance)

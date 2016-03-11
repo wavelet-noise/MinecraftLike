@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <memory>
 #include <glm/gtc/quaternion.hpp>
+#include <tools\ray.h>
 
 class Camera;
 typedef std::shared_ptr<Camera> PCamera;
@@ -61,7 +62,7 @@ public:
 
   void Update();
 
-  glm::vec3 GetRay(const glm::vec2 &pos);
+  glm::ray GetRay(const glm::vec2 &pos);
 
   void CalculateFrustum();
 

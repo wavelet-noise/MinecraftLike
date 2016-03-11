@@ -18,7 +18,7 @@ public:
   static DB &Get();
 
   void Registry(const StringIntern &name, PGameObject block, bool isStatic = true);
-  void ReloadDirectory(const std::string &dir);
+  void ReloadDirectory(const std::string &mDir);
   const std::vector<StringIntern> &Taglist(const StringIntern &name);
 
   void PushModel(const StringIntern &s, PModel &m);

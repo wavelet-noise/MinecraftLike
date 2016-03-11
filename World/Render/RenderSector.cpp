@@ -18,7 +18,7 @@ void RenderSector::Push(const Model &model, const SPos &pos)
 
 void RenderSector::Remove(const SPos &pos)
 {
-
+  
 }
 
 void RenderSector::Draw(Camera &camera, Camera &light)
@@ -82,14 +82,13 @@ void RenderSector::AddElements()
     std::lock_guard<std::mutex> lock(mMutex);
     tmpList.swap(mPushList);
   }
+
   for (auto &i : tmpList)
   {
     auto &model = std::get<0>(i);
     model.BuildAABB(&VertexVTN::vertex);
 
-    auto currentTime = glfwGetTime();
     model.GetMesh()->Compile(model.GetShader()->GetAttributeLocation(model.GetMesh()->GetAttribute()));
-    //LOG(trace) << "SectorCompiled: " << glfwGetTime() - currentTime;
 
     model.GetMesh()->Release();
 

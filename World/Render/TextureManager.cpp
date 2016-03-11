@@ -29,9 +29,9 @@ void TextureManager::LoadTexture(const std::string &name)
   LoadTexture(std::initializer_list<std::string>{name});
 }
 
-void TextureManager::LoadDirectory(const std::string &dir)
+void TextureManager::LoadDirectory(const std::string &mDir)
 {
-  boost::filesystem::path targetDir(dir);
+  boost::filesystem::path targetDir(mDir);
   boost::filesystem::recursive_directory_iterator iter(targetDir);
 
   int loaded = 0;

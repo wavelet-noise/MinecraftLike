@@ -20,6 +20,10 @@ void Agent::Afterload(GameObject * parent)
 {
 }
 
+void Agent::DrawGui(const GameObjectParams & params)
+{
+}
+
 void Agent::JsonLoad(const rapidjson::Value & val)
 {
   if (val.HasMember("name"))

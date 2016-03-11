@@ -33,6 +33,7 @@
 #include "gui\WindowDb.h"
 #include "gui\WindowInventory.h"
 #include <Render\Resourses.h>
+#include <tools\ray.h>
 
 Game::Game()
 {
@@ -131,8 +132,6 @@ int Game::Run()
   //     }
   //   });
 
-  mRender->AddModel("data/models/selection.obj", "dirt", "shaders/basic.glsl");
-
   auto currTime = static_cast<float>(glfwGetTime());
   while (!mWindow->WindowShouldClose())
   {
@@ -224,8 +223,6 @@ void Game::Draw(float dt)
   mSun->LookAt(mCamera->GetPos());
   mSun->Update();
 
-
-
   GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, fboId));
   GL_CALL(glClear(GL_DEPTH_BUFFER_BIT));
   GL_CALL(glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE));
@@ -240,6 +237,32 @@ void Game::Draw(float dt)
   mRenderSector->Draw(*mCamera, *mSun);
   mRender->Draw(*mCamera);
 
+  auto ray = mCamera->GetRay(mWindow->GetMouse().GetPos());
+  auto cells = Bresenham3D(ray.origin(), ray.origin() + ray.dir()*100.f);
+
+  static std::vector<size_t> models = [&]()->auto {
+    std::vector<size_t> t;
+    for (int i = 0; i < 10; i++)
+      t.push_back(mRender->AddModel("data/models/selection.obj", "dirt", "shaders/basic.glsl"));
+    return t;
+  }();
+
+  int iii = 0;
+  for (const auto &c : cells)
+  {
+    if (auto &b = mWorld->GetBlock(c))
+    {
+      mRender->SetModelMatrix(models[iii], glm::translate(glm::mat4(1), glm::vec3(c)));
+      if (mWindow->GetKeyboard().IsKeyDown(GLFW_KEY_SPACE))
+      {
+        mWorld->SetBlock(c, nullptr);
+      }
+      iii++;
+      if(iii >= 10)
+        break;
+    }
+  }
+
   WindowPerfomance &wp = WindowPerfomance::Get();
   WindowInventory &winv = WindowInventory::Get();
   WindowDb &wdb = WindowDb::Get();
@@ -249,10 +272,6 @@ void Game::Draw(float dt)
   wp.Draw();
   wdb.Draw();
   winv.Draw();
-  ImGui::Begin("shadow");
-  auto s = ImGui::GetWindowSize();
-  ImGui::Image((void*)depthTextureId->GetId(), s);
-  ImGui::End();
   ImGui::Render();
 }
 

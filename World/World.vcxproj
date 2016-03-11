@@ -30,6 +30,7 @@
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Chest.cpp" />
     <ClCompile Include="Core\EventBus.cpp" />
+    <ClCompile Include="Core\Furnance.cpp" />
     <ClCompile Include="Core\GameEvent.cpp" />
     <ClCompile Include="Core\MapGen\GenStrategy.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
@@ -91,6 +92,7 @@
     <ClCompile Include="tools\Bresenham3D.cpp" />
     <ClCompile Include="tools\Log.cpp" />
     <ClCompile Include="tools\order_casters.cpp" />
+    <ClCompile Include="tools\ray.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
     <ClCompile Include="tools\wset.h" />
     <ClCompile Include="Window\KeyBinder.cpp" />
@@ -101,7 +103,9 @@
   <ItemGroup>
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="core\Chest.h" />
+    <ClInclude Include="core\ChestSlot.h" />
     <ClInclude Include="Core\EventBus.h" />
+    <ClInclude Include="core\Furnance.h" />
     <ClInclude Include="Core\GameEvent.h" />
     <ClInclude Include="Core\MapGen\GenStrategy.h" />
     <ClInclude Include="Core\MapGen\WorldGenFlat.h" />
@@ -179,6 +183,7 @@
     <ClInclude Include="tools\Log.h" />
     <ClInclude Include="tools\order_casters.h" />
     <ClInclude Include="tools\QueuedThread.h" />
+    <ClInclude Include="tools\ray.h" />
     <ClInclude Include="tools\StringIntern.h" />
     <ClInclude Include="Window\KeyBinder.h" />
     <ClInclude Include="Window\Keyboard.h" />

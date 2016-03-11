@@ -160,12 +160,12 @@ void Camera::Update()
   changed = false;
 }
 
-glm::vec3 Camera::GetRay(const glm::vec2 &pos)
+glm::ray Camera::GetRay(const glm::vec2 &_pos)
 {
-  //TOTO:remake
-  glm::vec3 near = glm::unProject(glm::vec3(pos.x, 600.0f - pos.y, 0.0f), mView, mProjection, glm::vec4(0, 0, 600.0, 600));
-  glm::vec3 far = glm::unProject(glm::vec3(pos.x, 600.0f - pos.y, 1.0f), mView, mProjection, glm::vec4(0, 0, 600.0, 600));
-  return glm::normalize(far - near);
+  auto pos = _pos + glm::vec2(0.5);
+  glm::vec3 near = glm::unProject(glm::vec3(pos.x, mSize.y - pos.y, 0.0f), mView, mProjection, glm::vec4(0, 0, mSize.x, mSize.y));
+  glm::vec3 far  = glm::unProject(glm::vec3(pos.x, mSize.y - pos.y, 1.0f), mView, mProjection, glm::vec4(0, 0, mSize.x, mSize.y));
+  return glm::ray(near, far - near);
 }
 
 void NormalizePlane(float frustum[6][4], int side) {

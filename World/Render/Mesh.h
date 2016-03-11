@@ -14,6 +14,7 @@
 #include <tuple>
 
 using PMesh = std::shared_ptr<class Mesh>;
+using PCMesh = std::shared_ptr<const Mesh>;
 
 // TODO: Формирование данного меша из шаблонного.
 class Mesh
@@ -32,7 +33,13 @@ public:
   /// После компиляции данные о вершинах в ОЗУ освобождаются.
   void Compile(class Shader &shader);
 
-  void Draw();
+  void Presend(Shader & shader) const;
+
+  void Send(Shader & shader) const;
+
+  void Clear();
+
+  void Draw() const;
 
   inline const VertexFormat &GetAttribute() const noexcept
   {
@@ -46,13 +53,15 @@ public:
 
   void Load(const std::string &s);
 
+  void BuildAABB();
+
 private:
   std::vector<float> mVertex;
   std::vector<size_t> mIndex;
 
   VertexFormat mAttribute;
 
-  std::unique_ptr<IRenderMeshStrategy> mStrategy;
+  mutable std::unique_ptr<IRenderMeshStrategy> mStrategy;
 
   AABB mAABB;
 

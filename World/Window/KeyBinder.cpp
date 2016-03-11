@@ -20,13 +20,13 @@ void KeyBinder::Update()
   float val = mMouse.DeltaX();
   if (mMouse.GetCentring())
   {
-    mCallback(std::make_unique<GameEventRotate>(glm::vec3(0.0f, 0.0f, val / 100.f)));
+    mCallback(std::make_unique<GameEventRotate>(glm::vec3(0.0f, 0.0f, val / 200.f)));
   }
 
   val = mMouse.DeltaY();
   if (mMouse.GetCentring())
   {
-    mCallback(std::make_unique<GameEventRotate>(glm::vec3(val / 100.f, 0.0f, 0.0f)));
+    mCallback(std::make_unique<GameEventRotate>(glm::vec3(val / 200.f, 0.0f, 0.0f)));
   }
 
   for (auto &i : mMap)

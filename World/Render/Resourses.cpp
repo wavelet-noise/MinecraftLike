@@ -36,10 +36,11 @@ void Resourses::LoadMesh(const std::string &name)
 {
   auto &mesh = std::make_shared<Mesh>();
   mesh->Load(name);
+  mesh->BuildAABB();
   mMesh[name] = mesh;
 }
 
-PMesh Resourses::GetMesh(const std::string &name)
+PCMesh Resourses::GetMesh(const std::string &name) const
 {
   auto it = mMesh.find(name);
   if (it == mMesh.end())
@@ -47,5 +48,5 @@ PMesh Resourses::GetMesh(const std::string &name)
     return nullptr;
   }
 
-  return it->second;
+  return std::const_pointer_cast<const Mesh>(it->second);
 }

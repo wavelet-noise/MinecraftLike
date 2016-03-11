@@ -14,7 +14,7 @@ void Chest::JsonLoad(const rapidjson::Value &val)
 
 PAgent Chest::Clone(GameObject * parent, const std::string &)
 {
-  return PAgent();
+  return std::make_shared<Chest>(*this);
 }
 
 void Chest::Update(const GameObjectParams & params)

@@ -4,9 +4,10 @@
 // ============================================================================
 #include "RenderModel.h"
 
-void RenderModel::Compile()
+void RenderModel::Compile() const
 {
-  mMesh->Compile(*mShader);
+  mMesh->Presend(*mShader);
+  mMesh->Send(*mShader);
 }
 
 

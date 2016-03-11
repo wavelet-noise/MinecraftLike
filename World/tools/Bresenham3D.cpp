@@ -3,6 +3,7 @@
 // ==                  See license.txt for more information                  ==
 // ============================================================================
 #include "Bresenham3D.h"
+#include <algorithm>
 
 std::vector<glm::ivec3> Bresenham3D(const glm::vec3 &begin, const glm::vec3 &end)
 {
@@ -109,6 +110,13 @@ std::vector<glm::ivec3> Bresenham3D(const glm::vec3 &begin, const glm::vec3 &end
     }
   }
   points.push_back(glm::vec3(x, y, z));
+
+  std::sort(std::begin(points), std::end(points), [&](const glm::ivec3 &a, glm::ivec3 &b)->bool {
+    auto da = glm::distance(begin, glm::vec3(a));
+    auto db = glm::distance(begin, glm::vec3(b));
+
+    return da < db;
+  });
   return points;
 }
 

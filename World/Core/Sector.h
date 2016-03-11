@@ -29,7 +29,7 @@ public:
 
   /// Установить блок в заданную позицию.
   /// Существующий блок будет удален.
-  void SetBlock(const SBPos &pos, PGameObject block, bool silent = false);
+  void SetBlock(const SBPos &pos, PGameObject block);
 
   void SayChanged();
 

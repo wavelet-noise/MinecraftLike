@@ -108,7 +108,7 @@ void Render::EraseModel(size_t id)
 {
   if (id >= mModels.size() || !mModels[id])
   {
-    LOG(warning) << "Модуль уже удалена. id: " << id;
+    LOG(error) << "Model not exist. id: " << id;
     return;
   }
 
@@ -119,7 +119,7 @@ void Render::SetModelMatrix(size_t id, const glm::mat4 &matrix)
 {
   if (id >= mModels.size() || !mModels[id])
   {
-    LOG(warning) << "Установка матрицы на неизвестную модель. id: " << id;
+    LOG(error) << "Model not exist. id: " << id;
     return;
   }
   auto &model = *mModels[id];
