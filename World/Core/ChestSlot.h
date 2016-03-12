@@ -1,7 +1,8 @@
 #pragma once
+#include <memory>
 class ChestSlot
 {
 public:
-  PGameObject obj;
+  std::shared_ptr<class GameObject> obj;
   int count;
 };

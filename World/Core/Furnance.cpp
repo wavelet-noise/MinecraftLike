@@ -21,14 +21,9 @@ void Furnance::Update(const GameObjectParams & params)
 {
 }
 
-void Furnance::DrawGui(const InteractParams & params)
+void Furnance::DrawGui()
 {
-  static bool opened = false;
-  ImGui::Begin((std::string("Furnance##")+glm::to_string(params.pos)).c_str());
-
   ImGui::LabelText("Temp: ", "%g", T);
-
-  ImGui::End();
 }
 
 void Furnance::Interact(const InteractParams & params)

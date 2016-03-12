@@ -251,6 +251,9 @@
       <Filter>Core\Agents</Filter>
     </ClCompile>
     <ClCompile Include="tools\ray.cpp" />
+    <ClCompile Include="DragNDrop.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -508,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="tools\ray.h">
       <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="DragNDrop.h">
+      <Filter>gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

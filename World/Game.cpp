@@ -114,7 +114,7 @@ int Game::Run()
     }
   });
 
-  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 7);
+  mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
 
   mTessellator = std::make_unique<Tessellator>(*mRenderSector);
   mWorld->SetTessellator(mTessellator.get());
@@ -286,7 +286,9 @@ void Game::Draw(float dt)
   winv.Draw();
   for (auto &w : opened_w)
   {
-    std::get<1>(w)->DrawGui(InteractParams{ mWorld.get(), std::get<0>(w), dt });
+    ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).x).str().c_str());
+    std::get<1>(w)->DrawGui();
+    ImGui::End();
   }
   ImGui::Render();
 }

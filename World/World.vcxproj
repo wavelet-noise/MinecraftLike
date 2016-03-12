@@ -56,6 +56,7 @@
     <ClCompile Include="Core\Water.cpp" />
     <ClCompile Include="Core\WaterBlockTesselator.cpp" />
     <ClCompile Include="Core\World.cpp" />
+    <ClCompile Include="DragNDrop.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Core\Water.h" />
     <ClInclude Include="Core\WaterBlockTesselator.h" />
     <ClInclude Include="Core\World.h" />
+    <ClInclude Include="DragNDrop.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />

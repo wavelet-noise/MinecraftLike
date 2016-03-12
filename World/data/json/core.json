@@ -154,6 +154,11 @@
     "agents":[
 	 {
 		"type":"Furnance"
+	 },
+	 {
+		"type":"Chest",
+		"size":16,
+		"columns":8
 	 }
     ],
 	"tesselator":[

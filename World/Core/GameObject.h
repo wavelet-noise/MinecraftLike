@@ -31,7 +31,7 @@ public:
 
   /// client
   /// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
-  virtual void DrawGui(InteractParams &params);
+  virtual void DrawGui();
 
   ///client/server syncronize
   virtual void Interact(InteractParams &params);

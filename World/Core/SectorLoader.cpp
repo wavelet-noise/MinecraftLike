@@ -23,10 +23,10 @@ void SectorLoader::Reload()
     auto pos = mPos + site;
 //    pos.z = 0;
     auto a = mWorld.GetSector(pos);
-    if (!a)
-    {
-      return;
-    }
+    //if (!a)
+    //{
+    //  return;
+    //}
   }
 }
 
