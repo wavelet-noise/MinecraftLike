@@ -15,6 +15,7 @@ public:
   virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
   virtual void Update(const GameObjectParams & params) override;
   virtual void DrawGui(const InteractParams &params) override;
+  virtual void Interact(const InteractParams &params) override;
 
   float T;
   ChestSlot fuel;

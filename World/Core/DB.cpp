@@ -180,7 +180,7 @@ void DB::ReloadDirectory(const std::string & mDir)
             auto m = std::make_shared<Model>();
             m->JsonLoad(part);
 
-            mModel[StringIntern(id)] = std::move(m);
+            mModel[StringIntern(id)] = m;
           }
 
           std::vector<std::string> tags;

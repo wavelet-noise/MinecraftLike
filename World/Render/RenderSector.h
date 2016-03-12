@@ -25,8 +25,11 @@ public:
 
   void ShadowDraw(Camera & camera, PShader shader);
 
+  int ApproxDc();
+
 private:
   std::unordered_map<SPos, Model> mModels;
+  int mDc;
 
   std::list<std::tuple<Model, SPos>> mPushList;
   std::list<SPos> mRemoveList;

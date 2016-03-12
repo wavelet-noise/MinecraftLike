@@ -263,6 +263,7 @@ void Game::Draw(float dt)
         if (ImGui::IsMouseDown(1)) {
           if (auto b = mWorld->GetBlock(c))
           {
+            b->Interact(InteractParams{ mWorld.get(), c, dt });
             opened_w[c] = b;
           }
         }
@@ -279,7 +280,7 @@ void Game::Draw(float dt)
   WindowDb &wdb = WindowDb::Get();
 
   ImGui_ImplGlfwGL3_NewFrame();
-  wp.DtUpdate(dt, fps.GetCount());
+  wp.DtUpdate(dt, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
   wp.Draw();
   wdb.Draw();
   winv.Draw();

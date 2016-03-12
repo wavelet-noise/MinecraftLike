@@ -41,20 +41,25 @@ void WindowPerfomance::Draw()
         100,
         fps_subsec_cur, std::to_string(fps_subsec[fps_subsec_cur]).c_str(), 0, 1000, { 100,50 });
       ImGui::TreePop();
+
+      ImGui::LabelText("sector DC", "%i", dc);
+      ImGui::LabelText("active sectors", "%i", act);
     }
   }
   ImGui::End();
 }
 
-void WindowPerfomance::DtUpdate(float _dt, int fps)
+void WindowPerfomance::DtUpdate(float __dt, int __fps, int __dc, int __act)
 {
   std::lock_guard<std::mutex> lg(lock);
-  fps_sec_timer += _dt;
-  fps_subsec_timer += _dt;
+  fps_sec_timer += __dt;
+  fps_subsec_timer += __dt;
+  dc = __dc;
+  act = __act;
 
   if (fps_sec_timer >= 1)
   {
-    fps_sec[++fps_sec_cur] = static_cast<float>(fps);
+    fps_sec[++fps_sec_cur] = static_cast<float>(__fps);
     if (fps_sec_cur == fps_sec.size() - 1)
       fps_sec_cur = 0;
     fps_sec_timer -= 1;
@@ -64,12 +69,12 @@ void WindowPerfomance::DtUpdate(float _dt, int fps)
 
   if (fps_subsec_timer >= 0.1)
   {
-    fps_subsec[++fps_subsec_cur] = static_cast<float>(fps);
+    fps_subsec[++fps_subsec_cur] = static_cast<float>(__fps);
     if (fps_subsec_cur == fps_subsec.size() - 1)
       fps_subsec_cur = 0;
     fps_subsec_timer -= 0.1;
 
-    dt = _dt;
+    dt = __dt;
   }
 
   tess_perf.Update(dt);

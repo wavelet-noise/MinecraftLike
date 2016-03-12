@@ -23,15 +23,17 @@ void RenderSector::Remove(const SPos &pos)
 
 void RenderSector::Draw(Camera &camera, Camera &light)
 {
+  camera.Update();
   AddElements();
+  mDc = 0;
 
   for (auto &i : mModels)
   {
     auto &model = i.second;
-    glm::mat4 matrix = glm::translate({}, cs::StoW(i.first));
+    glm::mat4 matrix = glm::translate(glm::mat4(1), cs::StoW(i.first));
 
     const auto &aabb = model.GetAABB();
-    if (!camera.BoxWithinFrustum(matrix * std::get<0>(aabb), matrix * std::get<1>(aabb)))
+    if (model.IsAabbDot() || !camera.BoxWithinFrustum(matrix * std::get<0>(aabb), matrix * std::get<1>(aabb)))
     {
       continue;
     }
@@ -49,20 +51,22 @@ void RenderSector::Draw(Camera &camera, Camera &light)
     shader->SetUniform(1, "shadowmap");
 
     model.GetMesh()->Draw();
+    mDc++;
   }
 }
 
 void RenderSector::ShadowDraw(Camera &camera, PShader shader)
 {
+  camera.Update();
   AddElements();
 
   for (auto &i : mModels)
   {
     auto &model = i.second;
-    glm::mat4 matrix = glm::translate({}, cs::StoW(i.first));
+    glm::mat4 matrix = glm::translate(glm::mat4(1), cs::StoW(i.first));
 
     const auto &aabb = model.GetAABB();
-    if (!camera.BoxWithinFrustum(matrix * std::get<0>(aabb), matrix * std::get<1>(aabb)))
+    if (model.IsAabbDot() || !camera.BoxWithinFrustum(matrix * std::get<0>(aabb), matrix * std::get<1>(aabb)))
     {
       continue;
     }
@@ -73,6 +77,11 @@ void RenderSector::ShadowDraw(Camera &camera, PShader shader)
 
     model.GetMesh()->Draw();
   }
+}
+
+int RenderSector::ApproxDc()
+{
+  return mDc;
 }
 
 void RenderSector::AddElements()

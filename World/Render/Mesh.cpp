@@ -10,12 +10,12 @@
 #include <tiny_obj_loader.h>
 #include <tools\Log.h>
 
-//presend + send + clear
+//buildaabb + presend + send + clear
 void Mesh::Compile(Shader &shader)
 {
   BuildAABB();
   Presend(shader);
-  Send(shader);
+  Compile(shader);
   Clear();
 }
 
@@ -27,7 +27,7 @@ void Mesh::Presend(Shader &shader) const
   mStrategy->SetAttribute(mAttribute, locations);
 }
 
-void Mesh::Send(Shader &shader) const
+void Mesh::Compile(Shader &shader) const
 {
   mStrategy->Compile(mVertex.data(), mVertex.size(), mIndex.data(), mIndex.size());
 }

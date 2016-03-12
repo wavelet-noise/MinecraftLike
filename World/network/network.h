@@ -112,7 +112,7 @@ public:
   void Connect(const std::string & host, uint16_t port);
 
   // Posts data to be sent to the connection.
-  void Send(const std::vector< uint8_t > & buffer);
+  void Compile(const std::vector< uint8_t > & buffer);
 
   // Posts a recv for the connection to process. If total_bytes is 0, then 
   // as many bytes as possible up to GetReceiveBufferSize() will be 

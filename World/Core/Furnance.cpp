@@ -30,3 +30,7 @@ void Furnance::DrawGui(const InteractParams & params)
 
   ImGui::End();
 }
+
+void Furnance::Interact(const InteractParams & params)
+{
+}

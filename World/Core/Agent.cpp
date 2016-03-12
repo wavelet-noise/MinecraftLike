@@ -24,6 +24,10 @@ void Agent::DrawGui(const InteractParams & params)
 {
 }
 
+void Agent::Interact(const InteractParams & params)
+{
+}
+
 void Agent::JsonLoad(const rapidjson::Value & val)
 {
   if (val.HasMember("name"))

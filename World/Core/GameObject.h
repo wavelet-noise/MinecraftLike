@@ -29,9 +29,15 @@ public:
 
   virtual void Update(GameObjectParams &params);
 
+  /// client
+  /// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
   virtual void DrawGui(InteractParams &params);
 
-  ///Выполняется для всех агентов всех блоков после полной заргузки базы данных
+  ///client/server syncronize
+  virtual void Interact(InteractParams &params);
+
+  ///client/server paralell
+  ///выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
   virtual void Afterload();
 
   virtual PGameObject Clone();

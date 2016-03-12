@@ -41,11 +41,18 @@ public:
 
   virtual void Update(const GameObjectParams &params) = 0;
 
-  //выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
+  /// client/server paralell
+  /// выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
   virtual void Afterload(GameObject * parent);
 
+  /// client
+  /// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
   virtual void DrawGui(const InteractParams &params);
 
+  /// client/server syncronize
+  virtual void Interact(const InteractParams &params);
+
+  /// client/server paralell
   virtual void JsonLoad(const rapidjson::Value &val);
 
   /// Вурнуть имя типа агента.

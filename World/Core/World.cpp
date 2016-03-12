@@ -103,6 +103,11 @@ void World::SetBlock(const WBPos &wbpos, PGameObject block)
   }
 }
 
+int World::GetActiveCount()
+{
+  return mSectors.size();
+}
+
 Player *World::GetPlayer()
 {
   return mPlayer.get();

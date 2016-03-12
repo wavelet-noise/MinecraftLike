@@ -9,7 +9,7 @@ class WindowPerfomance : public WindowBase
 {
 public:
   void Draw() override;
-  void DtUpdate(float dt, int);
+  void DtUpdate(float dt, int, int, int);
   void TesselatorDt(float dt);
   void GeneratorDt(float dt);
   static WindowPerfomance &Get()
@@ -24,6 +24,7 @@ private:
   std::array<float, 100> fps_sec, fps_subsec;
   int fps_sec_cur, fps_subsec_cur;
   float fps_sec_timer, fps_subsec_timer, dt;
+  int dc, act;
 
   struct PerfHelper
   {

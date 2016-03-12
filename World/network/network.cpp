@@ -350,7 +350,7 @@ void Connection::Recv(int32_t total_bytes)
   m_io_strand.post(boost::bind(&Connection::DispatchRecv, shared_from_this(), total_bytes));
 }
 
-void Connection::Send(const std::vector< uint8_t > & buffer)
+void Connection::Compile(const std::vector< uint8_t > & buffer)
 {
   m_io_strand.post(boost::bind(&Connection::DispatchSend, shared_from_this(), buffer));
 }

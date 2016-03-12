@@ -35,6 +35,8 @@ public:
   /// Существующий блок будет удален.
   void SetBlock(const WBPos &pos, PGameObject block);
 
+  int GetActiveCount();
+
   Player *GetPlayer();
 
   void SetTessellator(Tessellator *tess);

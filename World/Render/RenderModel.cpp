@@ -7,7 +7,7 @@
 void RenderModel::Compile() const
 {
   mMesh->Presend(*mShader);
-  mMesh->Send(*mShader);
+  mMesh->Compile(*mShader);
 }
 
 
