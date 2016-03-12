@@ -1,25 +1,22 @@
-#pragma once
+#ifndef MATERIAL_H
+#define MATERIAL_H
 #include "Agent.h"
-#include "GameObject.h"
-#include <vector>
-#include "ChestSlot.h"
 
-class Furnance : public Agent
+class Heatable : public Agent
 {
 public:
-  Furnance();
+  Heatable();
 
   void JsonLoad(const rapidjson::Value &val) override;
 
   // Унаследовано через Agent
   virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
   virtual void Update(const GameObjectParams & params) override;
-  virtual void DrawGui() override;
-  virtual void Interact(const InteractParams &params) override;
 
 private:
   float T;
-  float remain_heat, heat;
 };
 
-REGISTER_AGENT(Furnance)
+REGISTER_AGENT(Heatable)
+
+#endif // MATERIAL_H

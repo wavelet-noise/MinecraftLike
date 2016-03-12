@@ -285,5 +285,15 @@
 		}
 	],
 	"tags":["tag_material_metal"]
+},{
+	"type":"dummy",
+	"id":"material_brick",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_brick",
+		"dens":1100
+		}
+	]
 }
 ]

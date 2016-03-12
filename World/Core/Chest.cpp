@@ -14,11 +14,14 @@ Chest::Chest()
 void Chest::JsonLoad(const rapidjson::Value &val)
 {
   JSONLOAD(NVP(columns), NVP(size));
+  slots.resize(size);
 }
 
-PAgent Chest::Clone(GameObject * parent, const std::string &)
+PAgent Chest::Clone(GameObject * parent, const std::string &name)
 {
-  return std::make_shared<Chest>(*this);
+  auto t = MakeAgent<Chest>(*this);
+  t->mParent = parent;
+  return t;
 }
 
 void Chest::Update(const GameObjectParams & params)
@@ -41,6 +44,58 @@ bool Chest::Push(PGameObject go, int count, int pos)
   }
 
   return false;
+}
+
+const ChestSlot Chest::GetFirst() const
+{
+  for (auto &cs : slots)
+  {
+    if (cs.obj)
+      return cs;
+  }
+  return *slots.begin();
+}
+
+const ChestSlot Chest::GetFirst(int &pos) const
+{
+  int i = 0;
+  for (auto &cs : slots)
+  {
+    if (cs.obj)
+    {
+      pos = i;
+      return cs;
+    }
+    i++;
+  }
+  pos = -1;
+  return *slots.begin();
+}
+
+ChestSlot Chest::PopFirst()
+{
+  for (auto &cs : slots)
+  {
+    if (cs.obj)
+      return std::move(cs);
+  }
+  return std::move(*slots.begin());
+}
+
+ChestSlot Chest::PopFirst(int &pos)
+{
+  int i = 0;
+  for (auto &cs : slots)
+  {
+    if (cs.obj)
+    {
+      pos = i;
+      return std::move(cs);
+    }
+    i++;
+  }
+  pos = -1;
+  return std::move(*slots.begin());
 }
 
 void Chest::DrawGui()

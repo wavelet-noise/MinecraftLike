@@ -63,11 +63,29 @@ public:
       mData.begin(),
       [](unsigned char a, unsigned char b) -> unsigned char {
       return static_cast<unsigned char>(
-          ((a / static_cast<float>(std::numeric_limits<unsigned char>::max())) *
+        ((a / static_cast<float>(std::numeric_limits<unsigned char>::max())) *
           (b / static_cast<float>(std::numeric_limits<unsigned char>::max()))) *
-          std::numeric_limits<unsigned char>::max()
+        std::numeric_limits<unsigned char>::max()
         );
     });
+
+    return *this;
+  }
+
+  Bitmap &operator |=(const Bitmap &other)
+  {
+    if (glm::length(glm::vec2(other.GetSize())) == 0)
+      return *this;
+
+    for (int i = 0; i < mData.size() / 4; i++)
+    {
+      if (other.mData[i * 4 + 3] != 0)
+      {
+        mData[i * 4] = other.mData[i * 4];
+        mData[i * 4 + 1] = other.mData[i * 4 + 1];
+        mData[i * 4 + 2] = other.mData[i * 4 + 2];
+      }
+    }
 
     return *this;
   }

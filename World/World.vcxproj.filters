@@ -254,6 +254,13 @@
     <ClCompile Include="DragNDrop.cpp">
       <Filter>gui</Filter>
     </ClCompile>
+    <ClCompile Include="template\TemplateMachine.cpp">
+      <Filter>Core\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Fuel.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Heatable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -514,6 +521,15 @@
     </ClInclude>
     <ClInclude Include="DragNDrop.h">
       <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="template\TemplateMachine.h">
+      <Filter>Core\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Fuel.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Heatable.h">
+      <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

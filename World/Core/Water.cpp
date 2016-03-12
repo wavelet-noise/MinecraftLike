@@ -9,14 +9,18 @@ Water::Water()
 {
 }
 
+
 void Water::JsonLoad(const rapidjson::Value &val)
 {
 
 }
 
-PAgent Water::Clone(GameObject * parent, const std::string &)
+PAgent Water::Clone(GameObject * parent, const std::string &name)
 {
-  return std::make_shared<Water>(*this);
+
+  auto t = MakeAgent<Water>(*this);
+  t->mParent = parent;
+  return t;
 }
 
 void Water::Update(const GameObjectParams & params)

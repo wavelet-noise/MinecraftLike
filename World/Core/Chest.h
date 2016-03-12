@@ -15,6 +15,11 @@ public:
   virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
   virtual void Update(const GameObjectParams & params) override;
   bool Push(PGameObject go, int count = 1, int pos = -1);
+  const ChestSlot GetFirst() const;
+  const ChestSlot GetFirst(int & pos) const;
+  ChestSlot PopFirst();
+
+  ChestSlot PopFirst(int & pos);
 
   /// client
   /// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
@@ -23,6 +28,7 @@ public:
   int columns = 10;
   int size = 40;
   std::vector<ChestSlot> slots;
+  void Resize();
 };
 
 REGISTER_AGENT(Chest)

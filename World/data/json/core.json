@@ -157,8 +157,8 @@
 	 },
 	 {
 		"type":"Chest",
-		"size":16,
-		"columns":8
+		"size":1,
+		"columns":1
 	 }
     ],
 	"tesselator":[
@@ -166,11 +166,20 @@
 	    "type":"SplitBlockTessellator",
         "generator":
         {
-          "all":"material_cobolt"
+          "all":"furnance_template_material_iron"
         },
 		"transparent":false
 	  }
 	],
-	"dynamic":true
+	"model":
+	  {
+	    "sprite":"furnance_template"
+	  },
+	"dynamic":true,
+	"template":{
+		"type":"TemplateMachine",
+		"material_base":"material_brick",
+		"materials_metal":["tag_material_metal"]
+	}
   }
 ]

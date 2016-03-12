@@ -31,6 +31,9 @@ public:
   /// Загрузка тесктуры @mat умноженной на маску @mask. Имя является суммой строк @mat и @mask
   void LoadTextureMultiplied(const std::string & mask, const std::string & mat);
 
+  ///  Загрузка тесктуры @front умноженной на маску @mask c фоном @back. Имя является суммой строк @mat и @mask
+  void LoadTexturesMultipliedBackground(const std::string &mask, const std::string &mat, const std::string &back);
+
   /// Получить текстуру по имени.
   /// Если текстуры не существует, возвращается нулевой указатель.
   std::tuple<PTexture, glm::uvec4> GetTexture(const std::string &name) const;
@@ -66,6 +69,7 @@ private:
   TextureManager& operator=(const TextureManager &) = delete;
 
   bool LoadToAtlas(size_t atlas, const std::initializer_list<std::string> &names);
+  bool LoadToAtlasMultipliedBackground(size_t atlas, const std::string &mask, const std::string &mat, const std::string &back);
   bool LoadToAtlasMultiplied(size_t atlas, const std::string & mask, const std::string & mat);
 
 };

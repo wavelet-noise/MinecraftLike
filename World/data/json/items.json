@@ -82,5 +82,47 @@
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
 	}
+},
+{
+	"type":"Item",
+    "id":"metal_big_plate",
+    "agents":[
+    ],
+	"model":
+	  {
+	    "sprite":"metal_big_plate"
+	  },
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
+},
+{
+	"type":"Item",
+    "id":"metal_plate",
+    "agents":[
+    ],
+	"model":
+	  {
+	    "sprite":"metal_plate"
+	  },
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
+},
+{
+	"type":"Item",
+    "id":"coal_lump",
+    "agents":[
+	{
+		"type":"Fuel",
+		"heat":27
+	}
+    ],
+	"model":
+	{
+	"sprite":"coal_lump"
+	}
 }
 ]

@@ -79,6 +79,7 @@ protected:
   std::map<StringIntern, PAgent> mAgents;
 
   friend class TemplateItemMaterial;
+  friend class TemplateMachine;
   StringIntern id;
 };
 

@@ -84,6 +84,26 @@ void TextureManager::LoadTextureMultiplied(const std::string & mask, const std::
   }
 }
 
+void TextureManager::LoadTexturesMultipliedBackground(const std::string & mask, const std::string & mat, const std::string & back)
+{
+  for (unsigned int i = 0; i < mMultiAtlas.size(); ++i)
+  {
+    if (LoadToAtlasMultipliedBackground(i, mask, mat, back))
+    {
+      // Кажется мы смогли загрузить все текстуры в один атлас.
+      return;
+    }
+  }
+  // Мы пытались, но не смоги...
+  // Попробуем создать еще один атлас.
+  mMultiAtlas.resize(mMultiAtlas.size() + 1);
+  if (!LoadToAtlasMultipliedBackground(mMultiAtlas.size() - 1, mask, mat, back))
+  {
+    // Ошибка.
+    std::cout << "TextureManager. Load texture error." << std::endl;
+  }
+}
+
 //TODO:лучше использовать сразу текстурные координаты, вместо отступа и размера в пикселях
 std::tuple<PTexture, glm::uvec4> TextureManager::GetTexture(const std::string &name) const
 {
@@ -129,6 +149,31 @@ bool TextureManager::LoadToAtlas(size_t atlas, const std::initializer_list<std::
 
     mTextures[name] = { atlas, pos };
   }
+
+  return true;
+}
+
+bool TextureManager::LoadToAtlasMultipliedBackground(size_t atlas, const std::string &mask, const std::string &mat,const std::string &back)
+{
+  // TODO: Удаление из атласа, если не смогли вставить.
+  Bitmap bitmap_mask, bitmap_mat, bitmap_back;
+  try
+  {
+    bitmap_mask = Bitmap(std::string("data\\textures\\") + mask + ".png");
+    bitmap_mat = Bitmap(std::string("data\\textures\\") + mat + ".png");
+    bitmap_back = Bitmap(std::string("data\\textures\\") + back + ".png");
+  }
+  catch (const std::exception &e)
+  {
+    LOG(error) << e.what();
+  }
+
+  bitmap_mask *= bitmap_mat;
+  bitmap_back |= bitmap_mask;
+
+  auto pos = mMultiAtlas[atlas].atlas.Add(mask, bitmap_back);
+
+  mTextures[mask + "_" + mat] = { atlas, pos };
 
   return true;
 }

@@ -16,10 +16,14 @@
 #include "PositionAgent.h"
 #include "PhysicAgent.h"
 #include "Material.h"
+#include "Furnance.h"
+#include "Fuel.h"
+#include "Chest.h"
 
 //possibly must be moved into <templates> file
 //deserialize autoreg
 #include <template\TemplateItemMaterial.h>
+#include <template\Templatemachine.h>
 
 //possibly must be moved into <tesselators> file
 //deserialize autoreg
