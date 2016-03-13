@@ -25,7 +25,6 @@ void RenderSector::Draw(Camera &camera, Camera &light)
 {
   camera.Update();
   AddElements();
-  mDc = 0;
 
   for (auto &i : mModels)
   {
@@ -59,6 +58,7 @@ void RenderSector::ShadowDraw(Camera &camera, PShader shader)
 {
   camera.Update();
   AddElements();
+  mDc = 0;
 
   for (auto &i : mModels)
   {
@@ -76,6 +76,7 @@ void RenderSector::ShadowDraw(Camera &camera, PShader shader)
     shader->SetUniform(camera.GetViewProject() * matrix, "transform_VP");
 
     model.GetMesh()->Draw();
+    mDc++;
   }
 }
 

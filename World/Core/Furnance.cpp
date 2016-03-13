@@ -3,6 +3,8 @@
 #include <glm\gtx\string_cast.hpp>
 #include <Core\Chest.h>
 #include <Core\Fuel.h>
+#include <core\World.h>
+#include <Core\Heatable.h>
 
 Furnance::Furnance()
   : Agent(nullptr, "Furnance", "")
@@ -44,9 +46,21 @@ void Furnance::Update(const GameObjectParams & params)
     remain_heat -= params.dt;
     T += params.dt;
   }
-  if(T > 0)
-    T -= params.dt / 4.f;
-
+  if (T > 0)
+  {
+    bool founded = false;
+    if (auto upper = params.world->GetBlock(params.pos + glm::vec3(0, 0, 1)))
+    {
+      if (auto he = upper->GetFromFullName<Heatable>("Heatable"))
+      {
+        founded = true;
+        he->Heat(params.dt);
+        T -= params.dt / 4.f;
+      }
+    }
+    if(!founded)
+      T -= params.dt / 4.f;
+  }
 
 }
 

@@ -7,7 +7,7 @@
 #define Player_h__
 
 #include "Creature.h"
-
+#include "ChestSlot.h"
 
 class Player : public Creature
 {
@@ -35,7 +35,6 @@ public:
 
 private:
   static const StringIntern mPhysicAgentName;
-
 };
 
 

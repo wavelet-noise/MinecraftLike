@@ -71,6 +71,10 @@ public:
   }
 
   void PushAgent(PAgent go);
+  inline bool IsPlacable()
+  {
+    return placable;
+  }
 
   StringIntern GetId();
 
@@ -81,6 +85,7 @@ protected:
   friend class TemplateItemMaterial;
   friend class TemplateMachine;
   StringIntern id;
+  bool placable = false;
 };
 
 

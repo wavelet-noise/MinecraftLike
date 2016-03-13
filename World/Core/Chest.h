@@ -18,8 +18,13 @@ public:
   const ChestSlot GetFirst() const;
   const ChestSlot GetFirst(int & pos) const;
   ChestSlot PopFirst();
-
+  ChestSlot PopSlot(int slot);
   ChestSlot PopFirst(int & pos);
+  ChestSlot PopSelected();
+  void PushSelected(ChestSlot cs);
+  void Select(int slot);
+  int GetSelected();
+
 
   /// client
   /// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
@@ -28,7 +33,7 @@ public:
   int columns = 10;
   int size = 40;
   std::vector<ChestSlot> slots;
-  void Resize();
+  int mSelected = -1;
 };
 
 REGISTER_AGENT(Chest)

@@ -4,6 +4,7 @@
 // ============================================================================
 #include "Player.h"
 #include "PhysicAgent.h"
+#include "Chest.h"
 
 const StringIntern Player::mPhysicAgentName = StringIntern("PhysicAgent");
 

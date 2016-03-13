@@ -50,6 +50,7 @@ void GameObject::Afterload()
 PGameObject GameObject::Clone()
 {
   auto a = MakeGameObject<GameObject>(id);
+  a->placable = placable;
 
   for (const auto &ag : mAgents)
   {

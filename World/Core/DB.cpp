@@ -19,6 +19,7 @@
 #include "Furnance.h"
 #include "Fuel.h"
 #include "Chest.h"
+#include "Heatable.h"
 
 //possibly must be moved into <templates> file
 //deserialize autoreg
@@ -96,6 +97,12 @@ void DB::ReloadDirectory(const std::string & mDir)
           LOG(trace) << "\"" << id << "\" parsing";
 
           auto b = std::make_shared<GameObject>(StringIntern(id));
+
+
+          if (val.HasMember("placeable"))
+          {
+            b->placable = val["placeable"].GetBool_();;
+          }
 
           if (val.HasMember("agents")) 
           {

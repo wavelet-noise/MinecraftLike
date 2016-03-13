@@ -43,7 +43,12 @@ bool Chest::Push(PGameObject go, int count, int pos)
     }
   }
 
-  return false;
+  if (pos >= size)
+    return false;
+  slots[pos].obj = go;
+  slots[pos].count = count;
+
+  return true;
 }
 
 const ChestSlot Chest::GetFirst() const
@@ -82,6 +87,15 @@ ChestSlot Chest::PopFirst()
   return std::move(*slots.begin());
 }
 
+ChestSlot Chest::PopSlot(int slot)
+{
+  if (slot == -1)
+    return{};
+  if (slot >= size)
+    return{};
+  return std::move(slots[slot]);
+}
+
 ChestSlot Chest::PopFirst(int &pos)
 {
   int i = 0;
@@ -98,9 +112,30 @@ ChestSlot Chest::PopFirst(int &pos)
   return std::move(*slots.begin());
 }
 
+ChestSlot Chest::PopSelected()
+{
+  return PopSlot(mSelected);
+}
+
+void Chest::PushSelected(ChestSlot cs)
+{
+  Push(cs.obj, cs.count, mSelected);
+}
+
+void Chest::Select(int slot)
+{
+  mSelected = slot;
+}
+
+int Chest::GetSelected()
+{
+  return mSelected;
+}
+
 void Chest::DrawGui()
 {
   int jj = 666;
+  int ii = 0;
   auto p = ImGui::GetWindowPos();
   for (auto &a : slots)
   {
@@ -111,7 +146,15 @@ void Chest::DrawGui()
 
     if (!a.obj)
     {
-      ImGui::Button("", { 40, 38 });
+      auto &atl = TextureManager::Get().GetTexture("white");
+      auto &tex = std::get<0>(atl);
+
+      //some shit, remake stored uv to texture coord space
+      auto uv = glm::vec2(std::get<1>(atl).x, std::get<1>(atl).y) / glm::vec2(tex->GetSize());
+      auto uv2 = uv + glm::vec2(std::get<1>(atl).z, std::get<1>(atl).w) / glm::vec2(tex->GetSize());
+      std::swap(uv.x, uv2.x);
+
+      ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv, -1, ii == mSelected ? ImVec4{ 1, 1, 1, 1 } : ImVec4{ 0,0,0,0 });
     }
     else if (auto i = DB::Get().GetModel(a.obj->GetId()))
     {
@@ -125,7 +168,7 @@ void Chest::DrawGui()
       std::swap(uv.x, uv2.x);
 
 
-      ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
+      ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv, -1, ii == mSelected ? ImVec4{1, 1, 1, 1} : ImVec4{0,0,0,0});
       if (ImGui::IsItemHovered())
       {
         ImGui::SetTooltip("%s x%d", a.obj->GetId().get().c_str(), a.count);
@@ -140,6 +183,7 @@ void Chest::DrawGui()
       else if (dnd.Busy() && ImGui::IsMouseReleased(0))
         a = dnd.Drop();
     }
+    ii++;
   }
 }
 

@@ -1,5 +1,5 @@
-#ifndef MATERIAL_H
-#define MATERIAL_H
+#ifndef Heatable_H
+#define Heatable_H
 #include "Agent.h"
 
 class Heatable : public Agent
@@ -12,6 +12,7 @@ public:
   // Унаследовано через Agent
   virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
   virtual void Update(const GameObjectParams & params) override;
+  void Heat(float f);
 
 private:
   float T;
@@ -19,4 +20,4 @@ private:
 
 REGISTER_AGENT(Heatable)
 
-#endif // MATERIAL_H
+#endif // Heatable_H

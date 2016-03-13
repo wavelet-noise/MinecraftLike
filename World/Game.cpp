@@ -34,6 +34,7 @@
 #include "gui\WindowInventory.h"
 #include <Render\Resourses.h>
 #include <tools\ray.h>
+#include <core\Chest.h>
 
 Game::Game()
 {
@@ -237,43 +238,63 @@ void Game::Draw(float dt)
   mRenderSector->Draw(*mCamera, *mSun);
   mRender->Draw(*mCamera);
 
+  glLoadIdentity();
+  glMatrixMode(GL_PROJECTION);
+  glLoadMatrixf(&mCamera->GetProject()[0][0]);
+  glMatrixMode(GL_MODELVIEW);
+  glm::mat4 MV = mCamera->GetView();
+  glLoadMatrixf(&MV[0][0]);
+  glUseProgram(1);
+  glBegin(GL_TRIANGLE_FAN);
+  glColor3f(1, 0, 0);
+  glVertex3f(0, 0, 0);
+  glVertex3f(10, 0, 0);
+
+  glColor3f(0, 1, 0);
+  glVertex3f(0, 0, 0);
+  glVertex3f(0, 10, 0);
+
+  glColor3f(0, 0, 1);
+  glVertex3f(0, 0, 0);
+  glVertex3f(0, 0, 10);
+
+  glVertex3f(0, 0, 0);
+  glVertex3fv(&mWorld->GetPlayer()->GetPosition()[0]);
+  glEnd();
+
   auto ray = mCamera->GetRay(mWindow->GetMouse().GetPos());
-  auto cells = Bresenham3D(ray.origin(), ray.origin() + ray.dir()*100.f);
+  std::tuple<glm::ivec3, glm::vec3> cells;
 
-  static std::vector<size_t> models = [&]()->auto {
-    std::vector<size_t> t;
-    for (int i = 0; i < 10; i++)
-      t.push_back(mRender->AddModel("data/models/selection.obj", "dirt", "shaders/basic.glsl"));
-    return t;
-  }();
+  static size_t models = mRender->AddModel("data/models/selection.obj", "dirt", "shaders/basic.glsl");
 
-  int iii = 0;
   static std::unordered_map<glm::ivec3, PGameObject> opened_w;
-  for (const auto &c : cells)
+
+  auto sel = mWorld->GetPlayer()->GetFromFullName<Chest>("Chest")->PopSelected();
+  if(sel.obj && sel.obj->IsPlacable())
+    cells = PickPrefirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
+      return mWorld->GetBlock(pos).get();
+    });
+  else
+    cells = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
+    return mWorld->GetBlock(pos).get();
+  });
+
+  mRender->SetModelMatrix(models, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(cells))));
+  if (!ImGui::IsAnyItemHovered())
   {
-    if (auto &b = mWorld->GetBlock(c))
+    if (ImGui::IsMouseDown(0) && sel.obj && sel.obj->IsPlacable())
     {
-      mRender->SetModelMatrix(models[iii], glm::translate(glm::mat4(1), glm::vec3(c)));
-      if (!ImGui::IsAnyItemHovered())
+      mWorld->SetBlock(std::get<0>(cells), DB::Get().Create(sel.obj->GetId()));
+    }
+    if (ImGui::IsMouseDown(1)) {
+      if (auto b = mWorld->GetBlock(std::get<0>(cells)))
       {
-        if (ImGui::IsMouseDown(0))
-        {
-          mWorld->SetBlock(c, nullptr);
-        }
-        if (ImGui::IsMouseDown(1)) {
-          if (auto b = mWorld->GetBlock(c))
-          {
-            b->Interact(InteractParams{ mWorld.get(), c, dt });
-            opened_w[c] = b;
-          }
-        }
+        b->Interact(InteractParams{ mWorld.get(), std::get<0>(cells), dt });
+        opened_w[std::get<0>(cells)] = b;
       }
-      break;
-      iii++;
-      if(iii >= 10)
-        break;
     }
   }
+  mWorld->GetPlayer()->GetFromFullName<Chest>("Chest")->PushSelected(std::move(sel));
 
   WindowPerfomance &wp = WindowPerfomance::Get();
   WindowInventory &winv = WindowInventory::Get();

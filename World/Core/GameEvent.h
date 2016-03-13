@@ -18,6 +18,20 @@ public:
 };
 
 
+class GameEventSelectPlayerSlot : public GameEvent
+{
+public:
+  GameEventSelectPlayerSlot(int slot)
+    : mSlot(slot)
+  {
+  }
+
+  virtual void Execute(World * world) override;
+
+private:
+  int mSlot;
+};
+
 class GameEventMove : public GameEvent
 {
 public:
@@ -26,7 +40,7 @@ public:
   {
   }
 
-  void Execute(class World *world) override;
+  void Execute(World *world) override;
 
 private:
   glm::vec3 mMoved;
@@ -41,7 +55,7 @@ public:
   {
   }
 
-  void Execute(class World *world) override;
+  void Execute(World *world) override;
 
 private:
   glm::vec3 mRotated;

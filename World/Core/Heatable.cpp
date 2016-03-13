@@ -19,4 +19,10 @@ PAgent Heatable::Clone(GameObject * parent, const std::string &name)
 
 void Heatable::Update(const GameObjectParams & params)
 {
+  T -= params.dt / 5.f;
+}
+
+void Heatable::Heat(float f)
+{
+  T += f;
 }

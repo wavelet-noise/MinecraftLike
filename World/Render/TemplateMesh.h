@@ -92,6 +92,7 @@ public:
       mIndex.push_back(size + i);
     }
 
+    mVertex.reserve(mVertex.size() + mesh.SizeVertex());
     mVertex.insert(mVertex.end(), mesh.mVertex.begin(), mesh.mVertex.end());
   }
 

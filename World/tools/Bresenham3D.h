@@ -8,7 +8,9 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <functional>
 
-std::vector<glm::ivec3> Bresenham3D(const glm::vec3 &begin, const glm::vec3 &end);
+std::tuple<glm::ivec3, glm::vec3> PickFirst(const glm::vec3 &origin, const glm::vec3 &direction, float radius, std::function<bool(const glm::ivec3 &)> collider);
+std::tuple<glm::ivec3, glm::vec3> PickPrefirst(const glm::vec3 &origin, const glm::vec3 &direction, float radius, std::function<bool(const glm::ivec3 &)> collider);
 
 #endif // Bresenham3D_h__

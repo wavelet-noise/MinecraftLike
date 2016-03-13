@@ -4,120 +4,176 @@
 // ============================================================================
 #include "Bresenham3D.h"
 #include <algorithm>
+#include <tools\CoordSystem.h>
 
-std::vector<glm::ivec3> Bresenham3D(const glm::vec3 &begin, const glm::vec3 &end)
-{
-  int x = static_cast<int>(begin.x);
-  int y = static_cast<int>(begin.y);
-  int z = static_cast<int>(begin.z);
-  int dx = static_cast<int>(glm::abs(end.x - x));
-  int dy = static_cast<int>(glm::abs(end.y - y));
-  int dz = static_cast<int>(glm::abs(end.z - z));
-  int sx = static_cast<int>(glm::sign(end.x - x));
-  int sy = static_cast<int>(glm::sign(end.y - y));
-  int sz = static_cast<int>(glm::sign(end.z - z));
-
-  std::vector<glm::ivec3> points;
-
-  if ((dy >= dx) && (dy >= dz))
-  {
-    int e_yx = (dx - dy) << 1;
-    int e_yz = (dz - dy) << 1;
-
-    e_yx -= (e_yx >> 1);
-    e_yz -= (e_yz >> 1);
-
-    for (int i = 0; i < dy; ++i)
-    {
-      points.push_back(glm::vec3(x, y, z));
-      if (e_yx >= 0)
-      {
-        x += sx;
-        e_yx -= (dy << 1);
-        points.push_back(glm::vec3(x, y, z));
-      }
-
-      if (e_yz >= 0)
-      {
-        z += sz;
-        e_yz -= (dy << 1);
-        points.push_back(glm::vec3(x, y, z));
-      }
-
-      y += sy;
-      e_yx += (dx << 1);
-      e_yz += (dz << 1);
-    }
-  }
-  else if ((dx >= dy) && (dx >= dz))
-  {
-    int e_xy = (dy - dx) << 1;
-    int e_xz = (dz - dx) << 1;
-
-    e_xz -= (e_xz >> 1);
-    e_xy -= (e_xy >> 1);
-
-    for (int i = 0; i < dx; ++i)
-    {
-      points.push_back(glm::vec3(x, y, z));
-
-      if (e_xy >= 0)
-      {
-        y += sy;
-        e_xy -= (dx << 1);
-        points.push_back(glm::vec3(x, y, z));
-      }
-
-      if (e_xz >= 0)
-      {
-        z += sz;
-        e_xz -= (dx << 1);
-        points.push_back(glm::vec3(x, y, z));
-      }
-      x += sx;
-      e_xy += (dy << 1);
-      e_xz += (dz << 1);
-    }
-  }
-  else // (dz>=dy) && (dz>=dx)
-  {
-    int e_zx = (dx - dz) << 1;
-    int e_zy = (dy - dz) << 1;
-
-    e_zx -= (e_zx >> 1);
-    e_zy -= (e_zy >> 1);
-
-    for (int i = 0; i < dz; ++i)
-    {
-      points.push_back(glm::vec3(x, y, z));
-
-      if (e_zx >= 0)
-      {
-        x += sx;
-        e_zx -= (dz << 1);
-        points.push_back(glm::vec3(x, y, z));
-      }
-      if (e_zy >= 0)
-      {
-        y += sy;
-        e_zy -= (dz << 1);
-        points.push_back(glm::vec3(x, y, z));
-      }
-
-      z += sz;
-      e_zx += (dx << 1);
-      e_zy += (dy << 1);
-    }
-  }
-  points.push_back(glm::vec3(x, y, z));
-
-  std::sort(std::begin(points), std::end(points), [&](const glm::ivec3 &a, glm::ivec3 &b)->bool {
-    auto da = glm::distance(begin, glm::vec3(a));
-    auto db = glm::distance(begin, glm::vec3(b));
-
-    return da < db;
-  });
-  return points;
+int mod(int value, int modulus) {
+  return (value % modulus + modulus) % modulus;
 }
 
+float intbound(float s, float ds) {
+  if (ds < 0)
+    return intbound(-s, -ds);
+  else 
+  {
+    s = mod(s, 1);
+    return (1 - s) / ds;
+  }
+}
+
+int signum(float x) {
+  return x > 0 ? 1 : x < 0 ? -1 : 0;
+}
+
+
+std::tuple<glm::ivec3, glm::vec3> PickFirst(const glm::vec3 &origin, const glm::vec3 &direction, float radius, std::function<bool(const glm::ivec3 &)> collider) {
+  // From "A Fast Voxel Traversal Algorithm for Ray Tracing"
+  // by John Amanatides and Andrew Woo, 1987
+  // <http://www.cse.yorku.ca/~amana/research/grid.pdf>
+  // <http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.42.3443>
+  auto temp = cs::WtoWB(origin);
+  int x = temp[0];
+  int y = temp[1];
+  int z = temp[2];
+  auto dx = direction[0];
+  auto dy = direction[1];
+  auto dz = direction[2];
+  auto stepX = signum(dx);
+  auto stepY = signum(dy);
+  auto stepZ = signum(dz);
+  auto tMaxX = intbound(origin[0], dx);
+  auto tMaxY = intbound(origin[1], dy);
+  auto tMaxZ = intbound(origin[2], dz);
+  auto tDeltaX = stepX / dx;
+  auto tDeltaY = stepY / dy;
+  auto tDeltaZ = stepZ / dz;
+  auto face = glm::ivec3();
+  std::vector<glm::ivec3> list;
+
+  if (dx == 0 && dy == 0 && dz == 0)
+    throw std::logic_error("Raycast in zero direction!");
+
+  radius /= sqrt(dx*dx + dy*dy + dz*dz);
+
+  while (true) {
+
+    if (collider({ x, y, z }))
+      break;
+
+    if (tMaxX < tMaxY) {
+      if (tMaxX < tMaxZ) {
+        if (tMaxX > radius) break;
+        x += stepX;
+        tMaxX += tDeltaX;
+        face[0] = -stepX;
+        face[1] = 0;
+        face[2] = 0;
+      }
+      else {
+        if (tMaxZ > radius) break;
+        z += stepZ;
+        tMaxZ += tDeltaZ;
+        face[0] = 0;
+        face[1] = 0;
+        face[2] = -stepZ;
+      }
+    }
+    else {
+      if (tMaxY < tMaxZ) {
+        if (tMaxY > radius) break;
+        y += stepY;
+        tMaxY += tDeltaY;
+        face[0] = 0;
+        face[1] = -stepY;
+        face[2] = 0;
+      }
+      else {
+        if (tMaxZ > radius) break;
+        z += stepZ;
+        tMaxZ += tDeltaZ;
+        face[0] = 0;
+        face[1] = 0;
+        face[2] = -stepZ;
+      }
+    }
+  }
+
+  return std::make_tuple(glm::ivec3(x,y,z), face);
+}
+
+std::tuple<glm::ivec3, glm::vec3> PickPrefirst(const glm::vec3 &origin, const glm::vec3 &direction, float radius, std::function<bool(const glm::ivec3 &)> collider) {
+  // From "A Fast Voxel Traversal Algorithm for Ray Tracing"
+  // by John Amanatides and Andrew Woo, 1987
+  // <http://www.cse.yorku.ca/~amana/research/grid.pdf>
+  // <http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.42.3443>
+  auto temp = cs::WtoWB(origin);
+  int x = temp[0], last_x = x;
+  int y = temp[1], last_y = y;
+  int z = temp[2], last_z = z;
+  auto dx = direction[0];
+  auto dy = direction[1];
+  auto dz = direction[2];
+  auto stepX = signum(dx);
+  auto stepY = signum(dy);
+  auto stepZ = signum(dz);
+  auto tMaxX = intbound(origin[0], dx);
+  auto tMaxY = intbound(origin[1], dy);
+  auto tMaxZ = intbound(origin[2], dz);
+  auto tDeltaX = stepX / dx;
+  auto tDeltaY = stepY / dy;
+  auto tDeltaZ = stepZ / dz;
+  auto face = glm::ivec3(), last_face = face;
+  std::vector<glm::ivec3> list;
+
+  if (dx == 0 && dy == 0 && dz == 0)
+    throw std::logic_error("Raycast in zero direction!");
+
+  radius /= sqrt(dx*dx + dy*dy + dz*dz);
+
+  while (true) {
+
+    if (collider({ x, y, z }))
+      break;
+    last_x = x; last_y = y; last_z = z;
+    last_face = face;
+
+    if (tMaxX < tMaxY) {
+      if (tMaxX < tMaxZ) {
+        if (tMaxX > radius) return{};
+        x += stepX;
+        tMaxX += tDeltaX;
+        face[0] = -stepX;
+        face[1] = 0;
+        face[2] = 0;
+      }
+      else {
+        if (tMaxZ > radius) return{};
+        z += stepZ;
+        tMaxZ += tDeltaZ;
+        face[0] = 0;
+        face[1] = 0;
+        face[2] = -stepZ;
+      }
+    }
+    else {
+      if (tMaxY < tMaxZ) {
+        if (tMaxY > radius) return{};
+        y += stepY;
+        tMaxY += tDeltaY;
+        face[0] = 0;
+        face[1] = -stepY;
+        face[2] = 0;
+      }
+      else {
+        if (tMaxZ > radius) return{};
+        z += stepZ;
+        tMaxZ += tDeltaZ;
+        face[0] = 0;
+        face[1] = 0;
+        face[2] = -stepZ;
+      }
+    }
+  }
+
+  return std::make_tuple(glm::ivec3(last_x, last_y, last_z), last_face);
+}
 
