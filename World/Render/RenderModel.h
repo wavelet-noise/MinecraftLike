@@ -18,7 +18,7 @@ struct RenderModel
   // TODO: Проверки наличия компонентов и возврат успешности компилирования.
   void Compile() const;
 
-  PCMesh mMesh;
+  PCMesh mMeshes;
   PShader mShader;
   PTexture mTexture;
 

@@ -7,7 +7,7 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include "..\tools\CoordSystem.h"
 #include <GLFW\glfw3.h>
-
+#include "Resourses.h"
 
 
 void RenderSector::Push(const Model &model, const SPos &pos)
@@ -47,7 +47,6 @@ void RenderSector::Draw(Camera &camera, Camera &light)
 
     shader->SetUniform(camera.GetViewProject() * matrix, "transform_VP");
     shader->SetUniform(light.GetShadow() * matrix, "shadow_VP");
-    shader->SetUniform(1, "shadowmap");
 
     model.GetMesh()->Draw();
     mDc++;

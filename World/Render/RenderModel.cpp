@@ -6,8 +6,8 @@
 
 void RenderModel::Compile() const
 {
-  mMesh->Presend(*mShader);
-  mMesh->Compile(*mShader);
+  mMeshes->Presend(*mShader);
+  mMeshes->Compile(*mShader);
 }
 
 

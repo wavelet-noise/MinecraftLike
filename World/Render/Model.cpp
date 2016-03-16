@@ -33,11 +33,11 @@ void Model::SetSprite(const StringIntern & s)
 void Model::BuildAABB(glm::vec3 VertexVTN::* p)
 {
   glm::vec3 _min{ 0 }, _max{ 0 };
-  if (!mMesh->Empty())
+  if (!mMeshes->Empty())
   {
-    for (decltype(mMesh->SizeVertex()) i = 0; i < mMesh->SizeVertex(); ++i)
+    for (decltype(mMeshes->SizeVertex()) i = 0; i < mMeshes->SizeVertex(); ++i)
     {
-      const glm::vec3 &t = mMesh->Vertex(i).*p;
+      const glm::vec3 &t = mMeshes->Vertex(i).*p;
       for (int j = 0; j < 3; ++j)
       {
         _max[j] = glm::max(t[j], _max[j]);

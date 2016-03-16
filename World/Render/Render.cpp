@@ -39,11 +39,17 @@ Render::Render()
 
   GL_CALL(glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f));
 
+  //Resourses::Get().LoadTexture("", true, TEXTURE_DIM_3, { 16,16,16 });
   auto bs = Resourses::Get().LoadShader("shaders/basic.glsl");
+  bs->Use();
   bs->SetUniform(TEXTURE_SLOT_0, "atlas");
-  bs->SetUniform(TEXTURE_SLOT_1, "shadowmap");
+  bs->SetUniform(TEXTURE_SLOT_2, "shadowmap");
+  bs->SetUniform(TEXTURE_SLOT_4, "rgbtable");
+  Resourses::Get().LoadTexture("data\\rgbtable.png", false, false, TEXTURE_DIM_3, {16,16,16});
+  Resourses::Get().GetTexture("data\\rgbtable.png")->Set(TEXTURE_SLOT_4);
 
   auto bs2 = Resourses::Get().LoadShader("shaders/shadow.glsl");
+  bs2->Use();
   bs2->SetUniform(TEXTURE_SLOT_0, "atlas");
 
   Resourses::Get().LoadMesh("data/models/selection.obj");
@@ -93,7 +99,7 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
 
   auto &model = *mModels.back();
 
-  model.mMesh = Resourses::Get().GetMesh("data/models/selection.obj");
+  model.mMeshes = Resourses::Get().GetMesh("data/models/selection.obj");
   model.mTexture = std::get<0>(TextureManager::Get().GetTexture(texture));
   model.mShader = Resourses::Get().GetShader(shader);
 
@@ -137,7 +143,7 @@ void Render::Draw(Camera &camera)
     }
     auto &model = *i;
 
-    const auto &aabb = model.mMesh->GetAABB();
+    const auto &aabb = model.mMeshes->GetAABB();
     if (!camera.BoxWithinFrustum(model.mModel * std::get<Mesh::MinAABB>(aabb), model.mModel * std::get<Mesh::MaxAABB>(aabb)))
     {
       continue;
@@ -150,7 +156,7 @@ void Render::Draw(Camera &camera)
 
     shader->SetUniform(camera.GetViewProject() * model.mModel, "transform_VP");
 
-    model.mMesh->Draw();
+    model.mMeshes->Draw();
   }
 }
 

@@ -9,7 +9,7 @@
 #include <memory>
 #include <boost\core\noncopyable.hpp>
 #include "Mesh.h"
-
+#include "Texture.h"
 
 /// База данных шейдеров.
 class Resourses : boost::noncopyable
@@ -26,9 +26,14 @@ public:
 
   void LoadMesh(const std::string &name);
 
+  void LoadTexture(const std::string &name, bool mip = false, bool smooth = false, TextureDim dim = TEXTURE_DIM_2, const glm::vec3 &size = {});
+
+  PCTexture GetTexture(const std::string &name) const;
+
 private:
   std::unordered_map<std::string, PShader> mShaders;
-  std::unordered_map<std::string, PMesh> mMesh;
+  std::unordered_map<std::string, PMesh> mMeshes;
+  std::unordered_map<std::string, PTexture> mTextures;
 };
 
 

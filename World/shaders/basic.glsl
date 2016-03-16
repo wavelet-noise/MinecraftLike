@@ -1,5 +1,6 @@
 uniform sampler2D atlas;
 uniform sampler2D shadowmap;
+uniform sampler3D rgbtable;
 uniform mat4 transform_VP;
 uniform mat4 shadow_VP;
 
@@ -38,8 +39,8 @@ void main(void)
 
     vec3 lightvector = normalize(pos.xyz + vec3(300));
 	float coef = min(1, max(0, dot(norm, lightvector)) + 0.5);
-    out_color = shadow * tcol * coef;
-	out_color.a = 1;
+	out_color = shadow * tcol * coef;
+	out_color = texture(rgbtable, out_color.xyz);
 }
 
 #endif

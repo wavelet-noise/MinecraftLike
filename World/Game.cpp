@@ -234,7 +234,8 @@ void Game::Draw(float dt)
   GL_CALL(glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE));
   GL_CALL(glCullFace(GL_BACK));
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-  depthTextureId->Set(TEXTURE_SLOT_1);
+  depthTextureId->Set(TEXTURE_SLOT_2);
+  Resourses::Get().GetTexture("data\\rgbtable.png")->Set(TEXTURE_SLOT_4);
   mRenderSector->Draw(*mCamera, *mSun);
   mRender->Draw(*mCamera);
 

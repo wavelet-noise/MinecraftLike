@@ -77,7 +77,7 @@ public:
     if (glm::length(glm::vec2(other.GetSize())) == 0)
       return *this;
 
-    for (int i = 0; i < mData.size() / 4; i++)
+    for (size_t i = 0; i < mData.size() / 4; i++)
     {
       if (other.mData[i * 4 + 3] != 0)
       {

@@ -34,12 +34,12 @@ public:
 
   inline PTemplateMesh<VertexVTN> &GetMesh() noexcept
   {
-    return mMesh;
+    return mMeshes;
   }
 
   inline const PTemplateMesh<VertexVTN> &GetMesh() const noexcept
   {
-    return mMesh;
+    return mMeshes;
   }
 
   inline const PTexture &GetTexture() const noexcept
@@ -76,7 +76,7 @@ public:
 private:
   glm::vec4 min, max;
   bool empty_aabb = true;
-  PTemplateMesh<VertexVTN> mMesh;
+  PTemplateMesh<VertexVTN> mMeshes;
   PTexture mTexture;
   PShader mShader;
 

@@ -4,7 +4,6 @@
 // ============================================================================
 #ifndef TEXTURE_H
 #define TEXTURE_H
-
 #include <memory>
 #include <glm/glm.hpp>
 #include "Bitmap.h"
@@ -12,27 +11,37 @@
 /// Описание текстурных слотов.
 enum TextureSlot
 {
-  TEXTURE_SLOT_0,
-  TEXTURE_SLOT_1,
-  TEXTURE_SLOT_2,
-  TEXTURE_SLOT_3,
-  TEXTURE_SLOT_4,
-  TEXTURE_SLOT_5,
-  TEXTURE_SLOT_6,
-  TEXTURE_SLOT_7,
+  TEXTURE_SLOT_0 = 0,
+  TEXTURE_SLOT_1 = 1,
+  TEXTURE_SLOT_2 = 2,
+  TEXTURE_SLOT_3 = 3,
+  TEXTURE_SLOT_4 = 4,
+  TEXTURE_SLOT_5 = 5,
+  TEXTURE_SLOT_6 = 6,
+  TEXTURE_SLOT_7 = 7,
 
   TEXTURE_SLOT_COUNT,
 };
 
+enum TextureDim
+{
+  TEXTURE_DIM_1,
+  TEXTURE_DIM_2,
+  TEXTURE_DIM_3,
+
+  TEXTURE_DIM_COUNT,
+};
+
 class Texture;
-typedef std::shared_ptr<Texture> PTexture;
+using PTexture = std::shared_ptr<Texture>;
+using PCTexture = std::shared_ptr<const Texture>;
 
 /// Текстура. Находится в видеопамяти.
 class Texture
 {
 public:
   /// Создать текстуру на основе битмапы.
-  Texture(const Bitmap &bitmap, bool mip = false);
+  Texture(const Bitmap &bitmap, bool mip = false, bool smoothing = false, TextureDim dim = TEXTURE_DIM_2, const glm::vec3 &size = {});
 
   /// id  only texture
   Texture();
@@ -56,12 +65,13 @@ public:
   void GenMipmap();
 
   /// Установить текстуру на заданный текстурный слот.
-  void Set(TextureSlot slot);
+  void Set(TextureSlot slot) const;
 
 private:
   // id текстуры. 0 - не существующая текстура.
   unsigned int mTextureId;
-  bool mMip;
+  bool mMip = false;
+  int mdim;
 
   // Размер текстуры в текстелях.
   glm::uvec2 mSize;
