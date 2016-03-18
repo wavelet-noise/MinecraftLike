@@ -40,7 +40,7 @@ Game::Game()
 {
   Window::WindowSystemInitialize();
 
-  mWindow = std::make_unique<Window>(glm::uvec2(600, 600));
+  mWindow = std::make_unique<Window>(glm::uvec2(1024, 768));
   mCamera = std::make_shared<Camera>();
   mWindow->SetCurrentContext();
 
@@ -188,11 +188,8 @@ void Game::Update(float dt)
 
 void Game::generateShadowFBO()
 {
-  int shadowMapWidth = mWindow->GetSize().x;
-  int shadowMapHeight = mWindow->GetSize().y;
-
   depthTextureId = std::make_shared<Texture>();
-  depthTextureId->DepthTexture({ shadowMapWidth, shadowMapHeight });
+  depthTextureId->DepthTexture({ mWindow->GetSize().x, mWindow->GetSize().y });
 
   GLenum FBOstatus;
 
@@ -207,10 +204,6 @@ void Game::generateShadowFBO()
 
   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureId->GetId(), 0);
 
-  FBOstatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-  if (FBOstatus != GL_FRAMEBUFFER_COMPLETE)
-    LOG(fatal) << "framebuffer incomplete";
-
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -220,7 +213,7 @@ void Game::Draw(float dt)
   mCamera->SetRot(mWorld->GetPlayer()->GetRot());
   mCamera->Update();
 
-  mSun->SetPos(mCamera->GetPos() + glm::vec3{ 300 });
+  mSun->SetPos(mCamera->GetPos() + glm::vec3{ 100 });
   mSun->LookAt(mCamera->GetPos());
   mSun->Update();
 
@@ -238,30 +231,6 @@ void Game::Draw(float dt)
   Resourses::Get().GetTexture("data\\rgbtable.png")->Set(TEXTURE_SLOT_4);
   mRenderSector->Draw(*mCamera, *mSun);
   mRender->Draw(*mCamera);
-
-  glLoadIdentity();
-  glMatrixMode(GL_PROJECTION);
-  glLoadMatrixf(&mCamera->GetProject()[0][0]);
-  glMatrixMode(GL_MODELVIEW);
-  glm::mat4 MV = mCamera->GetView();
-  glLoadMatrixf(&MV[0][0]);
-  glUseProgram(1);
-  glBegin(GL_TRIANGLE_FAN);
-  glColor3f(1, 0, 0);
-  glVertex3f(0, 0, 0);
-  glVertex3f(10, 0, 0);
-
-  glColor3f(0, 1, 0);
-  glVertex3f(0, 0, 0);
-  glVertex3f(0, 10, 0);
-
-  glColor3f(0, 0, 1);
-  glVertex3f(0, 0, 0);
-  glVertex3f(0, 0, 10);
-
-  glVertex3f(0, 0, 0);
-  glVertex3fv(&mWorld->GetPlayer()->GetPosition()[0]);
-  glEnd();
 
   auto ray = mCamera->GetRay(mWindow->GetMouse().GetPos());
   std::tuple<glm::ivec3, glm::vec3> cells;
@@ -312,6 +281,10 @@ void Game::Draw(float dt)
     std::get<1>(w)->DrawGui();
     ImGui::End();
   }
+  ImGui::Begin("shadow");
+  auto s = ImGui::GetWindowSize();
+  ImGui::Image((void*)depthTextureId->GetId(), s);
+  ImGui::End();
   ImGui::Render();
 }
 

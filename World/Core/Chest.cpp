@@ -148,11 +148,10 @@ void Chest::DrawGui()
     {
       auto &atl = TextureManager::Get().GetTexture("white");
       auto &tex = std::get<0>(atl);
+	  auto &uv4 = std::get<1>(atl);
 
-      //some shit, remake stored uv to texture coord space
-      auto uv = glm::vec2(std::get<1>(atl).x, std::get<1>(atl).y) / glm::vec2(tex->GetSize());
-      auto uv2 = uv + glm::vec2(std::get<1>(atl).z, std::get<1>(atl).w) / glm::vec2(tex->GetSize());
-      std::swap(uv.x, uv2.x);
+	  auto uv = glm::vec2(uv4.x, uv4.y);
+      auto uv2 = glm::vec2(uv4.z, uv4.w);
 
       ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv, -1, ii == mSelected ? ImVec4{ 1, 1, 1, 1 } : ImVec4{ 0,0,0,0 });
     }
@@ -161,12 +160,10 @@ void Chest::DrawGui()
       Model &m = *i;
       auto &atl = TextureManager::Get().GetTexture(m.GetSpriteName());
       auto &tex = std::get<0>(atl);
+	  auto &uv4 = std::get<1>(atl);
 
-      //some shit, remake stored uv to texture coord space
-      auto uv = glm::vec2(std::get<1>(atl).x, std::get<1>(atl).y) / glm::vec2(tex->GetSize());
-      auto uv2 = uv + glm::vec2(std::get<1>(atl).z, std::get<1>(atl).w) / glm::vec2(tex->GetSize());
-      std::swap(uv.x, uv2.x);
-
+	  auto uv = glm::vec2(uv4.x, uv4.y);
+	  auto uv2 = glm::vec2(uv4.z, uv4.w);
 
       ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv, -1, ii == mSelected ? ImVec4{1, 1, 1, 1} : ImVec4{0,0,0,0});
       if (ImGui::IsItemHovered())

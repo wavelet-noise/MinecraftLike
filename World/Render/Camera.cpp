@@ -154,7 +154,7 @@ void Camera::Update()
   mViewProjection = mProjection * mView;
   mDirection = glm::mat3_cast(mQuat);
 
-  mShadow = bias * mViewProjection;
+  mShadow = mViewProjection;
 
   CalculateFrustum();
   changed = false;

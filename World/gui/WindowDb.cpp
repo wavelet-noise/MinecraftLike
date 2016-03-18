@@ -29,11 +29,10 @@ void WindowDb::Draw()
       }
       auto &atl = TextureManager::Get().GetTexture(mtex);
       auto &tex = std::get<0>(atl);
+	  auto &atluv = std::get<1>(atl);
 
-      //some shit, remake stored uv to texture coord space
-      auto uv = glm::vec2(std::get<1>(atl).x, std::get<1>(atl).y) / glm::vec2(tex->GetSize());
-      auto uv2 = uv + glm::vec2(std::get<1>(atl).z, std::get<1>(atl).w) / glm::vec2(tex->GetSize());
-      std::swap(uv.x, uv2.x);
+	  auto uv = glm::vec2(atluv.x, atluv.y);
+	  auto uv2 = glm::vec2(atluv.z, atluv.w);
 
       if (jj < 9)
         ImGui::SameLine(), jj++;

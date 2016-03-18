@@ -105,17 +105,17 @@ void TextureManager::LoadTexturesMultipliedBackground(const std::string & mask, 
 }
 
 //TODO:лучше использовать сразу текстурные координаты, вместо отступа и размера в пикселях
-std::tuple<PTexture, glm::uvec4> TextureManager::GetTexture(const std::string &name) const
+std::tuple<PTexture, glm::vec4> TextureManager::GetTexture(const std::string &name) const
 {
   auto itTexture = mTextures.find(name);
   if (itTexture == mTextures.end())
   {
     // Текстура не найдена.
     const auto &texture = mTextures.find(error_image.name)->second;
-    return std::tuple<PTexture, glm::uvec4>(mMultiAtlas[texture.index].texture, texture.pos);
+    return std::tuple<PTexture, glm::vec4>(mMultiAtlas[texture.index].texture, texture.pos);
   }
 
-  return std::tuple<PTexture, glm::uvec4>(mMultiAtlas[(*itTexture).second.index].texture, (*itTexture).second.pos);
+  return std::tuple<PTexture, glm::vec4>(mMultiAtlas[(*itTexture).second.index].texture, (*itTexture).second.pos);
 }
 
 void TextureManager::Compile()
@@ -123,7 +123,7 @@ void TextureManager::Compile()
   LOG(trace) << "texture atlases recompiling";
   for (unsigned int i = 0; i < mMultiAtlas.size(); ++i)
   {
-    mMultiAtlas[i].texture = std::make_shared<Texture>(mMultiAtlas[i].atlas.GetAtlas(), false);
+    mMultiAtlas[i].texture = std::make_shared<Texture>(mMultiAtlas[i].atlas.GetAtlas(), true, true);
     mMultiAtlas[i].texture->GenMipmap();
 //    mMultiAtlas[i].atlas.GetAtlas().Save("Atlas_" + std::to_string(i) + ".png");
   }
@@ -145,9 +145,9 @@ bool TextureManager::LoadToAtlas(size_t atlas, const std::initializer_list<std::
       std::cout << msg << std::endl;
       continue;
     }
-    auto pos = mMultiAtlas[atlas].atlas.Add(name, bitmap);
+    auto uv = mMultiAtlas[atlas].atlas.Add(name, bitmap);
 
-    mTextures[name] = { atlas, pos };
+    mTextures[name] = { atlas, uv };
   }
 
   return true;

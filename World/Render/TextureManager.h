@@ -36,7 +36,7 @@ public:
 
   /// Получить текстуру по имени.
   /// Если текстуры не существует, возвращается нулевой указатель.
-  std::tuple<PTexture, glm::uvec4> GetTexture(const std::string &name) const;
+  std::tuple<PTexture, glm::vec4> GetTexture(const std::string &name) const;
 
   /// Создает текстуры в графической памяти.
   void Compile();
@@ -46,7 +46,7 @@ private:
   struct AtlasChunk
   {
     size_t index; // Номер атласа.
-    glm::uvec4 pos;     // Положение в атласе.
+    glm::vec4 pos;     // Положение в атласе.
   };
 
   struct AtlasTexture

@@ -17,7 +17,7 @@ public:
   Atlas(const glm::uvec2 &size);
   ~Atlas();
 
-  glm::uvec4 Add(const std::string &name, const Bitmap &bitmap);
+  glm::vec4 Add(const std::string &name, const Bitmap &bitmap);
 
   bool Remove(const std::string &name);
 

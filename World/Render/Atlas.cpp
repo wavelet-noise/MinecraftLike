@@ -25,7 +25,7 @@ Atlas::~Atlas()
 {
 }
 
-glm::uvec4 Atlas::Add(const std::string &name, const Bitmap &bitmap)
+glm::vec4 Atlas::Add(const std::string &name, const Bitmap &bitmap)
 {
   const auto &size = bitmap.GetSize();
   // Ищем самый маленький контейнер, в который может влезть битмапа.
@@ -58,7 +58,13 @@ glm::uvec4 Atlas::Add(const std::string &name, const Bitmap &bitmap)
 
       mBitmap.Insert(node->pos, bitmap);
       mNodes.erase(it);
-      return { node->pos.x , node->pos.y, size.x, size.y };
+
+	  auto asize   = glm::vec2(mBitmap.GetSize());
+	  auto bias    = glm::vec2(0.5) / asize;
+	  glm::vec4 uv = glm::vec4(glm::vec2(node->pos.x + size.x, node->pos.y) / asize + bias, 
+		                       glm::vec2(node->pos.x, node->pos.y + size.y) / asize + bias);
+
+      return uv;
     }
   }
 
