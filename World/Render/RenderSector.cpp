@@ -46,7 +46,7 @@ void RenderSector::Draw(Camera &camera, Camera &light)
     shader->Use();
 
     shader->SetUniform(camera.GetViewProject() * matrix, "transform_VP");
-    shader->SetUniform(light.GetShadow() * matrix, "shadow_VP");
+    shader->SetUniform(light.GetViewProject() * matrix, "shadow_VP");
 
     model.GetMesh()->Draw();
     mDc++;

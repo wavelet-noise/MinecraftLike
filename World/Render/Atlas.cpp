@@ -60,9 +60,9 @@ glm::vec4 Atlas::Add(const std::string &name, const Bitmap &bitmap)
       mNodes.erase(it);
 
 	  auto asize   = glm::vec2(mBitmap.GetSize());
-	  auto bias    = glm::vec2(0.5) / asize;
-	  glm::vec4 uv = glm::vec4(glm::vec2(node->pos.x + size.x, node->pos.y) / asize + bias, 
-		                       glm::vec2(node->pos.x, node->pos.y + size.y) / asize + bias);
+	  auto bias    = glm::vec2(0.5, -0.5) / asize;
+	  glm::vec4 uv = glm::vec4(glm::vec2(node->pos.x + size.x, node->pos.y) / asize, 
+		                       glm::vec2(node->pos.x, node->pos.y + size.y) / asize);
 
       return uv;
     }

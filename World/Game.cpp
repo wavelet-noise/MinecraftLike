@@ -90,14 +90,8 @@ int Game::Run()
 
   mCamera->Resize(mWindow->GetSize());
   mWindow->SetResizeCallback([&](int x, int y) {
-    if (y == 0)
-      y = 1;
-    mCamera->Resize({ x,y });
-    mSun->Resize({ x,y });
-    int width, height;
-    glfwGetFramebufferSize(mWindow->Get(), &width, &height);
-    glViewport(0, 0, width, height);
-    generateShadowFBO();
+    mCamera->Resize({ x, y });
+    mSun->Resize({ x, y });
   });
 
   TextureManager::Get().LoadDirectory("data\\textures\\");
@@ -189,12 +183,14 @@ void Game::Update(float dt)
 void Game::generateShadowFBO()
 {
   depthTextureId = std::make_shared<Texture>();
-  depthTextureId->DepthTexture({ mWindow->GetSize().x, mWindow->GetSize().y });
+  depthTextureId->DepthTexture({ 1024, 1024 });
 
   GLenum FBOstatus;
 
   if (fboId)
     glDeleteFramebuffers(1, &fboId);
+
+  fboId = -1;
 
   glGenFramebuffers(1, &fboId);
   glBindFramebuffer(GL_FRAMEBUFFER, fboId);
@@ -218,12 +214,14 @@ void Game::Draw(float dt)
   mSun->Update();
 
   GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, fboId));
+  GL_CALL(glViewport(0, 0, depthTextureId->GetSize().x, depthTextureId->GetSize().y));
   GL_CALL(glClear(GL_DEPTH_BUFFER_BIT));
   GL_CALL(glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE));
   GL_CALL(glCullFace(GL_FRONT));
   mRenderSector->ShadowDraw(*mSun, Resourses::Get().GetShader("shaders/shadow.glsl"));
 
   GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+  GL_CALL(glViewport(0, 0, mWindow->GetFbSize().x, mWindow->GetFbSize().y));
   GL_CALL(glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE));
   GL_CALL(glCullFace(GL_BACK));
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
@@ -281,10 +279,6 @@ void Game::Draw(float dt)
     std::get<1>(w)->DrawGui();
     ImGui::End();
   }
-  ImGui::Begin("shadow");
-  auto s = ImGui::GetWindowSize();
-  ImGui::Image((void*)depthTextureId->GetId(), s);
-  ImGui::End();
   ImGui::Render();
 }
 

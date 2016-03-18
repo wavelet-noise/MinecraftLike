@@ -34,6 +34,7 @@ public:
   void Update();
 
   const glm::uvec2 &GetSize() const;
+  const glm::uvec2 &GetFbSize() const;
 
   /// Установить имя окна.
   void SetTitle(const std::string &title);
@@ -62,14 +63,14 @@ private:
   static void ResizeCallback(GLFWwindow*, int, int);
   static std::function<void(int, int)> mResf;
 
-  std::unique_ptr<GLFWwindow, WindowDeleter> mWindow;
+  static std::unique_ptr<GLFWwindow, WindowDeleter> mWindow;
 
   std::unique_ptr<Keyboard> mKeyboard;
 
   std::unique_ptr<Mouse> mMouse;
 
-  glm::uvec2 mSize;
-
+  static glm::uvec2 mSize;
+  static glm::ivec2 fbsize;
 };
 
 #endif // WINDOW_GL_H
