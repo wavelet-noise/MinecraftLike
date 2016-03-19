@@ -45,6 +45,7 @@ Render::Render()
   bs->SetUniform(TEXTURE_SLOT_0, "atlas");
   bs->SetUniform(TEXTURE_SLOT_2, "shadowmap");
   bs->SetUniform(TEXTURE_SLOT_4, "rgbtable");
+  bs->SetUniform(glm::vec3(100), "lightpos");
   Resourses::Get().LoadTexture("data\\rgbtable.png", false, false, TEXTURE_DIM_3, {16,16,16});
   Resourses::Get().GetTexture("data\\rgbtable.png")->Set(TEXTURE_SLOT_4);
 

@@ -1,7 +1,3 @@
-
-
-
-
 #pragma once
 #ifndef RenderModel_h__
 #define RenderModel_h__

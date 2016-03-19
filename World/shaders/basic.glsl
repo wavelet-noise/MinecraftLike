@@ -3,6 +3,7 @@ uniform sampler2D shadowmap;
 uniform sampler3D rgbtable;
 uniform mat4 transform_VP;
 uniform mat4 shadow_VP;
+uniform vec3 lightpos;
 
 #ifdef _FRAGMENT_
 
@@ -11,6 +12,7 @@ in vec3 norm;
 in vec4 sc;
 in vec4 pos;
 in float oao;
+in vec3 lightvector;
 
 layout (location = 0) out vec4 out_color;
 
@@ -47,7 +49,6 @@ void main(void)
 		}
     }
 
-    vec3 lightvector = normalize(pos.xyz + vec3(100));
 	float coef = min(1, max(0, dot(norm, lightvector) * shadow * oao) + 0.4);
 	out_color = coef * tcol;
 	out_color = texture(rgbtable, out_color.xyz);
@@ -67,6 +68,7 @@ out vec3 norm;
 out vec4 sc;
 out vec4 pos;
 out float oao;
+out vec3 lightvector;
 
 void main(void)
 {
@@ -86,6 +88,7 @@ void main(void)
     fragTexcoord = texture;
     norm = normal;
 	oao = ao;
+	lightvector = normalize(lightpos);
 }
 
 #endif

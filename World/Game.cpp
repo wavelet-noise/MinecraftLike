@@ -205,7 +205,9 @@ void Game::Draw(float dt)
   mCamera->SetRot(mWorld->GetPlayer()->GetRot());
   mCamera->Update();
 
-  mSun->SetPos(mCamera->GetPos() + glm::vec3{ 100 });
+  static float phi = 0;
+  phi += dt / 20.f;
+  mSun->SetPos(mCamera->GetPos() + glm::vec3{ glm::sin(phi) + glm::cos(phi), 0, -glm::sin(phi) + glm::cos(phi) });
   mSun->LookAt(mCamera->GetPos());
   mSun->Update();
 
@@ -220,9 +222,10 @@ void Game::Draw(float dt)
   GL_CALL(glViewport(0, 0, mWindow->GetFbSize().x, mWindow->GetFbSize().y));
   GL_CALL(glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE));
   GL_CALL(glCullFace(GL_BACK));
+  auto col = glm::mix(glm::vec4(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f), glm::vec4(0,0.1,0.2,1), (glm::sin(phi) - glm::cos(phi) + 1) / 2.f);
+  GL_CALL(glClearColor(col.x, col.y, col.z, col.w));
   GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
   depthTextureId->Set(TEXTURE_SLOT_2);
-  Resourses::Get().GetTexture("data\\rgbtable.png")->Set(TEXTURE_SLOT_4);
   mRenderSector->Draw(*mCamera, *mSun);
   mRender->Draw(*mCamera);
 
