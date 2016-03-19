@@ -70,7 +70,7 @@ out float oao;
 
 void main(void)
 {
-	const float bias = 0.005;
+	const float bias = 0.000000005;
 
     pos = transform_VP * vec4(vertex, 1);
 	gl_Position = pos;
