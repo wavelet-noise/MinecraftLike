@@ -1,8 +1,4 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
-#include "Game.h"
+﻿#include "Game.h"
 
 #include <gl/glew.h>
 #include <iostream>

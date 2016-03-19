@@ -1,7 +1,7 @@
-// ============================================================================
-// ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
+
+
 #include "RenderSector.h"
 #include "Camera.h"
 #include <glm\gtc\matrix_transform.hpp>

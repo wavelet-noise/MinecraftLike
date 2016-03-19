@@ -1,7 +1,7 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+﻿
+
+
+
 #include "Texture.h"
 #include <GL\glew.h>
 #include "OpenGLCall.h"

@@ -1,7 +1,7 @@
-// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
+
+
 #include "PhysicAgent.h"
 
 #include <glm/gtc/matrix_transform.hpp>

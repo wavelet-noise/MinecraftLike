@@ -1,7 +1,7 @@
-// ============================================================================
-// ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
+
+
 #pragma once
 #ifndef RenderModel_h__
 #define RenderModel_h__

@@ -1,8 +1,4 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
-#include "Mouse.h"
+﻿#include "Mouse.h"
 #include <GLFW/glfw3.h>
 
 

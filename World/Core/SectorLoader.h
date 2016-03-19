@@ -1,7 +1,7 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+﻿
+
+
+
 #pragma once
 #ifndef SectorLoader_h__
 #define SectorLoader_h__

@@ -1,7 +1,7 @@
-// ============================================================================
+
 // ==                   Copyright (c) 2016, VASYAN                           ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
 #include <boost\filesystem.hpp>
 #include <boost\exception\diagnostic_information.hpp>
 #include <rapidjson\document.h>

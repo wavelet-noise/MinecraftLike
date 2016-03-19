@@ -1,7 +1,7 @@
-// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
+
+
 #pragma once
 #ifndef RenderMeshGL1_h__
 #define RenderMeshGL1_h__

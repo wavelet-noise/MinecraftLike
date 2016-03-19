@@ -1,7 +1,3 @@
-// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
 #include "Bresenham3D.h"
 #include <algorithm>
 #include <tools\CoordSystem.h>

@@ -1,7 +1,7 @@
-// ============================================================================
-// ==         Copyright (c) 2016, Samsonov Andrey and Smirnov Denis          ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
+
+
 #pragma once
 #ifndef WorldGenFlat_h__
 #define WorldGenFlat_h__

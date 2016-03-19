@@ -1,7 +1,7 @@
-// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
+
+
 #pragma once
 #ifndef PositionAgent_h__
 #define PositionAgent_h__

@@ -1,7 +1,7 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+﻿
+
+
+
 #include "SectorLoader.h"
 #include "World.h"
 #include <GLFW\glfw3.h>

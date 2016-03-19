@@ -1,7 +1,7 @@
-// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
+
+
 #include "MeshPartialBlockGenerator.h"
 #include <type_traits>
 #include "..\Render\TextureManager.h"

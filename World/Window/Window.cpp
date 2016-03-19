@@ -1,8 +1,4 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
-#include "Window.h"
+﻿#include "Window.h"
 
 #include <assert.h>
 #include <iostream>

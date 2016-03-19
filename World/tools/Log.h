@@ -1,8 +1,4 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
-#pragma once
+﻿#pragma once
 #ifndef WORLD_LOG_H__
 #define WORLD_LOG_H__
 

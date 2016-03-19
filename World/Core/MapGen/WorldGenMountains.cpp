@@ -62,8 +62,8 @@ void WorldGenMountains::Generate(Sector & s)
           }
           else
           {
-            if (solid(tx, ty, tz - 1) && rand() % 100 == 1)
-              s.SetBlock({ i, j, k }, bf);
+			  if (solid(tx, ty, tz - 1) && rand() % 100 == 1)
+				  ;//  s.SetBlock({ i, j, k }, bf);
           }
         }
       }

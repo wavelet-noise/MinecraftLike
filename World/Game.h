@@ -1,8 +1,4 @@
-﻿// ============================================================================
-// ==                   Copyright (c) 2015, Smirnov Denis                    ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
-#ifndef GAME_H
+﻿#ifndef GAME_H
 #define GAME_H
 
 #include <memory>

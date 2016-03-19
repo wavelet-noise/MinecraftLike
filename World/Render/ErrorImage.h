@@ -1,7 +1,7 @@
-// ============================================================================
+
 // ==         Copyright (c) 2015, Samsonov Andrey and Smirnov Denis          ==
-// ==                  See license.txt for more information                  ==
-// ============================================================================
+
+
 #pragma once
 #ifndef ERROR_IMAGE_H
 #define ERROR_IMAGE_H
