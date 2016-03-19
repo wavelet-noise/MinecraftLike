@@ -104,7 +104,7 @@ public:
   inline void Compile(const std::vector<int> &locations)
   {
     mStrategy->SetAttribute(GetAttribute(), locations);
-    mStrategy->Compile(reinterpret_cast<float *>(mVertex.data()), mVertex.size(),
+    mStrategy->Send(reinterpret_cast<float *>(mVertex.data()), mVertex.size(),
       reinterpret_cast<size_t *>(mIndex.data()), mIndex.size());
   }
 

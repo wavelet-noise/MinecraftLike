@@ -10,6 +10,7 @@ in vec2 fragTexcoord;
 in vec3 norm;
 in vec4 sc;
 in vec4 pos;
+in float oao;
 
 layout (location = 0) out vec4 out_color;
 
@@ -47,7 +48,7 @@ void main(void)
     }
 
     vec3 lightvector = normalize(pos.xyz + vec3(100));
-	float coef = min(1, max(0, dot(norm, lightvector) * shadow) + 0.5);
+	float coef = min(1, max(0, dot(norm, lightvector) * shadow) + 0.5) * oao;
 	out_color = coef * tcol;
 	//out_color = texture(rgbtable, out_color.xyz);
 }
@@ -59,11 +60,13 @@ void main(void)
 in vec3 vertex;
 in vec2 texture;
 in vec3 normal;
+in float ao;
 
 out vec2 fragTexcoord;
 out vec3 norm;
 out vec4 sc;
 out vec4 pos;
+out float oao;
 
 void main(void)
 {
@@ -82,6 +85,7 @@ void main(void)
 	
     fragTexcoord = texture;
     norm = normal;
+	oao = ao;
 }
 
 #endif

@@ -35,7 +35,7 @@ public:
 
   void Presend(Shader & shader) const;
 
-  void Compile(Shader & shader) const;
+  void Send(Shader & shader) const;
 
   void Clear();
 

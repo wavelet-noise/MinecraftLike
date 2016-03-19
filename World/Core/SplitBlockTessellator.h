@@ -6,7 +6,7 @@
 #ifndef BlockRenderStratery_h__
 #define BlockRenderStratery_h__
 
-#include "MeshBlockGenerator.h"
+#include "MeshPartialBlockGenerator.h"
 #include "BlockTessellator.h"
 #include "..\Render\Model.h"
 #include "TessellatorParams.h"
@@ -27,7 +27,7 @@ public:
 
 private:
   Model mModel;
-  MeshBlockGenerator mGenerator;
+  MeshPartialBlockGenerator mGenerator;
 };
 
 REGISTER_BLOCK_TESSELLATOR(SplitBlockTessellator)

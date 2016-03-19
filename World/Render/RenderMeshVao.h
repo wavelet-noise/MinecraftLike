@@ -21,7 +21,7 @@ public:
 
   void SetAttribute(const std::vector<Attribute> &attribute, const std::vector<int> &locations) override;
 
-  void Compile(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount) override;
+  void Send(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount) override;
 
   void Draw() const override;
 

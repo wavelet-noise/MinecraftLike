@@ -63,9 +63,6 @@
     <ClCompile Include="Core\SectorLoader.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\MeshBlockGenerator.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Agent.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
@@ -237,9 +234,6 @@
     <ClCompile Include="tiny_obj_loader.cpp">
       <Filter>3rdparty\tiny_obj_load</Filter>
     </ClCompile>
-    <ClCompile Include="Core\WaterBlockTesselator.cpp">
-      <Filter>Core\tessellator</Filter>
-    </ClCompile>
     <ClCompile Include="Render\Resourses.cpp" />
     <ClCompile Include="Core\MeshPartialBlockGenerator.cpp">
       <Filter>Core</Filter>
@@ -287,9 +281,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\SectorLoader.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MeshBlockGenerator.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Agent.h">
@@ -499,9 +490,6 @@
     </ClInclude>
     <ClInclude Include="tiny_obj_loader.h">
       <Filter>3rdparty\tiny_obj_load</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\WaterBlockTesselator.h">
-      <Filter>Core\tessellator</Filter>
     </ClInclude>
     <ClInclude Include="Render\Resourses.h" />
     <ClInclude Include="Core\MeshPartialBlockGenerator.h">

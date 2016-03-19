@@ -5,7 +5,7 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "RenderMeshVao.h"
-#include "..\Core\MeshBlockGenerator.h"
+#include "..\Core\MeshPartialBlockGenerator.h"
 #include "TemplateMesh.h"
 #include <tiny_obj_loader.h>
 #include <tools\Log.h>
@@ -15,7 +15,7 @@ void Mesh::Compile(Shader &shader)
 {
   BuildAABB();
   Presend(shader);
-  Compile(shader);
+  Send(shader);
   Clear();
 }
 
@@ -27,9 +27,9 @@ void Mesh::Presend(Shader &shader) const
   mStrategy->SetAttribute(mAttribute, locations);
 }
 
-void Mesh::Compile(Shader &shader) const
+void Mesh::Send(Shader &shader) const
 {
-  mStrategy->Compile(mVertex.data(), mVertex.size(), mIndex.data(), mIndex.size());
+  mStrategy->Send(mVertex.data(), mVertex.size(), mIndex.data(), mIndex.size());
 }
 
 void Mesh::Clear()

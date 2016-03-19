@@ -45,7 +45,7 @@ void RenderMeshDList::SetAttribute(const std::vector<Attribute> &attribute, cons
   }
 }
 
-void RenderMeshDList::Compile(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount)
+void RenderMeshDList::Send(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount)
 {
   assert(vertex && "vertex pointer is null");
   assert(index && "index pointer is null");

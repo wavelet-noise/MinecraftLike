@@ -27,6 +27,7 @@ VERTEX
   (glm::vec3, vertex)
   (glm::vec2, texture)
   (glm::vec3, normal)
+  (float, ao)
 )
 
 

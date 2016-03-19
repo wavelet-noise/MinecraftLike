@@ -50,7 +50,7 @@ void RenderMeshVao::SetAttribute(const std::vector<Attribute> &attribute, const 
   }
 }
 
-void RenderMeshVao::Compile(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount)
+void RenderMeshVao::Send(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount)
 {
   if (!mCreated)
   {

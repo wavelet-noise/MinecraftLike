@@ -26,7 +26,7 @@ public:
   /// @param vertexCount количество элементов в буфере вершин.
   /// @param index указатель на начало буфера индексов.
   /// @param indexCount количество элементов в буфере индексов.
-  virtual void Compile(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount) = 0;
+  virtual void Send(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount) = 0;
 
   /// Нарисовать сетку.
   virtual void Draw() const = 0;

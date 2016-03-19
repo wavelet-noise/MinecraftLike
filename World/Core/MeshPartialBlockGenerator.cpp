@@ -17,6 +17,16 @@ static glm::vec3 vertexCube[] =
   { 0.0f, 1.0f, 0.0f },{ 0.0f, 0.0f, 0.0f },{ 1.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 0.0f }  // bot
 };
 
+static char indexCube[] =
+{
+	0, 3, 4, 1, // front
+	1, 4, 7, 5, // right 
+	5, 7, 6, 2, // back
+	2, 6, 3, 0, // left
+	3, 6, 7, 4, // top
+	2, 0, 1, 5  // bot
+};
+
 static glm::vec3 normalCube[] =
 {
   {  0.0f, -1.0f,  0.0f }, // front
@@ -44,7 +54,7 @@ MeshPartialBlockGenerator::MeshPartialBlockGenerator()
   mTextures.resize(6);
 }
 
-PTemplateMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::Create(Side side, float percent)
+PTemplateMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::Create(Side side, const std::array<char, 8> &neib)
 {
   PTemplateMesh<VertexType> mesh = std::make_shared<TemplateMesh<VertexType>>();
 
@@ -54,6 +64,15 @@ PTemplateMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::
     SIDE_COUNT = VERTEX_COUNT / 4,
   };
   
+  auto realsides = 0;
+  for (size_t i = 0, sideCount = 0; i < SIDE_COUNT; ++i)
+  {
+	  if (side & (1 << i))
+	  {
+		  realsides++;
+	  }
+  }
+
   for (size_t i = 0, sideCount = 0; i < SIDE_COUNT; ++i)
   {
     if (side & (1 << i))
@@ -72,7 +91,7 @@ PTemplateMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::
           { 
             vertexCube[i * 4 + j][0],
             vertexCube[i * 4 + j][1],
-            vertexCube[i * 4 + j][2] * percent
+            vertexCube[i * 4 + j][2]
           },
           {
             test[j][0],
@@ -82,7 +101,10 @@ PTemplateMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::
             normalCube[i][0],
             normalCube[i][1],
             normalCube[i][2]
-          }
+          },
+		  {
+			  1.f / float(neib[indexCube[i * 4 + j]])
+		  }
         });
       }
 
