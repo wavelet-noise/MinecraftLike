@@ -48,9 +48,9 @@ void main(void)
     }
 
     vec3 lightvector = normalize(pos.xyz + vec3(100));
-	float coef = min(1, max(0, dot(norm, lightvector) * shadow) + 0.5) * oao;
+	float coef = min(1, max(0, dot(norm, lightvector) * shadow * oao) + 0.4);
 	out_color = coef * tcol;
-	//out_color = texture(rgbtable, out_color.xyz);
+	out_color = texture(rgbtable, out_color.xyz);
 }
 
 #endif
