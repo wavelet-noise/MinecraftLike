@@ -15,7 +15,7 @@
 using PModel = std::shared_ptr<class Model>;
 using PCModel = std::shared_ptr<const class Model>;
 
-/// Модель. Имеет всю информацию для рисования.
+// Модель. Имеет всю информацию для рисования.
 class Model
 {
 public:

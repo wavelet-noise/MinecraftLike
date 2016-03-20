@@ -104,6 +104,11 @@ void DB::ReloadDirectory(const std::string & mDir)
             b->placable = val["placeable"].GetBool_();;
           }
 
+		  if (val.HasMember("walkable"))
+		  {
+			  b->walkable = val["walkable"].GetBool_();;
+		  }
+
           if (val.HasMember("agents")) 
           {
             rapidjson::Value &arr = val["agents"];

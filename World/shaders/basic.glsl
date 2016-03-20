@@ -72,14 +72,14 @@ out vec3 lightvector;
 
 void main(void)
 {
-	const float bias = 0.000000005;
+	const float bias = 0.0000000000005;
 
     pos = transform_VP * vec4(vertex, 1);
 	gl_Position = pos;
 	sc = shadow_VP * vec4(vertex, 1);
 	
-	sc.x = sc.x/(abs(sc.x)+0.1f);
-    sc.y = sc.y/(abs(sc.y)+0.1f);
+	sc.x = sc.x/(abs(sc.x)+0.05f);
+    sc.y = sc.y/(abs(sc.y)+0.05f);
 	
 	sc.x  = sc.x * 0.5 + 0.5;
     sc.y  = sc.y * 0.5 + 0.5; 

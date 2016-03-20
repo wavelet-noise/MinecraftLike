@@ -21,10 +21,10 @@ class SectorTessellator : public SectorBase<PGameObjectTessellator>
 public:
   SectorTessellator(const SPos &pos);
 
-  /// —ообщить сектору, что он изменен.
+  // —ообщить сектору, что он изменен.
   void SayChanged();
 
-  /// ≈сли сектор был изменен, обновл€ет геометрию и посылает в рендер.
+  // ≈сли сектор был изменен, обновл€ет геометрию и посылает в рендер.
   void Update(class Tessellator *tesselator, class RenderSector &render);
 
 private:

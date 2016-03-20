@@ -11,7 +11,7 @@
 #include "TemplateMesh.h"
 #include "Texture.h"
 
-/// База данных шейдеров.
+// База данных шейдеров.
 class Resourses : boost::noncopyable
 {
 public:
@@ -19,7 +19,7 @@ public:
 
   PShader GetShader(const std::string &name) const;
 
-  /// Загрузить шейдер с указанным именем.
+  // Загрузить шейдер с указанным именем.
   PShader LoadShader(const std::string &name);
 
   PMesh<VertexVTN> GetMesh(const std::string &name) const;

@@ -53,8 +53,15 @@ Render::Render()
   bs2->Use();
   bs2->SetUniform(TEXTURE_SLOT_0, "atlas");
 
+  auto bs3 = Resourses::Get().LoadShader("shaders/clouds.glsl");
+  bs3->Use();
+  bs3->SetUniform(TEXTURE_SLOT_4, "noisetex");
+
   Resourses::Get().LoadMesh("data/models/selection.obj");
   Resourses::Get().LoadMesh("data/models/test.obj");
+
+  Resourses::Get().LoadTexture("data\\noisetex.png");
+  Resourses::Get().GetTexture("data\\noisetex.png")->Set(TEXTURE_SLOT_3);
 
   int ntex, texss;
   glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &ntex);
@@ -101,11 +108,20 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
 
   auto &model = *mModels.back();
 
-  model.mMeshes = Resourses::Get().GetMesh("data/models/selection.obj");
-  model.mTexture = std::get<0>(TextureManager::Get().GetTexture(texture));
+  PMesh<VertexVTN> m = std::make_shared<TemplateMesh<VertexVTN>>(*Resourses::Get().GetMesh(mesh));
+  auto tex_tuple = TextureManager::Get().GetTexture(texture);
+  const auto &uv4 = std::get<1>(tex_tuple);
+  for (int i = 0; i < m->SizeVertex(); i++)
+  {
+	  m->Vertex(i).texture.x = glm::mix(uv4.x, uv4.z, m->Vertex(i).texture.x);
+	  m->Vertex(i).texture.y = glm::mix(uv4.y, uv4.w, m->Vertex(i).texture.y);
+  }
+  model.mTexture = std::get<0>(tex_tuple);
   model.mShader = Resourses::Get().GetShader(shader);
+  model.mMeshes = m;
 
   model.Compile();
+  model.Release();
 
   model.mModel = glm::translate({}, glm::vec3(0, 3, 50));
 

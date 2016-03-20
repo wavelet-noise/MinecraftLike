@@ -37,7 +37,6 @@ static glm::vec3 normalCube[] =
   {  0.0f,  0.0f, -1.0f }, // bot
 };
 
-
 static size_t indexCubeSide[] =
 {
   0, 3, 2, 2, 1, 0

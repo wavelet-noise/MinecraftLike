@@ -29,10 +29,20 @@ class TemplateMesh
 public:
 	using VertexType = V;
 
-	inline TemplateMesh()
+	TemplateMesh()
 	{
 		mStrategy = std::make_unique<RenderMeshVao>();
 		//mStrategy = std::make_unique<RenderMeshDList>();
+	}
+
+	TemplateMesh(const TemplateMesh<VertexType> &other) :
+		mVertex(other.mVertex),
+		mIndex(other.mIndex),
+		min(other.min),
+		max(other.max),
+		empty_aabb(other.empty_aabb)
+	{
+		mStrategy = std::make_unique<RenderMeshVao>();
 	}
 
 	inline VertexType &Vertex(size_t i)
@@ -101,11 +111,11 @@ public:
 		mVertex.insert(mVertex.end(), mesh.mVertex.begin(), mesh.mVertex.end());
 	}
 
-	/// Создать сетку в видеопамяти.
-	/// @param vertex указатель на начало буфера вершин.
-	/// @param vertexSize количество элементов в буфере вершин.
-	/// @param index указатель на начало буфера индексов.
-	/// @param indexSize количество элементов в буфере индексов.
+	// Создать сетку в видеопамяти.
+	// @param vertex указатель на начало буфера вершин.
+	// @param vertexSize количество элементов в буфере вершин.
+	// @param index указатель на начало буфера индексов.
+	// @param indexSize количество элементов в буфере индексов.
 	inline void Compile(const std::vector<int> &locations)
 	{
 		mStrategy->SetAttribute(GetAttribute(), locations);
@@ -113,7 +123,7 @@ public:
 			reinterpret_cast<size_t *>(mIndex.data()), mIndex.size());
 	}
 
-	/// Нарисовать сетку.
+	// Нарисовать сетку.
 	inline void Draw()
 	{
 		mStrategy->Draw();
@@ -153,6 +163,7 @@ public:
 			vt.*pos = { shapes[0].mesh.positions[i * 3], shapes[0].mesh.positions[i * 3 + 1], shapes[0].mesh.positions[i * 3 + 2] };
 			vt.*norm = { shapes[0].mesh.normals[i * 3], shapes[0].mesh.normals[i * 3 + 1], shapes[0].mesh.normals[i * 3 + 2] };
 			vt.*uv = { shapes[0].mesh.texcoords[i * 2], shapes[0].mesh.texcoords[i * 2 + 1] };
+			vt.ao = 1;
 
 			mVertex.push_back(vt);
 		}

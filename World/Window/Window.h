@@ -15,16 +15,16 @@ public:
   Window(const glm::uvec2 &size);
   ~Window();
 
-  /// Инициализация оконной системы.
+  // Инициализация оконной системы.
   static void WindowSystemInitialize();
 
-  /// Завершить работу с оконной системой.
+  // Завершить работу с оконной системой.
   static void WindowSystemFinally();
 
-  /// Установить текущий контекст для данного окна.
+  // Установить текущий контекст для данного окна.
   void SetCurrentContext();
 
-  /// Должно ли окно закрыться?
+  // Должно ли окно закрыться?
   bool WindowShouldClose();
 
   void Update();
@@ -32,13 +32,13 @@ public:
   const glm::uvec2 &GetSize() const;
   const glm::uvec2 &GetFbSize() const;
 
-  /// Установить имя окна.
+  // Установить имя окна.
   void SetTitle(const std::string &title);
 
-  /// Получить клавиатуру.
+  // Получить клавиатуру.
   Keyboard &GetKeyboard();
 
-  /// Получить мышь.
+  // Получить мышь.
   Mouse &GetMouse();
 
   GLFWwindow *Get();

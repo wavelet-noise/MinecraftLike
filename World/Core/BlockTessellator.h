@@ -22,8 +22,8 @@ inline std::shared_ptr<T> MakeBlockTessellator(Args&&... args)
 }
 
 
-/// Тесселятор блоков.
-/// Формирует модель блока.
+// Тесселятор блоков.
+// Формирует модель блока.
 class BlockTessellator
 {
 public:
@@ -35,14 +35,14 @@ public:
 
   virtual const Model &GetModel(const TessellatorParams &params) = 0;
 
-  /// Прозрачен ли блок?
+  // Прозрачен ли блок?
   inline bool IsTransparent() const noexcept
   {
     return mTransparent;
   }
 
-  /// Статичен ли блок?
-  /// Данный параметр указывает тесселятору, можно ли склеивать блок.
+  // Статичен ли блок?
+  // Данный параметр указывает тесселятору, можно ли склеивать блок.
   inline bool IsStatic() const noexcept
   {
     return mStatic;

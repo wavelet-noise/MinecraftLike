@@ -10,7 +10,7 @@
 
 void ModelTessellator::SetTexture(int side, const std::string &texture)
 {
-	for (unsigned int i = 0; i < 6; ++i)
+	for (unsigned int i = 0; i < 7; ++i)
 	{
 		if (side & (1 << i))
 		{
@@ -34,12 +34,13 @@ void ModelTessellator::JsonLoad(const rapidjson::Value & val)
 		if (val.HasMember("sides"))
 		{
 			const rapidjson::Value &arr = val["sides"];
-			SetTexture(ModelTessellator::FRONT, arr.Begin()->GetString());
-			SetTexture(ModelTessellator::RIGHT, arr[1].GetString());
-			SetTexture(ModelTessellator::BACK, arr[2].GetString());
-			SetTexture(ModelTessellator::LEFT, arr[3].GetString());
-			SetTexture(ModelTessellator::TOP, arr[4].GetString());
+			SetTexture(ModelTessellator::FRONT,  arr.Begin()->GetString());
+			SetTexture(ModelTessellator::RIGHT,  arr[1].GetString());
+			SetTexture(ModelTessellator::BACK,   arr[2].GetString());
+			SetTexture(ModelTessellator::LEFT,   arr[3].GetString());
+			SetTexture(ModelTessellator::TOP,    arr[4].GetString());
 			SetTexture(ModelTessellator::BOTTOM, arr[5].GetString());
+			SetTexture(ModelTessellator::CENTER, arr[6].GetString());
 		}
 		else
 			LOG(error) << "missed texture";
@@ -47,7 +48,14 @@ void ModelTessellator::JsonLoad(const rapidjson::Value & val)
 	if (val.HasMember("model"))
 	{
 		const std::string &mo = val["model"].GetString();
-		mModel.GetMesh() = Resourses::Get().GetMesh(mo);
+		PMesh<VertexVTN> m = std::make_shared<TemplateMesh<VertexVTN>>(*Resourses::Get().GetMesh(mo));
+		const auto &uv4 = mTextures[6];
+		for (int i = 0; i < m->SizeVertex(); i++)
+		{
+			m->Vertex(i).texture.x = glm::mix(uv4.x, uv4.z, m->Vertex(i).texture.x);
+			m->Vertex(i).texture.y = glm::mix(uv4.y, uv4.w, m->Vertex(i).texture.y);
+		}
+		mModel.GetMesh() = m;
 	}
 	else
 		LOG(error) << "missed model";

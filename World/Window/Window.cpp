@@ -37,7 +37,7 @@ Window::Window(const glm::uvec2 &size) :
 
 	mMouse = std::make_unique<Mouse>(*mWindow);
 
-	/// Привязываем к glfw окну указатель на объект WindowGL.
+	// Привязываем к glfw окну указатель на объект WindowGL.
 	glfwSetWindowUserPointer(mWindow.get(), this);
 
 	glfwSetKeyCallback(mWindow.get(), [](GLFWwindow *win, int key, int scancode, int action, int mods)
@@ -86,7 +86,7 @@ void Window::SetCurrentContext()
 	assert(mWindow);
 	glfwMakeContextCurrent(mWindow.get());
 
-	glfwSwapInterval(0);
+	glfwSwapInterval(1);
 
 	const GLubyte* renderer = glGetString(GL_RENDERER);
 	const GLubyte* version = glGetString(GL_VERSION);

@@ -11,17 +11,17 @@
 #include "../tools/CoordSystem.h"
 class World;
 
-///???
+//???
 class SectorLoader
 {
 public:
   SectorLoader(World &world, const SPos &pos = {}, size_t radius = 3);
   ~SectorLoader();
 
-  /// Радиус зоны загрузки секторов.
+  // Радиус зоны загрузки секторов.
   void SetRadius(size_t radius);
 
-  /// Позиция сектора.
+  // Позиция сектора.
   void SetPos(const SPos &pos);
 
 private:

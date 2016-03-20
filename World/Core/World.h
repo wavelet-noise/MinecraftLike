@@ -25,14 +25,14 @@ public:
 
   void Update(float dt);
 
-  /// Получить сектор. Если сектор не загружен, будет произведена попытка 
-  /// загрузить сектор из загрузчика секторов.
+  // Получить сектор. Если сектор не загружен, будет произведена попытка 
+  // загрузить сектор из загрузчика секторов.
   std::shared_ptr<Sector> GetSector(const SPos &position);
 
   PGameObject GetBlock(const WBPos &position);
 
-  /// Установить блок в заданную позицию.
-  /// Существующий блок будет удален.
+  // Установить блок в заданную позицию.
+  // Существующий блок будет удален.
   void SetBlock(const WBPos &pos, PGameObject block);
 
   int GetActiveCount();
@@ -52,7 +52,7 @@ private:
   std::unique_ptr<Player> mPlayer;
 
 private:
-  /// Найти сектор по позиции сектора.
+  // Найти сектор по позиции сектора.
   std::shared_ptr<Sector> FindSector(const SPos &position);
 
   Tessellator *mTesselator;

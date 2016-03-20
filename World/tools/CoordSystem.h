@@ -11,7 +11,7 @@ typedef glm::ivec3  WBPos;    //  оординаты блока в мире.
 typedef glm::ivec3  SBPos;    //  оординаты блока в секторе.
 
 
-/// —истема координат.
+// —истема координат.
 namespace cs
 {
   namespace detail
@@ -23,7 +23,7 @@ namespace cs
     }
   }
 
-  /// ћировые координаты в координаты блока в мире.
+  // ћировые координаты в координаты блока в мире.
   inline WBPos WtoWB(const WPos &pos)
   {
     WBPos wbpos;
@@ -36,7 +36,7 @@ namespace cs
     return wbpos;
   }
 
-  ///  оординаты блока в мире в координаты сектора.
+  //  оординаты блока в мире в координаты сектора.
   inline SPos WBtoS(const WBPos &pos)
   {
     SPos spos;
@@ -50,13 +50,13 @@ namespace cs
     return spos;
   }
 
-  /// ћировые координаты в координаты сектора.
+  // ћировые координаты в координаты сектора.
   inline SPos WtoS(const WPos &pos)
   {
     return WBtoS(WtoWB(pos));
   }
 
-  /// ћировые координаты в координаты блока в секторе.
+  // ћировые координаты в координаты блока в секторе.
   inline SBPos WtoSB(const WPos &pos)
   {
     auto wbpos = WtoWB(pos);
@@ -67,7 +67,7 @@ namespace cs
     return wbpos - spos * size;
   }
 
-  /// ћировые координаты в координаты блока в секторе.
+  // ћировые координаты в координаты блока в секторе.
   inline SBPos WtoSB(const WPos &pos, const SPos &spos)
   {
     typedef SBPos::value_type vtype;
@@ -76,7 +76,7 @@ namespace cs
     return WtoWB(pos) - spos * size;
   }
 
-  ///  оординаты блока в мире в координаты блока в секторе.
+  //  оординаты блока в мире в координаты блока в секторе.
   inline SBPos WBtoSB(const WBPos &pos)
   {
     auto spos = WBtoS(pos);
@@ -86,7 +86,7 @@ namespace cs
     return pos - spos * size;
   }
 
-  ///  оординаты блока в мире в координаты блока в секторе.
+  //  оординаты блока в мире в координаты блока в секторе.
   inline SBPos WBtoSB(const WBPos &pos, const SPos &spos)
   {
     typedef SBPos::value_type vtype;
@@ -95,7 +95,7 @@ namespace cs
     return pos - spos * size;
   }
 
-  ///  оординаты блока в секторе в координаты блока в мире.
+  //  оординаты блока в секторе в координаты блока в мире.
   inline WBPos SBtoWB(const SBPos &pos, const SPos &spos)
   {
     typedef WBPos::value_type vtype;
@@ -104,8 +104,8 @@ namespace cs
     return spos * size + pos;
   }
 
-  ///  оординаты сектора в мировые координаты.
-  /// ¬озвращаютс€ координаты нулевого блока в секторе.
+  //  оординаты сектора в мировые координаты.
+  // ¬озвращаютс€ координаты нулевого блока в секторе.
   inline WPos StoW(const SPos &pos)
   {
     WPos wpos;
@@ -115,7 +115,7 @@ namespace cs
     return pos * size;
   }
 
-  /// »ндекс блока в секторе в позицию блока в секторе.
+  // »ндекс блока в секторе в позицию блока в секторе.
   inline SBPos ItoSB(size_t i)
   {
     using size_type = size_t;
@@ -123,7 +123,7 @@ namespace cs
     return SBPos{ i % size, (i / size) % size, i / (size * size) };
   }
 
-  /// ѕозици€ блока в секторе в индекс блока в секторе.
+  // ѕозици€ блока в секторе в индекс блока в секторе.
   inline size_t SBtoI(const SBPos &pos)
   {
     using size_type = size_t;

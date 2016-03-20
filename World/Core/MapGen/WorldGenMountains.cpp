@@ -34,38 +34,67 @@ void WorldGenMountains::Generate(Sector & s)
 	auto bd3 = DB::Get().Create(StringIntern("dirt3"));
 	auto bd2 = DB::Get().Create(StringIntern("dirt2"));
 	auto bd = DB::Get().Create(StringIntern("dirt"));
-	auto bf = DB::Get().Create(StringIntern("furnance"));
+	auto bf = DB::Get().Create(StringIntern("grass_high"));
+	auto bf2 = DB::Get().Create(StringIntern("grass_high_small"));
+	auto bf3 = DB::Get().Create(StringIntern("grass_high_small_white"));
+	auto bf4 = DB::Get().Create(StringIntern("grass_high_small_yellow"));
+	auto bf5 = DB::Get().Create(StringIntern("grass_high_small_blue"));
+	auto bf6 = DB::Get().Create(StringIntern("grass_high_small_red"));
+	auto bfb = DB::Get().Create(StringIntern("grass_high_small_bad"));
 
-	if (spos.x != 0)
-		for (int i = 0; i < SECTOR_SIZE; ++i)
+	for (int i = 0; i < SECTOR_SIZE; ++i)
+	{
+		for (int j = 0; j < SECTOR_SIZE; ++j)
 		{
-			for (int j = 0; j < SECTOR_SIZE; ++j)
+			for (int k = 0; k < SECTOR_SIZE; ++k)
 			{
-				for (int k = 0; k < SECTOR_SIZE; ++k)
-				{
-					float tx = static_cast<float>(i + spos.x*SECTOR_SIZE);
-					float ty = static_cast<float>(j + spos.y*SECTOR_SIZE);
-					float tz = static_cast<float>(k + spos.z*SECTOR_SIZE);
+				float tx = static_cast<float>(i + spos.x*SECTOR_SIZE);
+				float ty = static_cast<float>(j + spos.y*SECTOR_SIZE);
+				float tz = static_cast<float>(k + spos.z*SECTOR_SIZE);
 
-					if (solid(tx, ty, tz))
-					{
-						if (solid(tx, ty, tz + 15))
-							s.SetBlock({ i, j, k }, bd4);
-						else if (solid(tx, ty, tz + 10))
-							s.SetBlock({ i, j, k }, bd3);
-						else if (solid(tx, ty, tz + 5))
-							s.SetBlock({ i, j, k }, bd2);
-						else if (!solid(tx, ty, tz + 1))
-							s.SetBlock({ i, j, k }, bg);
-						else
-							s.SetBlock({ i, j, k }, bd);
-					}
+				if (solid(tx, ty, tz))
+				{
+					if (solid(tx, ty, tz + 15))
+						s.SetBlock({ i, j, k }, bd4);
+					else if (solid(tx, ty, tz + 10))
+						s.SetBlock({ i, j, k }, bd3);
+					else if (solid(tx, ty, tz + 5))
+						s.SetBlock({ i, j, k }, bd2);
+					else if (!solid(tx, ty, tz + 1))
+						s.SetBlock({ i, j, k }, bg);
 					else
+						s.SetBlock({ i, j, k }, bd);
+				}
+				else
+				{
+					if (solid(tx, ty, tz - 1))
 					{
-						if (solid(tx, ty, tz - 1) && rand() % 100 == 1)
+						if (rand() % 10 == 1)
 							s.SetBlock({ i, j, k }, bf);
+						else
+							if (rand() % 4 == 1)
+							{
+								switch (int t = rand() % 10)
+								{
+								case 0:
+									s.SetBlock({ i, j, k }, bf3);
+									break;
+								case 1:
+									s.SetBlock({ i, j, k }, bf4);
+									break;
+								case 2:
+									s.SetBlock({ i, j, k }, bf5);
+									break;
+								case 3:
+									s.SetBlock({ i, j, k }, bf6);
+									break;
+								default:
+									s.SetBlock({ i, j, k }, bf2);
+								}
+							}
 					}
 				}
 			}
 		}
+	}
 }

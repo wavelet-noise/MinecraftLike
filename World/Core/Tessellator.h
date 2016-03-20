@@ -18,18 +18,18 @@ class Tessellator : public QueuedThread<Tessellator>
 public:
   Tessellator(class RenderSector &render);
 
-  /// ѕотокобезопасные методы.
+  // ѕотокобезопасные методы.
 
-  /// ”становить тессел€тор в указанную позицию.
+  // ”становить тессел€тор в указанную позицию.
   void Set(const WBPos &pos, PGameObjectTessellator block);
 
   void Set(const SPos &spos, std::vector<std::tuple<size_t, StringIntern>> &&blocks);
 
-  /// —ообщить сектору, что он изменилс€.
+  // —ообщить сектору, что он изменилс€.
   void SayChanged(const SPos &pos);
 
 public:
-  /// ћетоды не предназначенные дл€ использовани€ вне потока тессел€тора.
+  // ћетоды не предназначенные дл€ использовани€ вне потока тессел€тора.
 
   void Start();
 
@@ -45,7 +45,7 @@ private:
   class RenderSector &mRender;
 
 private:
-  /// Ќайти сектор по позиции сектора.
+  // Ќайти сектор по позиции сектора.
   std::shared_ptr<SectorTessellator> FindSector(const SPos &pos);
 
 };

@@ -3,8 +3,8 @@
 #include "..\Render\Model.h"
 #include "TessellatorParams.h"
 
-/// Генератор модели для блока.
-/// Отсекает невидимые стороны блока.
+// Генератор модели для блока.
+// Отсекает невидимые стороны блока.
 class ModelTessellator : public BlockTessellator
 {
 	enum Side
@@ -19,7 +19,7 @@ class ModelTessellator : public BlockTessellator
 		BOTTOM = 1 << 5,
 		CENTER = 1 << 6,
 
-		ALL = 0x3F,
+		ALL = 0b01111111,
 	};
 
 public:

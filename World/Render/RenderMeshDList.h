@@ -9,7 +9,7 @@
 #include "IRenderMeshStrategy.h"
 #include <array>
 
-/// Стратегия рисования меша с помощью дисплейных списков.
+// Стратегия рисования меша с помощью дисплейных списков.
 class RenderMeshDList : public IRenderMeshStrategy
 {
 public:

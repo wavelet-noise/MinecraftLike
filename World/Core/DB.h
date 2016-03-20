@@ -20,10 +20,10 @@ public:
   void PushModel(const StringIntern &s, PModel &m);
   PModel GetModel(const StringIntern &s);
 
-  /// Создать блок.
-  /// Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
-  /// Если блок динамический, создается копия блока.
-  /// @param blockId Идентификатор блока.
+  // Создать блок.
+  // Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
+  // Если блок динамический, создается копия блока.
+  // @param blockId Идентификатор блока.
   PGameObject Create(const std::string & name);
   PGameObject Create(const StringIntern &name);
 

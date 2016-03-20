@@ -11,17 +11,17 @@
 #include <tuple>
 
 
-/// Необходимо определить следующие методы:
-/// void Start();
-/// void Process();
-/// void Stop();
+// Необходимо определить следующие методы:
+// void Start();
+// void Process();
+// void Stop();
 template<class T>
 class QueuedThread
 {
 public:
   using FunctorType = std::function<void()>;
 
-  /// Запустить поток.
+  // Запустить поток.
   void Run()
   {
     mThread = std::make_unique<decltype(mThread)::element_type>([this]
@@ -53,7 +53,7 @@ public:
     });
   }
 
-  /// Потокобезопасный деструктор.
+  // Потокобезопасный деструктор.
   ~QueuedThread()
   {
     if (mThread)
@@ -63,11 +63,11 @@ public:
     }
   }
 
-  /// Отложенное выполнение функции в потоке. 
-  /// Блокирующий вызов.
-  /// Потокобезопасная операция.
-  /// Все взаимодействие с потоком должно происходить 
-  /// с помощью данного метода.
+  // Отложенное выполнение функции в потоке. 
+  // Блокирующий вызов.
+  // Потокобезопасная операция.
+  // Все взаимодействие с потоком должно происходить 
+  // с помощью данного метода.
   template<class F, class ...Args>
   void PushFunc(F func, Args... args)
   {

@@ -15,17 +15,17 @@
 class Shader;
 typedef std::shared_ptr<Shader> PShader;
 
-/// Шейдер.
+// Шейдер.
 class Shader
 {
 public:
   Shader();
   ~Shader();
 
-  /// Установить шейдер.
+  // Установить шейдер.
   void Use();
 
-  /// Получить список локаций.
+  // Получить список локаций.
   std::vector<int> GetAttributeLocation(const std::vector<Attribute> &attribute);
 
   template<class T>
@@ -34,22 +34,22 @@ public:
     SetUniform_(val, name);
   };
 
-  ///
+  //
   int GetUniformLocation(const std::string &uni_name) const;
 
-  ///
+  //
   void AddExtension(std::string s);
 
-  ///
+  //
   void AddDefine(std::string s);
 
-  ///
+  //
   bool Link();
 
-  ///
+  //
   void BuildType(int type);
 
-  ///
+  //
   void BuildBody(const std::string & filename);
 
 #define UNIFORM_QUOTE(name) #name
@@ -62,19 +62,19 @@ private:
 
 private:
 
-  /// Загрузить шейдер.
+  // Загрузить шейдер.
   unsigned int CreateShader(const std::string &data, int type);
 
-  /// Удалить шейдер
+  // Удалить шейдер
   void DeleteShader(unsigned int shader);
 
-  /// Записать файл
+  // Записать файл
   void SaveTxtFile(const std::string & fileName, const std::string & content);
 
-  /// Прочитать файл.
+  // Прочитать файл.
   std::string ReadTxtFile(const std::string &fileName);
 
-  /// Записать дамп шейдера на диск
+  // Записать дамп шейдера на диск
   void LogDumpError(const std::string & filename, const std::string & str, int shader);
 
   void BuildBody(std::stringstream &ss, const std::string &filename, int level = 0 );

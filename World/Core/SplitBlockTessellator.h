@@ -7,8 +7,8 @@
 #include "..\Render\Model.h"
 #include "TessellatorParams.h"
 
-/// Генератор модели для блока.
-/// Отсекает невидимые стороны блока.
+// Генератор модели для блока.
+// Отсекает невидимые стороны блока.
 class SplitBlockTessellator : public BlockTessellator
 {
 public:

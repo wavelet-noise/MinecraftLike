@@ -11,6 +11,9 @@ layout (location = 0) out vec4 out_color;
 
 void main(void)
 {
+	vec4 tcol = texture(atlas, fragTexcoord).rgba;
+	if(tcol.a < 0.5)
+	    discard;
 }
 
 #endif
@@ -25,9 +28,10 @@ out vec2 fragTexcoord;
 void main(void)
 {
     vec4 sc = transform_VP * vec4(vertex, 1);
-	sc.x = sc.x/(abs(sc.x)+0.1f);
-    sc.y = sc.y/(abs(sc.y)+0.1f);
+	sc.x = sc.x/(abs(sc.x)+0.05f);
+    sc.y = sc.y/(abs(sc.y)+0.05f);
 	gl_Position = sc;
+	fragTexcoord = texture;
 }
 
 #endif

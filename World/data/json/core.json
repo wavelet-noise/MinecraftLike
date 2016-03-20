@@ -7,16 +7,17 @@
         ],
         "tesselator":[  
             {  
-                "type":"ModelTessellator",
-				"sides":[  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[  
 					"grass_side",
 					"grass_side",
 					"grass_side",
 					"grass_side",
 					"grass_top",
 					"dirt"
-				],
-				"model":"data/models/test.obj",
+					]
+                },
                 "transparent":false
             }
         ],
@@ -195,5 +196,173 @@
             ]
         },
         "placeable":true
+    },{  
+        "type":"Block",
+        "id":"grass_high",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_top",
+					"dirt",
+					"grass_planes"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+        "placeable":true,
+		"walkable":true
+    },{  
+        "type":"Block",
+        "id":"grass_high_small",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_top",
+					"dirt",
+					"grass_small_planes"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+        "placeable":true,
+		"walkable":true
+    },{  
+        "type":"Block",
+        "id":"grass_high_small_white",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_top",
+					"dirt",
+					"grass_small_planes_white"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+        "placeable":true,
+		"walkable":true
+    },{  
+        "type":"Block",
+        "id":"grass_high_small_yellow",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_top",
+					"dirt",
+					"grass_small_planes_yellow"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+        "placeable":true,
+		"walkable":true
+    },{  
+        "type":"Block",
+        "id":"grass_high_small_blue",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_top",
+					"dirt",
+					"grass_small_planes_blue"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+        "placeable":true,
+		"walkable":true
+    },{  
+        "type":"Block",
+        "id":"grass_high_small_red",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_top",
+					"dirt",
+					"grass_small_planes_red"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+        "placeable":true,
+		"walkable":true
+    },{  
+        "type":"Block",
+        "id":"grass_high_small_bad",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_side",
+					"grass_top",
+					"dirt",
+					"grass_small_planes_bad"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+        "placeable":true,
+		"walkable":true
     }
 ]

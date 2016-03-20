@@ -12,33 +12,33 @@
 #include "Atlas.h"
 
 
-/// Менеджер текстур.
-/// Хранит все игровые текстуры.
+// Менеджер текстур.
+// Хранит все игровые текстуры.
 class TextureManager
 {
 public:
   static TextureManager &Get();
 
-  /// Загрузить указанную текстуру.
+  // Загрузить указанную текстуру.
   void LoadTexture(const std::string &name);
 
   void LoadDirectory(const std::string & s);
 
-  /// Загрузить набор текстур.
-  /// Все текстуры будут добавлены в один текстурный атлас.
+  // Загрузить набор текстур.
+  // Все текстуры будут добавлены в один текстурный атлас.
   void LoadTexture(const std::initializer_list<std::string> &names);
 
-  /// Загрузка тесктуры @mat умноженной на маску @mask. Имя является суммой строк @mat и @mask
+  // Загрузка тесктуры @mat умноженной на маску @mask. Имя является суммой строк @mat и @mask
   void LoadTextureMultiplied(const std::string & mask, const std::string & mat);
 
-  ///  Загрузка тесктуры @front умноженной на маску @mask c фоном @back. Имя является суммой строк @mat и @mask
+  //  Загрузка тесктуры @front умноженной на маску @mask c фоном @back. Имя является суммой строк @mat и @mask
   void LoadTexturesMultipliedBackground(const std::string &mask, const std::string &mat, const std::string &back);
 
-  /// Получить текстуру по имени.
-  /// Если текстуры не существует, возвращается нулевой указатель.
+  // Получить текстуру по имени.
+  // Если текстуры не существует, возвращается нулевой указатель.
   std::tuple<PTexture, glm::vec4> GetTexture(const std::string &name) const;
 
-  /// Создает текстуры в графической памяти.
+  // Создает текстуры в графической памяти.
   void Compile();
 
 private:

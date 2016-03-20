@@ -11,7 +11,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 
-/// Возвращает true единожды в момент нажатия.
+// Возвращает true единожды в момент нажатия.
 struct KeyHandlerClick
 {
   bool operator()(bool pressed)
@@ -25,7 +25,7 @@ private:
   bool mPressed = false;
 };
 
-/// Возвращает true если клавиша нажата.
+// Возвращает true если клавиша нажата.
 struct KeyHandlerPress
 {
   bool operator()(bool pressed)
@@ -36,7 +36,7 @@ struct KeyHandlerPress
 
 
 
-/// Формирует игровые события.
+// Формирует игровые события.
 class KeyBinder
 {
 public:

@@ -120,31 +120,31 @@ namespace tinyobj {
     std::string m_mtlBasePath;
   };
 
-  /// Loads .obj from a file.
-  /// 'shapes' will be filled with parsed shape data
-  /// The function returns error string.
-  /// Returns true when loading .obj become success.
-  /// Returns warning and error message into `err`
-  /// 'mtl_basepath' is optional, and used for base path for .mtl file.
-  /// 'triangulate' is optional, and used whether triangulate polygon face in .obj
-  /// or not.
+  // Loads .obj from a file.
+  // 'shapes' will be filled with parsed shape data
+  // The function returns error string.
+  // Returns true when loading .obj become success.
+  // Returns warning and error message into `err`
+  // 'mtl_basepath' is optional, and used for base path for .mtl file.
+  // 'triangulate' is optional, and used whether triangulate polygon face in .obj
+  // or not.
   bool LoadObj(std::vector<shape_t> &shapes,       // [output]
     std::vector<material_t> &materials, // [output]
     std::string &err,                   // [output]
     const char *filename, const char *mtl_basepath = NULL,
     bool triangulate = true);
 
-  /// Loads object from a std::istream, uses GetMtlIStreamFn to retrieve
-  /// std::istream for materials.
-  /// Returns true when loading .obj become success.
-  /// Returns warning and error message into `err`
+  // Loads object from a std::istream, uses GetMtlIStreamFn to retrieve
+  // std::istream for materials.
+  // Returns true when loading .obj become success.
+  // Returns warning and error message into `err`
   bool LoadObj(std::vector<shape_t> &shapes,       // [output]
     std::vector<material_t> &materials, // [output]
     std::string &err,                   // [output]
     std::istream &inStream, MaterialReader &readMatFn,
     bool triangulate = true);
 
-  /// Loads materials into std::map
+  // Loads materials into std::map
   void LoadMtl(std::map<std::string, int> &material_map, // [output]
     std::vector<material_t> &materials,       // [output]
     std::istream &inStream);

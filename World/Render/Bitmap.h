@@ -13,43 +13,43 @@
 #include "Color.h"
 #include <algorithm>
 
-/// Битовое изображение в оперативной памяти.
+// Битовое изображение в оперативной памяти.
 class Bitmap
 {
 public:
-  /// Создает пустую битмапу.
+  // Создает пустую битмапу.
   Bitmap();
 
-  /// Загружает битмапу из png файла.
+  // Загружает битмапу из png файла.
   Bitmap(const std::string &fileName);
 
-  /// Создать битмапу заданного размера и цвета.
+  // Создать битмапу заданного размера и цвета.
   Bitmap(const glm::uvec2 &size, const Color &color = Color::black);
 
-  /// Создать битмапу заданного размера и массива данных.
+  // Создать битмапу заданного размера и массива данных.
   Bitmap(const glm::uvec2 &size, const unsigned char *data);
 
-  /// Разрушает битмапу.
+  // Разрушает битмапу.
   ~Bitmap();
 
   void Set(const glm::uvec2 &pos, Color color);
 
   Color Get(const glm::uvec2 &pos) const;
 
-  /// Вернуть размер битмапы.
+  // Вернуть размер битмапы.
   const glm::uvec2 &GetSize() const;
 
-  /// Вернуть данные битмапы.
+  // Вернуть данные битмапы.
   const std::vector<unsigned char> &GetRaw() const;
 
-  /// Сохранить в файл.
+  // Сохранить в файл.
   void Save(const std::string &fileName) const;
 
-  /// Вставить битмапу.
+  // Вставить битмапу.
   void Insert(const glm::uvec2 &pos, const Bitmap &bitmap);
 
-  /// Зеркалирование.
-  /// direction Направление. true - по горизонтали. false - по вертикали.
+  // Зеркалирование.
+  // direction Направление. true - по горизонтали. false - по вертикали.
   void Mirror(bool direction = true);
 
 

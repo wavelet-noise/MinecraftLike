@@ -14,21 +14,21 @@ class IRenderMeshStrategy
 public:
   virtual ~IRenderMeshStrategy() {};
 
-  /// Настроить и включить атрибут.
-  /// Для каждого типа атрибута определена фиксированная локация, 
-  /// из которой шейдер будет брать поток данных.
-  /// Attribute::size размер атрибута в байтах.
-  /// Attribute::offset смещение атрибута в байтах.
+  // Настроить и включить атрибут.
+  // Для каждого типа атрибута определена фиксированная локация, 
+  // из которой шейдер будет брать поток данных.
+  // Attribute::size размер атрибута в байтах.
+  // Attribute::offset смещение атрибута в байтах.
   virtual void SetAttribute(const std::vector<Attribute> &attribute, const std::vector<int> &locations) = 0;
 
-  /// Создать сетку в видеопамяти.
-  /// @param vertex указатель на начало буфера вершин.
-  /// @param vertexCount количество элементов в буфере вершин.
-  /// @param index указатель на начало буфера индексов.
-  /// @param indexCount количество элементов в буфере индексов.
+  // Создать сетку в видеопамяти.
+  // @param vertex указатель на начало буфера вершин.
+  // @param vertexCount количество элементов в буфере вершин.
+  // @param index указатель на начало буфера индексов.
+  // @param indexCount количество элементов в буфере индексов.
   virtual void Send(const float *vertex, size_t vertexCount, const size_t *index, size_t indexCount) = 0;
 
-  /// Нарисовать сетку.
+  // Нарисовать сетку.
   virtual void Draw() const = 0;
 
 };

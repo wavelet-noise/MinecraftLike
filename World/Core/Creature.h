@@ -9,7 +9,7 @@
 #include "GameObject.h"
 #include "PositionAgent.h"
 
-/// Сущность. Имеет позицию.
+// Сущность. Имеет позицию.
 class Creature : public GameObject
 {
 public:

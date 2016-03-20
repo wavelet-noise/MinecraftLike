@@ -37,6 +37,6 @@ public:
 	void JsonLoad(const rapidjson::Value & val);
 
 private:
-	/// —писок координат текстур дл€ сторон куба в атласе.
+	// —писок координат текстур дл€ сторон куба в атласе.
 	std::vector<glm::vec4> mTextures;
 };

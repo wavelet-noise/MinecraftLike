@@ -55,8 +55,8 @@ void RenderMeshDList::Send(const float *vertex, size_t vertexCount, const size_t
     mCreated = true;
   }
 
-  /// Имеется массив вершин и индексов, нужно сформировать дисплейный список.
-  /// Для этого нужно перейти к неиндексированному массиву.
+  // Имеется массив вершин и индексов, нужно сформировать дисплейный список.
+  // Для этого нужно перейти к неиндексированному массиву.
 
   GL_CALL(glNewList(mList, GL_COMPILE));
   GL_CALL(glBegin(GL_TRIANGLES));

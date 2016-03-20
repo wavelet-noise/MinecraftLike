@@ -13,7 +13,7 @@
 #include <tuple>
 #include <mutex>
 
-/// Хранит список моделей секторов на рендер.
+// Хранит список моделей секторов на рендер.
 class RenderSector
 {
 public:

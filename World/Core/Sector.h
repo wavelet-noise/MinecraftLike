@@ -27,8 +27,8 @@ public:
 
   const SPos &GetPos() const;
 
-  /// Установить блок в заданную позицию.
-  /// Существующий блок будет удален.
+  // Установить блок в заданную позицию.
+  // Существующий блок будет удален.
   void SetBlock(const SBPos &pos, PGameObject block);
 
   void SayChanged();

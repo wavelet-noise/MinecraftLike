@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 #include "Bitmap.h"
 
-/// Описание текстурных слотов.
+// Описание текстурных слотов.
 enum TextureSlot
 {
   TEXTURE_SLOT_0 = 0,
@@ -36,22 +36,22 @@ class Texture;
 using PTexture = std::shared_ptr<Texture>;
 using PCTexture = std::shared_ptr<const Texture>;
 
-/// Текстура. Находится в видеопамяти.
+// Текстура. Находится в видеопамяти.
 class Texture
 {
 public:
-  /// Создать текстуру на основе битмапы.
+  // Создать текстуру на основе битмапы.
   Texture(const Bitmap &bitmap, bool mip = false, bool smoothing = false, TextureDim dim = TEXTURE_DIM_2, const glm::vec3 &size = {});
 
-  /// id  only texture
+  // id  only texture
   Texture();
 
-  /// Разрушить текстуру.
+  // Разрушить текстуру.
   ~Texture();
 
   void DepthTexture(const glm::vec2 &size);
 
-  /// Вернуть размер текстуры.
+  // Вернуть размер текстуры.
   inline const glm::uvec2 &GetSize() const
   {
     return mSize;
@@ -64,7 +64,13 @@ public:
 
   void GenMipmap();
 
-  /// Установить текстуру на заданный текстурный слот.
+  //Typical binds:
+  //
+  // 0 - atlas
+  // 2 - shadow map
+  // 3 - noise texture
+  // 4 - rgb table
+  //
   void Set(TextureSlot slot) const;
 
 private:
