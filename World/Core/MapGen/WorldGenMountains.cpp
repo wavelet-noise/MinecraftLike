@@ -18,6 +18,22 @@ float dens(float tx, float ty, float tz)
 		return PerlinNoise3D(tx / 100.f, ty / 100.f, tz / 100.f, 1 + 5 * flat, 2, GEN_OCT) / ((tz + float(SECTOR_SIZE)) / float(SECTOR_SIZE));
 }
 
+float cluster(float tx, float ty, float tz)
+{
+	return PerlinNoise3D(tx / 3.f, ty / 3.f, tz / 3.f, 1 + 5, 2, 1);
+}
+
+// examples:
+// 0.2 = nothing
+// 0.3 = diamonds
+// 0.31 = coal
+// 0.4 = almost everything
+// 1 = everything
+bool is_cluster(float tx, float ty, float tz, float type, float prob)
+{
+	return cluster(tx + type * 3571, ty + type * 3557, tz + type * 3559) + 1 < prob * 2.f;
+}
+
 bool solid(float tx, float ty, float tz)
 {
 	return dens(tx, ty, tz) > 0.1;
@@ -30,10 +46,12 @@ void WorldGenMountains::Generate(Sector & s)
 	auto spos = s.GetPos();
 
 	auto bg = DB::Get().Create(StringIntern("grass"));
+
 	auto bd4 = DB::Get().Create(StringIntern("dirt4"));
 	auto bd3 = DB::Get().Create(StringIntern("dirt3"));
 	auto bd2 = DB::Get().Create(StringIntern("dirt2"));
 	auto bd = DB::Get().Create(StringIntern("dirt"));
+
 	auto bf = DB::Get().Create(StringIntern("grass_high"));
 	auto bf2 = DB::Get().Create(StringIntern("grass_high_small"));
 	auto bf3 = DB::Get().Create(StringIntern("grass_high_small_white"));
@@ -41,6 +59,11 @@ void WorldGenMountains::Generate(Sector & s)
 	auto bf5 = DB::Get().Create(StringIntern("grass_high_small_blue"));
 	auto bf6 = DB::Get().Create(StringIntern("grass_high_small_red"));
 	auto bfb = DB::Get().Create(StringIntern("grass_high_small_bad"));
+
+	auto coal_ore_block = DB::Get().Create(StringIntern("coal_ore_block"));
+	auto iron_ore_block = DB::Get().Create(StringIntern("iron_ore_block"));
+	auto copper_ore_block = DB::Get().Create(StringIntern("copper_ore_block"));
+	auto uranium_ore_block = DB::Get().Create(StringIntern("uranium_ore_block"));
 
 	for (int i = 0; i < SECTOR_SIZE; ++i)
 	{
@@ -55,7 +78,21 @@ void WorldGenMountains::Generate(Sector & s)
 				if (solid(tx, ty, tz))
 				{
 					if (solid(tx, ty, tz + 15))
-						s.SetBlock({ i, j, k }, bd4);
+					{
+						if (is_cluster(tx, ty, tz, 1, 0.28))
+							s.SetBlock({ i, j, k }, coal_ore_block);
+						else
+							if (is_cluster(tx, ty, tz, 2, 0.25))
+								s.SetBlock({ i, j, k }, iron_ore_block);
+							else
+								if (is_cluster(tx, ty, tz, 3, 0.25))
+									s.SetBlock({ i, j, k }, copper_ore_block);
+								else
+									if (is_cluster(tx, ty, tz, 4, 0.21))
+										s.SetBlock({ i, j, k }, uranium_ore_block);
+									else
+										s.SetBlock({ i, j, k }, bd4);
+					}
 					else if (solid(tx, ty, tz + 10))
 						s.SetBlock({ i, j, k }, bd3);
 					else if (solid(tx, ty, tz + 5))

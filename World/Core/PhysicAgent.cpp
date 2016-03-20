@@ -75,7 +75,7 @@ void PhysicAgent::Update(const GameObjectParams &params)
 	if (glm::length(mDeltaPos) > 0)
 	{
 		auto dir = glm::normalize(mDeltaPos);
-		auto sphere_checker = mDeltaPos + dir * 0.2f;
+		auto sphere_checker = mDeltaPos + dir * 0.8f;
 
 		auto bl = params.world->GetBlock(cs::WtoWB(pos + glm::vec3(sphere_checker.x, 0, 0)));
 		if (!bl || bl->IsWalkable())
@@ -98,7 +98,8 @@ void PhysicAgent::Update(const GameObjectParams &params)
 		}
 
 		bl = params.world->GetBlock(cs::WtoWB(pos + glm::vec3(0, 0, sphere_checker.z)));
-		if (!bl || bl->IsWalkable())
+		auto bl2 = params.world->GetBlock(cs::WtoWB(pos + glm::vec3(0, 0, sphere_checker.z + 1.8)));
+		if ((!bl || bl->IsWalkable()) && (!bl2 || bl2->IsWalkable()))
 		{
 			pos.z += mDeltaPos.z;
 		}
