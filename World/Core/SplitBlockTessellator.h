@@ -1,7 +1,3 @@
-
-
-
-
 #pragma once
 #ifndef BlockRenderStratery_h__
 #define BlockRenderStratery_h__

@@ -8,7 +8,7 @@
 #include "Render\Shader.h"
 #include <memory>
 #include <boost\core\noncopyable.hpp>
-#include "Mesh.h"
+#include "TemplateMesh.h"
 #include "Texture.h"
 
 /// База данных шейдеров.
@@ -22,7 +22,7 @@ public:
   /// Загрузить шейдер с указанным именем.
   PShader LoadShader(const std::string &name);
 
-  PCMesh GetMesh(const std::string &name) const;
+  PMesh<VertexVTN> GetMesh(const std::string &name) const;
 
   void LoadMesh(const std::string &name);
 
@@ -32,7 +32,7 @@ public:
 
 private:
   std::unordered_map<std::string, PShader> mShaders;
-  std::unordered_map<std::string, PMesh> mMeshes;
+  std::unordered_map<std::string, PMesh<VertexVTN>> mMeshes;
   std::unordered_map<std::string, PTexture> mTextures;
 };
 

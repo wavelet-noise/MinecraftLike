@@ -1,7 +1,3 @@
-
-
-
-
 #include "SplitBlockTessellator.h"
 #include "..\Render\TextureManager.h"
 #include "Config.h"

@@ -13,76 +13,98 @@
 #include <tools\StringIntern.h>
 
 using PModel = std::shared_ptr<class Model>;
+using PCModel = std::shared_ptr<const class Model>;
 
 /// ћодель. »меет всю информацию дл€ рисовани€.
 class Model
 {
 public:
-  Model();
+	Model();
 
-  void JsonLoad(const rapidjson::Value & val);
+	void JsonLoad(const rapidjson::Value & val);
 
-  enum Type
-  {
-    Static,
-  };
+	enum Type
+	{
+		Static,
+	};
 
-  inline void SetTexture(PTexture texture)
-  {
-    mTexture = texture;
-  }
+	inline void SetTexture(PTexture texture)
+	{
+		mTexture = texture;
+	}
 
-  inline PTemplateMesh<VertexVTN> &GetMesh() noexcept
-  {
-    return mMeshes;
-  }
+	inline PMesh<VertexVTN> &GetMesh() noexcept
+	{
+		return mMeshes;
+	}
 
-  inline const PTemplateMesh<VertexVTN> &GetMesh() const noexcept
-  {
-    return mMeshes;
-  }
+	inline const PMesh<VertexVTN> &GetMesh() const noexcept
+	{
+		return mMeshes;
+	}
 
-  inline const PTexture &GetTexture() const noexcept
-  {
-    return mTexture;
-  }
+	inline const PTexture &GetTexture() const noexcept
+	{
+		return mTexture;
+	}
 
-  inline Type GetType() const noexcept
-  {
-    return mType;
-  }
+	inline Type GetType() const noexcept
+	{
+		return mType;
+	}
 
-  inline PShader &GetShader()
-  {
-    return mShader;
-  }
+	inline PShader &GetShader()
+	{
+		return mShader;
+	}
 
-  inline StringIntern GetSpriteName()
-  {
-    return mSprite;
-  }
+	inline StringIntern GetSpriteName()
+	{
+		return mSprite;
+	}
 
-  void SetSprite(const StringIntern &s);
+	void SetSprite(const StringIntern &s);
 
-  void BuildAABB(glm::vec3 VertexVTN::* p);
+	const glm::mat4 &GetModel() const
+	{
+		return mModel;
+	}
 
-  const std::tuple<const glm::vec4 &, const glm::vec4 &> GetAABB() const
-  {
-    return std::tie(min, max);
-  }
+	void SetModel(const glm::mat4 &m)
+	{
+		mModel = m;
+	}
 
-  bool IsAabbDot();
+	void BuildAABB(glm::vec3 VertexVTN::* p);
+
+	inline const std::tuple<const glm::vec4&, const glm::vec4&> Model::GetAABB() const
+	{
+		return mMeshes->GetAABB();
+	}
+
+	bool IsAabbDot();
+
+	void Compile()
+	{
+		mMeshes->Compile(mShader->GetAttributeLocation(mMeshes->GetAttribute()));
+	}
+
+	void Release()
+	{
+		mMeshes->Release();
+	}
 
 private:
-  glm::vec4 min, max;
-  bool empty_aabb = true;
-  PTemplateMesh<VertexVTN> mMeshes;
-  PTexture mTexture;
-  PShader mShader;
 
-  StringIntern mSprite = StringIntern(""); //используетс€ дл€ восстановлении св€зи с атласом
+	friend class Render;
+	PMesh<VertexVTN> mMeshes;
+	PTexture mTexture;
+	PShader mShader;
+	glm::mat4 mModel;
 
-  Type mType = Static;
+	StringIntern mSprite = StringIntern(""); //используетс€ дл€ восстановлении св€зи с атласом
+
+	Type mType = Static;
 };
 
 #endif // Model_h__

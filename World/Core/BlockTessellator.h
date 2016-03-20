@@ -1,7 +1,3 @@
-
-
-
-
 #pragma once
 #ifndef RenderAgent_h__
 #define RenderAgent_h__

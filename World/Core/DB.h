@@ -1,7 +1,3 @@
-
-
-
-
 #pragma once
 #ifndef BlocksLibrary_h__
 #define BlocksLibrary_h__

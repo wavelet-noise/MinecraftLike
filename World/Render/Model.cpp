@@ -32,29 +32,10 @@ void Model::SetSprite(const StringIntern & s)
 
 void Model::BuildAABB(glm::vec3 VertexVTN::* p)
 {
-  glm::vec3 _min{ 0 }, _max{ 0 };
-  if (!mMeshes->Empty())
-  {
-    for (decltype(mMeshes->SizeVertex()) i = 0; i < mMeshes->SizeVertex(); ++i)
-    {
-      const glm::vec3 &t = mMeshes->Vertex(i).*p;
-      for (int j = 0; j < 3; ++j)
-      {
-        _max[j] = glm::max(t[j], _max[j]);
-        _min[j] = glm::min(t[j], _min[j]);
-      }
-    }
-    empty_aabb = false;
-  }
-  else
-  {
-    empty_aabb = true;
-  }
-  min = glm::vec4(_min, 1);
-  max = glm::vec4(_max, 1);
+	mMeshes->BuildAABB(p);
 }
 
 bool Model::IsAabbDot()
 {
-  return empty_aabb;
+	return mMeshes->IsAabbDot();
 }

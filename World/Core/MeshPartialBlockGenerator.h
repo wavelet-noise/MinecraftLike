@@ -30,7 +30,7 @@ public:
 public:
 	MeshPartialBlockGenerator();
 
-	PTemplateMesh<VertexType> Create(Side side, const std::array<char, 8> &neib);
+	PMesh<VertexType> Create(Side side, const std::array<char, 8> &neib);
 
 	void SetTexture(int side, const std::string &texture);
 

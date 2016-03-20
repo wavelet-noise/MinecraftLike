@@ -1,7 +1,3 @@
-
-
-
-
 #pragma once
 #ifndef SectorSplicer_h__
 #define SectorSplicer_h__

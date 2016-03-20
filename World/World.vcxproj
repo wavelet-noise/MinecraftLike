@@ -39,6 +39,7 @@
     <ClCompile Include="Core\MapGen\WorldGenMountains.cpp" />
     <ClCompile Include="Core\Material.cpp" />
     <ClCompile Include="Core\MeshPartialBlockGenerator.cpp" />
+    <ClCompile Include="Core\ModelTessellator.cpp" />
     <ClCompile Include="Core\Recipe.cpp" />
     <ClCompile Include="core\Recipe.h" />
     <ClCompile Include="Core\SectorTessellator.cpp" />
@@ -76,13 +77,11 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Color.cpp" />
     <ClCompile Include="Render\Resourses.cpp" />
-    <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\OpenGLCall.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Render\RenderMeshDList.cpp" />
     <ClCompile Include="Render\RenderMeshVao.cpp" />
     <ClCompile Include="Render\Model.cpp" />
-    <ClCompile Include="Render\RenderModel.cpp" />
     <ClCompile Include="Render\RenderSector.cpp" />
     <ClCompile Include="Render\Shader.cpp" />
     <ClCompile Include="Render\Texture.cpp" />
@@ -116,6 +115,7 @@
     <ClInclude Include="Core\MapGen\WorldGenMountains.h" />
     <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\MeshPartialBlockGenerator.h" />
+    <ClInclude Include="Core\ModelTessellator.h" />
     <ClInclude Include="Core\SectorBase.h" />
     <ClInclude Include="Core\SectorTessellator.h" />
     <ClInclude Include="Core\SplitBlockTessellator.h" />
@@ -146,8 +146,6 @@
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="network\NetworkManager.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
-    <ClInclude Include="Render\Mesh.h" />
-    <ClInclude Include="Render\RenderModel.h" />
     <ClInclude Include="Render\RenderSector.h" />
     <ClInclude Include="Serealize.h" />
     <ClInclude Include="imgui\imconfig.h" />

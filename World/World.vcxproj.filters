@@ -225,12 +225,6 @@
     <ClCompile Include="gui\WindowInventory.cpp">
       <Filter>gui</Filter>
     </ClCompile>
-    <ClCompile Include="Render\RenderModel.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Mesh.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="tiny_obj_loader.cpp">
       <Filter>3rdparty\tiny_obj_load</Filter>
     </ClCompile>
@@ -255,6 +249,9 @@
       <Filter>Core\Agents</Filter>
     </ClCompile>
     <ClCompile Include="Core\Heatable.cpp" />
+    <ClCompile Include="Core\ModelTessellator.cpp">
+      <Filter>Core\tessellator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -413,9 +410,6 @@
     <ClInclude Include="Core\SectorTessellator.h">
       <Filter>Core\tessellator</Filter>
     </ClInclude>
-    <ClInclude Include="Core\SplitBlockTessellator.h">
-      <Filter>Core\tessellator</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Tessellator.h">
       <Filter>Core\tessellator</Filter>
     </ClInclude>
@@ -476,16 +470,10 @@
     <ClInclude Include="core\Chest.h">
       <Filter>Core\Agents</Filter>
     </ClInclude>
-    <ClInclude Include="Render\RenderModel.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="Render\IRenderMeshStrategy.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\TemplateMesh.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Mesh.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="tiny_obj_loader.h">
@@ -518,6 +506,12 @@
     </ClInclude>
     <ClInclude Include="core\Heatable.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SplitBlockTessellator.h">
+      <Filter>Core\tessellator</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModelTessellator.h">
+      <Filter>Core\tessellator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

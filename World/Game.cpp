@@ -211,12 +211,25 @@ void Game::Draw(float dt)
   mSun->LookAt(mCamera->GetPos());
   mSun->Update();
 
-  GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, fboId));
-  GL_CALL(glViewport(0, 0, depthTextureId->GetSize().x, depthTextureId->GetSize().y));
-  GL_CALL(glClear(GL_DEPTH_BUFFER_BIT));
-  GL_CALL(glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE));
-  GL_CALL(glCullFace(GL_FRONT));
-  mRenderSector->ShadowDraw(*mSun, Resourses::Get().GetShader("shaders/shadow.glsl"));
+  static bool wire = false;
+
+  if(ImGui::IsKeyPressed(GLFW_KEY_F2, false))
+	  wire = wire ? (glPolygonMode(GL_FRONT_AND_BACK, GL_LINE), false) :
+					(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) , true);
+
+  static int skip = 1;
+  skip++;
+
+  if (skip >= 5)
+  {
+	  GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, fboId));
+	  GL_CALL(glViewport(0, 0, depthTextureId->GetSize().x, depthTextureId->GetSize().y));
+	  GL_CALL(glClear(GL_DEPTH_BUFFER_BIT));
+	  GL_CALL(glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE));
+	  GL_CALL(glCullFace(GL_FRONT));
+	  mRenderSector->ShadowDraw(*mSun, Resourses::Get().GetShader("shaders/shadow.glsl"));
+	  skip = 0;
+  }
 
   GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
   GL_CALL(glViewport(0, 0, mWindow->GetFbSize().x, mWindow->GetFbSize().y));

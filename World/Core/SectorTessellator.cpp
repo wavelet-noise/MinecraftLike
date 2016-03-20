@@ -64,6 +64,8 @@ void SectorTessellator::Push(const Model &model, const SBPos &pos)
 {
   auto &dst = mModel.GetMesh();
   const auto &src = model.GetMesh();
+
+
   if (dst->Empty())
   {
     mModel.SetTexture(model.GetTexture());

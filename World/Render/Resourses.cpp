@@ -34,9 +34,9 @@ PShader Resourses::GetShader(const std::string &name) const
 
 void Resourses::LoadMesh(const std::string &name)
 {
-  auto &mesh = std::make_shared<Mesh>();
-  mesh->Load(name);
-  mesh->BuildAABB();
+  auto &mesh = std::make_shared<TemplateMesh<VertexVTN>>();
+  mesh->Load(name, &VertexVTN::vertex, &VertexVTN::normal, &VertexVTN::texture);
+  mesh->BuildAABB(&VertexVTN::vertex);
   mMeshes[name] = mesh;
 }
 
@@ -58,7 +58,7 @@ PCTexture Resourses::GetTexture(const std::string & name) const
   return std::const_pointer_cast<const Texture>(it->second);
 }
 
-PCMesh Resourses::GetMesh(const std::string &name) const
+PMesh<VertexVTN> Resourses::GetMesh(const std::string &name) const
 {
   auto it = mMeshes.find(name);
   if (it == mMeshes.end())
@@ -66,5 +66,5 @@ PCMesh Resourses::GetMesh(const std::string &name) const
     return nullptr;
   }
 
-  return std::const_pointer_cast<const Mesh>(it->second);
+  return std::const_pointer_cast<TemplateMesh<VertexVTN>>(it->second);
 }

@@ -9,7 +9,7 @@
 #include <glm/glm.hpp>
 #include <memory>
 #include <vector>
-#include "RenderModel.h"
+#include "Model.h"
 
 
 class Render
@@ -32,7 +32,7 @@ public:
 private:
   glm::ivec2 mVersion;
 
-  std::vector<std::unique_ptr<RenderModel>> mModels;
+  std::vector<PModel> mModels;
 
   // TODO: Сделать список пустых id.
   size_t mGenId = 0;

@@ -54,9 +54,9 @@ MeshPartialBlockGenerator::MeshPartialBlockGenerator()
   mTextures.resize(6);
 }
 
-PTemplateMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::Create(Side side, const std::array<char, 8> &neib)
+PMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::Create(Side side, const std::array<char, 8> &neib)
 {
-  PTemplateMesh<VertexType> mesh = std::make_shared<TemplateMesh<VertexType>>();
+  PMesh<VertexType> mesh = std::make_shared<TemplateMesh<VertexType>>();
 
   enum 
   {
@@ -146,6 +146,4 @@ void MeshPartialBlockGenerator::JsonLoad(const rapidjson::Value & val)
     SetTexture(MeshPartialBlockGenerator::TOP,    arr[4].GetString());
     SetTexture(MeshPartialBlockGenerator::BOTTOM, arr[5].GetString());
   }
-  
-  //Generate();
 }

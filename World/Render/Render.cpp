@@ -54,6 +54,7 @@ Render::Render()
   bs2->SetUniform(TEXTURE_SLOT_0, "atlas");
 
   Resourses::Get().LoadMesh("data/models/selection.obj");
+  Resourses::Get().LoadMesh("data/models/test.obj");
 
   int ntex, texss;
   glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &ntex);
@@ -96,7 +97,7 @@ void Render::Initialize()
 
 uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, const std::string &shader)
 {
-  mModels.push_back(std::move(std::make_unique<RenderModel>()));
+  mModels.push_back(std::move(std::make_unique<Model>()));
 
   auto &model = *mModels.back();
 
@@ -131,7 +132,7 @@ void Render::SetModelMatrix(size_t id, const glm::mat4 &matrix)
   }
   auto &model = *mModels[id];
 
-  model.mModel = matrix;
+  model.SetModel(matrix);
 }
 
 void Render::Draw(Camera &camera)
@@ -144,20 +145,20 @@ void Render::Draw(Camera &camera)
     }
     auto &model = *i;
 
-    const auto &aabb = model.mMeshes->GetAABB();
-    if (!camera.BoxWithinFrustum(model.mModel * std::get<Mesh::MinAABB>(aabb), model.mModel * std::get<Mesh::MaxAABB>(aabb)))
+    const auto &aabb = model.GetAABB();
+    if (!camera.BoxWithinFrustum(model.GetModel() * std::get<0>(aabb), model.GetModel() * std::get<1>(aabb)))
     {
       continue;
     }
 
-    model.mTexture->Set(TEXTURE_SLOT_0);
+    model.GetTexture()->Set(TEXTURE_SLOT_0);
 
-    auto &shader = model.mShader;
+    auto &shader = model.GetShader();
     shader->Use();
 
-    shader->SetUniform(camera.GetViewProject() * model.mModel, "transform_VP");
+    shader->SetUniform(camera.GetViewProject() * model.GetModel(), "transform_VP");
 
-    model.mMeshes->Draw();
+    model.GetMesh()->Draw();
   }
 }
 
