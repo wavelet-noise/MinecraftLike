@@ -5,6 +5,7 @@ void Template::JsonLoad(const rapidjson::Value & val)
 {
 }
 
+// разворачивает все строки tag_* в соответствующий массив id
 void Template::Expand(std::vector<StringIntern> &vec)
 {
   std::vector<StringIntern> expanded;

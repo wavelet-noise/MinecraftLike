@@ -3,14 +3,14 @@
 #include <vector>
 #include <tools\StringIntern.h>
 
-struct TemplateMachine : public Template
+struct TemplateItemMaterialBase : public Template
 {
   // Унаследовано через Template
   virtual void Generate() override;
   virtual void JsonLoad(const rapidjson::Value & val) override;
 
   StringIntern material_base;
-  std::vector<StringIntern> materials_metal;
+  std::vector<StringIntern> materials;
 };
 
-REGISTER_TEMPLATE(TemplateMachine)
+REGISTER_TEMPLATE(TemplateItemMaterialBase)

@@ -242,15 +242,20 @@
     <ClCompile Include="DragNDrop.cpp">
       <Filter>gui</Filter>
     </ClCompile>
-    <ClCompile Include="template\TemplateMachine.cpp">
-      <Filter>Core\Template</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Fuel.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Heatable.cpp" />
     <ClCompile Include="Core\ModelTessellator.cpp">
       <Filter>Core\tessellator</Filter>
+    </ClCompile>
+    <ClCompile Include="template\TemplateItemMaterialBase.cpp">
+      <Filter>Core\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Heatable.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Tool.cpp">
+      <Filter>Core\Agents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -498,9 +503,6 @@
     <ClInclude Include="DragNDrop.h">
       <Filter>gui</Filter>
     </ClInclude>
-    <ClInclude Include="template\TemplateMachine.h">
-      <Filter>Core\Template</Filter>
-    </ClInclude>
     <ClInclude Include="core\Fuel.h">
       <Filter>Core\Agents</Filter>
     </ClInclude>
@@ -512,6 +514,12 @@
     </ClInclude>
     <ClInclude Include="Core\ModelTessellator.h">
       <Filter>Core\tessellator</Filter>
+    </ClInclude>
+    <ClInclude Include="template\TemplateItemMaterialBase.h">
+      <Filter>Core\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Tool.h">
+      <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

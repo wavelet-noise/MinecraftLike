@@ -79,11 +79,12 @@ public:
 
     for (size_t i = 0; i < mData.size() / 4; i++)
     {
-      if (other.mData[i * 4 + 3] != 0)
+      if (other.mData[i * 4 + 3] != 0) //alpha test
       {
         mData[i * 4] = other.mData[i * 4];
         mData[i * 4 + 1] = other.mData[i * 4 + 1];
         mData[i * 4 + 2] = other.mData[i * 4 + 2];
+		mData[i * 4 + 3] = other.mData[i * 4 + 3];
       }
     }
 

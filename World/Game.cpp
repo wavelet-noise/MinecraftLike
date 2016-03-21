@@ -31,6 +31,7 @@
 #include <Render\Resourses.h>
 #include <tools\ray.h>
 #include <core\Chest.h>
+#include <core\Tool.h>
 
 Game::Game()
 {
@@ -246,8 +247,6 @@ void Game::Draw(float dt)
 	std::tuple<glm::ivec3, glm::vec3> selection_pos; // pos, normal
 
 	static size_t select_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
-	static size_t break_model = mRender->AddModel("data/models/selection.obj", "break", "shaders/basic.glsl");
-	static float break_progress = 0;
 
 	static std::unordered_map<glm::ivec3, PGameObject> opened_w;
 
@@ -264,19 +263,20 @@ void Game::Draw(float dt)
 	mRender->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
 	if (!ImGui::IsAnyItemHovered())
 	{
-		mRender->SetModelMatrix(break_model, glm::translate(glm::mat4(1), {9999,0,0}));
 		if (ImGui::IsMouseDown(0))
 		{
-			if (sel.obj && sel.obj->IsPlacable())
-				mWorld->SetBlock(std::get<0>(selection_pos), DB::Get().Create(sel.obj->GetId()));
-			else
+			if (sel.obj)
 			{
-				break_progress += dt;
-				mRender->SetModelMatrix(break_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
-				if (break_progress >= 0.5)
+				if (sel.obj->IsPlacable())
 				{
-					break_progress = 0;
-					mWorld->SetBlock(std::get<0>(selection_pos), nullptr);
+					mWorld->SetBlock(std::get<0>(selection_pos), DB::Get().Create(sel.obj->GetId()));
+				}
+				else
+				{
+					if (auto tool = sel.obj->GetFromFullName<Tool>("Tool"))
+					{
+						tool->Update({ mWorld.get(), nullptr, glm::vec3(std::get<0>(selection_pos)) , dt, mRender.get() });
+					}
 				}
 			}
 		}

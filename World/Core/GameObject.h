@@ -88,7 +88,7 @@ protected:
   std::map<StringIntern, PAgent> mAgents;
 
   friend class TemplateItemMaterial;
-  friend class TemplateMachine;
+  friend class TemplateItemMaterialBase;
   StringIntern id;
   bool placable = false;
   bool walkable = false;

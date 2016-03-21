@@ -189,9 +189,9 @@
         },
         "dynamic":true,
         "template":{  
-            "type":"TemplateMachine",
+            "type":"TemplateItemMaterialBase",
             "material_base":"material_brick",
-            "materials_metal":[  
+            "materials":[  
                 "tag_material_metal"
             ]
         },

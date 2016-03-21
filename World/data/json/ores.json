@@ -1,0 +1,70 @@
+[
+    {  
+        "type":"Block",
+        "id":"coal_ore_block",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "all":"coal_ore_block"
+                },
+                "transparent":false
+            }
+        ],
+        "placeable":true
+    },
+    {  
+        "type":"Block",
+        "id":"copper_ore_block",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "all":"copper_ore_block"
+                },
+                "transparent":false
+            }
+        ],
+        "placeable":true
+    },
+    {  
+        "type":"Block",
+        "id":"iron_ore_block",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "all":"iron_ore_block"
+                },
+                "transparent":false
+            }
+        ],
+        "placeable":true
+    },
+    {  
+        "type":"Block",
+        "id":"uranium_ore_block",
+        "agents":[  
+
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "all":"uranium_ore_block"
+                },
+                "transparent":false
+            }
+        ],
+        "placeable":true
+    }
+]

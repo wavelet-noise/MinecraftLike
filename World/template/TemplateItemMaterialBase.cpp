@@ -1,13 +1,13 @@
-#include "TemplateMachine.h"
+#include "TemplateItemMaterialBase.h"
 #include <core\GameObject.h>
 #include <core\DB.h>
 #include <Render\TextureManager.h>
 
-void TemplateMachine::Generate()
+void TemplateItemMaterialBase::Generate()
 {
-  Expand(materials_metal);
+  Expand(materials);
 
-  for (const auto &s : materials_metal)
+  for (const auto &s : materials)
   {
     auto ngo = go->Clone();
     ngo->id = go->id + StringIntern("_") + s;
@@ -23,7 +23,7 @@ void TemplateMachine::Generate()
   }
 }
 
-void TemplateMachine::JsonLoad(const rapidjson::Value & val)
+void TemplateItemMaterialBase::JsonLoad(const rapidjson::Value & val)
 {
-  JSONLOAD(NVP(materials_metal), NVP(material_base));
+  JSONLOAD(NVP(materials), NVP(material_base));
 }

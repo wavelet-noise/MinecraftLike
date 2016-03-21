@@ -14,6 +14,7 @@ struct GameObjectParams
   class Sector *sector;
   glm::vec3 pos;
   float dt;
+  class Render *render;
 };
 
 struct InteractParams
