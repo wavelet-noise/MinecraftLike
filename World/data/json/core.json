@@ -200,7 +200,9 @@
         "type":"Block",
         "id":"grass_high",
         "agents":[  
-
+			{
+				"type":"Foliage"
+			}
         ],
         "tesselator":[  
             {  
@@ -224,7 +226,9 @@
         "type":"Block",
         "id":"grass_high_small",
         "agents":[  
-
+			{
+				"type":"Foliage"
+			}
         ],
         "tesselator":[  
             {  
@@ -248,7 +252,9 @@
         "type":"Block",
         "id":"grass_high_small_white",
         "agents":[  
-
+			{
+				"type":"Foliage"
+			}
         ],
         "tesselator":[  
             {  
@@ -272,7 +278,9 @@
         "type":"Block",
         "id":"grass_high_small_yellow",
         "agents":[  
-
+			{
+				"type":"Foliage"
+			}
         ],
         "tesselator":[  
             {  
@@ -296,7 +304,9 @@
         "type":"Block",
         "id":"grass_high_small_blue",
         "agents":[  
-
+			{
+				"type":"Foliage"
+			}
         ],
         "tesselator":[  
             {  
@@ -320,7 +330,9 @@
         "type":"Block",
         "id":"grass_high_small_red",
         "agents":[  
-
+			{
+				"type":"Foliage"
+			}
         ],
         "tesselator":[  
             {  
@@ -344,7 +356,9 @@
         "type":"Block",
         "id":"grass_high_small_bad",
         "agents":[  
-
+			{
+				"type":"Foliage"
+			}
         ],
         "tesselator":[  
             {  

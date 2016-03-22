@@ -33,6 +33,7 @@
     <ClCompile Include="Core\Fuel.cpp" />
     <ClCompile Include="Core\Furnance.cpp" />
     <ClCompile Include="Core\GameEvent.cpp" />
+    <ClCompile Include="Core\Foliage.cpp" />
     <ClCompile Include="Core\Heatable.cpp" />
     <ClCompile Include="Core\MapGen\GenStrategy.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="core\Fuel.h" />
     <ClInclude Include="core\Furnance.h" />
     <ClInclude Include="Core\GameEvent.h" />
+    <ClInclude Include="core\Foliage.h" />
     <ClInclude Include="core\Heatable.h" />
     <ClInclude Include="Core\MapGen\GenStrategy.h" />
     <ClInclude Include="Core\MapGen\WorldGenFlat.h" />

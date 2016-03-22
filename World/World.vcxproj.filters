@@ -257,6 +257,9 @@
     <ClCompile Include="Core\Tool.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Foliage.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -519,6 +522,9 @@
       <Filter>Core\Template</Filter>
     </ClInclude>
     <ClInclude Include="Core\Tool.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Foliage.h">
       <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>
