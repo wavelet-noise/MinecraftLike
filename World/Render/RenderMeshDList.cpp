@@ -6,7 +6,7 @@
 
 #include <assert.h>
 #include <gl/glew.h>
-#include "OpenGLCall.h"
+
 #include <string>
 
 RenderMeshDList::RenderMeshDList()
@@ -22,7 +22,7 @@ RenderMeshDList::~RenderMeshDList()
 {
   if (mCreated)
   {
-    GL_CALL(glDeleteLists(mList, 1));
+    glDeleteLists(mList, 1);
   }
 }
 
@@ -51,35 +51,35 @@ void RenderMeshDList::Send(const float *vertex, size_t vertexCount, const size_t
   assert(index && "index pointer is null");
   if (!mCreated)
   {
-    GL_CALL(mList = glGenLists(1));
+    mList = glGenLists(1);
     mCreated = true;
   }
 
   // Имеется массив вершин и индексов, нужно сформировать дисплейный список.
   // Для этого нужно перейти к неиндексированному массиву.
 
-  GL_CALL(glNewList(mList, GL_COMPILE));
-  GL_CALL(glBegin(GL_TRIANGLES));
+  glNewList(mList, GL_COMPILE);
+  glBegin(GL_TRIANGLES);
   for (size_t i = 0; i < indexCount; ++i)
   {
     if (mEnabled[ATTRIBUTE_TEXTURE])
     {
-      GL_CALL(glTexCoord2fv(&vertex[(mVertexSize * index[i] + mAttribute[ATTRIBUTE_TEXTURE].offset) / sizeof(float)]));
+      glTexCoord2fv(&vertex[(mVertexSize * index[i] + mAttribute[ATTRIBUTE_TEXTURE].offset) / sizeof(float)]);
     }
     if (mEnabled[ATTRIBUTE_VERTEX])
     {
-      GL_CALL(glVertex3fv(&vertex[(mVertexSize * index[i] + mAttribute[ATTRIBUTE_VERTEX].offset) / sizeof(float)]));
+      glVertex3fv(&vertex[(mVertexSize * index[i] + mAttribute[ATTRIBUTE_VERTEX].offset) / sizeof(float)]);
     }
   }
-  GL_CALL(glEnd());
-  GL_CALL(glEndList());
+  glEnd();
+  glEndList();
 }
 
 void RenderMeshDList::Draw() const
 {
   if (mCreated)
   {
-    GL_CALL(glCallList(mList));
+    glCallList(mList);
   }
 }
 

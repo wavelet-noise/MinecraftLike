@@ -10,7 +10,6 @@
 
 #include <fstream>
 #include <memory>
-#include "Render/OpenGLCall.h"
 #include <vector>
 #include <thread>
 #include <atomic>
@@ -32,6 +31,7 @@
 #include <tools\ray.h>
 #include <core\Chest.h>
 #include <core\Tool.h>
+#include <Render\ParticleSystem.h>
 
 Game::Game()
 {
@@ -221,27 +221,27 @@ void Game::Draw(float dt)
 	static int skip = 1;
 	skip++;
 
-	//if (skip >= 5)
-	{
-		GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, fboId));
-		GL_CALL(glViewport(0, 0, depthTextureId->GetSize().x, depthTextureId->GetSize().y));
-		GL_CALL(glClear(GL_DEPTH_BUFFER_BIT));
-		GL_CALL(glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE));
-		GL_CALL(glCullFace(GL_FRONT));
-		mRenderSector->ShadowDraw(*mSun, Resourses::Get().GetShader("shaders/shadow.glsl"));
-		skip = 0;
-	}
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+	glViewport(0, 0, depthTextureId->GetSize().x, depthTextureId->GetSize().y);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+	glCullFace(GL_FRONT);
+	mRenderSector->ShadowDraw(*mSun, Resourses::Get().GetShader("shaders/shadow.glsl"));
+	skip = 0;
 
-	GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
-	GL_CALL(glViewport(0, 0, mWindow->GetFbSize().x, mWindow->GetFbSize().y));
-	GL_CALL(glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE));
-	GL_CALL(glCullFace(GL_BACK));
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, mWindow->GetFbSize().x, mWindow->GetFbSize().y);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glCullFace(GL_BACK);
 	auto col = glm::mix(glm::vec4(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f), glm::vec4(0, 0.1, 0.2, 1), (glm::sin(phi) - glm::cos(phi) + 1) / 2.f);
-	GL_CALL(glClearColor(col.x, col.y, col.z, col.w));
-	GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	glClearColor(col.x, col.y, col.z, col.w);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	depthTextureId->Set(TEXTURE_SLOT_2);
 	mRenderSector->Draw(*mCamera, *mSun);
 	mRender->Draw(*mCamera);
+
+	ParticleSystem::Get().Add(glm::vec3(rand() % 20 - 10, rand() % 20 - 10, rand() % 20 - 10), 1, rand() % 10 / 10.f);
+	ParticleSystem::Get().Render(*mCamera);
 
 	auto ray = mCamera->GetRay(mWindow->GetMouse().GetPos());
 	std::tuple<glm::ivec3, glm::vec3> selection_pos; // pos, normal

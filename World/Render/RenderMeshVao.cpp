@@ -5,7 +5,6 @@
 #include "RenderMeshVao.h"
 
 #include <gl/glew.h>
-#include "OpenGLCall.h"
 #include <assert.h>
 
 
@@ -19,9 +18,9 @@ RenderMeshVao::~RenderMeshVao()
 {
   if (mCreated)
   {
-    GL_CALL(glDeleteBuffers(1, &mVbi));
-    GL_CALL(glDeleteBuffers(1, &mVbo));
-    GL_CALL(glDeleteVertexArrays(1, &mVao));
+    glDeleteBuffers(1, &mVbi);
+    glDeleteBuffers(1, &mVbo);
+    glDeleteVertexArrays(1, &mVao);
   }
 }
 
@@ -59,29 +58,29 @@ void RenderMeshVao::Send(const float *vertex, size_t vertexCount, const size_t *
 
   mIndexCount = indexCount;
 
-  GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, mVbo));
-  GL_CALL(glBufferData(GL_ARRAY_BUFFER, vertexCount * mVertexSize, vertex, GL_STATIC_DRAW));
+  glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+  glBufferData(GL_ARRAY_BUFFER, vertexCount * mVertexSize, vertex, GL_STATIC_DRAW);
 
-  GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi));
-  GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), index, GL_STATIC_DRAW));
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), index, GL_STATIC_DRAW);
 }
 
 void RenderMeshVao::Draw() const
 {
   if (mCreated)
   {
-    GL_CALL(glBindVertexArray(mVao));
-    GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi));
-    GL_CALL(glDrawElements(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, NULL));
+    glBindVertexArray(mVao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi);
+    glDrawElements(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, NULL);
   }
 }
 
 void RenderMeshVao::Create()
 {
-  GL_CALL(glGenVertexArrays(1, &mVao));
-  GL_CALL(glGenBuffers(1, &mVbo));
-  GL_CALL(glGenBuffers(1, &mVbi));
-  GL_CALL(glBindVertexArray(mVao));
-  GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi));
+  glGenVertexArrays(1, &mVao);
+  glGenBuffers(1, &mVbo);
+  glGenBuffers(1, &mVbi);
+  glBindVertexArray(mVao);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbi);
   mCreated = true;
 }

@@ -96,9 +96,6 @@
     <ClCompile Include="Render\Color.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Render\OpenGLCall.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="Render\Texture.cpp">
       <Filter>Render</Filter>
     </ClCompile>
@@ -260,6 +257,9 @@
     <ClCompile Include="Core\Foliage.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="Render\ParticleSystem.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -322,9 +322,6 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Color.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\OpenGLCall.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Texture.h">
@@ -526,6 +523,9 @@
     </ClInclude>
     <ClInclude Include="core\Foliage.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="render\ParticleSystem.h">
+      <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

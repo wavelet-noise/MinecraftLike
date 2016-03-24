@@ -8,7 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include "OpenGLCall.h"
+
 #include <tools\Log.h>
 #include "Resourses.h"
 #include <assert.h>
@@ -22,22 +22,16 @@
 Render::Render()
 {
   mVersion = { -1 , -1 };
-  GL_CALL(glGetIntegerv(GL_MAJOR_VERSION, &mVersion[0]));
-  GL_CALL(glGetIntegerv(GL_MINOR_VERSION, &mVersion[1]));
+  glGetIntegerv(GL_MAJOR_VERSION, &mVersion[0]);
+  glGetIntegerv(GL_MINOR_VERSION, &mVersion[1]);
 
-  // Настройки для старого огл.
-  if (mVersion[0] < 3)
-  {
-    GL_CALL(glEnable(GL_TEXTURE_2D));
-  }
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
 
-  GL_CALL(glEnable(GL_CULL_FACE));
-  GL_CALL(glCullFace(GL_BACK));
+  glEnable(GL_DEPTH_TEST);            // Разрешить тест глубины
+  glDepthFunc(GL_LEQUAL);            // Тип теста глубины
 
-  GL_CALL(glEnable(GL_DEPTH_TEST));            // Разрешить тест глубины
-  GL_CALL(glDepthFunc(GL_LEQUAL));            // Тип теста глубины
-
-  GL_CALL(glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f));
+  glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f);
 
   //Resourses::Get().LoadTexture("", true, TEXTURE_DIM_3, { 16,16,16 });
   auto bs = Resourses::Get().LoadShader("shaders/basic.glsl");
@@ -62,6 +56,12 @@ Render::Render()
 
   Resourses::Get().LoadTexture("data\\noisetex.png");
   Resourses::Get().GetTexture("data\\noisetex.png")->Set(TEXTURE_SLOT_3);
+
+  auto par = Resourses::Get().LoadShader("shaders/particles.glsl");
+  par->Use();
+  par->SetUniform(TEXTURE_SLOT_0, "atlas");
+  par->SetUniform(TEXTURE_SLOT_2, "shadowmap");
+  par->SetUniform(TEXTURE_SLOT_4, "rgbtable");
 
   int ntex, texss;
   glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &ntex);

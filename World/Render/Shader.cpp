@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <fstream>
 #include <sstream>
-#include "OpenGLCall.h"
+
 #include <map>
 #include "..\tools\Log.h"
 #include <regex>
@@ -23,11 +23,11 @@ Shader::Shader()
 Shader::~Shader(void)
 {
   while (!shaders_.empty()) {
-    GL_CALL(glDeleteShader(shaders_.back()));
+    glDeleteShader(shaders_.back());
     LOG(trace) << "deleting shader " << std::to_string(shaders_.back());
     shaders_.pop_back();
   }
-  GL_CALL(glDeleteProgram(mProgram));
+  glDeleteProgram(mProgram);
   LOG(trace) << "deleting program" << mProgram;
 }
 
@@ -166,7 +166,7 @@ void Shader::BuildBody(std::stringstream &ss, const std::string &filename, int l
 
 void Shader::Use()
 {
-  GL_CALL(glUseProgram(mProgram));
+  glUseProgram(mProgram);
 }
 
 std::vector<int> Shader::GetAttributeLocation(const std::vector<Attribute> &attribute)
@@ -197,18 +197,18 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
   LOG(trace) << "compile type " << type;
 
   char const *sourcePointer = data.c_str();
-  GL_CALL(glShaderSource(shader, 1, &sourcePointer, NULL));
-  GL_CALL(glCompileShader(shader));
-  GL_CALL(glAttachShader(mProgram, shader));
+  glShaderSource(shader, 1, &sourcePointer, nullptr);
+  glCompileShader(shader);
+  glAttachShader(mProgram, shader);
 
   GLint compiled = GL_FALSE;
-  GL_CALL(glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled));
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
 
   if (compiled != GL_TRUE)
   {
     LogDumpError(shaderfile_name, data, shader);
 
-    GL_CALL(glDeleteShader(shader));
+    glDeleteShader(shader);
     throw;
   }
 
@@ -217,7 +217,7 @@ unsigned int Shader::CreateShader(const std::string &data, int type)
 
 void Shader::DeleteShader(unsigned int shader)
 {
-  GL_CALL(glDeleteShader(shader));
+  glDeleteShader(shader);
 }
 
 void Shader::SaveTxtFile(const std::string &fileName, const std::string &content)

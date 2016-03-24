@@ -31,6 +31,11 @@ glm::vec4 Color::Tof32Color() const
                    );
 }
 
+glm::u8vec4 Color::Tou8Color() const
+{
+	return raw;
+}
+
 const Color Color::transparent  (0x00, 0x00, 0x00, 0x00);
 const Color Color::white  (0xFF, 0xFF, 0xFF, 0xFF);
 const Color Color::black  (0x00, 0x00, 0x00, 0xFF);

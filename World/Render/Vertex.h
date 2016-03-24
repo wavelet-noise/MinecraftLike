@@ -30,6 +30,13 @@ VERTEX
   (float, ao)
 )
 
+VERTEX
+(
+	(VertexVTC)
+	(glm::vec4, vertex)
+	(glm::vec2, texture)
+	(glm::u8vec4, color)
+)
 
 #endif // Vertex_h__
 
