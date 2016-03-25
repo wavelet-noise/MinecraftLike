@@ -238,10 +238,11 @@ void Game::Draw(float dt)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	depthTextureId->Set(TEXTURE_SLOT_2);
 	mRenderSector->Draw(*mCamera, *mSun);
+
 	mRender->Draw(*mCamera);
 
-	ParticleSystem::Get().Add(glm::vec3(rand() % 20 - 10, rand() % 20 - 10, rand() % 20 - 10), 1, rand() % 10 / 10.f);
-	ParticleSystem::Get().Render(*mCamera);
+	ParticleSystem::Get().Draw(*mCamera);
+	ParticleSystem::Get().Update(dt);
 
 	auto ray = mCamera->GetRay(mWindow->GetMouse().GetPos());
 	std::tuple<glm::ivec3, glm::vec3> selection_pos; // pos, normal
@@ -269,7 +270,13 @@ void Game::Draw(float dt)
 			{
 				if (sel.obj->IsPlacable())
 				{
-					mWorld->SetBlock(std::get<0>(selection_pos), DB::Get().Create(sel.obj->GetId()));
+					static float place = 0;
+					place -= dt;
+					if (place <= 0)
+					{
+						place = 0.5;
+						mWorld->SetBlock(std::get<0>(selection_pos), DB::Get().Create(sel.obj->GetId()));
+					}
 				}
 				else
 				{

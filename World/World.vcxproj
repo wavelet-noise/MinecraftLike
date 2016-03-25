@@ -30,6 +30,7 @@
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Chest.cpp" />
     <ClCompile Include="Core\EventBus.cpp" />
+    <ClCompile Include="Core\Farmland.cpp" />
     <ClCompile Include="Core\Fuel.cpp" />
     <ClCompile Include="Core\Furnance.cpp" />
     <ClCompile Include="Core\GameEvent.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="Core\Material.cpp" />
     <ClCompile Include="Core\MeshPartialBlockGenerator.cpp" />
     <ClCompile Include="Core\ModelTessellator.cpp" />
+    <ClCompile Include="Core\Plant.cpp" />
     <ClCompile Include="Core\Recipe.cpp" />
     <ClCompile Include="core\Recipe.h" />
     <ClCompile Include="Core\SectorTessellator.cpp" />
@@ -108,6 +110,7 @@
     <ClInclude Include="core\Chest.h" />
     <ClInclude Include="core\ChestSlot.h" />
     <ClInclude Include="Core\EventBus.h" />
+    <ClInclude Include="Core\Farmland.h" />
     <ClInclude Include="core\Fuel.h" />
     <ClInclude Include="core\Furnance.h" />
     <ClInclude Include="Core\GameEvent.h" />
@@ -119,6 +122,7 @@
     <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\MeshPartialBlockGenerator.h" />
     <ClInclude Include="Core\ModelTessellator.h" />
+    <ClInclude Include="Core\Plant.h" />
     <ClInclude Include="Core\SectorBase.h" />
     <ClInclude Include="Core\SectorTessellator.h" />
     <ClInclude Include="Core\SplitBlockTessellator.h" />

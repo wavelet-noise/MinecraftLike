@@ -260,6 +260,12 @@
     <ClCompile Include="Render\ParticleSystem.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Farmland.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Plant.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -526,6 +532,12 @@
     </ClInclude>
     <ClInclude Include="render\ParticleSystem.h">
       <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Farmland.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Plant.h">
+      <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,6 @@
 struct Particle
 {
 	glm::vec4 pos;
-	glm::vec2 tex;
 	glm::u8vec4 col;
 };
 
@@ -18,8 +17,7 @@ struct ParticleExtender
 class ParticleSystem
 {
 public:
-	void Render(const Camera &cam) const;
-	void Add(const glm::vec3 &pos, float lifetime = 1.f, float size = 1.f, const Color &color = Color::white);
+	void Add(const glm::vec3 &pos, StringIntern tex, float lifetime = 1.f, float size = 1.f, const Color &color = Color::white);
 	~ParticleSystem();
 	ParticleSystem();
 
@@ -30,13 +28,15 @@ public:
 	}
 
 	void Draw(const Camera &cam) const;
+	void Update(float dt);
 
 private:
-	GLuint mVao, mVbo[2], mVbi;
+	GLuint mVao, mVbo[3], mVbi;
 	bool mCreated = false;
 
 	const int maxSize = 1000;
 	std::vector<Particle> vertex;
+	std::vector<glm::vec2> uvs;
 	std::vector<ParticleExtender> vext;
 	int mCount = 0;
 

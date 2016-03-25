@@ -104,7 +104,6 @@ void TextureManager::LoadTexturesMultipliedBackground(const std::string & mask, 
   }
 }
 
-//TODO:лучше использовать сразу текстурные координаты, вместо отступа и размера в пикселях
 std::tuple<PTexture, glm::vec4> TextureManager::GetTexture(const std::string &name) const
 {
   auto itTexture = mTextures.find(name);

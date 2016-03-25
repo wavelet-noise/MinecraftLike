@@ -4,6 +4,7 @@
 #include <glm\gtx\transform.hpp>
 #include <Core\World.h>
 #include <Core\Foliage.h>
+#include <Render\ParticleSystem.h>
 
 Tool::Tool()
 	: Agent(nullptr, "Tool", "")
@@ -57,6 +58,14 @@ void Tool::Update(const GameObjectParams & params)
 			if (tool == StringIntern("watering_can"))
 			{
 				progress += params.dt;
+
+				static float splashes = 0;
+				splashes += params.dt;
+				if (splashes >= 0.1)
+				{
+					splashes = 0;
+					ParticleSystem::Get().Add(params.pos + glm::vec3(0.5 + rand() % 10 / 5.f - 1, 0.5 + rand() % 10 / 5.f - 1, 1.5f), StringIntern("watering_particle"), 0.2f);
+				}
 
 				if (progress >= 0.5)
 				{
