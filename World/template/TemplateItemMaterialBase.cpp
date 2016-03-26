@@ -12,13 +12,7 @@ void TemplateItemMaterialBase::Generate()
     auto ngo = go->Clone();
     ngo->id = go->id + StringIntern("_") + s;
 
-    auto basemodel = DB::Get().GetModel(go->id);
-    auto nmodel = std::make_shared<Model>(*basemodel);
-    TextureManager::Get().LoadTexturesMultipliedBackground(basemodel->GetSpriteName(), s, material_base);
-    nmodel->SetSprite(basemodel->GetSpriteName() + StringIntern("_") + s);
-    DB::Get().PushModel(ngo->id, nmodel);
-
-
+    TextureManager::Get().LoadTexturesMultipliedBackground(go->id, s, material_base);
     DB::Get().Registry(ngo->id, std::shared_ptr<GameObject>(ngo));
   }
 }

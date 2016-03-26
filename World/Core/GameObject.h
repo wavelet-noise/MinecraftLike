@@ -46,6 +46,8 @@ public:
 
   const Agent *GetFromFullName(const StringIntern &name) const;
 
+  std::string GetDescription();
+
   template<class T>
   T *GetFromFullName(const StringIntern &name)
   {
@@ -81,7 +83,21 @@ public:
 	  return walkable;
   }
 
+  bool operator == (const GameObject &other) const
+  {
+	  if (&other == this)
+		  return true;
+
+	  return other.id == id; //TODO: correct way
+  }
+
+  bool operator != (const GameObject &other) const
+  {
+	  return !(other == *this);
+  }
+
   StringIntern GetId();
+
 
 protected:
   friend class DB;

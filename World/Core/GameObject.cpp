@@ -91,3 +91,12 @@ const Agent *GameObject::GetFromFullName(const StringIntern &name) const
 
   return nullptr;
 }
+
+std::string GameObject::GetDescription()
+{
+	std::stringstream ss;
+
+	ss << id;
+
+	return ss.str();
+}

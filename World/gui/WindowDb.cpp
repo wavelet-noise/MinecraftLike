@@ -20,14 +20,7 @@ void WindowDb::Draw()
     auto p = ImGui::GetWindowPos();
     for (const auto &a : DB::Get().mObjects)
     {
-      auto i = DB::Get().mModel.find(a.first);
-      StringIntern mtex{ "error" };
-      if (i != DB::Get().mModel.end())
-      {
-        if(Model *m = i->second.get())
-          mtex = m->GetSpriteName();
-      }
-      auto &atl = TextureManager::Get().GetTexture(mtex);
+      auto &atl = TextureManager::Get().GetTexture(a.first);
       auto &tex = std::get<0>(atl);
 	  auto &atluv = std::get<1>(atl);
 
@@ -42,7 +35,7 @@ void WindowDb::Draw()
       ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
       if (ImGui::IsItemHovered())
       {
-        ImGui::SetTooltip("%s", a.first.get().c_str());
+        ImGui::SetTooltip("%s\n%s", a.first.get().c_str(), std::get<0>(a.second)->GetDescription().c_str());
 
         if (ImGui::IsMouseClicked(0))
           WindowInventory::Get().w->GetPlayer()->GetFromFullName<Chest>("Chest")->Push(DB::Get().Create(a.first));

@@ -17,15 +17,12 @@ public:
   void ReloadDirectory(const std::string &mDir);
   const std::vector<StringIntern> &Taglist(const StringIntern &name);
 
-  void PushModel(const StringIntern &s, PModel &m);
-  PModel GetModel(const StringIntern &s);
-
   // Создать блок.
   // Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
   // Если блок динамический, создается копия блока.
   // @param blockId Идентификатор блока.
-  PGameObject Create(const std::string & name);
-  PGameObject Create(const StringIntern &name);
+  PGameObject Create(const std::string  & name);
+  PGameObject Create(const StringIntern & name);
 
   PGameObjectTessellator CreateTesselator(const StringIntern &name);
 
@@ -33,7 +30,6 @@ private:
   friend class WindowDb;
   std::unordered_map<StringIntern, std::tuple<PGameObject, bool>> mObjects;
   std::unordered_map<StringIntern, PGameObjectTessellator> mTess;
-  std::unordered_map<StringIntern, PModel> mModel;
   std::unordered_map<StringIntern, std::vector<StringIntern>> mTags;
   std::list<std::shared_ptr<Template>> mTempl;
 

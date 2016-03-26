@@ -66,10 +66,6 @@
 				"level":1
 			}
 		],
-		"model":
-		{
-		"sprite":"hoe_template"
-		},
 		"template":{  
 				"type":"TemplateItemMaterialBase",
 				"material_base":"hoe_stick",
@@ -89,10 +85,6 @@
 				"level":1
 			}
 		],
-		"model":
-		{
-		"sprite":"watering_can"
-		},
 		"template":{  
 				"type":"TemplateItemMaterial",
 				"materials":[  
@@ -111,10 +103,6 @@
 				"level":1
 			}
 		],
-		"model":
-		{
-		"sprite":"sickle_template"
-		},
 		"template":{  
 				"type":"TemplateItemMaterialBase",
 				"material_base":"sickle_stick",
@@ -136,10 +124,6 @@
 				"type":"Foliage"
 			}
 		],
-		"model":
-		{
-		"sprite":"flax_grow_0"
-		},
 		"tesselator":[  
             {  
                 "type":"ModelTessellator",
@@ -150,7 +134,7 @@
 					"",
 					"",
 					"",
-					"flax_grow_0"
+					"flax_0"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -171,10 +155,6 @@
 				"type":"Foliage"
 			}
 		],
-		"model":
-		{
-		"sprite":"flax_grow_1"
-		},
 		"tesselator":[  
             {  
                 "type":"ModelTessellator",
@@ -185,7 +165,7 @@
 					"",
 					"",
 					"",
-					"flax_grow_1"
+					"flax_1"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -206,10 +186,6 @@
 				"type":"Foliage"
 			}
 		],
-		"model":
-		{
-		"sprite":"flax_grow_2"
-		},
 		"tesselator":[  
             {  
                 "type":"ModelTessellator",
@@ -220,7 +196,7 @@
 					"",
 					"",
 					"",
-					"flax_grow_2"
+					"flax_2"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -241,10 +217,6 @@
 				"type":"Foliage"
 			}
 		],
-		"model":
-		{
-		"sprite":"flax_grow_3"
-		},
 		"tesselator":[  
             {  
                 "type":"ModelTessellator",
@@ -255,7 +227,7 @@
 					"",
 					"",
 					"",
-					"flax_grow_3"
+					"flax_3"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -276,10 +248,6 @@
 				"type":"Foliage"
 			}
 		],
-		"model":
-		{
-		"sprite":"flax_grow_4"
-		},
 		"tesselator":[  
             {  
                 "type":"ModelTessellator",
@@ -290,7 +258,7 @@
 					"",
 					"",
 					"",
-					"flax_grow_4"
+					"flax_4"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -311,10 +279,6 @@
 				"type":"Foliage"
 			}
 		],
-		"model":
-		{
-		"sprite":"flax_grow_5"
-		},
 		"tesselator":[  
             {  
                 "type":"ModelTessellator",
@@ -325,7 +289,7 @@
 					"",
 					"",
 					"",
-					"flax_grow_5"
+					"flax_5"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -345,10 +309,6 @@
 				"type":"Foliage"
 			}
 		],
-		"model":
-		{
-		"sprite":"flax_grow_6"
-		},
 		"tesselator":[  
             {  
                 "type":"ModelTessellator",
@@ -359,7 +319,7 @@
 					"",
 					"",
 					"",
-					"flax_grow_6"
+					"flax_6"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true

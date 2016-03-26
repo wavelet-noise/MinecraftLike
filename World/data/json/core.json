@@ -208,13 +208,13 @@
             {  
                 "type":"ModelTessellator",
 				"sides":[  
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_top",
-					"dirt",
-					"grass_planes"
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"grass_high"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -234,13 +234,13 @@
             {  
                 "type":"ModelTessellator",
 				"sides":[  
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_top",
-					"dirt",
-					"grass_small_planes"
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"grass_high_small"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -260,13 +260,13 @@
             {  
                 "type":"ModelTessellator",
 				"sides":[  
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_top",
-					"dirt",
-					"grass_small_planes_white"
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"grass_high_small_white"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -286,13 +286,13 @@
             {  
                 "type":"ModelTessellator",
 				"sides":[  
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_top",
-					"dirt",
-					"grass_small_planes_yellow"
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"grass_high_small_yellow"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -312,13 +312,13 @@
             {  
                 "type":"ModelTessellator",
 				"sides":[  
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_top",
-					"dirt",
-					"grass_small_planes_blue"
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"grass_high_small_blue"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -338,13 +338,13 @@
             {  
                 "type":"ModelTessellator",
 				"sides":[  
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_top",
-					"dirt",
-					"grass_small_planes_red"
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"grass_high_small_red"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true
@@ -364,13 +364,13 @@
             {  
                 "type":"ModelTessellator",
 				"sides":[  
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_top",
-					"dirt",
-					"grass_small_planes_bad"
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"grass_high_small_bad"
 				],
 				"model":"data/models/test.obj",
                 "transparent":true

@@ -190,15 +190,6 @@ void DB::ReloadDirectory(const std::string & mDir)
             }
           }
 
-          if (val.HasMember("model"))
-          {
-            rapidjson::Value &part = val["model"];
-            auto m = std::make_shared<Model>();
-            m->JsonLoad(part);
-
-            mModel[StringIntern(id)] = m;
-          }
-
           std::vector<std::string> tags;
           JSONLOAD(NVP(tags));
           if (!tags.empty())
@@ -256,16 +247,6 @@ void DB::ReloadDirectory(const std::string & mDir)
 const std::vector<StringIntern>& DB::Taglist(const StringIntern & name)
 {
   return mTags[name];
-}
-
-void DB::PushModel(const StringIntern & s, PModel & m)
-{
-  mModel[s] = m;
-}
-
-PModel DB::GetModel(const StringIntern & s)
-{
-  return mModel[s];
 }
 
 PGameObject DB::Create(const StringIntern &name)
