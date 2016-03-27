@@ -6,7 +6,7 @@
 #include "..\tools\CoordSystem.h"
 #include "GameObject.h"
 #include <Serealize.h>
-#include <Render\Resourses.h>
+#include <Render\Resources.h>
 
 void ModelTessellator::SetTexture(int side, const std::string &texture)
 {
@@ -48,7 +48,7 @@ void ModelTessellator::JsonLoad(const rapidjson::Value & val)
 	if (val.HasMember("model"))
 	{
 		const std::string &mo = val["model"].GetString();
-		PMesh<VertexVTN> m = std::make_shared<TemplateMesh<VertexVTN>>(*Resourses::Get().GetMesh(mo));
+		PMesh<VertexVTN> m = std::make_shared<TemplateMesh<VertexVTN>>(*Resources::Get().GetMesh(mo));
 		const auto &uv4 = mTextures[6];
 		for (int i = 0; i < m->SizeVertex(); i++)
 		{

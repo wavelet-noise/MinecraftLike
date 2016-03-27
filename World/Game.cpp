@@ -28,7 +28,7 @@
 #include "gui\WindowDb.h"
 #include "gui\WindowInventory.h"
 #include "gui\WindowRecipe.h"
-#include <Render\Resourses.h>
+#include <Render\Resources.h>
 #include <tools\ray.h>
 #include <core\Chest.h>
 #include <core\Tool.h>
@@ -227,7 +227,7 @@ void Game::Draw(float dt)
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	glCullFace(GL_FRONT);
-	mRenderSector->ShadowDraw(*mSun, Resourses::Get().GetShader("shaders/shadow.glsl"));
+	mRenderSector->ShadowDraw(*mSun, Resources::Get().GetShader("shaders/shadow.glsl"));
 	skip = 0;
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -313,9 +313,16 @@ void Game::Draw(float dt)
 	for (auto &w : opened_w)
 	{
 		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+		
 		std::get<1>(w)->DrawGui();
 		ImGui::End();
 	}
+
+	if (ImGui::IsKeyPressed(GLFW_KEY_ESCAPE))
+	{
+		opened_w.clear();
+	}
+
 	ImGui::Render();
 }
 

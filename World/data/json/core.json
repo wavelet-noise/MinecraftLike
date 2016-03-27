@@ -385,6 +385,10 @@
 			},
 			{
 				"type":"Heatable"
+			},
+			{
+				"type":"LiquidPipe",
+				"max_volume":100
 			}
         ],
         "tesselator":[  
@@ -404,6 +408,30 @@
             }
         ],
         "dynamic":true,
+        "placeable":true
+    },
+    {  
+        "type":"Block",
+        "id":"f",
+        "agents":[  
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"f",
+						"r",
+						"b",
+						"l",
+						"t",
+						"b"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":false,
         "placeable":true
     },
     {  

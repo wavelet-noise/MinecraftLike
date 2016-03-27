@@ -1,0 +1,23 @@
+[
+	{
+		"type":"Block",
+		"id":"liquid_pipe",
+		"agents":[
+			{
+				"type":"LiquidPipe",
+				"max_volume":100
+			}
+		],
+		"placeable":true,
+		"dynamic":true,
+		"tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "all":"liquid_pipe"
+                },
+                "transparent":false
+            }
+        ]
+	}
+]

@@ -295,5 +295,15 @@
 		"dens":1100
 		}
 	]
+},{
+	"type":"dummy",
+	"id":"material_steam",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_steam",
+		"dens":1
+		}
+	]
 }
 ]

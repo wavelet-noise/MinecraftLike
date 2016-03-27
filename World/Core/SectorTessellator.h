@@ -19,24 +19,21 @@
 class SectorTessellator : public SectorBase<PGameObjectTessellator>
 {
 public:
-  SectorTessellator(const SPos &pos);
+	SectorTessellator(const SPos &pos);
 
-  // Сообщить сектору, что он изменен.
-  void SayChanged();
+	// Сообщить сектору, что он изменен.
+	void SayChanged();
 
-  // Если сектор был изменен, обновляет геометрию и посылает в рендер.
-  void Update(class Tessellator *tesselator, class RenderSector &render);
+	// Если сектор был изменен, обновляет геометрию и посылает в рендер.
+	void Update(class Tessellator *tesselator, class RenderSector &render);
 
-private:
-  SPos mPos;
-
-  Model mModel;
-
-  bool mChanged = false;
+	// требует загруженых шейдеров в Resources
+	static void Init();
 
 private:
-
-  void Push(const Model &model, const SBPos &pos);
+	SPos mPos;
+	bool mChanged = false;
+	void __PushMmodel(const Model &model, const SBPos &pos);
 
 };
 

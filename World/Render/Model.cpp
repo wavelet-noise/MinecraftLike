@@ -4,13 +4,13 @@
 
 
 #include "Model.h"
-#include "Resourses.h"
+#include "Resources.h"
 #include <Serealize.h>
 #include"TextureManager.h"
 
 Model::Model()
 {
-  mShader = Resourses::Get().GetShader("shaders/basic.glsl");
+  mShader = Resources::Get().GetShader("shaders/basic.glsl");
 }
 
 void Model::JsonLoad(const rapidjson::Value & val)

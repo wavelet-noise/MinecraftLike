@@ -3,6 +3,8 @@
 #include <Core\GameObject.h>
 #include <Core\Heatable.h>
 #include <imgui.h>
+#include <Core\LiquidPipe.h>
+#include <Core\DB.h>
 
 WaterBoiler::WaterBoiler()
 	: Agent(nullptr, "WaterBoiler", "")
@@ -29,9 +31,21 @@ void WaterBoiler::Update(const GameObjectParams & params)
 		steam += T - 100;
 		mParent->GetFromFullName<Heatable>("Heatable")->Heat(-T + 100);
 	}
+
+	if (steam > 0)
+	{
+		if (auto p = mParent->GetFromFullName<LiquidPipe>("LiquidPipe"))
+		{
+			if (p->PushLiquid({ DB::Get().Create("material_steam"), steam }))
+			{
+				steam = 0;
+			}
+		}
+	}
 }
 
 void WaterBoiler::DrawGui()
 {
+	ImGui::Text("WaterBoiler");
 	ImGui::LabelText("Steam", "%g m^3", steam);
 }

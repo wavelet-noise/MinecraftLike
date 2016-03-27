@@ -29,5 +29,6 @@ void Heatable::Heat(float f)
 
 void Heatable::DrawGui()
 {
+	ImGui::Text("Heatable");
 	ImGui::LabelText("Temp", "%g C", T);
 }

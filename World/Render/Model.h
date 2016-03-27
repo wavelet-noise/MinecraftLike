@@ -75,7 +75,7 @@ public:
 		mModel = m;
 	}
 
-	void BuildAABB(glm::vec3 VertexVTN::* p);
+	void BuildAABB(glm::vec3 VertexVTN::* p = nullptr);
 
 	inline const std::tuple<const glm::vec4&, const glm::vec4&> Model::GetAABB() const
 	{

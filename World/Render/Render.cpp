@@ -10,13 +10,13 @@
 #include <iostream>
 
 #include <tools\Log.h>
-#include "Resourses.h"
+#include "Resources.h"
 #include <assert.h>
 #include "Camera.h"
 #include <GLFW/glfw3.h>
 #include "RenderMeshVao.h"
 #include "TextureManager.h"
-
+#include <Core\SectorTessellator.h>
 
 
 Render::Render()
@@ -33,30 +33,32 @@ Render::Render()
 
   glClearColor(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f);
 
-  auto bs = Resourses::Get().LoadShader("shaders/basic.glsl");
+  auto bs = Resources::Get().LoadShader("shaders/basic.glsl");
   bs->Use();
   bs->SetUniform(TEXTURE_SLOT_0, "atlas");
   bs->SetUniform(TEXTURE_SLOT_2, "shadowmap");
   bs->SetUniform(TEXTURE_SLOT_4, "rgbtable");
   bs->SetUniform(glm::vec3(100), "lightpos");
-  Resourses::Get().LoadTexture("data\\rgbtable.png", false, true, TEXTURE_DIM_3, {16,16,16});
-  Resourses::Get().GetTexture("data\\rgbtable.png")->Set(TEXTURE_SLOT_4);
+  Resources::Get().LoadTexture("data\\rgbtable.png", false, true, TEXTURE_DIM_3, {16,16,16});
+  Resources::Get().GetTexture("data\\rgbtable.png")->Set(TEXTURE_SLOT_4);
 
-  auto bs2 = Resourses::Get().LoadShader("shaders/shadow.glsl");
+  SectorTessellator::Init();
+
+  auto bs2 = Resources::Get().LoadShader("shaders/shadow.glsl");
   bs2->Use();
   bs2->SetUniform(TEXTURE_SLOT_0, "atlas");
 
-  auto bs3 = Resourses::Get().LoadShader("shaders/clouds.glsl");
+  auto bs3 = Resources::Get().LoadShader("shaders/clouds.glsl");
   bs3->Use();
   bs3->SetUniform(TEXTURE_SLOT_4, "noisetex");
 
-  Resourses::Get().LoadMesh("data/models/selection.obj");
-  Resourses::Get().LoadMesh("data/models/test.obj");
+  Resources::Get().LoadMesh("data/models/selection.obj");
+  Resources::Get().LoadMesh("data/models/test.obj");
 
-  Resourses::Get().LoadTexture("data\\noisetex.png");
-  Resourses::Get().GetTexture("data\\noisetex.png")->Set(TEXTURE_SLOT_3);
+  Resources::Get().LoadTexture("data\\noisetex.png");
+  Resources::Get().GetTexture("data\\noisetex.png")->Set(TEXTURE_SLOT_3);
 
-  auto par = Resourses::Get().LoadShader("shaders/particles.glsl");
+  auto par = Resources::Get().LoadShader("shaders/particles.glsl");
   par->Use();
   par->SetUniform(TEXTURE_SLOT_0, "atlas");
   par->SetUniform(TEXTURE_SLOT_2, "shadowmap");
@@ -107,7 +109,7 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
 
   auto &model = *mModels.back();
 
-  PMesh<VertexVTN> m = std::make_shared<TemplateMesh<VertexVTN>>(*Resourses::Get().GetMesh(mesh));
+  PMesh<VertexVTN> m = std::make_shared<TemplateMesh<VertexVTN>>(*Resources::Get().GetMesh(mesh));
   auto tex_tuple = TextureManager::Get().GetTexture(texture);
   const auto &uv4 = std::get<1>(tex_tuple);
   for (int i = 0; i < m->SizeVertex(); i++)
@@ -116,7 +118,7 @@ uint32_t Render::AddModel(const std::string &mesh, const std::string &texture, c
 	  m->Vertex(i).texture.y = glm::mix(uv4.y, uv4.w, m->Vertex(i).texture.y);
   }
   model.mTexture = std::get<0>(tex_tuple);
-  model.mShader = Resourses::Get().GetShader(shader);
+  model.mShader = Resources::Get().GetShader(shader);
   model.mMeshes = m;
 
   model.Compile();

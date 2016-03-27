@@ -1,6 +1,6 @@
 #include "ParticleSystem.h"
 #include <gl/glew.h>
-#include <Render\Resourses.h>
+#include <Render\Resources.h>
 #include <Render\TextureManager.h>
 
 void ParticleSystem::Add(const glm::vec3 & pos, StringIntern tex, float liftime, float size, const Color & color)
@@ -70,7 +70,7 @@ ParticleSystem::ParticleSystem()
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), nullptr);
 	glEnableVertexAttribArray(2);
 
-	shader = Resourses::Get().GetShader("shaders/particles.glsl");
+	shader = Resources::Get().GetShader("shaders/particles.glsl");
 
 	mCreated = true;
 }

@@ -150,6 +150,7 @@ int Chest::GetSelected()
 
 void Chest::DrawGui()
 {
+	ImGui::Text("Storage");
 	int jj = 666;
 	int ii = 0;
 	auto p = ImGui::GetWindowPos();
@@ -160,42 +161,7 @@ void Chest::DrawGui()
 		else
 			jj = 0;
 
-		if (!a.obj)
-		{
-			auto &atl = TextureManager::Get().GetTexture("white");
-			auto &tex = std::get<0>(atl);
-			auto &uv4 = std::get<1>(atl);
-
-			auto uv = glm::vec2(uv4.x, uv4.y);
-			auto uv2 = glm::vec2(uv4.z, uv4.w);
-
-			ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv, -1, ii == mSelected ? ImVec4{ 1, 1, 1, 1 } : ImVec4{ 0, 0, 0, 0 });
-		}
-		else
-		{
-			auto &atl = TextureManager::Get().GetTexture(a.obj->GetId());
-			auto &tex = std::get<0>(atl);
-			auto &uv4 = std::get<1>(atl);
-
-			auto uv = glm::vec2(uv4.x, uv4.y);
-			auto uv2 = glm::vec2(uv4.z, uv4.w);
-
-			ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv, -1, ii == mSelected ? ImVec4{ 1, 1, 1, 1 } : ImVec4{ 0, 0, 0, 0 });
-			auto draw_list = ImGui::GetWindowDrawList();
-
-			if(a.count >= 100)
-				draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(22, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(a.count).c_str());
-			else if(a.count >= 10)
-				draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(16, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(a.count).c_str());
-			else
-				draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(a.count).c_str());
-
-			if (ImGui::IsItemHovered())
-			{
-				ImGui::SetTooltip("%s x%d\n%s", a.obj->GetId().get().c_str(), a.count, a.obj->GetDescription().c_str());
-			}
-		}
-
+		a.DrawGui(ii == mSelected);
 
 		auto &dnd = DragNDrop::Get();
 		if (ImGui::IsItemHovered())

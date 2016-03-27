@@ -61,6 +61,7 @@ public:
 		mIndex.reserve(indexCount);
 	}
 
+	//не происходит освобождения памяти
 	inline void Clear()
 	{
 		mVertex.clear();
@@ -69,8 +70,10 @@ public:
 
 	inline void Release()
 	{
-		mVertex.swap(decltype(mVertex)());
-		mIndex.swap(decltype(mIndex)());
+		mVertex.clear();
+		mVertex.shrink_to_fit();
+		mIndex.clear();
+		mIndex.shrink_to_fit();
 	}
 
 	inline size_t SizeVertex() const
@@ -93,22 +96,25 @@ public:
 		mIndex.push_back(index);
 	}
 
-	inline bool Empty() const noexcept
+	inline bool IsEmpty() const noexcept
 	{
 		return mVertex.empty() && mIndex.empty();
 	}
 
 	void Push(const TemplateMesh<VertexType> &mesh)
 	{
-		mIndex.reserve(mesh.mIndex.size());
+		//mIndex.reserve(mIndex.size() + mesh.mIndex.size());
 		size_t size = mVertex.size();
 		for (const auto &i : mesh.mIndex)
 		{
 			mIndex.push_back(size + i);
 		}
 
-		mVertex.reserve(mVertex.size() + mesh.SizeVertex());
-		mVertex.insert(mVertex.end(), mesh.mVertex.begin(), mesh.mVertex.end());
+		//mVertex.reserve(mVertex.size() + mesh.SizeVertex());
+		for (const auto &i : mesh.mVertex)
+		{
+			mVertex.push_back(i);
+		}
 	}
 
 	// Создать сетку в видеопамяти.

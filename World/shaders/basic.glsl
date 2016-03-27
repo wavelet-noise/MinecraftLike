@@ -72,7 +72,7 @@ out vec3 lightvector;
 
 void main(void)
 {
-	const float bias = 0.0000000000005;
+	const float bias = 0.000005;
 
     pos = transform_VP * vec4(vertex, 1);
 	gl_Position = pos;

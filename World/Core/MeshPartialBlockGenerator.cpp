@@ -78,10 +78,10 @@ PMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::Create(S
     {
       glm::vec2 test[] =
       {
-        { mTextures[i].x, mTextures[i].y },
-        { mTextures[i].x, mTextures[i].w },
-        { mTextures[i].z, mTextures[i].w },
         { mTextures[i].z, mTextures[i].y },
+        { mTextures[i].z, mTextures[i].w },
+        { mTextures[i].x, mTextures[i].w },
+        { mTextures[i].x, mTextures[i].y },
       };
 
       for (size_t j = 0; j < 4; ++j)
