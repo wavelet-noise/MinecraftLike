@@ -216,6 +216,16 @@ void DB::ReloadDirectory(const std::string & mDir)
             }
           }
 
+		  if (val.HasMember("recipe"))
+		  {
+			  rapidjson::Value &part = val["recipe"];
+			  auto r = std::make_shared<Recipe>();
+			  mRecipe.push_back(r);
+
+			  r->JsonLoad(part);
+		  }
+
+
           mObjects[StringIntern(id)] = std::make_tuple(b, dyn);
         }
         
@@ -241,33 +251,93 @@ void DB::ReloadDirectory(const std::string & mDir)
 
   TextureManager::Get().Compile();
 
+  std::list<PRecipe> old_recipes = std::move(mRecipe);
+  for (const auto &r : old_recipes)
+  {
+	  auto &exp = r->Expand();
+	  if (!exp.empty())
+	  {
+		  for (auto &a : exp)
+			  AddRecipe(a);
+	  }
+	  else
+	  {
+		  AddRecipe(r);
+	  }
+  }
+
+  LOG(info) "expanded to " << mRecipe.size() << " recipes";
+
   LOG(info) << "db done";
 }
 
-const std::vector<StringIntern>& DB::Taglist(const StringIntern & name)
+const std::vector<StringIntern> &DB::Taglist(const StringIntern & name) const
 {
-  return mTags[name];
+  return mTags.find(name)->second;
 }
 
-PGameObject DB::Create(const StringIntern &name)
+PGameObject DB::Create(const std::string & name) const
 {
-  auto t = mObjects[name];
-  if(std::get<1>(t))
-    return std::get<0>(t)->Clone();
-  else
-    return std::get<0>(t);
+	const auto &t = mObjects.find(StringIntern(name))->second;
+	if (std::get<1>(t))
+		return std::get<0>(t)->Clone();
+	else
+		return std::get<0>(t);
 }
 
-PGameObject DB::Create(const std::string &name)
+PGameObject DB::Create(const StringIntern & name) const
 {
-  auto t = mObjects[StringIntern(name)];
-  if (std::get<1>(t))
-    return std::get<0>(t)->Clone();
-  else
-    return std::get<0>(t);
+	const auto &t = mObjects.find(name)->second;
+	if (std::get<1>(t))
+		return std::get<0>(t)->Clone();
+	else
+		return std::get<0>(t);
 }
 
-PGameObjectTessellator DB::CreateTesselator(const StringIntern &name)
+PGameObjectTessellator DB::CreateTesselator(const StringIntern &name) const
 {
-  return mTess[name];
+  return mTess.find(name)->second;
+}
+
+const std::list<PRecipe> &DB::GetUsing(const std::string & name) const
+{
+	return GetUsing(StringIntern(name));
+}
+
+const std::list<PRecipe> &DB::GetUsing(const StringIntern & name) const
+{
+	static auto empty = std::list<PRecipe>();
+	const auto &t = mUsingCache.find(name);
+	if (t != mUsingCache.end())
+		return t->second;
+	return empty;
+}
+
+const std::list<PRecipe> &DB::GetRecipe(const std::string & name) const
+{
+	return GetRecipe(StringIntern(name));
+}
+
+const std::list<PRecipe> &DB::GetRecipe(const StringIntern & name) const
+{
+	static auto empty = std::list<PRecipe>();
+	const auto &t = mRecipeCache.find(name);
+	if(t != mRecipeCache.end())
+		return t->second;
+	return empty;
+}
+
+void DB::AddRecipe(PRecipe r)
+{
+	mRecipe.push_back(r);
+
+	for (const auto &a : r->input)
+	{
+		mUsingCache[a.id].push_back(r);
+	}
+
+	for (const auto &a : r->output)
+	{
+		mRecipeCache[a.id].push_back(r);
+	}
 }

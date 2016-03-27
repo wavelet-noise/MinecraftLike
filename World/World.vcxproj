@@ -29,6 +29,7 @@
   <ItemGroup>
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Chest.cpp" />
+    <ClCompile Include="Core\CraftingTable.cpp" />
     <ClCompile Include="Core\EventBus.cpp" />
     <ClCompile Include="Core\Farmland.cpp" />
     <ClCompile Include="Core\Fuel.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="Core\MapGen\WorldGenMountains.cpp" />
     <ClCompile Include="Core\Material.cpp" />
     <ClCompile Include="Core\MeshPartialBlockGenerator.cpp" />
+    <ClCompile Include="Core\MetalSmelter.cpp" />
     <ClCompile Include="Core\ModelTessellator.cpp" />
     <ClCompile Include="Core\Plant.cpp" />
     <ClCompile Include="Core\Recipe.cpp" />
@@ -60,6 +62,7 @@
     <ClCompile Include="Core\Tessellator.cpp" />
     <ClCompile Include="Core\Tool.cpp" />
     <ClCompile Include="Core\Water.cpp" />
+    <ClCompile Include="Core\WaterBoiler.cpp" />
     <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="DragNDrop.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
@@ -69,6 +72,7 @@
     <ClCompile Include="gui\WindowDb.cpp" />
     <ClCompile Include="gui\WindowInventory.cpp" />
     <ClCompile Include="gui\WindowPerfomance.cpp" />
+    <ClCompile Include="gui\WindowRecipe.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
@@ -109,6 +113,7 @@
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="core\Chest.h" />
     <ClInclude Include="core\ChestSlot.h" />
+    <ClInclude Include="Core\CraftingTable.h" />
     <ClInclude Include="Core\EventBus.h" />
     <ClInclude Include="Core\Farmland.h" />
     <ClInclude Include="core\Fuel.h" />
@@ -121,6 +126,7 @@
     <ClInclude Include="Core\MapGen\WorldGenMountains.h" />
     <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\MeshPartialBlockGenerator.h" />
+    <ClInclude Include="Core\MetalSmelter.h" />
     <ClInclude Include="Core\ModelTessellator.h" />
     <ClInclude Include="Core\Plant.h" />
     <ClInclude Include="Core\SectorBase.h" />
@@ -144,6 +150,7 @@
     <ClInclude Include="Core\TessellatorParams.h" />
     <ClInclude Include="Core\Tool.h" />
     <ClInclude Include="Core\Water.h" />
+    <ClInclude Include="Core\WaterBoiler.h" />
     <ClInclude Include="Core\World.h" />
     <ClInclude Include="DragNDrop.h" />
     <ClInclude Include="FpsCounter.h" />
@@ -152,6 +159,7 @@
     <ClInclude Include="gui\WindowDb.h" />
     <ClInclude Include="gui\WindowInventory.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />
+    <ClInclude Include="gui\WindowRecipe.h" />
     <ClInclude Include="network\NetworkManager.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="render\ParticleSystem.h" />

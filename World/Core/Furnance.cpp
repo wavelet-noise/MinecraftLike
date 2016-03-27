@@ -54,8 +54,8 @@ void Furnance::Update(const GameObjectParams & params)
       if (auto he = upper->GetFromFullName<Heatable>("Heatable"))
       {
         founded = true;
-        he->Heat(params.dt);
-        T -= params.dt / 4.f;
+        he->Heat(T);
+		T = 0;
       }
     }
     if(!founded)

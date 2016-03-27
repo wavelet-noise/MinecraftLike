@@ -5,8 +5,8 @@
 #include "GameObject.h"
 #include <unordered_map>
 #include "BlockTessellator.h"
-
-class Template;
+#include <Core\Recipe.h>
+#include <template\Template.h>
 
 class DB
 {
@@ -15,23 +15,36 @@ public:
 
   void Registry(const StringIntern &name, PGameObject block, bool isStatic = true);
   void ReloadDirectory(const std::string &mDir);
-  const std::vector<StringIntern> &Taglist(const StringIntern &name);
+  const std::vector<StringIntern> &Taglist(const StringIntern &name) const;
 
   // Создать блок.
   // Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
   // Если блок динамический, создается копия блока.
   // @param blockId Идентификатор блока.
-  PGameObject Create(const std::string  & name);
-  PGameObject Create(const StringIntern & name);
+  PGameObject Create(const std::string  & name) const;
+  PGameObject Create(const StringIntern & name) const;
 
-  PGameObjectTessellator CreateTesselator(const StringIntern &name);
+  PGameObjectTessellator CreateTesselator(const StringIntern &name) const;
+
+  const std::list<PRecipe> &GetUsing(const std::string  & name) const;
+  const std::list<PRecipe> &GetUsing(const StringIntern & name) const;
+
+  const std::list<PRecipe> &GetRecipe(const std::string  & name) const;
+  const std::list<PRecipe> &GetRecipe(const StringIntern & name) const;
+
+  void AddRecipe(PRecipe r);
 
 private:
   friend class WindowDb;
+  friend class Recipe;
   std::unordered_map<StringIntern, std::tuple<PGameObject, bool>> mObjects;
   std::unordered_map<StringIntern, PGameObjectTessellator> mTess;
   std::unordered_map<StringIntern, std::vector<StringIntern>> mTags;
   std::list<std::shared_ptr<Template>> mTempl;
+
+  std::list<PRecipe> mRecipe;
+  std::unordered_map<StringIntern, std::list<PRecipe>> mUsingCache;
+  std::unordered_map<StringIntern, std::list<PRecipe>> mRecipeCache;
 
 private:
   DB() {};

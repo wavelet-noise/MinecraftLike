@@ -4,10 +4,6 @@
     "id":"ingot",
     "agents":[
     ],
-	"model":
-	  {
-	    "sprite":"ingot"
-	  },
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
@@ -18,10 +14,6 @@
     "id":"gear",
     "agents":[
     ],
-	"model":
-	  {
-	    "sprite":"gear"
-	  },
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
@@ -32,10 +24,6 @@
     "id":"bar",
     "agents":[
     ],
-	"model":
-	  {
-	    "sprite":"bar"
-	  },
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
@@ -46,10 +34,6 @@
     "id":"dust",
     "agents":[
     ],
-	"model":
-	  {
-	    "sprite":"dust"
-	  },
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
@@ -60,10 +44,6 @@
     "id":"ball",
     "agents":[
     ],
-	"model":
-	{
-	"sprite":"ball"
-	},
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
@@ -74,10 +54,6 @@
     "id":"wire",
     "agents":[
     ],
-	"model":
-	  {
-	    "sprite":"wire"
-	  },
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
@@ -88,10 +64,6 @@
     "id":"metal_big_plate",
     "agents":[
     ],
-	"model":
-	  {
-	    "sprite":"metal_big_plate"
-	  },
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
@@ -99,13 +71,15 @@
 },
 {
 	"type":"Item",
+    "id":"stick",
+    "agents":[
+    ]
+},
+{
+	"type":"Item",
     "id":"metal_plate",
     "agents":[
     ],
-	"model":
-	  {
-	    "sprite":"metal_plate"
-	  },
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
@@ -119,10 +93,26 @@
 		"type":"Fuel",
 		"heat":27
 	}
+    ]
+},
+{
+	"type":"Item",
+    "id":"casting_form_gear",
+    "agents":[
     ],
-	"model":
-	{
-	"sprite":"coal_lump"
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	}
+},
+{
+	"type":"Item",
+    "id":"casting_form_ingot",
+    "agents":[
+    ],
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
 	}
 }
 ]

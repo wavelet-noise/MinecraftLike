@@ -2,13 +2,13 @@
 #include <tools\order_casters.h>
 #include <tools\wset.h>
 
-void WindowPerfomance::Draw()
+void WindowPerfomance::Draw(glm::vec2 mainwin_size)
 {
   ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
   ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
   ImGui::SetNextWindowCollapsed(true, ImGuiSetCond_FirstUseEver);
   
-  ImGui::Begin("Perfomance monitor", &mOpen);
+  ImGui::Begin("Perfomance monitor", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
   {
     ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
     if (ImGui::TreeNode("mem"))

@@ -27,6 +27,7 @@
 #include "gui\WindowPerfomance.h"
 #include "gui\WindowDb.h"
 #include "gui\WindowInventory.h"
+#include "gui\WindowRecipe.h"
 #include <Render\Resourses.h>
 #include <tools\ray.h>
 #include <core\Chest.h>
@@ -300,15 +301,18 @@ void Game::Draw(float dt)
 	WindowPerfomance &wp = WindowPerfomance::Get();
 	WindowInventory &winv = WindowInventory::Get();
 	WindowDb &wdb = WindowDb::Get();
+	WindowRecipe &wr = WindowRecipe::Get();
 
 	ImGui_ImplGlfwGL3_NewFrame();
 	wp.DtUpdate(dt, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
-	wp.Draw();
-	wdb.Draw();
-	winv.Draw();
+	wp.Draw(mWindow->GetSize());
+	wdb.Draw(mWindow->GetSize());
+	winv.Draw(mWindow->GetSize());
+	wr.Draw(mWindow->GetSize());
+
 	for (auto &w : opened_w)
 	{
-		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).x).str().c_str());
+		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 		std::get<1>(w)->DrawGui();
 		ImGui::End();
 	}

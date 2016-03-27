@@ -266,6 +266,14 @@
     <ClCompile Include="Core\Plant.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="Core\WaterBoiler.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\MetalSmelter.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\CraftingTable.cpp" />
+    <ClCompile Include="gui\WindowRecipe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -538,6 +546,18 @@
     </ClInclude>
     <ClInclude Include="Core\Plant.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MetalSmelter.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\WaterBoiler.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CraftingTable.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\WindowRecipe.h">
+      <Filter>gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

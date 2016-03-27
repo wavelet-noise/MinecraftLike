@@ -164,7 +164,7 @@
     },
     {  
         "type":"Block",
-        "id":"furnance",
+        "id":"furnance_iron",
         "agents":[  
             {  
                 "type":"Furnance"
@@ -179,22 +179,19 @@
             {  
                 "type":"SplitBlockTessellator",
                 "generator":{  
-                    "all":"furnance_template_material_iron"
+                    "separate":[
+						"furnance_iron",
+						"furnance_iron_side",
+						"furnance_iron_side",
+						"furnance_iron_side",
+						"metal_big_plate_material_iron",
+						"material_brick"
+					]
                 },
                 "transparent":false
             }
         ],
-        "model":{  
-            "sprite":"furnance_template"
-        },
         "dynamic":true,
-        "template":{  
-            "type":"TemplateItemMaterialBase",
-            "material_base":"material_brick",
-            "materials":[  
-                "tag_material_metal"
-            ]
-        },
         "placeable":true
     },{  
         "type":"Block",
@@ -378,5 +375,70 @@
         ],
         "placeable":true,
 		"walkable":true
+    },
+    {  
+        "type":"Block",
+        "id":"water_boiler_iron",
+        "agents":[  
+			{
+				"type":"WaterBoiler"
+			},
+			{
+				"type":"Heatable"
+			}
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"water_boiler_iron",
+						"metal_big_plate_material_iron",
+						"metal_big_plate_material_iron",
+						"metal_big_plate_material_iron",
+						"metal_big_plate_material_iron",
+						"metal_big_plate_material_iron"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":true,
+        "placeable":true
+    },
+    {  
+        "type":"Block",
+        "id":"metal_smelter_iron",
+        "agents":[  
+            {  
+                "type":"Chest",
+                "size":3,
+                "columns":3
+            },
+			{
+				"type":"MetalSmelter"
+			},
+			{
+				"type":"Heatable"
+			}
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"metal_smelter_iron",
+						"metal_big_plate_material_iron",
+						"metal_big_plate_material_iron",
+						"metal_big_plate_material_iron",
+						"metal_big_plate_material_iron",
+						"metal_big_plate_material_iron"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":true,
+        "placeable":true
     }
 ]

@@ -1,5 +1,6 @@
 #include "Heatable.h"
 #include <Serealize.h>
+#include <imgui.h>
 
 Heatable::Heatable()
   : Agent(nullptr, "Heatable", "")
@@ -19,10 +20,14 @@ PAgent Heatable::Clone(GameObject * parent, const std::string &name)
 
 void Heatable::Update(const GameObjectParams & params)
 {
-  T -= params.dt / 5.f;
 }
 
 void Heatable::Heat(float f)
 {
   T += f;
+}
+
+void Heatable::DrawGui()
+{
+	ImGui::LabelText("Temp", "%g C", T);
 }

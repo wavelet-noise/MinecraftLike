@@ -1,10 +1,11 @@
 #pragma once
 #include <imgui.h>
+#include <glm\glm.hpp>
 
 class WindowBase
 {
 public:
-  virtual void Draw() = 0;
+  virtual void Draw(glm::vec2 mainwin_size) = 0;
 
   void Hide()
   {

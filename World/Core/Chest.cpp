@@ -54,7 +54,7 @@ bool Chest::Push(PGameObject go, int count, int pos)
 	if (pos >= size)
 		return false;
 
-	if (*slots[pos].obj == *go)
+	if (slots[pos].obj && *slots[pos].obj == *go)
 	{
 		slots[pos].count += count;
 	}

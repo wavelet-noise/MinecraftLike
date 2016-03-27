@@ -8,12 +8,12 @@ WindowInventory::WindowInventory()
 {
 }
 
-void WindowInventory::Draw()
+void WindowInventory::Draw(glm::vec2 mainwin_size)
 {
   ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
   ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
 
-  ImGui::Begin("Inventory", &mOpen);
+  ImGui::Begin("Inventory", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
   w->GetPlayer()->GetFromFullName<Chest>("Chest")->DrawGui();
   ImGui::End();
 }

@@ -51,7 +51,7 @@ void main(void)
 
 	float coef = min(1, max(0, dot(norm, lightvector) * shadow * oao) + 0.4);
 	out_color = coef * tcol;
-	out_color = texture(rgbtable, out_color.xyz);
+	out_color = texture(rgbtable, out_color.xyz + vec3(0.5/16, 0.5/16, 0.5/16));
 }
 
 #endif

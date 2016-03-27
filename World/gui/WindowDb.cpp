@@ -6,14 +6,16 @@
 #include "WindowInventory.h"
 #include <Core\World.h>
 #include <Core\Chest.h>
+#include <GLFW\glfw3.h>
+#include <gui\WindowRecipe.h>
 
-void WindowDb::Draw()
+void WindowDb::Draw(glm::vec2 mainwin_size)
 {
-  ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
-  ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
+  ImGui::SetNextWindowSize(ImVec2(500, mainwin_size.y- 20), ImGuiSetCond_Always);
+  ImGui::SetNextWindowPos(ImVec2(mainwin_size.x - 500, 0), ImGuiSetCond_Always);
 
   int jj = 666;
-  ImGui::Begin("Database", &mOpen);
+  ImGui::Begin("Database", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
   {
     ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
@@ -36,6 +38,16 @@ void WindowDb::Draw()
       if (ImGui::IsItemHovered())
       {
         ImGui::SetTooltip("%s\n%s", a.first.get().c_str(), std::get<0>(a.second)->GetDescription().c_str());
+
+		if (ImGui::IsKeyPressed(GLFW_KEY_R))
+		{
+			WindowRecipe::Get().ShowRecipe(a.first);
+		}
+
+		if (ImGui::IsKeyPressed(GLFW_KEY_U))
+		{
+			WindowRecipe::Get().ShowUsing(a.first);
+		}
 
         if (ImGui::IsMouseClicked(0))
           WindowInventory::Get().w->GetPlayer()->GetFromFullName<Chest>("Chest")->Push(DB::Get().Create(a.first));

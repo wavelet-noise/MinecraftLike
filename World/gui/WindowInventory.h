@@ -11,7 +11,7 @@ public:
   World *w;
 
   // Унаследовано через WindowBase
-  virtual void Draw() override;
+  virtual void Draw(glm::vec2 mainwin_size) override;
 
   static WindowInventory &Get()
   {
