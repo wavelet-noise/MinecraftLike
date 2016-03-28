@@ -219,7 +219,6 @@
     <ClCompile Include="tiny_obj_loader.cpp">
       <Filter>3rdparty\tiny_obj_load</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Resourses.cpp" />
     <ClCompile Include="Core\MeshPartialBlockGenerator.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -266,12 +265,17 @@
     <ClCompile Include="Core\MetalSmelter.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="Core\CraftingTable.cpp" />
     <ClCompile Include="gui\WindowRecipe.cpp" />
-    <ClCompile Include="Core\LiquidPipe.cpp" />
     <ClCompile Include="Core\ChestSlot.cpp" />
     <ClCompile Include="Core\Recipe.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Resources.cpp" />
+    <ClCompile Include="Core\LiquidPipe.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\CraftingTable.cpp">
+      <Filter>Core\Agents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -497,7 +501,6 @@
     <ClInclude Include="tiny_obj_loader.h">
       <Filter>3rdparty\tiny_obj_load</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Resourses.h" />
     <ClInclude Include="Core\MeshPartialBlockGenerator.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -564,6 +567,7 @@
     <ClInclude Include="Core\Recipe.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Render\Resources.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.glsl" />

@@ -2,7 +2,7 @@
 #include "Agent.h"
 #include "GameObject.h"
 #include <vector>
-#include <core\ChestSlot.h>
+#include "ChestSlot.h"
 
 class LiquidPipe : public Agent
 {
@@ -21,7 +21,14 @@ public:
 		return mLocked;
 	}
 
+	inline float GetLiquidCount()
+	{
+		return liq.count;
+	}
+
 	StringIntern GetLiquidID();
+
+	bool SetLiquid(ChestSlot cs);
 
 	bool PushLiquid(ChestSlot cs);
 	

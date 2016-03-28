@@ -103,14 +103,14 @@ public:
 
 	void Push(const TemplateMesh<VertexType> &mesh)
 	{
-		//mIndex.reserve(mIndex.size() + mesh.mIndex.size());
+		mIndex.reserve(mIndex.size() + mesh.mIndex.size());
 		size_t size = mVertex.size();
 		for (const auto &i : mesh.mIndex)
 		{
 			mIndex.push_back(size + i);
 		}
 
-		//mVertex.reserve(mVertex.size() + mesh.SizeVertex());
+		mVertex.reserve(mVertex.size() + mesh.mVertex.size());
 		for (const auto &i : mesh.mVertex)
 		{
 			mVertex.push_back(i);

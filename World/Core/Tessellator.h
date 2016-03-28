@@ -11,42 +11,44 @@
 #include "..\tools\StringIntern.h"
 #include <tuple>
 #include <vector>
-
+#include <Render\Camera.h>
 
 class Tessellator : public QueuedThread<Tessellator>
 {
 public:
-  Tessellator(class RenderSector &render);
+	Tessellator(class RenderSector &render);
 
-  // ѕотокобезопасные методы.
+	// ѕотокобезопасные методы.
 
-  // ”становить тессел€тор в указанную позицию.
-  void Set(const WBPos &pos, PGameObjectTessellator block);
+	// ”становить тессел€тор в указанную позицию.
+	void Set(const WBPos &pos, PGameObjectTessellator block);
 
-  void Set(const SPos &spos, std::vector<std::tuple<size_t, StringIntern>> &&blocks);
+	void Set(const SPos &spos, std::vector<std::tuple<size_t, StringIntern>> &&blocks);
 
-  // —ообщить сектору, что он изменилс€.
-  void SayChanged(const SPos &pos);
+	// —ообщить сектору, что он изменилс€.
+	void SayChanged(const SPos &pos);
+	void SayCamera(std::shared_ptr<Camera> c);
 
 public:
-  // ћетоды не предназначенные дл€ использовани€ вне потока тессел€тора.
+	// ћетоды не предназначенные дл€ использовани€ вне потока тессел€тора.
 
-  void Start();
+	void Start();
 
-  void Process();
+	void Process();
 
-  void Stop();
+	void Stop();
 
-  PGameObjectTessellator GetBlock(const WBPos &pos);
-  
-private:
-  std::unordered_map<SPos, std::shared_ptr<SectorTessellator>> mSectors;
-
-  class RenderSector &mRender;
+	PGameObjectTessellator GetBlock(const WBPos &pos);
 
 private:
-  // Ќайти сектор по позиции сектора.
-  std::shared_ptr<SectorTessellator> FindSector(const SPos &pos);
+	std::unordered_map<SPos, std::shared_ptr<SectorTessellator>> mSectors;
+
+	class RenderSector &mRender;
+	std::shared_ptr<Camera> cam;
+
+private:
+	// Ќайти сектор по позиции сектора.
+	std::shared_ptr<SectorTessellator> FindSector(const SPos &pos);
 
 };
 

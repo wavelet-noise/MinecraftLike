@@ -15,19 +15,7 @@ Model::Model()
 
 void Model::JsonLoad(const rapidjson::Value & val)
 {
-  if (val.HasMember("sprite"))
-  {
-    auto s = val["sprite"].GetString();
 
-    mTexture = std::get<0>(TextureManager::Get().GetTexture(s));
-    mSprite = s;
-  }
-}
-
-void Model::SetSprite(const StringIntern & s)
-{
-  mTexture = std::get<0>(TextureManager::Get().GetTexture(s));
-  mSprite = s;
 }
 
 void Model::BuildAABB(glm::vec3 VertexVTN::* p)
@@ -38,4 +26,30 @@ void Model::BuildAABB(glm::vec3 VertexVTN::* p)
 bool Model::IsAabbDot()
 {
 	return mMeshes->IsAabbDot();
+}
+
+void DeltaModel::Init(std::vector<PMeshType> & meshes)
+{
+	mMeshes = std::make_shared<TemplateMesh<VertexVTN>>();
+	parts.reserve(meshes.size());
+
+	mMeshes->Reserve(10000, 10000);
+	for (const auto &m : meshes)
+	{
+		if (m)
+		{
+			GpuReference gr;
+			gr.ibegin = mMeshes->SizeIndex();
+			gr.vbegin = mMeshes->SizeVertex();
+			gr.isize = m->SizeIndex();
+			gr.vsize = m->SizeVertex();
+
+			mMeshes->Push(*m);
+			parts.emplace_back(gr);
+		}
+		else
+		{
+			parts.emplace_back();
+		}
+	}
 }

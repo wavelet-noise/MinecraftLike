@@ -61,6 +61,11 @@ void Tessellator::SayChanged(const SPos &pos)
   }, pos);
 }
 
+void Tessellator::SayCamera(std::shared_ptr<Camera> c)
+{
+	cam = c;
+}
+
 void Tessellator::Start()
 {
   //TODO:???
@@ -71,7 +76,15 @@ void Tessellator::Process()
   auto start = glfwGetTime();
   for (auto it = mSectors.begin(); it != mSectors.end(); ++it)
   {
-    it->second->Update(this, mRender);
+	  if (it->second->IsChanged())
+	  {
+		  glm::vec3 min = it->second->GetPos();
+		  if (cam->BoxWithinFrustum(min * float(SECTOR_SIZE), (min + glm::vec3(1, 1, 1)) * float(SECTOR_SIZE)))
+		  if (it->second->Update(this, mRender))
+		  {
+			  break;
+		  }
+	  }
   }
   auto end = glfwGetTime();
   WindowPerfomance::Get().TesselatorDt(static_cast<float>(end - start));

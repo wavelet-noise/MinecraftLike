@@ -29,11 +29,11 @@ void SectorTessellator::SayChanged()
 	mChanged = true;
 }
 
-void SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
+bool SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
 {
 	if (!mChanged)
 	{
-		return;
+		return false;
 	}
 
 	mModel.GetMesh()->Clear();
@@ -55,13 +55,15 @@ void SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
 	//LOG(trace) << "SectorTessellated: [" << mPos.x << "," << mPos.y << "," << mPos.z << "]";
 
 	using MeshType = std::remove_reference_t<decltype(mModel.GetMesh())>::element_type;
+
 	if (!mModel.GetMesh()->IsEmpty())
 	{
-		mModel.GetMesh()->BuildAABB(&MeshType::VertexType::vertex);
+		mModel.GetMesh()->BuildAABB(&VertexVTN::vertex);
 		render.Push(mModel, mPos);
 	}
 
 	mChanged = false;
+	return true;
 }
 
 void SectorTessellator::Init()

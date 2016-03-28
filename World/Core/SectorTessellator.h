@@ -25,16 +25,25 @@ public:
 	void SayChanged();
 
 	// Если сектор был изменен, обновляет геометрию и посылает в рендер.
-	void Update(class Tessellator *tesselator, class RenderSector &render);
+	bool Update(class Tessellator *tesselator, class RenderSector &render);
 
 	// требует загруженых шейдеров в Resources
 	static void Init();
+
+	inline bool IsChanged() const noexcept
+	{
+		return mChanged;
+	}
+
+	inline SPos GetPos() const noexcept
+	{
+		return mPos;
+	}
 
 private:
 	SPos mPos;
 	bool mChanged = false;
 	void __PushMmodel(const Model &model, const SBPos &pos);
-
 };
 
 

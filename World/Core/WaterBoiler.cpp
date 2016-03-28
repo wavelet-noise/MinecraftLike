@@ -46,6 +46,4 @@ void WaterBoiler::Update(const GameObjectParams & params)
 
 void WaterBoiler::DrawGui()
 {
-	ImGui::Text("WaterBoiler");
-	ImGui::LabelText("Steam", "%g m^3", steam);
 }

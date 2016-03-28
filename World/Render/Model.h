@@ -14,6 +14,7 @@
 
 using PModel = std::shared_ptr<class Model>;
 using PCModel = std::shared_ptr<const class Model>;
+using PMeshType = PMesh<VertexVTN>;
 
 // Модель. Имеет всю информацию для рисования.
 class Model
@@ -33,12 +34,12 @@ public:
 		mTexture = texture;
 	}
 
-	inline PMesh<VertexVTN> &GetMesh() noexcept
+	inline PMeshType &GetMesh() noexcept
 	{
 		return mMeshes;
 	}
 
-	inline const PMesh<VertexVTN> &GetMesh() const noexcept
+	inline const PMeshType &GetMesh() const noexcept
 	{
 		return mMeshes;
 	}
@@ -57,13 +58,6 @@ public:
 	{
 		return mShader;
 	}
-
-	inline StringIntern GetSpriteName()
-	{
-		return mSprite;
-	}
-
-	void SetSprite(const StringIntern &s);
 
 	const glm::mat4 &GetModel() const
 	{
@@ -94,17 +88,34 @@ public:
 		mMeshes->Release();
 	}
 
-private:
+protected:
 
 	friend class Render;
-	PMesh<VertexVTN> mMeshes;
+	PMeshType mMeshes;
 	PTexture mTexture;
 	PShader mShader;
 	glm::mat4 mModel;
 
-	StringIntern mSprite = StringIntern(""); //используется для восстановлении связи с атласом
-
 	Type mType = Static;
+};
+
+class DeltaModel : public Model
+{
+	struct GpuReference
+	{
+		int vbegin = 0;
+		int ibegin = 0;
+		char vsize = 0;
+		char isize = 0;
+	};
+
+	std::vector<GpuReference> parts;
+
+public:
+
+	void Init(std::vector<PMeshType> &meshes);
+
+	void UpdatePart(int i, PMeshType &mesh);
 };
 
 #endif // Model_h__

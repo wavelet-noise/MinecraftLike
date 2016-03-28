@@ -1,8 +1,8 @@
 #include "LiquidPipe.h"
 #include <Serealize.h>
 #include <imgui.h>
-#include <Core\GameObject.h>
-#include <Core\World.h>
+#include "Core\GameObject.h"
+#include "Core\World.h"
 
 LiquidPipe::LiquidPipe()
 	: Agent(nullptr, "LiquidPipe", "")
@@ -38,9 +38,10 @@ void LiquidPipe::Update(const GameObjectParams & params)
 		{
 			if (auto p = n->GetFromFullName<LiquidPipe>("LiquidPipe"))
 			{
-				if (p->PushLiquid({ liq.obj, liq.count / 2 }))
+				float t = p->GetLiquidCount() + liq.count;
+				if (liq.count && p->PushLiquid({ liq.obj, t / 2 }))
 				{
-					liq.count /= 2;
+					liq.count = t / 2;
 				}
 			}
 		}
@@ -68,6 +69,27 @@ StringIntern LiquidPipe::GetLiquidID()
 		return liq.obj->GetId();
 
 	return StringIntern("");
+}
+
+bool LiquidPipe::SetLiquid(ChestSlot cs)
+{
+	if (!mDisabled)
+	{
+		if (!cs.obj)
+			return true;
+
+		if (liq.obj && *cs.obj == *liq.obj)
+		{
+			liq.count = cs.count;
+			return true;
+		}
+
+		liq.obj = cs.obj;
+		liq.count = cs.count;
+		return true;
+	}
+
+	return false;
 }
 
 bool LiquidPipe::PushLiquid(ChestSlot cs)
