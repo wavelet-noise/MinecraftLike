@@ -18,7 +18,7 @@ typedef std::shared_ptr<class BlockTessellator> PGameObjectTessellator;
 template<class T, class... Args>
 inline std::shared_ptr<T> MakeBlockTessellator(Args&&... args)
 {
-  return std::make_shared<T>(std::forward<Args>(args)...);
+	return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
 
@@ -27,30 +27,46 @@ inline std::shared_ptr<T> MakeBlockTessellator(Args&&... args)
 class BlockTessellator
 {
 public:
-  virtual ~BlockTessellator() = default;
 
-  virtual PGameObjectTessellator Clone() = 0;
+	enum Side
+	{
+		EMPTY = 0,
 
-  virtual void JsonLoad(const rapidjson::Value &val);
+		FRONT = 1 << 0,
+		RIGHT = 1 << 1,
+		BACK = 1 << 2,
+		LEFT = 1 << 3,
+		TOP = 1 << 4,
+		BOTTOM = 1 << 5,
+		CENTER = 1 << 6,
 
-  virtual const Model &GetModel(const TessellatorParams &params) = 0;
+		ALL = 0b01111111,
+	};
 
-  // Прозрачен ли блок?
-  inline bool IsTransparent() const noexcept
-  {
-    return mTransparent;
-  }
+	virtual ~BlockTessellator() = default;
 
-  // Статичен ли блок?
-  // Данный параметр указывает тесселятору, можно ли склеивать блок.
-  inline bool IsStatic() const noexcept
-  {
-    return mStatic;
-  }
+	virtual PGameObjectTessellator Clone() = 0;
+
+	virtual void JsonLoad(const rapidjson::Value &val);
+
+	virtual PModel GetModel(const TessellatorParams &params) = 0;
+
+	// Прозрачен ли блок?
+	inline bool IsTransparent() const noexcept
+	{
+		return mTransparent;
+	}
+
+	// Статичен ли блок?
+	// Данный параметр указывает тесселятору, можно ли склеивать блок.
+	inline bool IsStatic() const noexcept
+	{
+		return mStatic;
+	}
 
 private:
-  bool mStatic = true;
-  bool mTransparent = false;
+	bool mStatic = true;
+	bool mTransparent = false;
 };
 
 
@@ -58,8 +74,8 @@ private:
 
 struct BlockTessellatorFactory : public boost::noncopyable
 {
-  using FactoryType = TemplateFactory<StringIntern, BlockTessellator>;
-  static FactoryType &Get();
+	using FactoryType = TemplateFactory<StringIntern, BlockTessellator>;
+	static FactoryType &Get();
 };
 
 #endif // RenderAgent_h__

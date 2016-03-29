@@ -31,6 +31,8 @@ public:
 
   PGameObject GetBlock(const WBPos &position);
 
+  PGameObject GetBlock(const WBPos & wbpos, std::shared_ptr<Sector> &contains);
+
   // Установить блок в заданную позицию.
   // Существующий блок будет удален.
   void SetBlock(const WBPos &pos, PGameObject block);

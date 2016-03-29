@@ -277,6 +277,10 @@
     <ClCompile Include="Core\CraftingTable.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="Core\SplitConnectionTesselator.cpp">
+      <Filter>Core\tessellator</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Xyz.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -568,6 +572,15 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Render\Resources.h" />
+    <ClInclude Include="Core\LiquidController.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SplitConnectionTesselator.h">
+      <Filter>Core\tessellator</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Xyz.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.glsl" />

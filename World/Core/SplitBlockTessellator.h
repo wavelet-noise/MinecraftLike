@@ -19,10 +19,10 @@ public:
 
   PGameObjectTessellator Clone() override;
 
-  const Model &GetModel(const TessellatorParams &params) override;
+  PModel GetModel(const TessellatorParams &params) override;
 
 private:
-  Model mModel;
+  PModel mModel;
   MeshPartialBlockGenerator mGenerator;
 };
 

@@ -54,6 +54,12 @@ Render::Render()
 
   Resources::Get().LoadMesh("data/models/selection.obj");
   Resources::Get().LoadMesh("data/models/test.obj");
+  Resources::Get().LoadMesh("data/models/pipe_f.obj");
+  Resources::Get().LoadMesh("data/models/pipe_b.obj");
+  Resources::Get().LoadMesh("data/models/pipe_l.obj");
+  Resources::Get().LoadMesh("data/models/pipe_r.obj");
+  Resources::Get().LoadMesh("data/models/pipe_u.obj");
+  Resources::Get().LoadMesh("data/models/pipe_d.obj");
 
   Resources::Get().LoadTexture("data\\noisetex.png");
   Resources::Get().GetTexture("data\\noisetex.png")->Set(TEXTURE_SLOT_3);

@@ -1,13 +1,14 @@
 #pragma once
+/*
 #include "Agent.h"
 #include "GameObject.h"
 #include <vector>
 #include "ChestSlot.h"
 
-class LiquidPipe : public Agent
+class LiquidController : public Agent
 {
 public:
-	LiquidPipe();
+	LiquidController();
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -15,10 +16,6 @@ public:
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	virtual void Update(const GameObjectParams & params) override;
 	virtual void DrawGui() override;
-
-	void OnDestroy(const GameObjectParams & params) override;
-
-	void OnCreate(const GameObjectParams & params) override;
 
 	inline bool IsLocked() 
 	{
@@ -29,6 +26,9 @@ public:
 	{
 		return liq.count;
 	}
+
+	void OnDestroy(const GameObjectParams & params) override;
+	void OnCreate(const GameObjectParams & params) override;
 
 	StringIntern GetLiquidID();
 
@@ -44,4 +44,5 @@ private:
 	float max_volume;
 };
 
-REGISTER_AGENT(LiquidPipe)
+REGISTER_AGENT(LiquidController)
+*/

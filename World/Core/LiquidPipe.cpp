@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include "Core\GameObject.h"
 #include "Core\World.h"
+#include "LiquidController.h"
 
 LiquidPipe::LiquidPipe()
 	: Agent(nullptr, "LiquidPipe", "")
@@ -61,6 +62,14 @@ void LiquidPipe::DrawGui()
 	}
 
 	liq.DrawGui();
+}
+
+void LiquidPipe::OnDestroy(const GameObjectParams & params)
+{
+}
+
+void LiquidPipe::OnCreate(const GameObjectParams & params)
+{
 }
 
 StringIntern LiquidPipe::GetLiquidID()

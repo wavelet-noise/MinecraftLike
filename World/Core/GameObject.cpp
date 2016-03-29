@@ -17,79 +17,103 @@ GameObject::~GameObject()
 
 void GameObject::Update(GameObjectParams &params)
 {
-  for (auto &agent : mAgents)
-  {
-    agent.second->Update(params);
-  }
+	for (auto &agent : mAgents)
+	{
+		agent.second->Update(params);
+	}
 }
 
 void GameObject::DrawGui()
 {
-  for (auto &agent : mAgents)
-  {
-    agent.second->DrawGui();
-  }
+	for (auto &agent : mAgents)
+	{
+		agent.second->DrawGui();
+	}
 }
 
 void GameObject::Interact(InteractParams & params)
 {
-  for (auto &agent : mAgents)
-  {
-    agent.second->Interact(params);
-  }
+	for (auto &agent : mAgents)
+	{
+		agent.second->Interact(params);
+	}
 }
 
 void GameObject::Afterload()
 {
-  for (auto &agent : mAgents)
-  {
-    agent.second->Afterload(this);
-  }
+	for (auto &agent : mAgents)
+	{
+		agent.second->Afterload(this);
+	}
+}
+
+void GameObject::OnDestroy(const GameObjectParams &params)
+{
+	for (auto &agent : mAgents)
+	{
+		agent.second->OnDestroy(params);
+	}
+}
+
+void GameObject::OnCreate(const GameObjectParams & params)
+{
+	for (auto &agent : mAgents)
+	{
+		agent.second->OnCreate(params);
+	}
+}
+
+void GameObject::OnAdjacentChanged(const GameObjectParams & params)
+{
+	for (auto &agent : mAgents)
+	{
+		agent.second->OnAdjacentChanged(params);
+	}
 }
 
 PGameObject GameObject::Clone()
 {
-  auto a = MakeGameObject<GameObject>(id);
-  a->placable = placable;
+	auto a = MakeGameObject<GameObject>(id);
+	a->placable = placable;
 
-  for (const auto &ag : mAgents)
-  {
-    a->mAgents[ag.first] = ag.second->Clone(a.get());
-  }
+	for (const auto &ag : mAgents)
+	{
+		a->mAgents[ag.first] = ag.second->Clone(a.get());
+	}
 
-  return a;
+	return a;
 }
 
 StringIntern GameObject::GetId()
 {
-  return id;
+	return id;
 }
 
 Agent *GameObject::GetFromFullName(const StringIntern &name)
 {
-  auto it = mAgents.find(name);
-  if (it != mAgents.end())
-  {
-    return it->second.get();
-  }
+	auto it = mAgents.find(name);
+	if (it != mAgents.end())
+	{
+		return it->second.get();
+	}
 
-  return nullptr;
+	return nullptr;
 }
 
 void GameObject::PushAgent(PAgent go)
 {
-  mAgents[go->GetFullName()] = go;
+	mAgents[go->GetFullName()] = go;
 }
 
 const Agent *GameObject::GetFromFullName(const StringIntern &name) const
 {
-  auto it = mAgents.find(name);
-  if (it != mAgents.end())
-  {
-    return it->second.get();
-  }
+	auto it = mAgents.find(name);
+	if (it != mAgents.end())
+	{
+		return it->second.get();
+	}
 
-  return nullptr;
+	return nullptr;
 }
 
 std::string GameObject::GetDescription()

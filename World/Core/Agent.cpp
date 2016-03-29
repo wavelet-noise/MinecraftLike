@@ -16,6 +16,10 @@ Agent::~Agent()
 {
 }
 
+void Agent::Update(const GameObjectParams & params)
+{
+}
+
 void Agent::Afterload(GameObject * parent)
 {
 }
@@ -25,6 +29,18 @@ void Agent::DrawGui()
 }
 
 void Agent::Interact(const InteractParams & params)
+{
+}
+
+void Agent::OnDestroy(const GameObjectParams & params)
+{
+}
+
+void Agent::OnCreate(const GameObjectParams & params)
+{
+}
+
+void Agent::OnAdjacentChanged(const GameObjectParams & params)
 {
 }
 

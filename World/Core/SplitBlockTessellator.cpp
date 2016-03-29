@@ -9,11 +9,12 @@
 
 SplitBlockTessellator::SplitBlockTessellator()
 {
-	mModel.SetTexture(std::get<0>(TextureManager::Get().GetTexture("stone")));//TODO:remove
+	mModel = std::make_shared<Model>();
+	mModel->SetTexture(std::get<0>(TextureManager::Get().GetTexture("stone")));//TODO:remove
 }
 
 
-const Model & SplitBlockTessellator::GetModel(const TessellatorParams &params)
+PModel SplitBlockTessellator::GetModel(const TessellatorParams &params)
 {
 	const int32_t size = static_cast<int32_t>(SECTOR_SIZE);
 
@@ -187,7 +188,7 @@ const Model & SplitBlockTessellator::GetModel(const TessellatorParams &params)
 		}
 	}
 
-	mModel.GetMesh() = mGenerator.Create(static_cast<MeshPartialBlockGenerator::Side>(sides), a);
+	mModel->GetMesh() = mGenerator.Create(static_cast<MeshPartialBlockGenerator::Side>(sides), a);
 
 	return mModel;
 }

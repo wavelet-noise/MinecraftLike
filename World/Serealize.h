@@ -74,6 +74,16 @@ namespace {
   }
 
   template<typename _Ty>
+  void __deserialize(const rapidjson::Value &val, const char *s, std::shared_ptr<_Ty> &target)
+  {
+	  if (!val.HasMember(s))
+		  return;
+
+	  const rapidjson::Value &v = val[s];
+	  target->JsonLoad(v);
+  }
+
+  template<typename _Ty>
   void __deserialize(const rapidjson::Value &val, const char *s, std::vector<_Ty> &target)
   {
 

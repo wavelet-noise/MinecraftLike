@@ -94,12 +94,49 @@ PGameObject World::GetBlock(const WBPos &wbpos)
   return nullptr;
 }
 
+PGameObject World::GetBlock(const WBPos &wbpos, std::shared_ptr<Sector> &contains)
+{
+	auto spos = cs::WBtoS(wbpos);
+	if (auto sector = FindSector(spos))
+	{
+		contains = sector;
+		return sector->GetBlock(cs::WBtoSB(wbpos, spos));
+	}
+
+	contains = nullptr;
+	return nullptr;
+}
+
+
+static float sdt = 0;
+static World *sworld = nullptr;
+static glm::ivec3 neib[] = {
+	{  1,  0,  0 },
+	{  0,  1,  0 },
+	{  0,  0,  1 },
+	{ -1,  0,  0 },
+	{  0, -1,  0 },
+	{  0,  0, -1 }
+};
+
 void World::SetBlock(const WBPos &wbpos, PGameObject block)
 {
   auto spos = cs::WBtoS(wbpos);
+  std::shared_ptr<Sector> sec;
+
+  if (auto l = GetBlock(wbpos, sec))
+	  l->OnDestroy({ this, sec.get(), wbpos, 0 });
+
   if (auto sector = FindSector(spos))
   {
-    sector->SetBlock(cs::WBtoSB(wbpos, spos), block);
+	  sector->SetBlock(cs::WBtoSB(wbpos, spos), block);
+	  block->OnCreate({ this, sec.get(), wbpos, 0 });
+  }
+
+  for (const auto &n : neib)
+  {
+	  if (auto l = GetBlock(wbpos + n, sec))
+		  l->OnAdjacentChanged({ this, sec.get(), wbpos + n, 0 });
   }
 }
 

@@ -60,11 +60,13 @@
     <ClCompile Include="Core\BlockTessellator.cpp" />
     <ClCompile Include="Core\Sector.cpp" />
     <ClCompile Include="Core\SectorLoader.cpp" />
+    <ClCompile Include="Core\SplitConnectionTesselator.cpp" />
     <ClCompile Include="Core\Tessellator.cpp" />
     <ClCompile Include="Core\Tool.cpp" />
     <ClCompile Include="Core\Water.cpp" />
     <ClCompile Include="Core\WaterBoiler.cpp" />
     <ClCompile Include="Core\World.cpp" />
+    <ClCompile Include="Core\Xyz.cpp" />
     <ClCompile Include="DragNDrop.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -122,6 +124,7 @@
     <ClInclude Include="Core\GameEvent.h" />
     <ClInclude Include="core\Foliage.h" />
     <ClInclude Include="core\Heatable.h" />
+    <ClInclude Include="Core\LiquidController.h" />
     <ClInclude Include="Core\LiquidPipe.h" />
     <ClInclude Include="Core\MapGen\GenStrategy.h" />
     <ClInclude Include="Core\MapGen\WorldGenFlat.h" />
@@ -148,6 +151,7 @@
     <ClInclude Include="Core\BlockTessellator.h" />
     <ClInclude Include="Core\Sector.h" />
     <ClInclude Include="Core\SectorLoader.h" />
+    <ClInclude Include="Core\SplitConnectionTesselator.h" />
     <ClInclude Include="Core\TemplateFactory.h" />
     <ClInclude Include="Core\Tessellator.h" />
     <ClInclude Include="Core\TessellatorParams.h" />
@@ -155,6 +159,7 @@
     <ClInclude Include="Core\Water.h" />
     <ClInclude Include="Core\WaterBoiler.h" />
     <ClInclude Include="Core\World.h" />
+    <ClInclude Include="Core\Xyz.h" />
     <ClInclude Include="DragNDrop.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />

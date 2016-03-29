@@ -47,7 +47,7 @@ bool SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
 		{
 			auto sbpos = cs::ItoSB(i);
 			params.wbpos = cs::SBtoWB(sbpos, mPos);
-			__PushMmodel(GetBlock(i)->GetModel(params), sbpos);
+			__PushMmodel(*GetBlock(i)->GetModel(params), sbpos);
 		}
 	};
 
@@ -84,7 +84,7 @@ void SectorTessellator::__PushMmodel(const Model &model, const SBPos &pos)
 	{
 		mModel.SetTexture(model.GetTexture());
 	}
-	if (mModel.GetTexture() == model.GetTexture())
+	//if (!model.GetTexture() /*костыль*/ || mModel.GetTexture() == model.GetTexture())
 	{
 		size_t size = dst->SizeVertex();
 		dst->Push(*src);
@@ -93,8 +93,8 @@ void SectorTessellator::__PushMmodel(const Model &model, const SBPos &pos)
 			dst->Vertex(i).vertex += pos;
 		}
 	}
-	else
+	//else
 	{
-		LOG(warning) << "Батчинг меша в секторе пропущен. Текстуры не совпадают.";
+	//	LOG(warning) << "Батчинг меша в секторе пропущен. Текстуры не совпадают.";
 	}
 }

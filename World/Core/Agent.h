@@ -39,7 +39,7 @@ public:
 
   virtual PAgent Clone(GameObject *parent, const std::string &name = "") = 0;
 
-  virtual void Update(const GameObjectParams &params) = 0;
+  virtual void Update(const GameObjectParams &params);
 
   // client/server paralell
   // выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
@@ -51,6 +51,12 @@ public:
 
   // client/server syncronize
   virtual void Interact(const InteractParams &params);
+
+  virtual void OnDestroy(const GameObjectParams &params);
+
+  virtual void OnCreate(const GameObjectParams & params);
+
+  virtual void OnAdjacentChanged(const GameObjectParams & params);
 
   // client/server paralell
   virtual void JsonLoad(const rapidjson::Value &val);

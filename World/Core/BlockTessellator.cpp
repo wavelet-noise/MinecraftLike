@@ -6,14 +6,15 @@
 //deserialize autoreg
 #include "SplitBlockTessellator.h"
 #include "ModelTessellator.h"
+#include "SplitConnectionTesselator.h"
 
 void BlockTessellator::JsonLoad(const rapidjson::Value & val)
 {
-  JSONLOAD(sge::make_nvp("transparent", mTransparent));
+	JSONLOAD(sge::make_nvp("transparent", mTransparent));
 }
 
 BlockTessellatorFactory::FactoryType & BlockTessellatorFactory::Get()
 {
-  static FactoryType object;
-  return object;
+	static FactoryType object;
+	return object;
 }

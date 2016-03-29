@@ -21,26 +21,27 @@ void ModelTessellator::SetTexture(int side, const std::string &texture)
 
 ModelTessellator::ModelTessellator()
 {
-	mModel.SetTexture(std::get<0>(TextureManager::Get().GetTexture("stone")));
+	mModel = std::make_shared<Model>();
+	mModel->SetTexture(std::get<0>(TextureManager::Get().GetTexture("stone")));
 }
 
 void ModelTessellator::JsonLoad(const rapidjson::Value & val)
 {
 	if (val.HasMember("all"))
 	{
-		SetTexture(ModelTessellator::ALL, val["all"].GetString());
+		SetTexture(ALL, val["all"].GetString());
 	}
 	else
 		if (val.HasMember("sides"))
 		{
 			const rapidjson::Value &arr = val["sides"];
-			SetTexture(ModelTessellator::FRONT,  arr.Begin()->GetString());
-			SetTexture(ModelTessellator::RIGHT,  arr[1].GetString());
-			SetTexture(ModelTessellator::BACK,   arr[2].GetString());
-			SetTexture(ModelTessellator::LEFT,   arr[3].GetString());
-			SetTexture(ModelTessellator::TOP,    arr[4].GetString());
-			SetTexture(ModelTessellator::BOTTOM, arr[5].GetString());
-			SetTexture(ModelTessellator::CENTER, arr[6].GetString());
+			SetTexture(FRONT,  arr.Begin()->GetString());
+			SetTexture(RIGHT,  arr[1].GetString());
+			SetTexture(BACK,   arr[2].GetString());
+			SetTexture(LEFT,   arr[3].GetString());
+			SetTexture(TOP,    arr[4].GetString());
+			SetTexture(BOTTOM, arr[5].GetString());
+			SetTexture(CENTER, arr[6].GetString());
 		}
 		else
 			LOG(error) << "missed texture";
@@ -55,7 +56,7 @@ void ModelTessellator::JsonLoad(const rapidjson::Value & val)
 			m->Vertex(i).texture.x = glm::mix(uv4.x, uv4.z, m->Vertex(i).texture.x);
 			m->Vertex(i).texture.y = glm::mix(uv4.y, uv4.w, m->Vertex(i).texture.y);
 		}
-		mModel.GetMesh() = m;
+		mModel->GetMesh() = m;
 	}
 	else
 		LOG(error) << "missed model";
@@ -68,7 +69,7 @@ PGameObjectTessellator ModelTessellator::Clone()
 	return PGameObjectTessellator();
 }
 
-const Model & ModelTessellator::GetModel(const TessellatorParams & params)
+PModel ModelTessellator::GetModel(const TessellatorParams & params)
 {
 	return mModel;
 }

@@ -18,96 +18,105 @@ using PGameObject = std::shared_ptr<GameObject>;
 template<class T, class... Args>
 inline std::shared_ptr<T> MakeGameObject(Args&&... args)
 {
-  return std::make_shared<T>(std::forward<Args>(args)...);
+	return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
 class GameObject
 {
 public:
-  GameObject(const StringIntern &__id);
-  virtual ~GameObject();
+	GameObject(const StringIntern &__id);
+	virtual ~GameObject();
 
-  virtual void Update(GameObjectParams &params);
+	virtual void Update(GameObjectParams &params);
 
-  // client
-  // рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
-  virtual void DrawGui();
+	// client
+	// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
+	virtual void DrawGui();
 
-  //client/server syncronize
-  virtual void Interact(InteractParams &params);
+	//client/server syncronize
+	virtual void Interact(InteractParams &params);
 
-  //client/server paralell
-  //выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
-  virtual void Afterload();
+	//client/server paralell
+	//выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
+	virtual void Afterload();
 
-  virtual PGameObject Clone();
+	//вызывется для блоков, перед тем как они будут имключены из сектора
+	virtual void OnDestroy(const GameObjectParams &params);
 
-  Agent *GetFromFullName(const StringIntern &name);
+	//вызывется для блоков, после того, как они добавлены в сектор
+	virtual void OnCreate(const GameObjectParams & params);
 
-  const Agent *GetFromFullName(const StringIntern &name) const;
+	//вызывется после того, как сосед изменился
+	virtual void OnAdjacentChanged(const GameObjectParams & params);
 
-  std::string GetDescription();
+	virtual PGameObject Clone();
 
-  template<class T>
-  T *GetFromFullName(const StringIntern &name)
-  {
-    return static_cast<T*>(GetFromFullName(name));
-  }
+	Agent *GetFromFullName(const StringIntern &name);
 
-  template<class T>
-  const T *GetFromFullName(const StringIntern &name) const
-  {
-    return static_cast<const T*>(GetFromFullName(name));
-  }
+	const Agent *GetFromFullName(const StringIntern &name) const;
 
-  template<class T>
-  T *GetFromFullName(const std::string &name)
-  {
-    return static_cast<T*>(GetFromFullName(StringIntern(name)));
-  }
+	std::string GetDescription();
 
-  template<class T>
-  const T *GetFromFullName(const std::string &name) const
-  {
-    return static_cast<T*>(GetFromFullName(StringIntern(name)));
-  }
+	template<class T>
+	T *GetFromFullName(const StringIntern &name)
+	{
+		return static_cast<T*>(GetFromFullName(name));
+	}
 
-  void PushAgent(PAgent go);
-  inline bool IsPlacable()
-  {
-    return placable;
-  }
+	template<class T>
+	const T *GetFromFullName(const StringIntern &name) const
+	{
+		return static_cast<const T*>(GetFromFullName(name));
+	}
 
-  inline bool IsWalkable()
-  {
-	  return walkable;
-  }
+	template<class T>
+	T *GetFromFullName(const std::string &name)
+	{
+		return static_cast<T*>(GetFromFullName(StringIntern(name)));
+	}
 
-  bool operator == (const GameObject &other) const
-  {
-	  if (&other == this)
-		  return true;
+	template<class T>
+	const T *GetFromFullName(const std::string &name) const
+	{
+		return static_cast<T*>(GetFromFullName(StringIntern(name)));
+	}
 
-	  return other.id == id; //TODO: correct way
-  }
+	void PushAgent(PAgent go);
+	inline bool IsPlacable()
+	{
+		return placable;
+	}
 
-  bool operator != (const GameObject &other) const
-  {
-	  return !(other == *this);
-  }
+	inline bool IsWalkable()
+	{
+		return walkable;
+	}
 
-  StringIntern GetId();
+	bool operator == (const GameObject &other) const
+	{
+		if (&other == this)
+			return true;
+
+		return other.id == id; //TODO: correct way
+	}
+
+	bool operator != (const GameObject &other) const
+	{
+		return !(other == *this);
+	}
+
+	StringIntern GetId();
 
 
 protected:
-  friend class DB;
-  std::map<StringIntern, PAgent> mAgents;
+	friend class DB;
+	std::map<StringIntern, PAgent> mAgents;
 
-  friend class TemplateItemMaterial;
-  friend class TemplateItemMaterialBase;
-  StringIntern id;
-  bool placable = false;
-  bool walkable = false;
+	friend class TemplateItemMaterial;
+	friend class TemplateItemMaterialBase;
+	StringIntern id;
+	bool placable = false;
+	bool walkable = false;
 };
 
 

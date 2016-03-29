@@ -12,6 +12,34 @@
 		"dynamic":true,
 		"tesselator":[  
             {  
+                "type":"SplitConnectionTesselator",
+				"all":"material_copper",
+				"connections":[
+					"data/models/pipe_l.obj",
+					"data/models/pipe_r.obj",
+					"data/models/pipe_f.obj",
+					"data/models/pipe_b.obj",
+					"data/models/pipe_d.obj",
+					"data/models/pipe_u.obj",
+					""
+				],
+                "transparent":true
+            }
+        ]
+	},
+	{
+		"type":"Block",
+		"id":"liquid_controller",
+		"agents":[
+			{
+				"type":"LiquidController",
+				"max_volume":100
+			}
+		],
+		"placeable":false,
+		"dynamic":true,
+		"tesselator":[  
+            {  
                 "type":"SplitBlockTessellator",
                 "generator":{  
                     "all":"liquid_pipe"
