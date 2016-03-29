@@ -40,7 +40,7 @@ public:
 		BOTTOM = 1 << 5,
 		CENTER = 1 << 6,
 
-		ALL = 0b01111111,
+		ALL = FRONT + RIGHT + BACK + LEFT + TOP + BOTTOM + CENTER
 	};
 
 	virtual ~BlockTessellator() = default;

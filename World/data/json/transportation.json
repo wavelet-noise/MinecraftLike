@@ -13,22 +13,23 @@
 		"tesselator":[  
             {  
                 "type":"SplitConnectionTesselator",
-				"all":"material_copper",
+				"all":"material_iron",
 				"connections":[
-					"data/models/pipe_l.obj",
-					"data/models/pipe_r.obj",
 					"data/models/pipe_f.obj",
+					"data/models/pipe_r.obj",
 					"data/models/pipe_b.obj",
-					"data/models/pipe_d.obj",
+					"data/models/pipe_l.obj",
 					"data/models/pipe_u.obj",
+					"data/models/pipe_d.obj",
+					
 					""
 				],
-                "transparent":true
-            }
-        ]
-	},
-	{
-		"type":"Block",
+                "transparent":true        
+            }                             
+        ]                                 
+	},                                    
+	{                                     
+		"type":"Block",                    
 		"id":"liquid_controller",
 		"agents":[
 			{

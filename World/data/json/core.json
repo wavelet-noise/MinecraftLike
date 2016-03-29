@@ -184,7 +184,7 @@
 						"furnance_iron_side",
 						"furnance_iron_side",
 						"furnance_iron_side",
-						"metal_big_plate_material_iron",
+						"metal_big_plate",
 						"material_brick"
 					]
                 },
@@ -397,11 +397,11 @@
                 "generator":{  
                     "separate":[
 						"water_boiler_iron",
-						"metal_big_plate_material_iron",
-						"metal_big_plate_material_iron",
-						"metal_big_plate_material_iron",
-						"metal_big_plate_material_iron",
-						"metal_big_plate_material_iron"
+						"metal_big_plate",
+						"metal_big_plate",
+						"metal_big_plate",
+						"metal_big_plate",
+						"metal_big_plate"
 					]
                 },
                 "transparent":false

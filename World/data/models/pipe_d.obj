@@ -1,7 +1,6 @@
 # Blender v2.76 (sub 0) OBJ File: ''
 # www.blender.org
-mtllib pipe_d.mtl
-o Cube.003_Cube.004
+o pipe_down
 v 0.600000 0.400000 0.600000
 v 0.600000 0.600000 0.600000
 v 0.400000 0.400000 0.600000

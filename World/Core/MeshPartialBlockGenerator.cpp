@@ -55,7 +55,8 @@ MeshPartialBlockGenerator::MeshPartialBlockGenerator()
 
 PMesh<MeshPartialBlockGenerator::VertexType> MeshPartialBlockGenerator::Create(Side side, const std::array<char, 8> &neib)
 {
-  PMesh<VertexType> mesh = std::make_shared<TemplateMesh<VertexType>>();
+  static PMesh<VertexType> mesh = std::make_shared<TemplateMesh<VertexType>>();
+  mesh->Clear();
 
   enum 
   {

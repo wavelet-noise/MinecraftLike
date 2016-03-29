@@ -14,8 +14,8 @@
 
 World::World()
 {
-  mPlayer = std::make_unique<Player>(StringIntern(std::string("player")));
-  mPlayer->PushAgent(std::make_shared<Chest>());
+	mPlayer = std::make_unique<Player>(StringIntern(std::string("player")));
+	mPlayer->PushAgent(std::make_shared<Chest>());
 }
 
 
@@ -25,73 +25,80 @@ World::~World()
 
 void World::Update(float dt)
 {
-  mEventBus.Update(this);
+	mEventBus.Update(this);
 
-  for (auto &i : mSectors)
-  {
-    i.second->Update(this, dt);
-  }
-  mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt});
+	for (auto &i : mSectors)
+	{
+		i.second->Update(this, dt);
+	}
+	mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt });
 }
 
 
 
 std::shared_ptr<Sector> World::GetSector(const SPos &position)
 {
-  auto it = mSectors.find(position);
-  if (it == mSectors.end())
-  {
-    if (auto psec = WorldWorker::Get().GetSector(position))
-    {
-      mSectors[position] = psec;
-      psec->Draw(mTesselator);
+	auto it = mSectors.find(position);
+	if (it == mSectors.end())
+	{
+		if (auto psec = WorldWorker::Get().GetSector(position))
+		{
+			mSectors[position] = psec;
+			psec->Draw(mTesselator);
 
-      // Добавлен новый сектор, сообщим соседним секторам, что б перестроились.
-      /*SPos offset[] = 
-      {
-        {  1,  0,  0 },
-        { -1,  0,  0 },
-        {  0,  1,  0 },
-        {  0, -1,  0 },
-        {  0,  0,  1 },
-        {  0,  0, -1 },
-      };
-      for (const auto &i : offset)
-      {
-        if (auto &sector = FindSector(position + i))
-        {
-          sector->SayChanged();
-        }
-      }*/
-      return psec;
-    }
+			// Добавлен новый сектор, сообщим соседним секторам, что б перестроились.
+			/*SPos offset[] =
+			{
+			  {  1,  0,  0 },
+			  { -1,  0,  0 },
+			  {  0,  1,  0 },
+			  {  0, -1,  0 },
+			  {  0,  0,  1 },
+			  {  0,  0, -1 },
+			};
+			for (const auto &i : offset)
+			{
+			  if (auto &sector = FindSector(position + i))
+			  {
+				sector->SayChanged();
+			  }
+			}*/
+			return psec;
+		}
 
-    return nullptr;
-  }
-  
-  return it->second;
+		return nullptr;
+	}
+
+	return it->second;
 }
 
 std::shared_ptr<Sector> World::FindSector(const SPos &position)
 {
-  auto it = mSectors.find(position);
-  if (it != mSectors.end())
-  {
-    return it->second;
-  }
+	static SPos last{ 99999 };
+	static std::shared_ptr<Sector> plast;
 
-  return nullptr;
+	if (last == position)
+		return plast;
+
+	auto it = mSectors.find(position);
+	if (it != mSectors.end())
+	{
+		plast = it->second;
+		return it->second;
+	}
+
+	return nullptr;
 }
 
 PGameObject World::GetBlock(const WBPos &wbpos)
 {
-  auto spos = cs::WBtoS(wbpos);
-  if (auto sector = FindSector(spos))
-  {
-    return sector->GetBlock(cs::WBtoSB(wbpos, spos));
-  }
+	auto spos = cs::WBtoS(wbpos);
+	if (auto sector = FindSector(spos))
+	{
+		return sector->GetBlock(cs::WBtoSB(wbpos, spos));
+	}
 
-  return nullptr;
+	return nullptr;
 }
 
 PGameObject World::GetBlock(const WBPos &wbpos, std::shared_ptr<Sector> &contains)
@@ -121,46 +128,47 @@ static glm::ivec3 neib[] = {
 
 void World::SetBlock(const WBPos &wbpos, PGameObject block)
 {
-  auto spos = cs::WBtoS(wbpos);
-  std::shared_ptr<Sector> sec;
+	auto spos = cs::WBtoS(wbpos);
+	std::shared_ptr<Sector> sec;
 
-  if (auto l = GetBlock(wbpos, sec))
-	  l->OnDestroy({ this, sec.get(), wbpos, 0 });
+	if (auto l = GetBlock(wbpos, sec))
+		l->OnDestroy({ this, sec.get(), wbpos, 0 });
 
-  if (auto sector = FindSector(spos))
-  {
-	  sector->SetBlock(cs::WBtoSB(wbpos, spos), block);
-	  block->OnCreate({ this, sec.get(), wbpos, 0 });
-  }
+	if (auto sector = FindSector(spos))
+	{
+		sector->SetBlock(cs::WBtoSB(wbpos, spos), block);
+		if(block) // may be nullptr on place air
+			block->OnCreate({ this, sec.get(), wbpos, 0 });
+	}
 
-  for (const auto &n : neib)
-  {
-	  if (auto l = GetBlock(wbpos + n, sec))
-		  l->OnAdjacentChanged({ this, sec.get(), wbpos + n, 0 });
-  }
+	for (const auto &n : neib)
+	{
+		if (auto l = GetBlock(wbpos + n, sec))
+			l->OnAdjacentChanged({ this, sec.get(), wbpos + n, 0 });
+	}
 }
 
 int World::GetActiveCount()
 {
-  return mSectors.size();
+	return mSectors.size();
 }
 
 Player *World::GetPlayer()
 {
-  return mPlayer.get();
+	return mPlayer.get();
 }
 
 void World::SetTessellator(Tessellator *tess)
 {
-  mTesselator = tess;
+	mTesselator = tess;
 }
 
 Tessellator * World::GetTessellator()
 {
-  return mTesselator;
+	return mTesselator;
 }
 
 void World::PushEvent(std::unique_ptr<GameEvent> event)
 {
-  mEventBus.Push(std::move(event));
+	mEventBus.Push(std::move(event));
 }

@@ -52,7 +52,7 @@ void SplitConnectionTesselator::JsonLoad(const rapidjson::Value & val)
 			if (auto me = Resources::Get().GetMesh(arr[i].GetString()))
 			{
 				PMesh<VertexVTN> m = std::make_shared<TemplateMesh<VertexVTN>>(*me);
-				const auto &uv4 = mTextures[CENTER];
+				const auto &uv4 = mTextures[6];
 				for (int i = 0; i < m->SizeVertex(); i++)
 				{
 					m->Vertex(i).texture.x = glm::mix(uv4.x, uv4.z, m->Vertex(i).texture.x);
@@ -76,13 +76,13 @@ PGameObjectTessellator SplitConnectionTesselator::Clone()
 PModel SplitConnectionTesselator::GetModel(const TessellatorParams & params)
 {
 	static glm::ivec3 neib[] = {
-		{  1,  0,  0 },
-		{  0, -1,  0 },
-		{ -1,  0,  0 },
-		{  0, -1,  0 },
-		{  0,  0, -1 },
-		{  0,  0,  1 }
-	};
+		{  0, -1,  0 },	//FRONT 
+		{  1,  0,  0 },	//RIGHT 
+		{  0,  1,  0 },	//BACK 
+		{ -1,  0,  0 },	//LEFT 
+		{  0,  0,  1 },	//TOP
+		{  0,  0, -1 }	//BOTTOM 
+	};					
 
 	PModel m = std::make_shared<Model>();
 	m->GetMesh() = std::make_shared<TemplateMesh<VertexVTN>>();
