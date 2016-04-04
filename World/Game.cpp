@@ -57,19 +57,12 @@ Game::Game()
 
 	mWorld = std::make_unique<World>();
 	WindowInventory::Get().w = mWorld.get();
-	mKeyBinder = std::make_unique<KeyBinder>(mWindow->GetKeyboard(), mWindow->GetMouse());
-
-	mKeyBinder->SetCallback([world = mWorld.get()](std::unique_ptr<GameEvent> event)
-	{
-		world->PushEvent(std::move(event));
-	});
 
 	generateShadowFBO();
 }
 
 Game::~Game()
 {
-	mKeyBinder.reset();
 	mWorld.reset();
 	mRenderSector.reset();
 	mRender.reset();
@@ -114,18 +107,6 @@ int Game::Run()
 	mWorld->SetTessellator(mTessellator.get());
 	mTessellator->Run();
 
-	//   boost::thread update_thread([this]
-	//   {
-	//     auto currTime = static_cast<float>(glfwGetTime());
-	//     while (true)
-	//     {
-	//       auto lastTime = currTime;
-	//       currTime = static_cast<float>(glfwGetTime());
-	//       Update(currTime - lastTime);
-	//       boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
-	//     }
-	//   });
-
 	auto currTime = static_cast<float>(glfwGetTime());
 	while (!mWindow->WindowShouldClose())
 	{
@@ -143,11 +124,7 @@ int Game::Run()
 
 	mTessellator.reset();
 
-	//update_thread.interrupt();
 	gen_thread.interrupt();
-
-	//LOG(trace) << "update joining";
-	//update_thread.join();
 
 	LOG(trace) << "generate joining";
 	gen_thread.join();
@@ -160,19 +137,6 @@ int Game::Run()
 
 void Game::Update(float dt)
 {
-	mKeyBinder->Update();
-
-	if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_TAB))
-	{
-		mWindow->GetMouse().SetCentring(!mWindow->GetMouse().GetCentring());
-	}
-
-	if (mWindow->GetKeyboard().IsKeyPress(GLFW_KEY_F5))
-	{
-		auto p = mCamera->GetPos();
-		mWorld->GetPlayer()->SetPosition(p + glm::vec3(300));
-	}
-
 	SPos secPos = cs::WtoS(mWorld->GetPlayer()->GetPosition());
 	mSectorLoader->SetPos(secPos);
 
@@ -204,8 +168,9 @@ void Game::generateShadowFBO()
 
 void Game::Draw(float dt)
 {
-	mCamera->SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
-	mCamera->SetRot(mWorld->GetPlayer()->GetRot());
+	float drawtime = glfwGetTime();
+	//mCamera->SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
+	//mCamera->SetRot(mWorld->GetPlayer()->GetRot());
 	mCamera->Update();
 
 	static float phi = 0;
@@ -214,7 +179,7 @@ void Game::Draw(float dt)
 	mSun->LookAt(mCamera->GetPos());
 	mSun->Update();
 
-	static bool wire = false;
+	static bool wire = true;
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_F2, false))
 		wire = wire ? (glPolygonMode(GL_FRONT_AND_BACK, GL_LINE), false) :
@@ -246,7 +211,7 @@ void Game::Draw(float dt)
 	ParticleSystem::Get().Draw(*mCamera);
 	ParticleSystem::Get().Update(dt);
 
-	auto ray = mCamera->GetRay(mWindow->GetMouse().GetPos());
+	auto ray = mCamera->GetRay(ImGui::GetMousePos());
 	std::tuple<glm::ivec3, glm::vec3> selection_pos; // pos, normal
 
 	static size_t select_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
@@ -305,7 +270,6 @@ void Game::Draw(float dt)
 	WindowRecipe &wr = WindowRecipe::Get();
 
 	ImGui_ImplGlfwGL3_NewFrame();
-	wp.DtUpdate(dt, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
 	wp.Draw(mWindow->GetSize());
 	wdb.Draw(mWindow->GetSize());
 	winv.Draw(mWindow->GetSize());
@@ -325,5 +289,7 @@ void Game::Draw(float dt)
 	}
 
 	ImGui::Render();
+
+	wp.DtUpdate(glfwGetTime() - drawtime, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
 }
 

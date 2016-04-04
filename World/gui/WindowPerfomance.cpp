@@ -21,6 +21,7 @@ void WindowPerfomance::Draw(glm::vec2 mainwin_size)
 		if (ImGui::TreeNode("deltas"))
 		{
 			ImGui::LabelText("render dt", "%g ms", dt * 1000);
+			ImGui::LabelText("approx fps", "%g", 1.f / dt );
 			tess_perf.Draw();
 			gen_perf.Draw();
 			ImGui::TreePop();

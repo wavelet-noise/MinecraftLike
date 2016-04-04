@@ -7,7 +7,8 @@ WindowRecipe::WindowRecipe()
 
 void WindowRecipe::Draw(glm::vec2 mainwin_size)
 {
-	ImGui::Begin("Recipe & Usage", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::SetNextWindowSize({ 250, 500 });
+	ImGui::Begin("Recipe & Usage", nullptr);
 	if (recipe)
 	{
 		ImGui::Text("Recipe");

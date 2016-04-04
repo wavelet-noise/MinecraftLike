@@ -107,9 +107,6 @@
     <ClCompile Include="tools\ray.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
     <ClCompile Include="tools\wset.h" />
-    <ClCompile Include="Window\KeyBinder.cpp" />
-    <ClCompile Include="Window\Keyboard.cpp" />
-    <ClCompile Include="Window\Mouse.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +208,6 @@
     <ClInclude Include="tools\QueuedThread.h" />
     <ClInclude Include="tools\ray.h" />
     <ClInclude Include="tools\StringIntern.h" />
-    <ClInclude Include="Window\KeyBinder.h" />
-    <ClInclude Include="Window\Keyboard.h" />
-    <ClInclude Include="Window\Mouse.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>

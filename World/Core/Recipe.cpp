@@ -58,9 +58,14 @@ void Recipe::DrawSome(const StringIntern &s)
 
 void Recipe::DrawGui()
 {
+	bool first = true;
 	for (const auto &inp : input)
 	{
-		ImGui::SameLine();
+		if (first)
+			first = false;
+		else
+			ImGui::SameLine();
+
 		DrawSome(inp.id);
 		auto draw_list = ImGui::GetWindowDrawList();
 

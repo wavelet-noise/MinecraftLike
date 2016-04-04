@@ -33,19 +33,27 @@ void LiquidPipe::Update(const GameObjectParams & params)
 	if (!liq.obj)
 		return;
 
+	std::vector<LiquidPipe *> pipes;
+	float total = liq.count;
+
 	for (int i = 0; i < 6; i++)
 	{
 		if (auto n = params.world->GetBlock(params.pos + neib[i]))
 		{
 			if (auto p = n->GetFromFullName<LiquidPipe>("LiquidPipe"))
 			{
-				float t = p->GetLiquidCount() + liq.count;
-				if (liq.count && p->PushLiquid({ liq.obj, t / 2 }))
-				{
-					liq.count = t / 2;
-				}
+				if (!p->CanAccept(liq.obj))
+					continue;
+
+				total += p->GetLiquidCount();
+				pipes.push_back(p);
 			}
 		}
+	}
+
+	for (auto r : pipes)
+	{
+		r->SetLiquid({ liq.obj, total / pipes.size() });
 	}
 }
 
@@ -99,6 +107,11 @@ bool LiquidPipe::SetLiquid(ChestSlot cs)
 	}
 
 	return false;
+}
+
+bool LiquidPipe::CanAccept(PGameObject i)
+{
+	return !i || !liq.obj || liq.obj->GetId() == i->GetId();
 }
 
 bool LiquidPipe::PushLiquid(ChestSlot cs)

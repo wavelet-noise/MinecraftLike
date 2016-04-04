@@ -5,8 +5,7 @@
 #include <tools\Log.h>
 #include <gui\imgui_impl_glfw_gl3.h>
 
-Window::Window(const glm::uvec2 &size) :
-	mKeyboard(new Keyboard())
+Window::Window(const glm::uvec2 &size)
 {
 	mSize = size;
 	std::cout << "Start window creating" << std::endl;
@@ -35,8 +34,6 @@ Window::Window(const glm::uvec2 &size) :
 		throw "Window not created.";
 	}
 
-	mMouse = std::make_unique<Mouse>(*mWindow);
-
 	// Привязываем к glfw окну указатель на объект WindowGL.
 	glfwSetWindowUserPointer(mWindow.get(), this);
 
@@ -44,7 +41,6 @@ Window::Window(const glm::uvec2 &size) :
 	{
 		Window *window = static_cast<Window *>(glfwGetWindowUserPointer(win));
 		assert(window);
-		window->mKeyboard->SetKey(key, scancode, action, mods);
 		ImGui_ImplGlfwGL3_KeyCallback(win, key, scancode, action, mods);
 	});
 
@@ -105,7 +101,6 @@ void Window::Update()
 	assert(mWindow);
 	glfwSwapBuffers(mWindow.get());
 
-	mMouse->Update();
 	glfwPollEvents();
 }
 
@@ -119,22 +114,11 @@ const glm::uvec2 & Window::GetFbSize() const
 	return fbsize;
 }
 
-Keyboard &Window::GetKeyboard()
-{
-	return *mKeyboard;
-}
-
 void Window::SetTitle(const std::string &title)
 {
 	assert(mWindow);
 	glfwSetWindowTitle(mWindow.get(), title.c_str());
 }
-
-Mouse &Window::GetMouse()
-{
-	return *mMouse;
-}
-
 GLFWwindow * Window::Get()
 {
 	return mWindow.get();

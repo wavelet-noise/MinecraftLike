@@ -102,12 +102,6 @@
     <ClCompile Include="Render\TextureManager.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Window\Keyboard.cpp">
-      <Filter>Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Window\Mouse.cpp">
-      <Filter>Window</Filter>
-    </ClCompile>
     <ClCompile Include="Window\Window.cpp">
       <Filter>Window</Filter>
     </ClCompile>
@@ -194,9 +188,6 @@
     </ClCompile>
     <ClCompile Include="Core\GameEvent.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Window\KeyBinder.cpp">
-      <Filter>Window</Filter>
     </ClCompile>
     <ClCompile Include="gui\WindowDb.cpp">
       <Filter>gui</Filter>
@@ -357,12 +348,6 @@
     <ClInclude Include="Render\VertexTools.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Window\Keyboard.h">
-      <Filter>Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Window\Mouse.h">
-      <Filter>Window</Filter>
-    </ClInclude>
     <ClInclude Include="Window\Window.h">
       <Filter>Window</Filter>
     </ClInclude>
@@ -477,9 +462,6 @@
     </ClInclude>
     <ClInclude Include="Core\GameEvent.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Window\KeyBinder.h">
-      <Filter>Window</Filter>
     </ClInclude>
     <ClInclude Include="Core\EventBus.h">
       <Filter>Core</Filter>

@@ -30,9 +30,16 @@ public:
 		return liq.count;
 	}
 
+	inline float SetLiquidCount(float c)
+	{
+		return liq.count = c;
+	}
+
 	StringIntern GetLiquidID();
 
 	bool SetLiquid(ChestSlot cs);
+
+	bool CanAccept(PGameObject i);
 
 	bool PushLiquid(ChestSlot cs);
 	

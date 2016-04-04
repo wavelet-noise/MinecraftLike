@@ -12,7 +12,6 @@
 #include "FpsCounter.h"
 #include "Render\RenderSector.h"
 #include "network\NetworkManager.h"
-#include "Window\KeyBinder.h"
 
 class Game
 {
@@ -41,7 +40,6 @@ private:
   std::shared_ptr<Camera> mCamera;
   std::shared_ptr<Camera> mSun;
   std::unique_ptr<World> mWorld;
-  std::unique_ptr<KeyBinder> mKeyBinder;
   std::unique_ptr<Tessellator> mTessellator;
 
   std::unique_ptr<SectorLoader> mSectorLoader;
