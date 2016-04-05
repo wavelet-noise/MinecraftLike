@@ -24,15 +24,16 @@
 #include "tools\order_casters.h"
 
 #include "gui\imgui_impl_glfw_gl3.h"
-#include "gui\WindowPerfomance.h"
-#include "gui\WindowDb.h"
-#include "gui\WindowInventory.h"
-#include "gui\WindowRecipe.h"
+#include "gui\WS.h"
+#include <gui\WindowInventory.h>
+#include <gui\WindowPerfomance.h>
 #include <Render\Resources.h>
 #include <tools\ray.h>
 #include <core\Chest.h>
 #include <core\Tool.h>
 #include <Render\ParticleSystem.h>
+#include <core\EventBus.h>
+#include <core\OrderBus.h>
 
 Game::Game()
 {
@@ -80,6 +81,8 @@ int Game::Run()
 	}
 
 	mCamera->Resize(mWindow->GetSize());
+	mCamera->SetPos({0, 0, 64});
+	mCamera->LookAt({32, 32, 0});
 	mWindow->SetResizeCallback([&](int x, int y) {
 		mCamera->Resize({ x, y });
 		mSun->Resize({ x, y });
@@ -139,6 +142,14 @@ void Game::Update(float dt)
 {
 	SPos secPos = cs::WtoS(mWorld->GetPlayer()->GetPosition());
 	mSectorLoader->SetPos(secPos);
+
+	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
+	{
+		auto del = glm::vec3(ImGui::GetMouseDragDelta(1).y / mWindow->GetSize().y, ImGui::GetMouseDragDelta(1).x / mWindow->GetSize().x, 0);
+		del = mCamera->GetDirection() * del;
+		del.z = 0;
+		mCamera->SetPos(mCamera->GetPos() - del);
+	}
 
 	mWorld->Update(static_cast<float>(dt));
 }
@@ -216,6 +227,33 @@ void Game::Draw(float dt)
 
 	static size_t select_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
 
+	static std::vector<size_t> order_models = [&]() -> std::vector<size_t>
+	{
+		std::vector<size_t> t;
+		for (int i = 0; i < 1000; i++)
+		{
+			t.push_back(mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl"));
+		}
+		return t;
+	}();
+
+
+	int j = 0;
+	for (auto i : order_models)
+	{
+		if (OrderBus::Get().orders.size() > j && OrderBus::Get().orders[j]->GetId() == Order::Idfor<OrderDig>())
+		{
+			auto od = std::static_pointer_cast<OrderDig>(OrderBus::Get().orders[j]);
+			mRender->SetModelMatrix(i, glm::translate(glm::mat4(1), od->pos));
+		}
+		else
+		{
+			mRender->SetModelMatrix(i, glm::translate(glm::mat4(1), glm::vec3{99999}));
+		}
+			
+		j++;
+	}
+
 	static std::unordered_map<glm::ivec3, PGameObject> opened_w;
 
 	auto sel = mWorld->GetPlayer()->GetFromFullName<Chest>("Chest")->PopSelected();
@@ -233,25 +271,11 @@ void Game::Draw(float dt)
 	{
 		if (ImGui::IsMouseDown(0))
 		{
-			if (sel.obj)
+			switch (WindowTools::Get().selected)
 			{
-				if (sel.obj->IsPlacable())
-				{
-					static float place = 0;
-					place -= dt;
-					if (place <= 0)
-					{
-						place = 0.5;
-						mWorld->SetBlock(std::get<0>(selection_pos), DB::Get().Create(sel.obj->GetId()));
-					}
-				}
-				else
-				{
-					if (auto tool = sel.obj->GetFromFullName<Tool>("Tool"))
-					{
-						tool->Update({ mWorld.get(), nullptr, glm::vec3(std::get<0>(selection_pos)) , dt, mRender.get() });
-					}
-				}
+			case SelectedOrder::DIG_SQUARE:
+				OrderBus::Get().IssueOrder(std::make_shared<OrderDig>(std::get<0>(selection_pos)));
+				break;
 			}
 		}
 		if (ImGui::IsMouseDown(1)) {
@@ -264,16 +288,9 @@ void Game::Draw(float dt)
 	}
 	mWorld->GetPlayer()->GetFromFullName<Chest>("Chest")->PushSelected(std::move(sel));
 
-	WindowPerfomance &wp = WindowPerfomance::Get();
-	WindowInventory &winv = WindowInventory::Get();
-	WindowDb &wdb = WindowDb::Get();
-	WindowRecipe &wr = WindowRecipe::Get();
-
 	ImGui_ImplGlfwGL3_NewFrame();
-	wp.Draw(mWindow->GetSize());
-	wdb.Draw(mWindow->GetSize());
-	winv.Draw(mWindow->GetSize());
-	wr.Draw(mWindow->GetSize());
+
+	WS::Get().Draw(mWindow->GetSize());
 
 	for (auto &w : opened_w)
 	{
@@ -290,6 +307,6 @@ void Game::Draw(float dt)
 
 	ImGui::Render();
 
-	wp.DtUpdate(glfwGetTime() - drawtime, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
+	WindowPerfomance::Get().DtUpdate(glfwGetTime() - drawtime, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
 }
 

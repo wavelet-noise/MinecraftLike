@@ -17,6 +17,11 @@ public:
     mOpen = true;
   }
 
+  void Toggle()
+  {
+	  mOpen = !mOpen;
+  }
+
   void SetVisibility(bool val)
   {
     mOpen = val;

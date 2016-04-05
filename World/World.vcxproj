@@ -46,6 +46,7 @@
     <ClCompile Include="Core\MeshPartialBlockGenerator.cpp" />
     <ClCompile Include="Core\MetalSmelter.cpp" />
     <ClCompile Include="Core\ModelTessellator.cpp" />
+    <ClCompile Include="Core\OrderBus.cpp" />
     <ClCompile Include="Core\Plant.cpp" />
     <ClCompile Include="Core\Recipe.cpp" />
     <ClCompile Include="Core\SectorTessellator.cpp" />
@@ -73,9 +74,12 @@
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="gui\WindowBase.h" />
     <ClCompile Include="gui\WindowDb.cpp" />
+    <ClCompile Include="gui\WindowEventlog.cpp" />
     <ClCompile Include="gui\WindowInventory.cpp" />
     <ClCompile Include="gui\WindowPerfomance.cpp" />
     <ClCompile Include="gui\WindowRecipe.cpp" />
+    <ClCompile Include="gui\WindowTools.cpp" />
+    <ClCompile Include="gui\WS.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
@@ -130,6 +134,7 @@
     <ClInclude Include="Core\MeshPartialBlockGenerator.h" />
     <ClInclude Include="Core\MetalSmelter.h" />
     <ClInclude Include="Core\ModelTessellator.h" />
+    <ClInclude Include="core\OrderBus.h" />
     <ClInclude Include="Core\Plant.h" />
     <ClInclude Include="Core\Recipe.h" />
     <ClInclude Include="Core\SectorBase.h" />
@@ -162,9 +167,12 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
     <ClInclude Include="gui\WindowDb.h" />
+    <ClInclude Include="gui\WindowEventlog.h" />
     <ClInclude Include="gui\WindowInventory.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="gui\WindowRecipe.h" />
+    <ClInclude Include="gui\WindowTools.h" />
+    <ClInclude Include="gui\WS.h" />
     <ClInclude Include="network\NetworkManager.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="render\ParticleSystem.h" />

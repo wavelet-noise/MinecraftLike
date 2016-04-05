@@ -1,11 +1,4 @@
-
-
-
-
 #pragma once
-#ifndef GameEvent_h__
-#define GameEvent_h__
-
 #include <glm/glm.hpp>
 
 class GameEvent
@@ -60,6 +53,3 @@ public:
 private:
   glm::vec3 mRotated;
 };
-
-
-#endif // GameEvent_h__

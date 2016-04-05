@@ -8,12 +8,14 @@ void WindowPerfomance::Draw(glm::vec2 mainwin_size)
 	ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowCollapsed(true, ImGuiSetCond_FirstUseEver);
 
-	ImGui::Begin("Perfomance monitor", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
+	if (mOpen)
 	{
+		ImGui::Begin("Perfomance monitor", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
 		ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
 		if (ImGui::TreeNode("mem"))
 		{
 			ImGui::LabelText("total", "%s", mems.c_str());
+
 			ImGui::TreePop();
 		}
 
@@ -21,9 +23,10 @@ void WindowPerfomance::Draw(glm::vec2 mainwin_size)
 		if (ImGui::TreeNode("deltas"))
 		{
 			ImGui::LabelText("render dt", "%g ms", dt * 1000);
-			ImGui::LabelText("approx fps", "%g", 1.f / dt );
+			ImGui::LabelText("approx fps", "%g", 1.f / dt);
 			tess_perf.Draw();
 			gen_perf.Draw();
+
 			ImGui::TreePop();
 		}
 
@@ -41,13 +44,20 @@ void WindowPerfomance::Draw(glm::vec2 mainwin_size)
 				&fps_subsec[0],
 				100,
 				fps_subsec_cur, std::to_string(fps_subsec[fps_subsec_cur]).c_str(), 0, 1000, { 100,50 });
-			ImGui::TreePop();
 
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("sector stats"))
+		{
 			ImGui::LabelText("sector DC", "%i", dc);
 			ImGui::LabelText("active sectors", "%i", act);
+
+			ImGui::TreePop();
 		}
+
+		ImGui::End();
 	}
-	ImGui::End();
 }
 
 void WindowPerfomance::DtUpdate(float __dt, int __fps, int __dc, int __act)
@@ -127,7 +137,7 @@ void WindowPerfomance::PerfHelper::Set(float _tes_dt)
 	tes_dt_count++;
 	if (tes_dt_count == 1)
 		tes_dt_mean = _tes_dt;
-	tes_dt_mean = tes_dt_mean * ((tes_dt_count - 1) / float(tes_dt_count) ) + _tes_dt * (1 / float(tes_dt_count));
+	tes_dt_mean = tes_dt_mean * ((tes_dt_count - 1) / float(tes_dt_count)) + _tes_dt * (1 / float(tes_dt_count));
 }
 
 float WindowPerfomance::PerfHelper::Get()

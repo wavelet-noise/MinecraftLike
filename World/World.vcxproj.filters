@@ -43,6 +43,12 @@
     <Filter Include="3rdparty\tiny_obj_load">
       <UniqueIdentifier>{a62715c2-bd5f-452a-8720-2774cb9b1254}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\orders">
+      <UniqueIdentifier>{440cb647-3511-43ea-ad38-2510e230ccdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\events">
+      <UniqueIdentifier>{c0ae2a91-b8ce-4959-bbc3-ed4469afb2a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsCounter.cpp" />
@@ -192,9 +198,6 @@
     <ClCompile Include="gui\WindowDb.cpp">
       <Filter>gui</Filter>
     </ClCompile>
-    <ClCompile Include="Core\EventBus.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="template\TemplateItemMaterial.cpp">
       <Filter>Core\Template</Filter>
     </ClCompile>
@@ -272,6 +275,13 @@
       <Filter>Core\tessellator</Filter>
     </ClCompile>
     <ClCompile Include="Core\Xyz.cpp" />
+    <ClCompile Include="gui\WindowEventlog.cpp" />
+    <ClCompile Include="Core\EventBus.cpp">
+      <Filter>Core\events</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderBus.cpp" />
+    <ClCompile Include="gui\WS.cpp" />
+    <ClCompile Include="gui\WindowTools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -463,9 +473,6 @@
     <ClInclude Include="Core\GameEvent.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\EventBus.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="template\TemplateItemMaterial.h">
       <Filter>Core\Template</Filter>
     </ClInclude>
@@ -562,6 +569,21 @@
     </ClInclude>
     <ClInclude Include="Core\Xyz.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\WindowEventlog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\EventBus.h">
+      <Filter>Core\events</Filter>
+    </ClInclude>
+    <ClInclude Include="core\OrderBus.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\WindowTools.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\WS.h">
+      <Filter>gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

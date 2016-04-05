@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "../Render/Render.h"
 #include "EventBus.h"
+#include "GameEvent.h"
 
 class Tessellator;
 
@@ -58,8 +59,6 @@ private:
   std::shared_ptr<Sector> FindSector(const SPos &position);
 
   Tessellator *mTesselator;
-
-  EventBus mEventBus;
 };
 
 

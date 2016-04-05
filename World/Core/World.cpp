@@ -25,7 +25,7 @@ World::~World()
 
 void World::Update(float dt)
 {
-	mEventBus.Update(this);
+	//mEventBus.Update(this);
 
 	for (auto &i : mSectors)
 	{
@@ -170,5 +170,5 @@ Tessellator * World::GetTessellator()
 
 void World::PushEvent(std::unique_ptr<GameEvent> event)
 {
-	mEventBus.Push(std::move(event));
+	//mEventBus.Push(std::move(event));
 }

@@ -8,28 +8,32 @@ WindowRecipe::WindowRecipe()
 void WindowRecipe::Draw(glm::vec2 mainwin_size)
 {
 	ImGui::SetNextWindowSize({ 250, 500 });
-	ImGui::Begin("Recipe & Usage", nullptr);
-	if (recipe)
+
+	if (mOpen)
 	{
-		ImGui::Text("Recipe");
-		decltype(auto) t = DB::Get().GetRecipe(what);
-		if (!t.empty())
-			for (const auto &r : t)
-			{
-				r->DrawGui();
-			}
+		ImGui::Begin("Recipe & Usage", &mOpen);
+		if (recipe)
+		{
+			ImGui::Text("Recipe");
+			decltype(auto) t = DB::Get().GetRecipe(what);
+			if (!t.empty())
+				for (const auto &r : t)
+				{
+					r->DrawGui();
+				}
+		}
+		else
+		{
+			ImGui::Text("Using");
+			decltype(auto) t = DB::Get().GetUsing(what);
+			if (!t.empty())
+				for (const auto &r : t)
+				{
+					r->DrawGui();
+				}
+		}
+		ImGui::End();
 	}
-	else
-	{
-		ImGui::Text("Using");
-		decltype(auto) t = DB::Get().GetUsing(what);
-		if (!t.empty())
-			for (const auto &r : t)
-			{
-				r->DrawGui();
-			}
-	}
-	ImGui::End();
 }
 
 void WindowRecipe::ShowRecipe(const StringIntern & s)
