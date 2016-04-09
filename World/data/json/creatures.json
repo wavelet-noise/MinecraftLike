@@ -1,0 +1,49 @@
+[
+{
+	"type":"Creature",
+	"id":"caracter",
+	"agents":
+	[
+		{
+			"type":"PositionAgent"
+		},
+		{
+			"type":"Controlable"
+		},
+		{
+			"type":"Creature"
+		},
+		{
+			"type":"CalorieConsumer"
+		},
+		{
+			"type":"WaterConsumer"
+		}
+	],
+	"dynamic":true
+},
+{
+	"type":"CreaturePart",
+	"id":"full_humanoid_leg",
+	"agents":[
+		{
+			"type":"WalkingPossibility",
+			"speed":1
+		},
+		{
+			"type":"CrawlingPossibility",
+			"speed":0.2
+		}
+	]
+},
+{
+	"type":"CreaturePart",
+	"id":"full_humanoid_arm",
+	"agents":[
+		{
+			"type":"CrawlingPossibility",
+			"speed":0.2
+		}
+	]
+}
+]

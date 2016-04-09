@@ -11,11 +11,11 @@
 #include "..\Render\Render.h"
 #include "Tessellator.h"
 #include <Core\Chest.h>
+#include <Core\EventBus.h>
+#include <memory>
 
 World::World()
 {
-	mPlayer = std::make_unique<Player>(StringIntern(std::string("player")));
-	mPlayer->PushAgent(std::make_shared<Chest>());
 }
 
 
@@ -31,7 +31,6 @@ void World::Update(float dt)
 	{
 		i.second->Update(this, dt);
 	}
-	mPlayer->Update(GameObjectParams{ this, nullptr, {}, dt });
 }
 
 
@@ -45,6 +44,7 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
 		{
 			mSectors[position] = psec;
 			psec->Draw(mTesselator);
+			EventBus::Get().Publish<EventSectorReady>(psec);
 
 			// Добавлен новый сектор, сообщим соседним секторам, что б перестроились.
 			/*SPos offset[] =
@@ -126,7 +126,7 @@ static glm::ivec3 neib[] = {
 	{  0,  0, -1 }
 };
 
-void World::SetBlock(const WBPos &wbpos, PGameObject block)
+PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block)
 {
 	auto spos = cs::WBtoS(wbpos);
 	std::shared_ptr<Sector> sec;
@@ -146,16 +146,23 @@ void World::SetBlock(const WBPos &wbpos, PGameObject block)
 		if (auto l = GetBlock(wbpos + n, sec))
 			l->OnAdjacentChanged({ this, sec.get(), wbpos + n, 0 });
 	}
+
+	return block;
+}
+
+PGameObject World::Spawn(const WBPos & position, PGameObject creature)
+{
+	if (auto &s = GetSector(cs::WBtoS(position)))
+		s->Spawn(position, creature);
+	else
+		LOG(error) << "Spawning " << creature->GetId() << " in not existing sector!";
+
+	return creature;
 }
 
 int World::GetActiveCount()
 {
 	return mSectors.size();
-}
-
-Player *World::GetPlayer()
-{
-	return mPlayer.get();
 }
 
 void World::SetTessellator(Tessellator *tess)
@@ -166,9 +173,4 @@ void World::SetTessellator(Tessellator *tess)
 Tessellator * World::GetTessellator()
 {
 	return mTesselator;
-}
-
-void World::PushEvent(std::unique_ptr<GameEvent> event)
-{
-	//mEventBus.Push(std::move(event));
 }

@@ -35,8 +35,8 @@
     <ClCompile Include="Core\Farmland.cpp" />
     <ClCompile Include="Core\Fuel.cpp" />
     <ClCompile Include="Core\Furnance.cpp" />
-    <ClCompile Include="Core\GameEvent.cpp" />
     <ClCompile Include="Core\Foliage.cpp" />
+    <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Heatable.cpp" />
     <ClCompile Include="Core\LiquidPipe.cpp" />
     <ClCompile Include="Core\MapGen\GenStrategy.cpp" />
@@ -52,11 +52,8 @@
     <ClCompile Include="Core\SectorTessellator.cpp" />
     <ClCompile Include="Core\SplitBlockTessellator.cpp" />
     <ClCompile Include="Core\DB.cpp" />
-    <ClCompile Include="Core\Creature.cpp" />
-    <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\MapGen\WorldWorker.cpp" />
     <ClCompile Include="Core\PhysicAgent.cpp" />
-    <ClCompile Include="Core\Player.cpp" />
     <ClCompile Include="Core\PositionAgent.cpp" />
     <ClCompile Include="Core\BlockTessellator.cpp" />
     <ClCompile Include="Core\Sector.cpp" />
@@ -101,6 +98,7 @@
     <ClCompile Include="Render\Shader.cpp" />
     <ClCompile Include="Render\Texture.cpp" />
     <ClCompile Include="Render\TextureManager.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="template\Template.cpp" />
     <ClCompile Include="template\TemplateItemMaterial.cpp" />
     <ClCompile Include="template\TemplateItemMaterialBase.cpp" />
@@ -122,8 +120,8 @@
     <ClInclude Include="Core\Farmland.h" />
     <ClInclude Include="core\Fuel.h" />
     <ClInclude Include="core\Furnance.h" />
-    <ClInclude Include="Core\GameEvent.h" />
     <ClInclude Include="core\Foliage.h" />
+    <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="core\Heatable.h" />
     <ClInclude Include="Core\LiquidController.h" />
     <ClInclude Include="Core\LiquidPipe.h" />
@@ -142,13 +140,10 @@
     <ClInclude Include="Core\SplitBlockTessellator.h" />
     <ClInclude Include="Core\DB.h" />
     <ClInclude Include="Core\Config.h" />
-    <ClInclude Include="Core\Creature.h" />
-    <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\GameObjectParams.h" />
     <ClInclude Include="Core\MapGen\PerlinNoise.h" />
     <ClInclude Include="Core\MapGen\WorldWorker.h" />
     <ClInclude Include="Core\PhysicAgent.h" />
-    <ClInclude Include="Core\Player.h" />
     <ClInclude Include="Core\PositionAgent.h" />
     <ClInclude Include="Core\BlockTessellator.h" />
     <ClInclude Include="Core\Sector.h" />
@@ -204,6 +199,7 @@
     <ClInclude Include="Render\TextureManager.h" />
     <ClInclude Include="Render\Vertex.h" />
     <ClInclude Include="Render\VertexTools.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="TemplateFactory.h" />
     <ClInclude Include="template\Template.h" />
     <ClInclude Include="template\TemplateItemMaterial.h" />

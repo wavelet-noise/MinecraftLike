@@ -1,12 +1,6 @@
-
-
-
-
 #pragma once
-#ifndef Sector_h__
-#define Sector_h__
-
 #include <array>
+#include <GL\glew.h>
 #include <glm/glm.hpp>
 
 #include "../tools/CoordSystem.h"
@@ -18,6 +12,7 @@
 #include <list>
 #include "SectorBase.h"
 
+class Creature;
 
 class Sector : public SectorBase<PGameObject>
 {
@@ -31,6 +26,8 @@ public:
   // Существующий блок будет удален.
   void SetBlock(const SBPos &pos, PGameObject block);
 
+  void Spawn(const SBPos &position, PGameObject creature);
+
   void SayChanged();
 
   void Update(class World *world, float dt);
@@ -41,6 +38,8 @@ private:
   SPos mPos;
 
   class Tessellator *mTessellator = nullptr;
+
+  std::list<PGameObject> creatures;
 
 //   friend class boost::serialization::access;
 // 
@@ -87,6 +86,3 @@ private:
 //     }
 //   }
 // }
-
-
-#endif // Sector_h__

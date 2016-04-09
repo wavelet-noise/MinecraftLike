@@ -1,9 +1,12 @@
 #pragma once
-#include <vector>
+#include <list>
 #include <memory>
+#include <GL\glew.h>
 #include <glm\glm.hpp>
 
-class Order
+using POrder = std::shared_ptr<class Order>;
+
+class Order : public std::enable_shared_from_this<Order>
 {
 public:
 	virtual ~Order() {}
@@ -18,6 +21,20 @@ public:
 	virtual size_t GetId() const = 0;
 
 	virtual bool IsEquals(const Order &rhs) = 0;
+	virtual std::string to_string() const;
+
+	void Take();
+	void Done();
+
+	inline bool IsTaken() const
+	{
+		return mTaken;
+	}
+
+	inline bool IsDone() const
+	{
+		return mDone;
+	}
 
 private:
 	static size_t Nextid()
@@ -25,6 +42,9 @@ private:
 		static size_t next_id(0);
 		return next_id++;
 	}
+
+	bool mTaken = false;
+	bool mDone = false;
 };
 
 template<typename T>
@@ -39,6 +59,7 @@ struct NumberedOrder : public Order
 struct OrderDig : public NumberedOrder<OrderDig>
 {
 	OrderDig(glm::vec3 v);
+	std::string to_string() const override;
 	glm::vec3 pos;
 
 	virtual bool IsEquals(const Order &rhs) override
@@ -55,9 +76,11 @@ struct OrderDig : public NumberedOrder<OrderDig>
 class OrderBus
 {
 public:
-	std::vector<std::shared_ptr<Order>> orders;
+	std::list<POrder> orders, orders_taken;
 
-	void IssueOrder(std::shared_ptr<Order> ord);
+	void IssueOrder(POrder ord);
+
+	void Update();
 
 	static OrderBus &Get()
 	{

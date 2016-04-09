@@ -1,15 +1,10 @@
-
-
-
-
 #pragma once
-#ifndef WorldWorker_h_
-#define WorldWorker_h_
+#include <GL\glew.h>
+#include <glm/glm.hpp>
 #include <boost\noncopyable.hpp>
 #include <unordered_set>
 #include <unordered_map>
 #include <memory>
-#include <glm/glm.hpp>
 #include "tools\CoordSystem.h"
 #include <mutex>
 #include "GenStrategy.h"
@@ -35,4 +30,3 @@ private:
 
   std::unique_ptr<GenStrategy> mGenerator;
 };
-#endif //WorldWorker_h_

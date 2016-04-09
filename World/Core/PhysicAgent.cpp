@@ -3,7 +3,7 @@
 
 
 #include "PhysicAgent.h"
-
+#include "PositionAgent.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "World.h"
 #include "../tools/CoordSystem.h"
@@ -23,31 +23,15 @@ PhysicAgent::PhysicAgent()
 			));
 }
 
-PhysicAgent::PhysicAgent(GameObject *parent, const std::string &name)
-	: Agent(parent, "PhysicAgent", name)
-{
-	mQuat = glm::quat_cast(glm::lookAt
-		(
-			glm::vec3(0.0f, 0.0f, 0.0f), // eye
-			glm::vec3(0.0f, 1.0f, 0.0f), // center
-			glm::vec3(0.0f, 0.0f, 1.0f)  // up
-			));
-}
-
-
-PhysicAgent::PhysicAgent(const PhysicAgent &object, GameObject *parent, const std::string &name)
-	: Agent(parent, "PhysicAgent", name)
-{
-
-}
-
 PhysicAgent::~PhysicAgent()
 {
 }
 
 PAgent PhysicAgent::Clone(GameObject *parent, const std::string &name)
 {
-	return MakeAgent<PhysicAgent>(*this, parent, name);
+	auto t = MakeAgent<PhysicAgent>(*this);
+	t->mParent = parent;
+	return t;
 }
 
 void PhysicAgent::Update(const GameObjectParams &params)

@@ -323,6 +323,8 @@ bool    ImGui_ImplGlfwGL3_Init(GLFWwindow* window, bool install_callbacks)
     io.ImeWindowHandle = glfwGetWin32Window(g_Window);
 #endif
 
+	io.Fonts->AddFontFromFileTTF("DejaVuSansMono.ttf", 14.0f, NULL, io.Fonts->GetGlyphRangesCyrillic()); 
+
     return true;
 }
 

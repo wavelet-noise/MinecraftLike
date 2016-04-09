@@ -43,6 +43,7 @@ private:
   std::unique_ptr<Tessellator> mTessellator;
 
   std::unique_ptr<SectorLoader> mSectorLoader;
+  std::list<PGameObject> controlled;
 
   PTexture depthTextureId;
   unsigned fboId = 0;

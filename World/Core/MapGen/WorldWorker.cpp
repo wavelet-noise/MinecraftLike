@@ -1,8 +1,3 @@
-
-
-
-
-#include <GLFW\glfw3.h>
 #include "WorldWorker.h"
 #include <thread>
 #include "tools\CoordSystem.h"
@@ -13,6 +8,7 @@
 #include <gui\WindowPerfomance.h>
 #include "WorldGenFlat.h"
 #include "WorldGenMountains.h"
+#include <Core\EventBus.h>
 
 WorldWorker &WorldWorker::Get()
 {
@@ -61,6 +57,7 @@ void WorldWorker::Process()
   }
   else
     mQueueMutex.unlock();
+
   auto end = glfwGetTime();
   WindowPerfomance::Get().GeneratorDt(end - start);
 }

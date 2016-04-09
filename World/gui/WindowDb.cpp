@@ -49,9 +49,6 @@ void WindowDb::Draw(glm::vec2 mainwin_size)
 				{
 					WindowRecipe::Get().ShowUsing(a.first);
 				}
-
-				if (ImGui::IsMouseClicked(0))
-					WindowInventory::Get().w->GetPlayer()->GetFromFullName<Chest>("Chest")->Push(DB::Get().Create(a.first));
 			}
 
 		}

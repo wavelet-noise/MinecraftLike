@@ -81,8 +81,8 @@ int Game::Run()
 	}
 
 	mCamera->Resize(mWindow->GetSize());
-	mCamera->SetPos({0, 0, 64});
-	mCamera->LookAt({32, 32, 0});
+	mCamera->SetPos({ 0, 0, 64 });
+	mCamera->LookAt({ 32, 32, 0 });
 	mWindow->SetResizeCallback([&](int x, int y) {
 		mCamera->Resize({ x, y });
 		mSun->Resize({ x, y });
@@ -92,8 +92,6 @@ int Game::Run()
 	TextureManager::Get().Compile();
 
 	DB::Get().ReloadDirectory("data\\json\\");
-
-	mWorld->GetPlayer()->SetPosition({ 0,0,50 });
 
 	boost::thread gen_thread([]() {
 		while (true)
@@ -140,7 +138,7 @@ int Game::Run()
 
 void Game::Update(float dt)
 {
-	SPos secPos = cs::WtoS(mWorld->GetPlayer()->GetPosition());
+	SPos secPos = { 0,0,0 };
 	mSectorLoader->SetPos(secPos);
 
 	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
@@ -151,7 +149,29 @@ void Game::Update(float dt)
 		mCamera->SetPos(mCamera->GetPos() - del);
 	}
 
+	for (const auto &e : EventBus::Get().ListenChannel<EventSectorReady>())
+	{
+		const auto &esec = std::static_pointer_cast<EventSectorReady>(e);
+		if (esec->sec->GetPos() == SPos(0, 0, 0))
+		{
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+		}
+	}
+
 	mWorld->Update(static_cast<float>(dt));
+	OrderBus::Get().Update();
+	EventBus::Get().Update();
 }
 
 void Game::generateShadowFBO()
@@ -239,30 +259,26 @@ void Game::Draw(float dt)
 
 
 	int j = 0;
+	auto ord = OrderBus::Get().orders.begin();
 	for (auto i : order_models)
 	{
-		if (OrderBus::Get().orders.size() > j && OrderBus::Get().orders[j]->GetId() == Order::Idfor<OrderDig>())
+		if (OrderBus::Get().orders.size() > j && (*ord)->GetId() == Order::Idfor<OrderDig>())
 		{
-			auto od = std::static_pointer_cast<OrderDig>(OrderBus::Get().orders[j]);
+			auto od = std::static_pointer_cast<OrderDig>(*ord);
 			mRender->SetModelMatrix(i, glm::translate(glm::mat4(1), od->pos));
+			ord++;
 		}
 		else
 		{
-			mRender->SetModelMatrix(i, glm::translate(glm::mat4(1), glm::vec3{99999}));
+			mRender->SetModelMatrix(i, glm::translate(glm::mat4(1), glm::vec3{ 99999 }));
 		}
-			
+
 		j++;
 	}
 
 	static std::unordered_map<glm::ivec3, PGameObject> opened_w;
 
-	auto sel = mWorld->GetPlayer()->GetFromFullName<Chest>("Chest")->PopSelected();
-	if (sel.obj && sel.obj->IsPlacable())
-		selection_pos = PickPrefirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
-		return mWorld->GetBlock(pos).get();
-	});
-	else
-		selection_pos = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
+	selection_pos = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
 		return mWorld->GetBlock(pos).get();
 	});
 
@@ -286,16 +302,28 @@ void Game::Draw(float dt)
 			}
 		}
 	}
-	mWorld->GetPlayer()->GetFromFullName<Chest>("Chest")->PushSelected(std::move(sel));
 
 	ImGui_ImplGlfwGL3_NewFrame();
 
 	WS::Get().Draw(mWindow->GetSize());
 
+	ImGui::Begin("Colony");
+	int i = 0;
+	for (auto &c : controlled)
+	{
+		if (ImGui::TreeNode((std::string("creature_") + std::to_string(i)).c_str()))
+		{
+			c->DrawGui();
+			ImGui::TreePop();
+		}
+		i++;
+	}
+	ImGui::End();
+
 	for (auto &w : opened_w)
 	{
 		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-		
+
 		std::get<1>(w)->DrawGui();
 		ImGui::End();
 	}

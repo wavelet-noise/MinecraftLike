@@ -1,9 +1,5 @@
-
-
-
-
 #include "Sector.h"
-
+#include <core\PositionAgent.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <stdint.h>
@@ -13,11 +9,12 @@
 #include "Tessellator.h"
 #include "SectorBase.h"
 #include <tuple>
+#include <Render\ParticleSystem.h>
+
 
 Sector::Sector(const SPos &position)
 	: mPos(position)
 {
-
 }
 
 
@@ -49,6 +46,17 @@ void Sector::SetBlock(const SBPos &pos, PGameObject block)
 	}
 }
 
+void Sector::Spawn(const SBPos & position, PGameObject creature)
+{
+	creatures.push_back(creature);
+	EventBus::Get().Publish<EventCreatureSpawn>(creature);
+
+	if (auto p = creature->GetFromFullName<PositionAgent>("PositionAgent"))
+		p->Set(position);
+	else
+		LOG(error) << "Spawning " << creature->GetId() << ", that is not creature!";
+}
+
 void Sector::Update(World *world, float dt)
 {
 	GameObjectParams gop{ world, this, {}, dt };
@@ -56,6 +64,37 @@ void Sector::Update(World *world, float dt)
 	{
 		gop.pos = cs::SBtoWB(cs::ItoSB(mUniquePoses[i]), mPos);
 		if (mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);
+	}
+
+
+	for (auto c_iter = creatures.begin(); c_iter != creatures.end(); ++c_iter)
+	{
+		(*c_iter)->Update(gop);
+	}
+
+	for (auto c_iter = creatures.begin(); c_iter != creatures.end();)
+	{
+		PGameObject c = *c_iter;
+		auto p = c->GetFromFullName<PositionAgent>("PositionAgent");
+
+		ParticleSystem::Get().Add( p->Get() + glm::vec3(0,0,0.5), StringIntern("car"), dt);
+
+		// если находится за границей сектора -- переносим в новый сектор, если он существует
+		if (p->Get().x > (mPos.x + 1) * SECTOR_SIZE ||
+			p->Get().x < (mPos.x) * SECTOR_SIZE ||
+			p->Get().y >(mPos.y + 1) * SECTOR_SIZE ||
+			p->Get().y < (mPos.y) * SECTOR_SIZE)
+		{
+			auto &nsec = world->GetSector(cs::WtoS(p->Get()));
+			if (nsec)
+			{
+				creatures.erase(c_iter);
+				nsec->creatures.push_back(std::move(c));
+				break;
+			}
+		}
+		//передвигаем итератор, если существо не перемещено
+		++c_iter;
 	}
 }
 

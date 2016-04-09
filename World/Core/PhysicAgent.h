@@ -19,8 +19,6 @@ class PhysicAgent : public Agent
 {
 public:
   PhysicAgent();
-  PhysicAgent(GameObject *parent, const std::string &name = "");
-  PhysicAgent(const PhysicAgent &object, GameObject *parent, const std::string &name = "");
   ~PhysicAgent();
 
   PAgent Clone(GameObject *parent, const std::string &name = "") override;

@@ -36,7 +36,7 @@ void Camera::RebuildProjection()
   {
   case Camera::ORTHO:
   case Camera::SHADOW:
-    mProjection = glm::ortho(-200.f, 200.f, -200.f, 200.f, -1000.f, 1000.f);
+    mProjection = glm::ortho(-100.f, 100.f, -100.f, 100.f, -300.f, 300.f);
     break;
   case Camera::PERSPECTIVE:
     mProjection = glm::perspective(mFov, mAspect, mNear, mFar);

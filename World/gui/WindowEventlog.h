@@ -1,6 +1,8 @@
 #pragma once
+#include <GL\glew.h>
 #include "WindowBase.h"
 #include <tools\StringIntern.h>
+#include <boost\circular_buffer.hpp>
 
 class World;
 
@@ -18,4 +20,7 @@ public:
 		static WindowEventlog w;
 		return w;
 	}
+
+private:
+	boost::circular_buffer<std::string> evlog;
 };

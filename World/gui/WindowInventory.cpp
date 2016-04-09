@@ -16,7 +16,6 @@ void WindowInventory::Draw(glm::vec2 mainwin_size)
   if (mOpen)
   {
 	  ImGui::Begin("Inventory", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
-	  w->GetPlayer()->GetFromFullName<Chest>("Chest")->DrawGui();
 	  ImGui::End();
   }
 }

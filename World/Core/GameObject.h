@@ -1,11 +1,5 @@
-
-
-
-
 #pragma once
-#ifndef GameObject_h__
-#define GameObject_h__
-
+#include "Settings.h"
 #include <map>
 #include <memory>
 #include <type_traits>
@@ -118,7 +112,3 @@ protected:
 	bool placable = false;
 	bool walkable = false;
 };
-
-
-
-#endif // GameObject_h__

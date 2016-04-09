@@ -11,10 +11,10 @@
 #include <memory>
 #include <list>
 #include "Sector.h"
-#include "Player.h"
+
 #include "../Render/Render.h"
 #include "EventBus.h"
-#include "GameEvent.h"
+
 
 class Tessellator;
 
@@ -36,23 +36,19 @@ public:
 
   // Установить блок в заданную позицию.
   // Существующий блок будет удален.
-  void SetBlock(const WBPos &pos, PGameObject block);
+  PGameObject SetBlock(const WBPos &pos, PGameObject block);
+
+  PGameObject Spawn(const WBPos &position, PGameObject creature);
 
   int GetActiveCount();
 
-  Player *GetPlayer();
-
   void SetTessellator(Tessellator *tess);
   Tessellator * GetTessellator();
-
-  void PushEvent(std::unique_ptr<GameEvent> event);
 
 private:
   std::unordered_map<SPos, std::shared_ptr<Sector>> mSectors;
 
   Sector *mCurrentSector;
-
-  std::unique_ptr<Player> mPlayer;
 
 private:
   // Найти сектор по позиции сектора.
@@ -60,7 +56,5 @@ private:
 
   Tessellator *mTesselator;
 };
-
-
 
 #endif // World_h__

@@ -54,16 +54,10 @@
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Core\GameObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Sector.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\World.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Player.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\SectorLoader.cpp">
@@ -74,9 +68,6 @@
     </ClCompile>
     <ClCompile Include="Core\PositionAgent.cpp">
       <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Creature.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\PhysicAgent.cpp">
       <Filter>Core\Agents</Filter>
@@ -192,9 +183,6 @@
     <ClCompile Include="Core\Material.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="Core\GameEvent.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="gui\WindowDb.cpp">
       <Filter>gui</Filter>
     </ClCompile>
@@ -282,15 +270,16 @@
     <ClCompile Include="Core\OrderBus.cpp" />
     <ClCompile Include="gui\WS.cpp" />
     <ClCompile Include="gui\WindowTools.cpp" />
+    <ClCompile Include="Core\GameObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="tools\StringIntern.h">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\GameObject.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Sector.h">
       <Filter>Core</Filter>
@@ -304,9 +293,6 @@
     <ClInclude Include="Core\MapGen\PerlinNoise.h">
       <Filter>Core\MapGen</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Player.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\SectorLoader.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -315,9 +301,6 @@
     </ClInclude>
     <ClInclude Include="Core\PositionAgent.h">
       <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Creature.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\PhysicAgent.h">
       <Filter>Core\Agents</Filter>
@@ -387,9 +370,6 @@
     </ClInclude>
     <ClInclude Include="Render\RenderMeshVao.h">
       <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="network\packetrequestplayers.h">
-      <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="network\packet.h">
       <Filter>network</Filter>
@@ -469,9 +449,6 @@
     </ClInclude>
     <ClInclude Include="Render\RenderSector.h">
       <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\GameEvent.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="template\TemplateItemMaterial.h">
       <Filter>Core\Template</Filter>
@@ -585,6 +562,13 @@
     <ClInclude Include="gui\WS.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="Core\GameObject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packetrequestplayers.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.glsl" />
