@@ -6,31 +6,13 @@
 #include <core\World.h>
 #include <imgui.h>
 #include <glm\gtx\string_cast.hpp>
-
-PositionAgent::PositionAgent()
-	: Agent(nullptr, "PositionAgent", "")
-{
-}
-
-PositionAgent::PositionAgent(GameObject *parent, const std::string &name)
-	: Agent(parent, "PositionAgent", name)
-{
-}
-
-
-PositionAgent::PositionAgent(const PositionAgent &object, GameObject *parent, const std::string &name)
-	: Agent(parent, "PositionAgent", name)
-{
-
-}
-
-PositionAgent::~PositionAgent()
-{
-}
+#include <fstream>
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
-	return MakeAgent<PositionAgent>(*this, parent, name);
+	auto t = MakeAgent<PositionAgent>(*this);
+	t->mParent = parent;
+	return t;
 }
 
 void PositionAgent::JsonLoad(const rapidjson::Value & val)
@@ -51,11 +33,6 @@ void PositionAgent::DrawGui()
 	}
 }
 
-Controlable::Controlable()
-	: Agent(nullptr, "Controlable", "")
-{
-}
-
 PAgent Controlable::Clone(GameObject * parent, const std::string & name)
 {
 	auto t = MakeAgent<Controlable>(*this);
@@ -65,7 +42,7 @@ PAgent Controlable::Clone(GameObject * parent, const std::string & name)
 
 void Controlable::Update(const GameObjectParams & params)
 {
-	auto c = mParent->GetFromFullName<Creature>("Creature");
+	auto c = mParent->GetAgent<Creature>();
 
 	if (!c->order)
 	{
@@ -75,7 +52,7 @@ void Controlable::Update(const GameObjectParams & params)
 
 		for (const auto &i : o)
 		{
-			auto p = mParent->GetFromFullName<PositionAgent>("PositionAgent");
+			auto p = mParent->GetAgent<PositionAgent>();
 
 
 			if (!i->IsTaken() && i->GetId() == Order::Idfor<OrderDig>())
@@ -97,10 +74,6 @@ void Controlable::Update(const GameObjectParams & params)
 	}
 }
 
-Creature::Creature()
-	: Agent(nullptr, "Creature", "")
-{
-}
 
 PAgent Creature::Clone(GameObject * parent, const std::string & name)
 {
@@ -113,7 +86,7 @@ void Creature::Update(const GameObjectParams & params)
 {
 	if (order)
 	{
-		auto p = mParent->GetFromFullName<PositionAgent>("PositionAgent");
+		auto p = mParent->GetAgent<PositionAgent>();
 		auto &pos = std::static_pointer_cast<OrderDig>(order)->pos;
 		p->Set(glm::mix(p->Get(), pos, params.dt));
 
@@ -137,11 +110,6 @@ void Creature::DrawGui()
 	}
 }
 
-WalkingPossibility::WalkingPossibility()
-	: Agent(nullptr, "WalkingPossibility", "")
-{
-}
-
 PAgent WalkingPossibility::Clone(GameObject * parent, const std::string & name)
 {
 	auto t = MakeAgent<WalkingPossibility>(*this);
@@ -158,11 +126,6 @@ void WalkingPossibility::DrawGui()
 	ImGui::Text("Can walk");
 }
 
-CrawlingPossibility::CrawlingPossibility()
-	: Agent(nullptr, "CrawlingPossibility", "")
-{
-}
-
 PAgent CrawlingPossibility::Clone(GameObject * parent, const std::string & name)
 {
 	auto t = MakeAgent<CrawlingPossibility>(*this);
@@ -177,11 +140,6 @@ void CrawlingPossibility::Update(const GameObjectParams & params)
 void CrawlingPossibility::DrawGui()
 {
 	ImGui::Text("Can crawl");
-}
-
-WaterConsumer::WaterConsumer()
-	: Agent(nullptr, "WaterConsumer", "")
-{
 }
 
 PAgent WaterConsumer::Clone(GameObject * parent, const std::string & name)
@@ -205,25 +163,23 @@ void WaterConsumer::DrawGui()
 
 	if (water <= 0)
 	{
-		ImGui::TextColored({ 1,0,0,1 }, "Dry");
+		ImGui::TextColored({ 1,0,0,1 }, "Dying of thirst");
+		mParent->GetAgent<Anatomic>()->Think("I'm dying of thirst :(");
 	}
 	else if (water <= full / 3.f)
 	{
 		ImGui::TextColored({ 1,1,0,1 }, "Strong thirst");
+		mParent->GetAgent<Anatomic>()->Think("I'm feel strong thirst :(");
 	}
 	else if (water <= full / 1.5f)
 	{
 		ImGui::TextColored({ 0.5,1,0,1 }, "Thirst");
+		mParent->GetAgent<Anatomic>()->Think("I'm feel thirst :(");
 	}
 	else
 	{
 		ImGui::TextColored({ 0,1,0,1 }, "Full");
 	}
-}
-
-CalorieConsumer::CalorieConsumer()
-	: Agent(nullptr, "CalorieConsumer", "")
-{
 }
 
 PAgent CalorieConsumer::Clone(GameObject * parent, const std::string & name)
@@ -248,17 +204,160 @@ void CalorieConsumer::DrawGui()
 	if (calorie <= 0)
 	{
 		ImGui::TextColored({ 1,0,0,1 }, "Starwing");
+		mParent->GetAgent<Anatomic>()->Think("I'm starwing :(");
 	}
 	else if (calorie <= full / 3.f)
 	{
 		ImGui::TextColored({ 1,1,0,1 }, "Very hungry");
+		mParent->GetAgent<Anatomic>()->Think("I'm very hungry :(");
 	}
 	else if (calorie <= full / 1.5f)
 	{
 		ImGui::TextColored({ 0.5,1,0,1 }, "Hungry");
+		mParent->GetAgent<Anatomic>()->Think("I'm hungry :(");
 	}
 	else
 	{
 		ImGui::TextColored({ 0,1,0,1 }, "Full");
 	}
+}
+
+PAgent Morale::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<Morale>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void Morale::Update(const GameObjectParams & params)
+{
+}
+
+void Morale::DrawGui()
+{
+	if (Settings::Get().IsDebug())
+	{
+		ImGui::Text("Morale: %g", morale);
+	}
+
+	if (morale >= 50)
+	{
+		ImGui::TextColored({ 0,1,0.5,1 }, "High morale");
+	}
+	else if (morale >= 40)
+	{
+		ImGui::TextColored({ 0,1,0,1 }, "Normal morale");
+	}
+	else if (morale >= 30)
+	{
+		ImGui::TextColored({ 0.5,1,0,1 }, "Slightly fatigued");
+	}
+	else if (morale >= 20)
+	{
+		ImGui::TextColored({ 1,1,0,1 }, "Moderately fatigued");
+	}
+	else
+	{
+		ImGui::TextColored({ 1,0,0,1 }, "Seriously fatigued");
+		mParent->GetAgent<Anatomic>()->Think("Life is pointless :(");
+	}
+}
+
+Anatomic::Anatomic()
+{
+	minds.resize(25);
+}
+
+PAgent Anatomic::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<Anatomic>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void Anatomic::Update(const GameObjectParams & params)
+{
+}
+
+void Anatomic::Afterload(GameObject * parent)
+{
+}
+
+void Anatomic::DrawGui()
+{
+	int j = 0;
+	if (ImGui::TreeNode((boost::format("Mind##%1%") % j).str().c_str()))
+	{
+		for (int i = 0; i < minds.size(); i++)
+		{
+			if(!(minds[i].mind.empty()))
+				ImGui::Text(minds[i].mind.c_str());
+		}
+		j++;
+		ImGui::TreePop();
+	}
+}
+
+void Anatomic::Think(const std::string &s)
+{
+	auto f = std::find_if(minds.begin(), minds.end(), [&](const Mind &m) -> bool { return m.mind == s; });
+	if (f == minds.end())
+	{
+		minds.push_back({ s });
+	}
+}
+
+PAgent Named::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<Named>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void Named::Update(const GameObjectParams & params)
+{
+}
+
+std::vector<std::string> LoadNames(const std::string &name)
+{
+	std::ifstream file(name.c_str());
+	std::vector<std::string> t;
+	t.reserve(200);
+
+	if (file.is_open())
+	{
+		std::string line = "";
+		while (getline(file, line))
+		{
+			t.push_back(line);
+		}
+		file.close();
+		return std::move(t);
+	}
+	else
+	{
+		LOG(fatal) << name << "missed";
+		return{};
+	}
+}
+
+void Named::OnCreate(const GameObjectParams & params)
+{
+	static std::vector<std::string> fname = []() -> auto { return LoadNames("data/loc/female_names.txt"); }(),
+		                            mname = []() -> auto { return LoadNames("data/loc/male_names.txt"); }(),
+		                            sname = []() -> auto { return LoadNames("data/loc/second_names.txt"); }();
+
+	if (gender == 'f')
+	{
+		name = fname[rand() % fname.size()] + " " + sname[rand() % sname.size()];
+	}
+	else
+	{
+		name = mname[rand() % mname.size()] + " " + sname[rand() % sname.size()];
+	}
+}
+
+void Named::DrawGui()
+{
+	ImGui::Text("Name: %s", name.c_str());
 }

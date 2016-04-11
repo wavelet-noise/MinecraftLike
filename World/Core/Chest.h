@@ -8,6 +8,7 @@ class Chest : public Agent
 {
 public:
   Chest();
+  AGENT(Chest)
 
   void JsonLoad(const rapidjson::Value &val) override;
 

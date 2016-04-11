@@ -7,7 +7,7 @@
 class LiquidPipe : public Agent
 {
 public:
-	LiquidPipe();
+	AGENT(LiquidPipe)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 

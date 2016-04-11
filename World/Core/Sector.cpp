@@ -51,7 +51,7 @@ void Sector::Spawn(const SBPos & position, PGameObject creature)
 	creatures.push_back(creature);
 	EventBus::Get().Publish<EventCreatureSpawn>(creature);
 
-	if (auto p = creature->GetFromFullName<PositionAgent>("PositionAgent"))
+	if (auto p = creature->GetAgent<PositionAgent>())
 		p->Set(position);
 	else
 		LOG(error) << "Spawning " << creature->GetId() << ", that is not creature!";
@@ -75,7 +75,7 @@ void Sector::Update(World *world, float dt)
 	for (auto c_iter = creatures.begin(); c_iter != creatures.end();)
 	{
 		PGameObject c = *c_iter;
-		auto p = c->GetFromFullName<PositionAgent>("PositionAgent");
+		auto p = c->GetAgent<PositionAgent>();
 
 		ParticleSystem::Get().Add( p->Get() + glm::vec3(0,0,0.5), StringIntern("car"), dt);
 

@@ -2,11 +2,6 @@
 #include <Core\DB.h>
 #include <Core\World.h>
 
-Xyz::Xyz()
-	: Agent(nullptr, "Xyz", "")
-{
-}
-
 void Xyz::JsonLoad(const rapidjson::Value & val)
 {
 }

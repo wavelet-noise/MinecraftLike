@@ -569,6 +569,10 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="Core\CalorieConsumer.h" />
+    <ClInclude Include="core\Effect.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.glsl" />

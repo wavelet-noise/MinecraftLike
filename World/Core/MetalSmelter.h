@@ -3,8 +3,8 @@
 class MetalSmelter : public Agent
 {
 public:
-	MetalSmelter();
-
+	AGENT(MetalSmelter)
+	
 	void JsonLoad(const rapidjson::Value &val) override;
 
 	// Унаследовано через Agent

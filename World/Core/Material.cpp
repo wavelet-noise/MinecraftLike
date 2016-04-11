@@ -1,11 +1,6 @@
 #include "Material.h"
 #include <Serealize.h>
 
-Material::Material()
-  : Agent(nullptr, "Material", "")
-{
-}
-
 void Material::JsonLoad(const rapidjson::Value &val)
 {
   JSONLOAD(NVP(mtex), NVP(dens));

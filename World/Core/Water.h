@@ -6,16 +6,16 @@
 class Water : public Agent
 {
 public:
-  Water();
+	AGENT(Water)
 
-  void JsonLoad(const rapidjson::Value &val) override;
+	void JsonLoad(const rapidjson::Value &val) override;
 
-  // Унаследовано через Agent
-  virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
-  virtual void Update(const GameObjectParams & params) override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	virtual void Update(const GameObjectParams & params) override;
 
 private:
-  float fill = 0.5;
+	float fill = 0.5;
 };
 
 REGISTER_AGENT(Water)

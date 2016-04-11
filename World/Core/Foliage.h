@@ -4,7 +4,7 @@
 class Foliage : public Agent
 {
 public:
-	Foliage();
+	AGENT(Foliage)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 

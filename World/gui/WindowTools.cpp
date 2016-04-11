@@ -13,6 +13,11 @@ void WindowTools::Draw(glm::vec2 wsize)
 	{
 		ImGui::Begin("Tools", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
 
+		if (ImGui::Button("Global crear order"))
+		{
+			OrderBus::Get().Clear();
+		}
+
 		if (ImGui::TreeNode("Digging"))
 		{
 			if (ImGui::Button("Dig square"))

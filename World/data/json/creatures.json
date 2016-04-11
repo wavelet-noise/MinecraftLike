@@ -18,6 +18,15 @@
 		},
 		{
 			"type":"WaterConsumer"
+		},
+		{
+			"type":"Morale"
+		},
+		{
+			"type":"Anatomic"
+		},
+		{
+			"type":"Named"
 		}
 	],
 	"dynamic":true

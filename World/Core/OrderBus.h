@@ -79,6 +79,7 @@ public:
 	std::list<POrder> orders, orders_taken;
 
 	void IssueOrder(POrder ord);
+	void Clear();
 
 	void Update();
 

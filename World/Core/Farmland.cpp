@@ -3,11 +3,6 @@
 #include <Core\World.h>
 #include <core\Plant.h>
 
-Farmland::Farmland()
-	: Agent(nullptr, "Farmland", "")
-{
-}
-
 void Farmland::JsonLoad(const rapidjson::Value & val)
 {
 	JSONLOAD(NVP(hydrated));
@@ -27,7 +22,7 @@ void Farmland::Update(const GameObjectParams & params)
 	{
 		if (auto b = params.world->GetBlock(params.pos + glm::vec3(0, 0, 1)))
 		{
-			if (auto p = b->GetFromFullName<Plant>("Plant"))
+			if (auto p = b->GetAgent<Plant>())
 			{
 				if (p->GetNext() != StringIntern(""))
 				{

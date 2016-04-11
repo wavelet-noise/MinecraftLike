@@ -31,6 +31,12 @@ void World::Update(float dt)
 	{
 		i.second->Update(this, dt);
 	}
+
+	auto a = DB::Get().Create("allagents");
+	for (auto &c : a->mAgents)
+	{
+		c.second->__AfterUpdate();
+	}
 }
 
 
@@ -153,7 +159,10 @@ PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block)
 PGameObject World::Spawn(const WBPos & position, PGameObject creature)
 {
 	if (auto &s = GetSector(cs::WBtoS(position)))
+	{
 		s->Spawn(position, creature);
+		creature->OnCreate({ this, s.get(), position, 0 });
+	}
 	else
 		LOG(error) << "Spawning " << creature->GetId() << " in not existing sector!";
 

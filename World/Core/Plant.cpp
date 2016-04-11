@@ -1,11 +1,6 @@
 #include "Plant.h"
 #include <Serealize.h>
 
-Plant::Plant()
-	: Agent(nullptr, "Plant", "")
-{
-}
-
 void Plant::JsonLoad(const rapidjson::Value & val)
 {
 	JSONLOAD(NVP(next));

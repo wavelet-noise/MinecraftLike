@@ -3,7 +3,7 @@
 class WaterBoiler : public Agent
 {
 public:
-	WaterBoiler();
+	AGENT(WaterBoiler)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 

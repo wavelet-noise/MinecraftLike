@@ -113,9 +113,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Agent.h" />
+    <ClInclude Include="Core\CalorieConsumer.h" />
     <ClInclude Include="core\Chest.h" />
     <ClInclude Include="core\ChestSlot.h" />
     <ClInclude Include="Core\CraftingTable.h" />
+    <ClInclude Include="core\Effect.h" />
     <ClInclude Include="Core\EventBus.h" />
     <ClInclude Include="Core\Farmland.h" />
     <ClInclude Include="core\Fuel.h" />

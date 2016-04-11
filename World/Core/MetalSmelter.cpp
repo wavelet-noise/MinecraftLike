@@ -4,11 +4,6 @@
 #include <Core\Heatable.h>
 #include <Core\Chest.h>
 
-MetalSmelter::MetalSmelter()
-	: Agent(nullptr, "MetalSmelter", "")
-{
-}
-
 void MetalSmelter::JsonLoad(const rapidjson::Value &val)
 {
 }
@@ -22,10 +17,10 @@ PAgent MetalSmelter::Clone(GameObject * parent, const std::string &name)
 
 void MetalSmelter::Update(const GameObjectParams & params)
 {
-	float T = mParent->GetFromFullName<Heatable>("Heatable")->GetTemp();
-	mParent->GetFromFullName<Heatable>("Heatable")->Heat(-T);
+	float T = mParent->GetAgent<Heatable>()->GetTemp();
+	mParent->GetAgent<Heatable>()->Heat(-T);
 
-	auto chest = mParent->GetFromFullName<Chest>("Chest");
+	auto chest = mParent->GetAgent<Chest>();
 	auto &metal = chest->PopSlot(0);
 	auto &form = chest->PopSlot(1);
 	if (metal.obj)

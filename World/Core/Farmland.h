@@ -5,7 +5,7 @@
 class Farmland : public Agent
 {
 public:
-	Farmland();
+	AGENT(Farmland)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 

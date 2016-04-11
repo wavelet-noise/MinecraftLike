@@ -13,7 +13,6 @@ const StringIntern PhysicAgent::mPositionAgentName = StringIntern("PositionAgent
 
 
 PhysicAgent::PhysicAgent()
-	: Agent(nullptr, "PhysicAgent", "")
 {
 	mQuat = glm::quat_cast(glm::lookAt
 		(
@@ -104,12 +103,12 @@ void PhysicAgent::JsonLoad(const rapidjson::Value & val)
 
 void PhysicAgent::SetPos(const WPos &pos)
 {
-	mParent->GetFromFullName<PositionAgent>(mPositionAgentName)->Set(pos);
+	mParent->GetAgent<PositionAgent>()->Set(pos);
 }
 
 const WPos &PhysicAgent::GetPos() const
 {
-	return mParent->GetFromFullName<PositionAgent>(mPositionAgentName)->Get();
+	return mParent->GetAgent<PositionAgent>()->Get();
 }
 
 void PhysicAgent::Rotate(const glm::vec3 &degrees)

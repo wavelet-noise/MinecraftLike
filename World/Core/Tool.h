@@ -4,7 +4,7 @@
 class Tool : public Agent
 {
 public:
-	Tool();
+	AGENT(Tool)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 

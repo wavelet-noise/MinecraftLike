@@ -1,11 +1,6 @@
 #include "Fuel.h"
 #include <Serealize.h>
 
-Fuel::Fuel()
-  : Agent(nullptr, "Fuel", "")
-{
-}
-
 void Fuel::JsonLoad(const rapidjson::Value & val)
 {
   JSONLOAD(sge::make_nvp("heat", mHeat));

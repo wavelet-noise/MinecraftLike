@@ -285,13 +285,51 @@ void Game::Draw(float dt)
 	mRender->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
 	if (!ImGui::IsAnyItemHovered())
 	{
+		static glm::vec3 min, max;
+		static int minmaxstate = 0;
+		if (WindowTools::Get().selected != SelectedOrder::DIG_SQUARE)
+		{
+			min = max = glm::vec3{ 99999 };
+			minmaxstate = 0;
+		}
+
 		if (ImGui::IsMouseDown(0))
 		{
 			switch (WindowTools::Get().selected)
 			{
 			case SelectedOrder::DIG_SQUARE:
-				OrderBus::Get().IssueOrder(std::make_shared<OrderDig>(std::get<0>(selection_pos)));
+				switch (minmaxstate)
+				{
+				case 0:
+					min = std::get<0>(selection_pos);
+					minmaxstate = 1;
+					break;
+				}
 				break;
+			}
+		}
+
+		if (!ImGui::IsMouseDown(0))
+		{
+			if (minmaxstate == 1)
+			{
+				max = std::get<0>(selection_pos);
+
+				if (min.x > max.x) std::swap(min.x, max.x);
+				if (min.y > max.y) std::swap(min.y, max.y);
+				if (min.z > max.z) std::swap(min.z, max.z);
+
+				for (int i = min.x; i <= max.x; i++)
+					for (int j = min.y; j <= max.y; j++)
+						for (int k = min.z; k <= max.z; k++)
+						{
+							if(auto b = mWorld->GetBlock(glm::vec3{ i,j,k }))
+							{
+								OrderBus::Get().IssueOrder(std::make_shared<OrderDig>(glm::vec3{ i,j,k }));
+							}
+						}
+
+				minmaxstate = 0;
 			}
 		}
 		if (ImGui::IsMouseDown(1)) {

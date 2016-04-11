@@ -46,6 +46,13 @@ void DB::ReloadDirectory(const std::string & mDir)
 {
   mObjects.clear();
 
+  auto b = std::make_shared<GameObject>(StringIntern("allagents"));
+  for (auto &m : AgentFactory::Get().map_)
+  {
+	  b->mAgents[m.first] = m.second();
+  }
+  mObjects[StringIntern("allagents")] = std::make_tuple(b, false);
+
   boost::filesystem::path targetDir(mDir);
   boost::filesystem::recursive_directory_iterator iter(targetDir);
 

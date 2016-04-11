@@ -19,7 +19,7 @@ void GameObject::Update(GameObjectParams &params)
 {
 	for (auto &agent : mAgents)
 	{
-		agent.second->Update(params);
+		agent.second->__Update(params);
 	}
 }
 
@@ -89,31 +89,9 @@ StringIntern GameObject::GetId()
 	return id;
 }
 
-Agent *GameObject::GetFromFullName(const StringIntern &name)
-{
-	auto it = mAgents.find(name);
-	if (it != mAgents.end())
-	{
-		return it->second.get();
-	}
-
-	return nullptr;
-}
-
 void GameObject::PushAgent(PAgent go)
 {
 	mAgents[go->GetFullName()] = go;
-}
-
-const Agent *GameObject::GetFromFullName(const StringIntern &name) const
-{
-	auto it = mAgents.find(name);
-	if (it != mAgents.end())
-	{
-		return it->second.get();
-	}
-
-	return nullptr;
 }
 
 std::string GameObject::GetDescription()

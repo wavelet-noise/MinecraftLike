@@ -6,7 +6,6 @@
 #include <DragNDrop.h>
 
 Chest::Chest()
-	: Agent(nullptr, "Chest", "")
 {
 	slots.resize(size);
 }

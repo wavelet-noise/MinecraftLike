@@ -1,10 +1,5 @@
 #include "Foliage.h"
 
-Foliage::Foliage()
-	: Agent(nullptr, "Foliage", "")
-{
-}
-
 void Foliage::JsonLoad(const rapidjson::Value & val)
 {
 }

@@ -6,7 +6,7 @@
 class CraftingTable : public Agent
 {
 public:
-	CraftingTable();
+	AGENT(CraftingTable)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 

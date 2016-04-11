@@ -3,12 +3,6 @@
 #include <Core\World.h>
 #include <Core\Tessellator.h>
 
-Water::Water()
-  : Agent(nullptr, "Water", "")
-{
-}
-
-
 void Water::JsonLoad(const rapidjson::Value &val)
 {
 
@@ -33,7 +27,7 @@ void Water::Update(const GameObjectParams & params)
       {
         if (down->GetId() == water)
         {
-          auto dwater = down->GetFromFullName<Water>("Water");
+          auto dwater = down->GetAgent<Water>();
           float t = dwater->fill;
           if (t < 1)
           {

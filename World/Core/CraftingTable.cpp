@@ -4,11 +4,6 @@
 #include <Core\Chest.h>
 #include <core\World.h>
 
-CraftingTable::CraftingTable()
-	: Agent(nullptr, "CraftingTable", "")
-{
-}
-
 void CraftingTable::JsonLoad(const rapidjson::Value &val)
 {
 

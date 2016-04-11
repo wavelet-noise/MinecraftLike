@@ -7,19 +7,19 @@
 class Furnance : public Agent
 {
 public:
-  Furnance();
+	AGENT(Furnance)
 
-  void JsonLoad(const rapidjson::Value &val) override;
+	void JsonLoad(const rapidjson::Value &val) override;
 
-  // Унаследовано через Agent
-  virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
-  virtual void Update(const GameObjectParams & params) override;
-  virtual void DrawGui() override;
-  virtual void Interact(const InteractParams &params) override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	virtual void Update(const GameObjectParams & params) override;
+	virtual void DrawGui() override;
+	virtual void Interact(const InteractParams &params) override;
 
 private:
-  float T;
-  float remain_heat, heat;
+	float T;
+	float remain_heat, heat;
 };
 
 REGISTER_AGENT(Furnance)

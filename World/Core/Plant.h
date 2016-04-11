@@ -3,7 +3,7 @@
 class Plant : public Agent
 {
 public:
-	Plant();
+	AGENT(Plant)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 

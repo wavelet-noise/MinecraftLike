@@ -6,11 +6,6 @@
 #include <Core\Foliage.h>
 #include <Render\ParticleSystem.h>
 
-Tool::Tool()
-	: Agent(nullptr, "Tool", "")
-{
-}
-
 void Tool::JsonLoad(const rapidjson::Value &val)
 {
 	JSONLOAD(NVP(tool));
@@ -91,7 +86,7 @@ void Tool::Update(const GameObjectParams & params)
 								{
 									if (auto b = params.world->GetBlock(params.pos + glm::vec3(i, j, k)))
 									{
-										if (auto f = b->GetFromFullName<Foliage>("Foliage"))
+										if (auto f = b->GetAgent<Foliage>())
 										{
 											params.world->SetBlock(params.pos + glm::vec3(i, j, k), nullptr);
 										}

@@ -46,7 +46,6 @@ public:
     }
   }
 
-private:
   FactoryMap map_;
 };
 

@@ -6,11 +6,6 @@
 #include <Core\LiquidPipe.h>
 #include <Core\DB.h>
 
-WaterBoiler::WaterBoiler()
-	: Agent(nullptr, "WaterBoiler", "")
-{
-}
-
 void WaterBoiler::JsonLoad(const rapidjson::Value &val)
 {
 }
@@ -24,17 +19,17 @@ PAgent WaterBoiler::Clone(GameObject * parent, const std::string &name)
 
 void WaterBoiler::Update(const GameObjectParams & params)
 {
-	float T = mParent->GetFromFullName<Heatable>("Heatable")->GetTemp();
+	float T = mParent->GetAgent<Heatable>()->GetTemp();
 
 	if (T > 100)
 	{
 		steam += T - 100;
-		mParent->GetFromFullName<Heatable>("Heatable")->Heat(-T + 100);
+		mParent->GetAgent<Heatable>()->Heat(-T + 100);
 	}
 
 	if (steam > 0)
 	{
-		if (auto p = mParent->GetFromFullName<LiquidPipe>("LiquidPipe"))
+		if (auto p = mParent->GetAgent<LiquidPipe>())
 		{
 			if (p->PushLiquid({ DB::Get().Create("material_steam"), steam }))
 			{

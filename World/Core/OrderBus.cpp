@@ -4,12 +4,23 @@
 
 void OrderBus::IssueOrder(POrder ord)
 {
+	if (orders.size() >= 10000)
+	{
+		LOG(error) << "too much orders";
+		orders.clear();
+	}
+
 	for (const auto o : orders)
 	{
 		if (o->IsEquals(*ord))
 			return;
 	}
 	orders.push_back(ord);
+}
+
+void OrderBus::Clear()
+{
+	orders.clear();
 }
 
 void OrderBus::Update()

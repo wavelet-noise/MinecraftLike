@@ -2,11 +2,6 @@
 #include <Serealize.h>
 #include <imgui.h>
 
-Heatable::Heatable()
-  : Agent(nullptr, "Heatable", "")
-{
-}
-
 void Heatable::JsonLoad(const rapidjson::Value &val)
 {
 }

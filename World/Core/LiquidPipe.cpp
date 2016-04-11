@@ -5,11 +5,6 @@
 #include "Core\World.h"
 #include "LiquidController.h"
 
-LiquidPipe::LiquidPipe()
-	: Agent(nullptr, "LiquidPipe", "")
-{
-}
-
 void LiquidPipe::JsonLoad(const rapidjson::Value &val)
 {
 	JSONLOAD(NVP(max_volume));
@@ -40,7 +35,7 @@ void LiquidPipe::Update(const GameObjectParams & params)
 	{
 		if (auto n = params.world->GetBlock(params.pos + neib[i]))
 		{
-			if (auto p = n->GetFromFullName<LiquidPipe>("LiquidPipe"))
+			if (auto p = n->GetAgent<LiquidPipe>())
 			{
 				if (!p->CanAccept(liq.obj))
 					continue;

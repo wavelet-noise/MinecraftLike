@@ -22,8 +22,15 @@ using PAgent = std::shared_ptr<class Agent>;
 template<class T, class... Args>
 inline std::shared_ptr<T> MakeAgent(Args&&... args)
 {
-  return std::make_shared<T>(std::forward<Args>(args)...);
+	return std::make_shared<T>(std::forward<Args>(args)...);
 }
+
+struct AgSync
+{
+	float elapsed;
+	bool first;
+	bool executed;
+};
 
 // Агент.
 // Тип агента задается потомками на этапе компиляции и не меняется. Аналогичен типу объекта.
@@ -33,58 +40,75 @@ inline std::shared_ptr<T> MakeAgent(Args&&... args)
 class Agent
 {
 public:
-  // Создать агент с указанным типом и именем.
-  Agent(GameObject *parent, const std::string &type, const std::string &name = "");
-  virtual ~Agent();
+	Agent() = default;
+	virtual ~Agent() = default;
 
-  virtual PAgent Clone(GameObject *parent, const std::string &name = "") = 0;
+	virtual PAgent Clone(GameObject *parent, const std::string &name = "") = 0;
 
-  virtual void Update(const GameObjectParams &params);
+	// максимальный период вызова метода Update в секундах
+	// 0 - не ограничено
+	virtual float GetFreq() const
+	{
+		return 1.0f;
+	}
 
-  // client/server paralell
-  // выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
-  virtual void Afterload(GameObject * parent);
+	virtual void __Update(const GameObjectParams &params) = 0;
+	virtual void __AfterUpdate() = 0;
 
-  // client
-  // рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
-  virtual void DrawGui();
+	virtual void Update(const GameObjectParams &params);
 
-  // client/server syncronize
-  virtual void Interact(const InteractParams &params);
+	template <typename T>
+	static AgSync & GetSync()
+	{
+		static AgSync ag;
+		return ag;
+	}
 
-  virtual void OnDestroy(const GameObjectParams &params);
+	// client/server paralell
+	// выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
+	virtual void Afterload(GameObject * parent);
 
-  virtual void OnCreate(const GameObjectParams & params);
+	// client
+	// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
+	virtual void DrawGui();
 
-  virtual void OnAdjacentChanged(const GameObjectParams & params);
+	// client/server syncronize
+	virtual void Interact(const InteractParams &params);
 
-  // client/server paralell
-  virtual void JsonLoad(const rapidjson::Value &val);
+	virtual void OnDestroy(const GameObjectParams &params);
 
-  // Вурнуть имя типа агента.
-  const StringIntern &GetTypeName();
+	virtual void OnCreate(const GameObjectParams & params);
 
-  // Вернуть имя агента указанного типа.
-  const StringIntern &GetName();
+	virtual void OnAdjacentChanged(const GameObjectParams & params);
 
-  // Вернуть полное имя агента. Включает имя типа и имя агента.
-  const StringIntern &GetFullName();
+	virtual StringIntern GetFullName() const = 0;
+
+	// client/server paralell
+	virtual void JsonLoad(const rapidjson::Value &val);
 
 protected:
-  GameObject *mParent;
+	GameObject *mParent;
 
-  const StringIntern mTypeName;
-  StringIntern mAgentName;
-  StringIntern mFullName;
+	const StringIntern mTypeName;
+	StringIntern mAgentName;
+	StringIntern mFullName;
 };
 
 
 #define REGISTER_AGENT(type) REGISTER_ELEMENT(type, AgentFactory::Get(), StringIntern(#type))
+#define AGENT(type) virtual StringIntern GetFullName() const override { return StringIntern(#type); } \
+					static StringIntern TypeName() { return StringIntern(#type); } \
+                    virtual void __Update(const GameObjectParams &params) override { \
+						auto & s = Agent::GetSync<type>();  \
+						if(s.first) { s.first = false; s.elapsed += params.dt; } \
+						if(s.elapsed >= GetFreq()) { Update({params.world, params.sector, params.pos, s.elapsed, params.render}); s.executed = true; }  \
+					} \
+				    virtual void __AfterUpdate() override { auto & s = Agent::GetSync<type>();  s.first = true; if(s.executed) { s.elapsed = 0.f; } s.executed = false; }
 
 struct AgentFactory : public boost::noncopyable
 {
-  using FactoryType = TemplateFactory<StringIntern, Agent>;
-  static FactoryType &Get();
+	using FactoryType = TemplateFactory<StringIntern, Agent>;
+	static FactoryType &Get();
 };
 
 #endif // Agent_h__

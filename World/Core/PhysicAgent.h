@@ -18,48 +18,50 @@ using PPhysicAgent = std::unique_ptr<class PhysicAgent>;
 class PhysicAgent : public Agent
 {
 public:
-  PhysicAgent();
-  ~PhysicAgent();
+	AGENT(PhysicAgent)
 
-  PAgent Clone(GameObject *parent, const std::string &name = "") override;
+	PhysicAgent();
+	~PhysicAgent();
 
-  void Update(const GameObjectParams &params) override;
+	PAgent Clone(GameObject *parent, const std::string &name = "") override;
 
-  void JsonLoad(const rapidjson::Value &val) override;
+	void Update(const GameObjectParams &params) override;
 
-  inline const glm::mat3 &GetDirection() const noexcept
-  {
-    return mDirection;
-  }
+	void JsonLoad(const rapidjson::Value &val) override;
 
-  void SetPos(const WPos &pos);
+	inline const glm::mat3 &GetDirection() const noexcept
+	{
+		return mDirection;
+	}
 
-  const WPos &GetPos() const;
+	void SetPos(const WPos &pos);
 
-  const glm::quat &GetRot() const
-  {
-    return mQuat;
-  }
+	const WPos &GetPos() const;
 
-  // Повернуть камеру относительно текущей ориентации на заданный угол по трем осям.
-  void Rotate(const glm::vec3 &degrees);
+	const glm::quat &GetRot() const
+	{
+		return mQuat;
+	}
 
-  // Переместиться, относительно текущего положения и ориентации.
-  void Move(const glm::vec3 &dist);
+	// Повернуть камеру относительно текущей ориентации на заданный угол по трем осям.
+	void Rotate(const glm::vec3 &degrees);
 
-  void Accelerate(const glm::vec3 & vel);
+	// Переместиться, относительно текущего положения и ориентации.
+	void Move(const glm::vec3 &dist);
 
-  void SetAcceleration(const glm::vec3 & vel);
+	void Accelerate(const glm::vec3 & vel);
+
+	void SetAcceleration(const glm::vec3 & vel);
 
 private:
-  static const StringIntern mPositionAgentName;
+	static const StringIntern mPositionAgentName;
 
-  glm::mat3 mDirection;
-  glm::vec3 mDeltaPos;
-  glm::vec3 mVelocity;
+	glm::mat3 mDirection;
+	glm::vec3 mDeltaPos;
+	glm::vec3 mVelocity;
 
-  glm::quat mQuat;
-  glm::vec3 mDir;
+	glm::quat mQuat;
+	glm::vec3 mDir;
 
 
 };

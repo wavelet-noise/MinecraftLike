@@ -45,34 +45,19 @@ public:
 
 	virtual PGameObject Clone();
 
-	Agent *GetFromFullName(const StringIntern &name);
-
-	const Agent *GetFromFullName(const StringIntern &name) const;
-
 	std::string GetDescription();
 
 	template<class T>
-	T *GetFromFullName(const StringIntern &name)
+	T *GetAgent()
 	{
-		return static_cast<T*>(GetFromFullName(name));
-	}
+		StringIntern name = T::TypeName();
+		auto it = mAgents.find(name);
+		if (it != mAgents.end())
+		{
+			return static_cast<T*>(it->second.get());
+		}
 
-	template<class T>
-	const T *GetFromFullName(const StringIntern &name) const
-	{
-		return static_cast<const T*>(GetFromFullName(name));
-	}
-
-	template<class T>
-	T *GetFromFullName(const std::string &name)
-	{
-		return static_cast<T*>(GetFromFullName(StringIntern(name)));
-	}
-
-	template<class T>
-	const T *GetFromFullName(const std::string &name) const
-	{
-		return static_cast<T*>(GetFromFullName(StringIntern(name)));
+		return nullptr;
 	}
 
 	void PushAgent(PAgent go);
@@ -104,6 +89,7 @@ public:
 
 protected:
 	friend class DB;
+	friend class World;
 	std::map<StringIntern, PAgent> mAgents;
 
 	friend class TemplateItemMaterial;
