@@ -78,8 +78,8 @@ void main(void)
 	gl_Position = pos;
 	sc = shadow_VP * vec4(vertex, 1);
 	
-	sc.x = sc.x/(abs(sc.x)+0.05f);
-    sc.y = sc.y/(abs(sc.y)+0.05f);
+	//sc.x = sc.x/(abs(sc.x)+0.05f);
+    //sc.y = sc.y/(abs(sc.y)+0.05f);
 	
 	sc.x  = sc.x * 0.5 + 0.5;
     sc.y  = sc.y * 0.5 + 0.5; 

@@ -40,6 +40,9 @@ public:
 
   PGameObject Spawn(const WBPos &position, PGameObject creature);
 
+  PGameObject Place(const SBPos & position, PGameObject item);
+  PGameObject Replace(const SBPos & position, PGameObject item);
+
   int GetActiveCount();
 
   void SetTessellator(Tessellator *tess);

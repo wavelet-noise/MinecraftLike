@@ -169,6 +169,31 @@ PGameObject World::Spawn(const WBPos & position, PGameObject creature)
 	return creature;
 }
 
+PGameObject World::Place(const SBPos & position, PGameObject item)
+{
+	if (auto &s = GetSector(cs::WBtoS(position)))
+	{
+		s->Place(position, item);
+		item->OnCreate({ this, s.get(), position, 0 });
+	}
+	else
+		LOG(error) << "Placing " << item->GetId() << " in not existing sector!";
+
+	return item;
+}
+
+PGameObject World::Replace(const SBPos & position, PGameObject item)
+{
+	if (auto &s = GetSector(cs::WBtoS(position)))
+	{
+		s->Repace(position, item);
+	}
+	else
+		LOG(error) << "Replacing " << item->GetId() << " in not existing sector!";
+
+	return item;
+}
+
 int World::GetActiveCount()
 {
 	return mSectors.size();

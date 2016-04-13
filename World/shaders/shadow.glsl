@@ -28,8 +28,8 @@ out vec2 fragTexcoord;
 void main(void)
 {
     vec4 sc = transform_VP * vec4(vertex, 1);
-	sc.x = sc.x/(abs(sc.x)+0.05f);
-    sc.y = sc.y/(abs(sc.y)+0.05f);
+	//sc.x = sc.x/(abs(sc.x)+0.05f);
+    //sc.y = sc.y/(abs(sc.y)+0.05f);
 	gl_Position = sc;
 	fragTexcoord = texture;
 }

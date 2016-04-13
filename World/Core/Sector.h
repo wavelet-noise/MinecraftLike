@@ -27,6 +27,8 @@ public:
   void SetBlock(const SBPos &pos, PGameObject block);
 
   void Spawn(const SBPos &position, PGameObject creature);
+  void Place(const SBPos &position, PGameObject creature);
+  void Repace(const SBPos &position, PGameObject creature);
 
   void SayChanged();
 
@@ -40,6 +42,7 @@ private:
   class Tessellator *mTessellator = nullptr;
 
   std::list<PGameObject> creatures;
+  std::list<std::tuple<PGameObject, glm::vec3>> items;
 
 //   friend class boost::serialization::access;
 // 

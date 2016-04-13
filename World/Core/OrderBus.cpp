@@ -70,3 +70,12 @@ void Order::Done()
 	EventBus::Get().Publish<EventOrderDone>(shared_from_this());
 	mDone = true;
 }
+
+OrderGet::OrderGet(glm::vec3 v, PGameObject i) : pos(v), item(i)
+{
+}
+
+std::string OrderGet::to_string() const
+{
+	return (boost::format("OrderGet: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
+}

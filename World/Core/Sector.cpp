@@ -57,6 +57,17 @@ void Sector::Spawn(const SBPos & position, PGameObject creature)
 		LOG(error) << "Spawning " << creature->GetId() << ", that is not creature!";
 }
 
+void Sector::Place(const SBPos & position, PGameObject item)
+{
+	items.push_back(std::make_tuple(item, position));
+	EventBus::Get().Publish<EventItemPlace>(item);
+}
+
+void Sector::Repace(const SBPos & position, PGameObject creature)
+{
+	items.remove(std::make_tuple( creature, position ));
+}
+
 void Sector::Update(World *world, float dt)
 {
 	GameObjectParams gop{ world, this, {}, dt };
@@ -95,6 +106,13 @@ void Sector::Update(World *world, float dt)
 		}
 		//передвигаем итератор, если существо не перемещено
 		++c_iter;
+	}
+
+	for (auto c_iter = items.begin(); c_iter != items.end(); ++c_iter)
+	{
+		std::get<0>(*c_iter)->Update(gop);
+	
+		ParticleSystem::Get().Add(std::get<1>(*c_iter) + glm::vec3(0, 0, 0.5), StringIntern("r"), dt);
 	}
 }
 

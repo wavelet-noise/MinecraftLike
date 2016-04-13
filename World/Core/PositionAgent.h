@@ -14,7 +14,7 @@ class PositionAgent : public Agent
 public:
 	AGENT(PositionAgent)
 
-		PAgent Clone(GameObject *parent, const std::string &name = "") override;
+	PAgent Clone(GameObject *parent, const std::string &name = "") override;
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -56,7 +56,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 5.0f;
+		return 1.0f;
 	}
 };
 
@@ -223,3 +223,22 @@ public:
 };
 
 REGISTER_AGENT(Named)
+
+class DeathDrop : public Agent
+{
+public:
+	AGENT(DeathDrop)
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	virtual void OnDestroy(const GameObjectParams & params) override;
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	StringIntern id;
+};
+
+REGISTER_AGENT(DeathDrop)

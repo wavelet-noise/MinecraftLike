@@ -43,6 +43,11 @@ void WindowTools::Draw(glm::vec2 wsize)
 			ImGui::TreePop();
 		}
 
+		if (ImGui::Button("Collect items"))
+		{
+			selected = SelectedOrder::COLLECT_SQUARE;
+		}
+
 		ImGui::End();
 	}
 }

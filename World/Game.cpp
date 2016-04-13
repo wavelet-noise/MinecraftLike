@@ -246,6 +246,7 @@ void Game::Draw(float dt)
 	std::tuple<glm::ivec3, glm::vec3> selection_pos; // pos, normal
 
 	static size_t select_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
+	static size_t square_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
 
 	static std::vector<size_t> order_models = [&]() -> std::vector<size_t>
 	{
@@ -332,6 +333,7 @@ void Game::Draw(float dt)
 				minmaxstate = 0;
 			}
 		}
+
 		if (ImGui::IsMouseDown(1)) {
 			if (auto b = mWorld->GetBlock(std::get<0>(selection_pos)))
 			{

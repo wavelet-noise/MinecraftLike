@@ -105,6 +105,17 @@ struct EventCreatureSpawn : public NumberedEvent<EventCreatureSpawn>
 	}
 };
 
+struct EventItemPlace : public NumberedEvent<EventItemPlace>
+{
+	EventItemPlace(PGameObject p) : obj(p) {}
+	PGameObject obj;
+
+	std::string to_string() const
+	{
+		return (boost::format("EventItemPlace: obj = %1%") % obj->GetId()).str();
+	}
+};
+
 class EventBus
 {
 public:

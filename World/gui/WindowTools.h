@@ -7,7 +7,8 @@ class World;
 enum class SelectedOrder
 {
 	NONE,
-	DIG_SQUARE
+	DIG_SQUARE,
+	COLLECT_SQUARE
 };
 
 class WindowTools : public WindowBase

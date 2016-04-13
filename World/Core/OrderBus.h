@@ -3,6 +3,7 @@
 #include <memory>
 #include <GL\glew.h>
 #include <glm\glm.hpp>
+#include <Core\GameObject.h>
 
 using POrder = std::shared_ptr<class Order>;
 
@@ -69,6 +70,24 @@ struct OrderDig : public NumberedOrder<OrderDig>
 
 		const auto &o = static_cast<const OrderDig &>(rhs);
 		
+		return o.pos == pos;
+	}
+};
+
+struct OrderGet : public NumberedOrder<OrderGet>
+{
+	OrderGet(glm::vec3 v, PGameObject i);
+	std::string to_string() const override;
+	glm::vec3 pos;
+	PGameObject item;
+
+	virtual bool IsEquals(const Order &rhs) override
+	{
+		if (rhs.GetId() != GetId())
+			return false;
+
+		const auto &o = static_cast<const OrderGet &>(rhs);
+
 		return o.pos == pos;
 	}
 };

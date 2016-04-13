@@ -27,6 +27,11 @@
 		},
 		{
 			"type":"Named"
+		},
+		{
+			"type":"Chest",
+			"size":5,
+			"columns":5
 		}
 	],
 	"dynamic":true

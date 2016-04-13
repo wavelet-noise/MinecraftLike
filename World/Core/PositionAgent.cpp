@@ -3,10 +3,12 @@
 #include <Core\GameObject.h>
 #include <core\PhysicAgent.h>
 #include <core\EventBus.h>
+#include <core\OrderBus.h>
 #include <core\World.h>
 #include <imgui.h>
 #include <glm\gtx\string_cast.hpp>
 #include <fstream>
+#include <core\Chest.h>
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -64,6 +66,16 @@ void Controlable::Update(const GameObjectParams & params)
 					nearest_order = d;
 				}
 			}
+
+			if (!i->IsTaken() && i->GetId() == Order::Idfor<OrderGet>())
+			{
+				const auto &d = std::static_pointer_cast<OrderGet>(i);
+				if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
+				{
+					nearest = d->pos;
+					nearest_order = d;
+				}
+			}
 		}
 
 		if (nearest_order)
@@ -87,14 +99,35 @@ void Creature::Update(const GameObjectParams & params)
 	if (order)
 	{
 		auto p = mParent->GetAgent<PositionAgent>();
-		auto &pos = std::static_pointer_cast<OrderDig>(order)->pos;
-		p->Set(glm::mix(p->Get(), pos, params.dt));
 
-		if (glm::distance(std::static_pointer_cast<OrderDig>(order)->pos, p->Get()) < 1)
+		if (order->GetId() == Order::Idfor<OrderDig>())
 		{
-			params.world->SetBlock(std::static_pointer_cast<OrderDig>(order)->pos, nullptr);
-			order->Done();
-			order = nullptr;
+			auto &pos = std::static_pointer_cast<OrderDig>(order)->pos;
+			p->Set(glm::mix(p->Get(), pos, params.dt));
+
+			if (glm::distance(std::static_pointer_cast<OrderDig>(order)->pos, p->Get()) < 1)
+			{
+				params.world->SetBlock(std::static_pointer_cast<OrderDig>(order)->pos, nullptr);
+				order->Done();
+				order = nullptr;
+			}
+		}
+		else if (order->GetId() == Order::Idfor<OrderGet>())
+		{
+			auto &ord = std::static_pointer_cast<OrderGet>(order);
+			auto &pos = ord->pos;
+			p->Set(glm::mix(p->Get(), pos, params.dt));
+
+			if (glm::distance(std::static_pointer_cast<OrderGet>(order)->pos, p->Get()) < 1)
+			{
+				params.world->Replace(ord->pos, ord->item);
+
+				auto p = mParent->GetAgent<Chest>();
+				p->Push(ord->item);
+
+				order->Done();
+				order = nullptr;
+			}
 		}
 	}
 }
@@ -360,4 +393,27 @@ void Named::OnCreate(const GameObjectParams & params)
 void Named::DrawGui()
 {
 	ImGui::Text("Name: %s", name.c_str());
+}
+
+PAgent DeathDrop::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<DeathDrop>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void DeathDrop::Update(const GameObjectParams & params)
+{
+}
+
+void DeathDrop::OnDestroy(const GameObjectParams & params)
+{
+	auto i = DB::Get().Create(id);
+	params.world->Place(params.pos, i);
+	OrderBus::Get().IssueOrder(std::make_shared<OrderGet>(params.pos, i));
+}
+
+void DeathDrop::JsonLoad(const rapidjson::Value & val)
+{
+	JSONLOAD(NVP(id));
 }

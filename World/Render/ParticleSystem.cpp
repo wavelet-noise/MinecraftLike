@@ -66,7 +66,7 @@ ParticleSystem::ParticleSystem()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 	glBindBuffer(GL_ARRAY_BUFFER, mVbo[2]);
-	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(Particle), nullptr, GL_STREAM_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), nullptr, GL_STREAM_DRAW);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), nullptr);
 	glEnableVertexAttribArray(2);
 
@@ -81,10 +81,12 @@ void ParticleSystem::Draw(const Camera & cam) const
 	{
 
 		glBindBuffer(GL_ARRAY_BUFFER, mVbo[0]);
+		//glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(Particle), nullptr, GL_STREAM_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, mCount * sizeof(Particle), &vertex[0]);
 
 		glBindBuffer(GL_ARRAY_BUFFER, mVbo[2]);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, mCount * 4 * sizeof(Particle), &uvs[0]);
+		//glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), nullptr, GL_STREAM_DRAW);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, mCount * 4 * sizeof(glm::vec2), &uvs[0]);
 
 		shader->Use();
 		shader->SetUniform(cam.GetView(), "modelview");

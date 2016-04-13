@@ -3,17 +3,20 @@
         "type":"Block",
         "id":"grass",
         "agents":[  
-
+			{
+				"type":"DeathDrop",
+				"id":"grass"
+			}
         ],
         "tesselator":[  
             {  
                 "type":"SplitBlockTessellator",
                 "generator":{  
                     "separate":[  
-					"grass_side",
-					"grass_side",
-					"grass_side",
-					"grass_side",
+					"grass_top",
+					"grass_top",
+					"grass_top",
+					"grass_top",
 					"grass_top",
 					"dirt"
 					]
