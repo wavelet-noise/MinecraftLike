@@ -32,6 +32,9 @@
 			"type":"Chest",
 			"size":5,
 			"columns":5
+		},
+		{
+			"type":"Wander"
 		}
 	],
 	"dynamic":true

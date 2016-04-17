@@ -88,6 +88,42 @@ struct OrderGet : public NumberedOrder<OrderGet>
 
 		const auto &o = static_cast<const OrderGet &>(rhs);
 
+		return o.pos == pos && item == item;
+	}
+};
+
+struct OrderWalk : public NumberedOrder<OrderWalk>
+{
+	OrderWalk(glm::vec3 v);
+	std::string to_string() const override;
+	glm::vec3 pos;
+	PGameObject item;
+
+	virtual bool IsEquals(const Order &rhs) override
+	{
+		if (rhs.GetId() != GetId())
+			return false;
+
+		const auto &o = static_cast<const OrderWalk &>(rhs);
+
+		return o.pos == pos;
+	}
+};
+
+struct OrderWander : public NumberedOrder<OrderWander>
+{
+	OrderWander(glm::vec3 v);
+	std::string to_string() const override;
+	glm::vec3 pos;
+	PGameObject item;
+
+	virtual bool IsEquals(const Order &rhs) override
+	{
+		if (rhs.GetId() != GetId())
+			return false;
+
+		const auto &o = static_cast<const OrderWander &>(rhs);
+
 		return o.pos == pos;
 	}
 };

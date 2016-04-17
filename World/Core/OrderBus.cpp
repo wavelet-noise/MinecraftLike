@@ -79,3 +79,21 @@ std::string OrderGet::to_string() const
 {
 	return (boost::format("OrderGet: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
 }
+
+OrderWalk::OrderWalk(glm::vec3 v) : pos(v)
+{
+}
+
+std::string OrderWalk::to_string() const
+{
+	return (boost::format("OrderWalk: pos = %1%") % glm::to_string(pos)).str();
+}
+
+OrderWander::OrderWander(glm::vec3 v) : pos(v)
+{
+}
+
+std::string OrderWander::to_string() const
+{
+	return (boost::format("OrderWander: pos = %1%") % glm::to_string(pos)).str();
+}
