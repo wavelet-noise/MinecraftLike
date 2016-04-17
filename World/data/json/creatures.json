@@ -35,6 +35,9 @@
 		},
 		{
 			"type":"Wander"
+		},
+		{
+			"type":"PhysicAgent"
 		}
 	],
 	"dynamic":true

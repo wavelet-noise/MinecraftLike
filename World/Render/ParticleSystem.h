@@ -34,7 +34,7 @@ private:
 	GLuint mVao, mVbo[3], mVbi;
 	bool mCreated = false;
 
-	const int maxSize = 1000;
+	const int maxSize = 10000;
 	std::vector<Particle> vertex;
 	std::vector<glm::vec2> uvs;
 	std::vector<ParticleExtender> vext;

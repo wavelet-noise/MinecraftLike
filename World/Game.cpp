@@ -155,6 +155,19 @@ void Game::Update(float dt)
 		if (esec->sec->GetPos() == SPos(0, 0, 0))
 		{
 			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
 		}
 	}
 

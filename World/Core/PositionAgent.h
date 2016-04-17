@@ -56,7 +56,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 1.0f;
+		return 1/2.0f;
 	}
 };
 
@@ -70,16 +70,20 @@ public:
 		// Унаследовано через Agent
 		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
+	void Clear();
+
 	void Update(const GameObjectParams &params) override;
 
 	void DrawGui() override;
 
 	float GetFreq() const override
 	{
-		return 1 / 20.f;
+		return 1 / 10.f;
 	}
 
 	POrder order;
+	std::list<glm::vec3> path;
+	glm::vec3 wishpos;
 };
 
 REGISTER_AGENT(Creature)
