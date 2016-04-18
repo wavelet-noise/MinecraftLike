@@ -67,7 +67,7 @@ int heuristic_cost_estimate(const glm::vec3 &start, const glm::vec3 &goal, World
 	{
 		return std::numeric_limits<int>().max();
 	}
-	else if (auto b = w->GetBlock(start - glm::vec3(0,0,1)))
+	else if (auto b = w->GetBlock(start - glm::vec3(0, 0, 1)))
 		return glm::distance(start, goal);
 
 	return std::numeric_limits<int>().max();
@@ -229,33 +229,52 @@ void Controlable::Update(const GameObjectParams & params)
 
 		for (const auto &i : o)
 		{
-			if (!i->IsTaken() && i->GetId() == Order::Idfor<OrderDig>())
+			if (!i->IsTaken())
 			{
-				const auto &d = std::static_pointer_cast<OrderDig>(i);
-				if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
+				if (i->GetId() == Order::Idfor<OrderDig>())
 				{
-					nearest = d->pos;
-					nearest_order = d;
+					const auto &d = std::static_pointer_cast<OrderDig>(i);
+					if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
+					{
+						nearest = d->pos;
+						nearest_order = d;
+					}
 				}
-			}
-
-			if (!i->IsTaken() && i->GetId() == Order::Idfor<OrderGet>())
-			{
-				const auto &d = std::static_pointer_cast<OrderGet>(i);
-				if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
+				else if (i->GetId() == Order::Idfor<OrderGet>())
 				{
-					nearest = d->pos;
-					nearest_order = d;
+					const auto &d = std::static_pointer_cast<OrderGet>(i);
+					if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
+					{
+						nearest = d->pos;
+						nearest_order = d;
+					}
 				}
-			}
-
-			if (!i->IsTaken() && i->GetId() == Order::Idfor<OrderWalk>())
-			{
-				const auto &d = std::static_pointer_cast<OrderWalk>(i);
-				if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
+				else if (i->GetId() == Order::Idfor<OrderWalk>())
 				{
-					nearest = d->pos;
-					nearest_order = d;
+					const auto &d = std::static_pointer_cast<OrderWalk>(i);
+					if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
+					{
+						nearest = d->pos;
+						nearest_order = d;
+					}
+				}
+				else if (i->GetId() == Order::Idfor<OrderPlace>())
+				{
+					const auto &d = std::static_pointer_cast<OrderPlace>(i);
+					if (glm::distance(p->Get(), glm::vec3(d->pos)) < glm::distance(p->Get(), nearest))
+					{
+						nearest = d->pos;
+						nearest_order = d;
+					}
+				}
+				else if (i->GetId() == Order::Idfor<OrderDrop>())
+				{
+					const auto &d = std::static_pointer_cast<OrderDrop>(i);
+					if (glm::distance(p->Get(), glm::vec3(d->pos)) < glm::distance(p->Get(), nearest))
+					{
+						nearest = d->pos;
+						nearest_order = d;
+					}
 				}
 			}
 		}
@@ -293,6 +312,26 @@ void Creature::Update(const GameObjectParams & params)
 		if (order->GetId() == Order::Idfor<OrderDig>())
 		{
 			auto &pos = std::static_pointer_cast<OrderDig>(order)->pos;
+
+			if (path.empty())
+				wishpos = pos + glm::vec3(0, 0, 1);
+			else
+			{
+				p->Set(path.back());
+				path.pop_back();
+
+				if (path.empty())
+				{
+					params.world->SetBlock(pos, nullptr);
+					Clear();
+				}
+			}
+		}
+		else if (order->GetId() == Order::Idfor<OrderGet>())
+		{
+			auto &ord = std::static_pointer_cast<OrderGet>(order);
+			auto &pos = ord->pos;
+
 			if (path.empty())
 				wishpos = pos;
 			else
@@ -302,62 +341,126 @@ void Creature::Update(const GameObjectParams & params)
 
 				if (path.empty())
 				{
-					params.world->SetBlock(std::static_pointer_cast<OrderDig>(order)->pos, nullptr);
+					params.world->Replace(pos, ord->item);
+
+					auto p = mParent->GetAgent<Chest>();
+					p->Push(ord->item);
 
 					Clear();
 				}
 			}
 		}
-		else if (order->GetId() == Order::Idfor<OrderGet>())
-		{
-			auto &ord = std::static_pointer_cast<OrderGet>(order);
-			auto &pos = ord->pos;
-			p->Set(glm::mix(p->Get(), pos, params.dt));
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				params.world->Replace(ord->pos, ord->item);
-
-				auto p = mParent->GetAgent<Chest>();
-				p->Push(ord->item);
-
-				Clear();
-			}
-		}
 		else if (order->GetId() == Order::Idfor<OrderWalk>())
 		{
 			auto &pos = std::static_pointer_cast<OrderWalk>(order)->pos;
-			p->Set(glm::mix(p->Get(), pos, params.dt));
 
 			if (path.empty())
 				wishpos = pos;
 			else
 			{
-				Clear();
+				p->Set(path.back());
+				path.pop_back();
+
+				if (path.empty())
+				{
+					Clear();
+				}
 			}
 		}
 		else if (order->GetId() == Order::Idfor<OrderWander>())
 		{
 			auto &pos = std::static_pointer_cast<OrderWander>(order)->pos;
-			p->Set(glm::mix(p->Get(), pos, params.dt));
 
 			if (path.empty())
 				wishpos = pos;
 			else
 			{
-				Clear();
+				p->Set(path.back());
+				path.pop_back();
+
+				if (path.empty())
+				{
+					Clear();
+				}
+			}
+		}
+		else if (order->GetId() == Order::Idfor<OrderPlace>())
+		{
+			auto &ord = std::static_pointer_cast<OrderPlace>(order);
+			auto &pos = ord->pos;
+
+			if (path.empty())
+				wishpos = pos;
+			else
+			{
+				p->Set(path.back());
+				path.pop_back();
+
+				if (path.empty())
+				{
+					params.world->SetBlock(pos, ord->item);
+
+					Clear();
+				}
+			}
+		}
+		else if (order->GetId() == Order::Idfor<OrderDrop>())
+		{
+			auto &ord = std::static_pointer_cast<OrderDrop>(order);
+			auto &pos = ord->pos;
+
+			if (path.empty())
+				wishpos = pos;
+			else
+			{
+				p->Set(path.back());
+				path.pop_back();
+
+				if (path.empty())
+				{
+					bool placed = false;
+					if (auto b = params.world->GetBlock(pos - glm::ivec3(0, 0, 1)))
+					{
+						if(auto ch = b->GetAgent<Chest>())
+						{
+							ch->Push(ord->item, ord->count);
+							placed = true;
+						}
+					}
+
+					if (!placed)
+					{
+						//
+					}
+
+					Clear();
+				}
 			}
 		}
 
 		if (path.empty() && order)
 		{
-			path = Astar(glm::trunc(p->Get()), wishpos + glm::vec3(0, 0, 1), params.world);
+			path = Astar(glm::trunc(p->Get()), wishpos, params.world);
 			if (path.empty())
 			{
 				Clear();
 				return;
+			}
+		}
+	}
+	else
+	{
+		if (auto ch = mParent->GetAgent<Chest>())
+		{
+			auto &i = ch->GetFirst();
+			if(i.obj)
+			{
+				auto &storages = params.world->GetStorages();
+				if (!storages.empty())
+				{
+					auto i = ch->PopFirst();
+					order = std::make_shared<OrderDrop>(storages.begin()->first + glm::vec3(0,0,1) , i.obj, i.count);
+				}
 			}
 		}
 	}
@@ -658,12 +761,14 @@ PAgent Wander::Clone(GameObject * parent, const std::string & name)
 
 void Wander::Update(const GameObjectParams & params)
 {
-	/*if (auto c = mParent->GetAgent<Creature>())
+	if (auto c = mParent->GetAgent<Creature>())
 	{
 		if (!c->order)
 		{
 			auto p = mParent->GetAgent<PositionAgent>();
-			c->order = std::make_shared<OrderWander>(p->Get() + glm::vec3((rand() % 60 - 30) / 10.f, (rand() % 60 - 30) / 10.f, 2));
+			auto npos = p->Get() + glm::vec3((rand() % 60 - 30) / 10.f, (rand() % 60 - 30) / 10.f, 0);
+			if(params.world->IsWalkable(npos))
+				c->order = std::make_shared<OrderWander>(npos);
 		}
-	}*/
+	}
 }

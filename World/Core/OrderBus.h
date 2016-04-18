@@ -4,6 +4,7 @@
 #include <GL\glew.h>
 #include <glm\glm.hpp>
 #include <Core\GameObject.h>
+#include <tools\CoordSystem.h>
 
 using POrder = std::shared_ptr<class Order>;
 
@@ -89,6 +90,43 @@ struct OrderGet : public NumberedOrder<OrderGet>
 		const auto &o = static_cast<const OrderGet &>(rhs);
 
 		return o.pos == pos && item == item;
+	}
+};
+
+struct OrderPlace : public NumberedOrder<OrderPlace>
+{
+	OrderPlace(WBPos v, PGameObject i);
+	std::string to_string() const override;
+	WBPos pos;
+	PGameObject item;
+
+	virtual bool IsEquals(const Order &rhs) override
+	{
+		if (rhs.GetId() != GetId())
+			return false;
+
+		const auto &o = static_cast<const OrderPlace &>(rhs);
+
+		return o.pos == pos && item == item;
+	}
+};
+
+struct OrderDrop : public NumberedOrder<OrderDrop>
+{
+	OrderDrop(WBPos v, PGameObject i, int c);
+	std::string to_string() const override;
+	WBPos pos;
+	PGameObject item;
+	int count;
+
+	virtual bool IsEquals(const Order &rhs) override
+	{
+		if (rhs.GetId() != GetId())
+			return false;
+
+		const auto &o = static_cast<const OrderDrop &>(rhs);
+
+		return o.pos == pos && item == item && count == o.count;
 	}
 };
 

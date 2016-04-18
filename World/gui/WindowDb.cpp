@@ -36,6 +36,7 @@ void WindowDb::Draw(glm::vec2 mainwin_size)
 				jj = 0;
 
 			ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
+
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetTooltip("%s\n%s", a.first.get().c_str(), std::get<0>(a.second)->GetDescription().c_str());
@@ -48,6 +49,11 @@ void WindowDb::Draw(glm::vec2 mainwin_size)
 				if (ImGui::IsKeyPressed(GLFW_KEY_U))
 				{
 					WindowRecipe::Get().ShowUsing(a.first);
+				}
+
+				if(ImGui::IsMouseClicked(0))
+				{
+					selected_id = std::get<0>(a.second)->GetId();
 				}
 			}
 

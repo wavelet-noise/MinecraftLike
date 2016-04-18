@@ -281,9 +281,14 @@ void Game::Draw(float dt)
 
 	static std::unordered_map<glm::ivec3, PGameObject> opened_w;
 
-	selection_pos = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
+	if(WindowTools::Get().selected == SelectedOrder::PLACE_BLOCK)
+		selection_pos = PickPrefirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
 		return mWorld->GetBlock(pos).get();
 	});
+	else
+		selection_pos = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
+			return mWorld->GetBlock(pos).get();
+		});
 
 	mRender->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
 	if (!ImGui::IsAnyItemHovered())
@@ -308,6 +313,9 @@ void Game::Draw(float dt)
 					minmaxstate = 1;
 					break;
 				}
+				break;
+			case SelectedOrder::PLACE_BLOCK:
+				OrderBus::Get().IssueOrder(std::make_shared<OrderPlace>(std::get<0>(selection_pos), DB::Get().Create(WindowDb::Get().GetSelectedId())));
 				break;
 			}
 		}

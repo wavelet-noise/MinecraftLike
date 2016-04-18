@@ -34,6 +34,8 @@ public:
 
   PGameObject GetBlock(const WBPos & wbpos, std::shared_ptr<Sector> &contains);
 
+  bool IsWalkable(const WBPos & wbpos);
+
   // Установить блок в заданную позицию.
   // Существующий блок будет удален.
   PGameObject SetBlock(const WBPos &pos, PGameObject block);
@@ -42,6 +44,7 @@ public:
 
   PGameObject Place(const SBPos & position, PGameObject item);
   PGameObject Replace(const SBPos & position, PGameObject item);
+  std::list<std::pair<glm::vec3, PGameObject>> &GetStorages();
 
   int GetActiveCount();
 
@@ -50,6 +53,7 @@ public:
 
 private:
   std::unordered_map<SPos, std::shared_ptr<Sector>> mSectors;
+  std::list<std::pair<glm::vec3, PGameObject>> storages;
 
   Sector *mCurrentSector;
 

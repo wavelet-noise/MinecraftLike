@@ -5,10 +5,17 @@
 #include <glm/glm.hpp>
 #include "../Core/Config.h"
 
-typedef glm::vec3   WPos;     // Мировые координаты.
-typedef glm::ivec3  SPos;     // Координаты сектора.
-typedef glm::ivec3  WBPos;    // Координаты блока в мире.
-typedef glm::ivec3  SBPos;    // Координаты блока в секторе.
+// Мировые координаты.
+using WPos = glm::vec3;   
+
+// Координаты сектора.
+using SPos = glm::ivec3;    
+
+// Координаты блока в мире.
+using WBPos = glm::ivec3;    
+
+// Координаты блока в секторе.
+using SBPos = glm::ivec3;    
 
 
 // Система координат.

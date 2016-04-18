@@ -43,9 +43,24 @@ void WindowTools::Draw(glm::vec2 wsize)
 			ImGui::TreePop();
 		}
 
-		if (ImGui::Button("Collect items"))
+		if (ImGui::TreeNode("Building"))
 		{
-			selected = SelectedOrder::COLLECT_SQUARE;
+			if (ImGui::Button("Place block"))
+			{
+				selected = SelectedOrder::PLACE_BLOCK;
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Crafting"))
+		{
+			if (ImGui::Button("Craft one"))
+			{
+				selected = SelectedOrder::DIG_SQUARE;
+			}
+
+			ImGui::TreePop();
 		}
 
 		ImGui::End();

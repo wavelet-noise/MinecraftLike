@@ -96,6 +96,25 @@ std::shared_ptr<Sector> World::FindSector(const SPos &position)
 	return nullptr;
 }
 
+bool World::IsWalkable(const WBPos &wbpos)
+{
+	auto spos = cs::WBtoS(wbpos);
+	if (auto sector = FindSector(spos))
+	{
+		if (auto b = sector->GetBlock(cs::WBtoSB(wbpos, spos)))
+			return false;
+	}
+
+	spos = cs::WBtoS(wbpos - glm::ivec3(0,0,1));
+	if (auto sector = FindSector(spos))
+	{
+		if (auto b = sector->GetBlock(cs::WBtoSB(wbpos - glm::ivec3(0, 0, 1), spos)))
+			return true;
+	}
+
+	return false;
+}
+
 PGameObject World::GetBlock(const WBPos &wbpos)
 {
 	auto spos = cs::WBtoS(wbpos);
@@ -136,15 +155,30 @@ PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block)
 {
 	auto spos = cs::WBtoS(wbpos);
 	std::shared_ptr<Sector> sec;
+	static StringIntern storage("storage");
 
 	if (auto l = GetBlock(wbpos, sec))
+	{
 		l->OnDestroy({ this, sec.get(), wbpos, 0 });
+
+		if (l->GetId() == storage)
+		{
+			storages.remove(std::make_pair(wbpos, block));
+		}
+	}
 
 	if (auto sector = FindSector(spos))
 	{
 		sector->SetBlock(cs::WBtoSB(wbpos, spos), block);
-		if(block) // may be nullptr on place air
+		if (block) // may be nullptr on place air
+		{
 			block->OnCreate({ this, sec.get(), wbpos, 0 });
+			
+			if (block->GetId() == storage)
+			{
+				storages.push_back(std::make_pair(wbpos, block));
+			}
+		}
 	}
 
 	for (const auto &n : neib)
@@ -192,6 +226,11 @@ PGameObject World::Replace(const SBPos & position, PGameObject item)
 		LOG(error) << "Replacing " << item->GetId() << " in not existing sector!";
 
 	return item;
+}
+
+std::list<std::pair<glm::vec3, PGameObject>>& World::GetStorages()
+{
+	return storages;
 }
 
 int World::GetActiveCount()

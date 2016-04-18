@@ -196,6 +196,35 @@
         ],
         "dynamic":true,
         "placeable":true
+    },
+    {  
+        "type":"Block",
+        "id":"storage",
+		"agents":[  
+            {  
+                "type":"Chest",
+                "size":20,
+                "columns":5
+            }
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"storage",
+						"storage",
+						"storage",
+						"storage",
+						"storage",
+						"storage"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":true,
+        "placeable":true
     },{  
         "type":"Block",
         "id":"grass_high",

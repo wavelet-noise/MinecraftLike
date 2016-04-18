@@ -267,13 +267,15 @@
     <ClCompile Include="Core\EventBus.cpp">
       <Filter>Core\events</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderBus.cpp" />
     <ClCompile Include="gui\WS.cpp" />
     <ClCompile Include="gui\WindowTools.cpp" />
     <ClCompile Include="Core\GameObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="Core\OrderBus.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />

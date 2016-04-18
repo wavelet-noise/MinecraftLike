@@ -8,7 +8,8 @@ enum class SelectedOrder
 {
 	NONE,
 	DIG_SQUARE,
-	COLLECT_SQUARE
+	COLLECT_SQUARE,
+	PLACE_BLOCK
 };
 
 class WindowTools : public WindowBase

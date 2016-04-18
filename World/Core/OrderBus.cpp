@@ -97,3 +97,21 @@ std::string OrderWander::to_string() const
 {
 	return (boost::format("OrderWander: pos = %1%") % glm::to_string(pos)).str();
 }
+
+OrderPlace::OrderPlace(WBPos v, PGameObject i) : pos(v), item(i)
+{
+}
+
+std::string OrderPlace::to_string() const
+{
+	return (boost::format("OrderPlace: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
+}
+
+OrderDrop::OrderDrop(WBPos v, PGameObject i, int c) : pos(v), item(i), count(c)
+{
+}
+
+std::string OrderDrop::to_string() const
+{
+	return (boost::format("OrderDrop: pos = %1% id = %2% count = %3%") % glm::to_string(pos) % item->GetId() % count).str();
+}
