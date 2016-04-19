@@ -114,5 +114,15 @@
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
 	}
+},
+{
+	"type":"Item",
+    "id":"nutrition",
+    "agents":[
+	{
+		"type":"Food",
+		"nutrition":100
+	}
+    ]
 }
 ]

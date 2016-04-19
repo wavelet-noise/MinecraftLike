@@ -6,6 +6,7 @@
 #include <Core\OrderBus.h>
 #include <unordered_map>
 #include <boost\circular_buffer.hpp>
+#include <deque>
 
 using PPositionAgent = std::unique_ptr<class PositionAgent>;
 
@@ -81,7 +82,12 @@ public:
 		return 1 / 10.f;
 	}
 
+	void AddPersinal(POrder o);
+
 	POrder order;
+
+	std::deque<POrder> personal;
+
 	std::list<glm::vec3> path;
 	glm::vec3 wishpos;
 };
@@ -158,6 +164,7 @@ public:
 	}
 
 	float calorie = 0, full = 100;
+	bool want_to_eat = false;
 };
 
 REGISTER_AGENT(CalorieConsumer)
@@ -264,3 +271,22 @@ public:
 };
 
 REGISTER_AGENT(Wander)
+
+class Food : public Agent
+{
+public:
+	AGENT(Food)
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	inline int GetNutrition() const
+	{
+		return nutrition;
+	}
+
+	int nutrition;
+};
+
+REGISTER_AGENT(Food)

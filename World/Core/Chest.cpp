@@ -132,6 +132,34 @@ ChestSlot Chest::PopSelected()
 	return PopSlot(mSelected);
 }
 
+ChestSlot Chest::PopByPredicate(std::function<bool(const ChestSlot&)> pred)
+{
+	for (auto &cs : slots)
+	{
+		if (cs.obj)
+		{
+			if(pred(cs))
+				return std::move(cs);
+		}
+	}
+
+	return {};
+}
+
+ChestSlot Chest::GetByPredicate(std::function<bool(const ChestSlot&)> pred)
+{
+	for (auto &cs : slots)
+	{
+		if (cs.obj)
+		{
+			if (pred(cs))
+				return cs;
+		}
+	}
+
+	return{};
+}
+
 void Chest::PushSelected(ChestSlot cs)
 {
 	Push(cs.obj, cs.count, mSelected);

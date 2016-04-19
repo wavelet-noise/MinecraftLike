@@ -81,7 +81,7 @@ int Game::Run()
 	}
 
 	mCamera->Resize(mWindow->GetSize());
-	mCamera->SetPos({ 0, 0, 64 });
+	mCamera->SetPos({ 0, 0, 20 });
 	mCamera->LookAt({ 32, 32, 0 });
 	mWindow->SetResizeCallback([&](int x, int y) {
 		mCamera->Resize({ x, y });
@@ -154,7 +154,9 @@ void Game::Update(float dt)
 		const auto &esec = std::static_pointer_cast<EventSectorReady>(e);
 		if (esec->sec->GetPos() == SPos(0, 0, 0))
 		{
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			auto c = DB::Get().Create("caracter");
+			c->GetAgent<Chest>()->Push(DB::Get().Create("nutrition"), 100);
+			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, c));
 			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
 			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
 			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));

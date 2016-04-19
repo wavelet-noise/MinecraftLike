@@ -22,6 +22,8 @@ public:
   ChestSlot PopSlot(int slot);
   ChestSlot PopFirst(int & pos);
   ChestSlot PopSelected();
+  ChestSlot PopByPredicate(std::function<bool(const ChestSlot &)> pred);
+  ChestSlot GetByPredicate(std::function<bool(const ChestSlot&)> pred);
   void PushSelected(ChestSlot cs);
   void Select(int slot);
   int GetSelected();

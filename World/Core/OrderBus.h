@@ -23,6 +23,7 @@ public:
 	virtual size_t GetId() const = 0;
 
 	virtual bool IsEquals(const Order &rhs) = 0;
+	virtual glm::vec3 GetPos() const = 0;
 	virtual std::string to_string() const;
 
 	void Take();
@@ -64,6 +65,11 @@ struct OrderDig : public NumberedOrder<OrderDig>
 	std::string to_string() const override;
 	glm::vec3 pos;
 
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
+
 	virtual bool IsEquals(const Order &rhs) override
 	{
 		if (rhs.GetId() != GetId())
@@ -82,6 +88,11 @@ struct OrderGet : public NumberedOrder<OrderGet>
 	glm::vec3 pos;
 	PGameObject item;
 
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
+
 	virtual bool IsEquals(const Order &rhs) override
 	{
 		if (rhs.GetId() != GetId())
@@ -99,6 +110,11 @@ struct OrderPlace : public NumberedOrder<OrderPlace>
 	std::string to_string() const override;
 	WBPos pos;
 	PGameObject item;
+
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
 
 	virtual bool IsEquals(const Order &rhs) override
 	{
@@ -119,6 +135,11 @@ struct OrderDrop : public NumberedOrder<OrderDrop>
 	PGameObject item;
 	int count;
 
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
+
 	virtual bool IsEquals(const Order &rhs) override
 	{
 		if (rhs.GetId() != GetId())
@@ -130,12 +151,40 @@ struct OrderDrop : public NumberedOrder<OrderDrop>
 	}
 };
 
+struct OrderEat : public NumberedOrder<OrderEat>
+{
+	OrderEat(WBPos v, PGameObject i);
+	std::string to_string() const override;
+	WBPos pos;
+	PGameObject item;
+
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
+
+	virtual bool IsEquals(const Order &rhs) override
+	{
+		if (rhs.GetId() != GetId())
+			return false;
+
+		const auto &o = static_cast<const OrderEat &>(rhs);
+
+		return o.pos == pos && item == item;
+	}
+};
+
 struct OrderWalk : public NumberedOrder<OrderWalk>
 {
 	OrderWalk(glm::vec3 v);
 	std::string to_string() const override;
 	glm::vec3 pos;
 	PGameObject item;
+
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
 
 	virtual bool IsEquals(const Order &rhs) override
 	{
@@ -154,6 +203,11 @@ struct OrderWander : public NumberedOrder<OrderWander>
 	std::string to_string() const override;
 	glm::vec3 pos;
 	PGameObject item;
+
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
 
 	virtual bool IsEquals(const Order &rhs) override
 	{

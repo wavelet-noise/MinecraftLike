@@ -279,6 +279,33 @@ void Controlable::Update(const GameObjectParams & params)
 			}
 		}
 
+		if (auto ch = mParent->GetAgent<Chest>())
+		{
+			auto &i = ch->GetFirst();
+			if (i.obj)
+			{
+				auto &storages = params.world->GetStorages();
+				auto tpos = storages.begin()->first + glm::vec3(0, 0, 1);
+				if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
+				{
+					auto i = ch->PopFirst();
+					nearest_order = std::make_shared<OrderDrop>(storages.begin()->first + glm::vec3(0, 0, 1), i.obj, i.count);
+					nearest = tpos;
+				}
+			}
+		}
+
+		auto c = mParent->GetAgent<Creature>();
+		if (c->personal.size() > 0)
+		{
+			if (glm::distance(p->Get(), (*c->personal.begin())->GetPos()) < glm::distance(p->Get(), nearest))
+			{
+				nearest = (*c->personal.begin())->GetPos();
+				nearest_order = c->personal.front();
+				c->personal.pop_front();
+			}
+		}
+
 		if (nearest_order)
 		{
 			nearest_order->Take();
@@ -421,7 +448,7 @@ void Creature::Update(const GameObjectParams & params)
 					bool placed = false;
 					if (auto b = params.world->GetBlock(pos - glm::ivec3(0, 0, 1)))
 					{
-						if(auto ch = b->GetAgent<Chest>())
+						if (auto ch = b->GetAgent<Chest>())
 						{
 							ch->Push(ord->item, ord->count);
 							placed = true;
@@ -437,6 +464,50 @@ void Creature::Update(const GameObjectParams & params)
 				}
 			}
 		}
+		else if (order->GetId() == Order::Idfor<OrderEat>())
+		{
+			auto &ord = std::static_pointer_cast<OrderEat>(order);
+			auto &pos = ord->pos;
+
+			if (path.empty())
+				wishpos = pos;
+			else
+			{
+				p->Set(path.back());
+				path.pop_back();
+
+				if (path.empty())
+				{
+					if (auto b = params.world->GetBlock(pos - glm::ivec3(0, 0, 1)))
+					{
+						if (auto ch = b->GetAgent<Chest>())
+						{
+							auto poped = ch->PopByPredicate([&](const ChestSlot &o)->bool {
+								return o.obj && o.obj->GetAgent<Food>();
+							});
+							if (poped.obj)
+							{
+								--poped.count;
+								if (auto cal = mParent->GetAgent<CalorieConsumer>())
+								{
+									if (cal->calorie >= 100)
+										goto eat_exit;
+									cal->calorie += poped.obj->GetAgent<Food>()->nutrition;
+								}
+
+								if (poped.count > 0)
+								{
+									ch->Push(poped.obj, poped.count);
+								}
+							}
+						}
+					}
+
+					eat_exit:
+					Clear();
+				}
+			}
+		}
 
 		if (path.empty() && order)
 		{
@@ -445,22 +516,6 @@ void Creature::Update(const GameObjectParams & params)
 			{
 				Clear();
 				return;
-			}
-		}
-	}
-	else
-	{
-		if (auto ch = mParent->GetAgent<Chest>())
-		{
-			auto &i = ch->GetFirst();
-			if(i.obj)
-			{
-				auto &storages = params.world->GetStorages();
-				if (!storages.empty())
-				{
-					auto i = ch->PopFirst();
-					order = std::make_shared<OrderDrop>(storages.begin()->first + glm::vec3(0,0,1) , i.obj, i.count);
-				}
 			}
 		}
 	}
@@ -474,7 +529,26 @@ void Creature::DrawGui()
 			ImGui::Text("Order: %s", order->to_string());
 		else
 			ImGui::Text("Order: none");
+
+		int j = 0;
+		if (ImGui::TreeNode((boost::format("Self orders##%1%") % j).str().c_str()))
+		{
+			for (const auto &i : personal)
+			{
+				ImGui::Text(i->to_string().c_str());
+			}
+			ImGui::TreePop();
+		}
 	}
+}
+
+void Creature::AddPersinal(POrder o)
+{
+	std::remove_if(personal.begin(), personal.end(), [&](const POrder &p)->bool {
+		return p->GetId() == o->GetId();
+	});
+
+	personal.push_front(o);
 }
 
 PAgent WalkingPossibility::Clone(GameObject * parent, const std::string & name)
@@ -559,6 +633,27 @@ PAgent CalorieConsumer::Clone(GameObject * parent, const std::string & name)
 void CalorieConsumer::Update(const GameObjectParams & params)
 {
 	calorie -= params.dt / 10.f;
+
+	if (want_to_eat)
+		if (auto c = mParent->GetAgent<Creature>())
+		{
+			auto &storages = params.world->GetStorages();
+			auto tpos = storages.begin()->first + glm::vec3(0, 0, 1);
+			if (storages.size() > 0)
+			{
+				auto ch = storages.begin()->second->GetAgent<Chest>();
+				auto i = ch->GetByPredicate([](const ChestSlot &o)->bool
+				{
+					return o.obj && o.obj->GetAgent<Food>();
+				});
+
+				if (i.obj)
+				{
+					c->AddPersinal(std::make_shared<OrderEat>(tpos, i.obj));
+					want_to_eat = false;
+				}
+			}
+		}
 }
 
 void CalorieConsumer::DrawGui()
@@ -572,16 +667,19 @@ void CalorieConsumer::DrawGui()
 	{
 		ImGui::TextColored({ 1,0,0,1 }, "Starwing");
 		mParent->GetAgent<Anatomic>()->Think("I'm starwing :(");
+		want_to_eat = true;
 	}
 	else if (calorie <= full / 3.f)
 	{
 		ImGui::TextColored({ 1,1,0,1 }, "Very hungry");
 		mParent->GetAgent<Anatomic>()->Think("I'm very hungry :(");
+		want_to_eat = true;
 	}
 	else if (calorie <= full / 1.5f)
 	{
 		ImGui::TextColored({ 0.5,1,0,1 }, "Hungry");
 		mParent->GetAgent<Anatomic>()->Think("I'm hungry :(");
+		want_to_eat = true;
 	}
 	else
 	{
@@ -763,12 +861,23 @@ void Wander::Update(const GameObjectParams & params)
 {
 	if (auto c = mParent->GetAgent<Creature>())
 	{
-		if (!c->order)
+		auto p = mParent->GetAgent<PositionAgent>();
+		auto npos = p->Get() + glm::vec3((rand() % 60 - 30) / 10.f, (rand() % 60 - 30) / 10.f, 0);
+		if (params.world->IsWalkable(npos))
 		{
-			auto p = mParent->GetAgent<PositionAgent>();
-			auto npos = p->Get() + glm::vec3((rand() % 60 - 30) / 10.f, (rand() % 60 - 30) / 10.f, 0);
-			if(params.world->IsWalkable(npos))
-				c->order = std::make_shared<OrderWander>(npos);
+			c->AddPersinal(std::make_shared<OrderWander>(npos));
 		}
 	}
+}
+
+PAgent Food::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<Food>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void Food::JsonLoad(const rapidjson::Value & val)
+{
+	JSONLOAD(NVP(nutrition));
 }

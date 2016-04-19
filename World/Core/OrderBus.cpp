@@ -115,3 +115,12 @@ std::string OrderDrop::to_string() const
 {
 	return (boost::format("OrderDrop: pos = %1% id = %2% count = %3%") % glm::to_string(pos) % item->GetId() % count).str();
 }
+
+OrderEat::OrderEat(WBPos v, PGameObject i) : pos(v), item(i)
+{
+}
+
+std::string OrderEat::to_string() const
+{
+	return (boost::format("OrderEat: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
+}
