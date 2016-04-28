@@ -42,6 +42,11 @@ void DB::Registry(const StringIntern &name, PGameObject block, bool isStatic)
   mObjects[name] = std::make_tuple(block, isStatic);
 }
 
+void DB::RegistryTesselator(const StringIntern & name, PGameObjectTessellator tess)
+{
+	mTess[name] = tess;
+}
+
 void DB::ReloadDirectory(const std::string & mDir)
 {
   mObjects.clear();
@@ -282,6 +287,11 @@ void DB::ReloadDirectory(const std::string & mDir)
 const std::vector<StringIntern> &DB::Taglist(const StringIntern & name) const
 {
   return mTags.find(name)->second;
+}
+
+const std::vector<StringIntern> &DB::Taglist(const std::string & name) const
+{
+	return mTags.find(StringIntern(name))->second;
 }
 
 PGameObject DB::Create(const std::string & name) const

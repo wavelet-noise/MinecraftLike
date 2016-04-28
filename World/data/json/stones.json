@@ -1,0 +1,529 @@
+[
+{  
+	"type":"Block",
+	"id":"calcite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"calcite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"marble",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"marble"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"limestone",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"limestone"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"dolomite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"dolomite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"chalk",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"chalk"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"alunite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"alunite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"andesite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"andesite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"anhydrite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"anhydrite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"basalt",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"basalt"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"cassiterite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"cassiterite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"chert",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"chert"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"chromite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"chromite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"claystone",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"claystone"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"conglomerate",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"conglomerate"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"cobaltite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"cobaltite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"bauxite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"bauxite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"chromite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"chromite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"cryolite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"cryolite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"diorite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"diorite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"gabbro",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"gabbro"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"galena",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"galena"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"granite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"granite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"gypsum",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"gypsum"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"hematite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"hematite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"ilmenite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"ilmenite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"kaolinite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"kaolinite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"kimberlite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"kimberlite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"lignite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"lignite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"magnetite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"magnetite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"malachite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"malachite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+},
+{  
+	"type":"Block",
+	"id":"sphalerite",
+	"agents":[  
+	],
+	"tesselator":[  
+		{  
+			"type":"SplitBlockTessellator",
+			"generator":{  
+				"all":"sphalerite"
+			},
+			"transparent":false
+		}
+	],
+	"placeable":true,
+	"tags":["rock", "flux"]
+}
+]

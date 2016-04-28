@@ -490,8 +490,7 @@ void Creature::Update(const GameObjectParams & params)
 								--poped.count;
 								if (auto cal = mParent->GetAgent<CalorieConsumer>())
 								{
-									if (cal->calorie >= 100)
-										goto eat_exit;
+									if (cal->calorie <= 100 - poped.obj->GetAgent<Food>()->nutrition)
 									cal->calorie += poped.obj->GetAgent<Food>()->nutrition;
 								}
 
@@ -503,7 +502,6 @@ void Creature::Update(const GameObjectParams & params)
 						}
 					}
 
-					eat_exit:
 					Clear();
 				}
 			}

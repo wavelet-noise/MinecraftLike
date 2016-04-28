@@ -84,6 +84,10 @@ int Game::Run()
 	mCamera->SetPos({ 0, 0, 20 });
 	mCamera->LookAt({ 32, 32, 0 });
 	mWindow->SetResizeCallback([&](int x, int y) {
+		if (y < 1)
+			y = 1;
+		if (x < 1)
+			x = 1;
 		mCamera->Resize({ x, y });
 		mSun->Resize({ x, y });
 	});
@@ -374,7 +378,7 @@ void Game::Draw(float dt)
 
 	for (auto &w : opened_w)
 	{
-		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize || ImGuiWindowFlags_NoSavedSettings);
 
 		std::get<1>(w)->DrawGui();
 		ImGui::End();

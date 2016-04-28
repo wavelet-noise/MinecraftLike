@@ -80,10 +80,7 @@ void Tessellator::Process()
 		{
 			glm::vec3 min = it->second->GetPos();
 			if (cam->BoxWithinFrustum(min * float(SECTOR_SIZE), (min + glm::vec3(1, 1, 1)) * float(SECTOR_SIZE)))
-				if (it->second->Update(this, mRender))
-				{
-					break;
-				}
+				it->second->Update(this, mRender);
 		}
 	}
 	auto end = glfwGetTime();

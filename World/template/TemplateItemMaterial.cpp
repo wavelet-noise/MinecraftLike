@@ -2,6 +2,7 @@
 #include <core\GameObject.h>
 #include <core\DB.h>
 #include <Render\TextureManager.h>
+#include <Core\SplitBlockTessellator.h>
 
 void TemplateItemMaterial::Generate()
 {

@@ -14,8 +14,11 @@ public:
   static DB &Get();
 
   void Registry(const StringIntern &name, PGameObject block, bool isStatic = true);
+  void RegistryTesselator(const StringIntern &name, PGameObjectTessellator tess);
   void ReloadDirectory(const std::string &mDir);
   const std::vector<StringIntern> &Taglist(const StringIntern &name) const;
+
+  const std::vector<StringIntern>& Taglist(const std::string & name) const;
 
   // Создать блок.
   // Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.

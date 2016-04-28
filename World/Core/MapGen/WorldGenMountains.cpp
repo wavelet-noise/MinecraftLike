@@ -47,8 +47,7 @@ void WorldGenMountains::Generate(Sector & s)
 
 	auto bg = DB::Get().Create(StringIntern("grass"));
 
-	auto bd4 = DB::Get().Create(StringIntern("dirt4"));
-	auto bd3 = DB::Get().Create(StringIntern("dirt3"));
+	auto bd3 = DB::Get().Create(StringIntern("conglomerate"));
 	auto bd2 = DB::Get().Create(StringIntern("dirt2"));
 	auto bd = DB::Get().Create(StringIntern("dirt"));
 
@@ -64,6 +63,13 @@ void WorldGenMountains::Generate(Sector & s)
 	auto iron_ore_block = DB::Get().Create(StringIntern("iron_ore_block"));
 	auto copper_ore_block = DB::Get().Create(StringIntern("copper_ore_block"));
 	auto uranium_ore_block = DB::Get().Create(StringIntern("uranium_ore_block"));
+
+	auto rock = DB::Get().Taglist("rock");
+	std::vector<PGameObject> rocks;
+	for (const auto &r : rock)
+	{
+		rocks.push_back(DB::Get().Create(r));
+	}
 
 	for (int i = 0; i < SECTOR_SIZE; ++i)
 	{
@@ -91,7 +97,7 @@ void WorldGenMountains::Generate(Sector & s)
 									if (is_cluster(tx, ty, tz, 4, 0.21))
 										s.SetBlock({ i, j, k }, uranium_ore_block);
 									else
-										s.SetBlock({ i, j, k }, bd4);
+										s.SetBlock({ i, j, k }, rocks[rand() % rocks.size()]);
 					}
 					else if (solid(tx, ty, tz + 10))
 						s.SetBlock({ i, j, k }, bd3);
