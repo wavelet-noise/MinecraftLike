@@ -64,6 +64,8 @@ public:
 		return ag;
 	}
 
+	virtual void Requirements(GameObject * parent);
+
 	// client/server paralell
 	// выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
 	virtual void Afterload(GameObject * parent);
@@ -94,6 +96,38 @@ protected:
 	StringIntern mFullName;
 };
 
+static void __req_helper()
+{
+}
+
+template <typename Last>
+static void __req_helper(const Last &last)
+{
+	__deserialize(last.first, last.second);
+}
+
+template <typename First, typename... Rest>
+static void __req_helper(const First &first, const Rest&... rest)
+{
+	__deserialize(first.first, first.second);
+	deserialize(rest...);
+}
+
+#define APPLY0(t, dummy)
+#define APPLY1(t, a) t(a)
+#define APPLY2(t, a, b) t(a) t(b)
+#define APPLY3(t, a, b, c) t(a) t(b) t(c)
+#define APPLY4(t, a, b, c, d) t(a) t(b) t(c) t(d)
+#define APPLY5(t, a, b, c, d, e) t(a) t(b) t(c) t(d) t(e)
+#define APPLY6(t, a, b, c, d, e, f) t(a) t(b) t(c) t(d) t(e) t(f)
+#define APPLY7(t, a, b, c, d, e, f, g) t(a) t(b) t(c) t(d) t(e) t(f) t(g)
+#define APPLY8(t, a, b, c, d, e, f, g, h) t(a) t(b) t(c) t(d) t(e) t(f) t(g) t(h)
+
+#define NUM_ARGS_H1(dummy, x8, x7, x6, x5, x4, x3, x2, x1, x0, ...) x0
+#define NUM_ARGS(...) NUM_ARGS_H1(dummy, ##__VA_ARGS__, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#define APPLY_ALL_H3(t, n, ...) APPLY##n(t, __VA_ARGS__)
+#define APPLY_ALL_H2(t, n, ...) APPLY_ALL_H3(t, n, __VA_ARGS__)
+#define APPLY_ALL(t, ...) APPLY_ALL_H2(t, NUM_ARGS(__VA_ARGS__), __VA_ARGS__)
 
 #define REGISTER_AGENT(type) REGISTER_ELEMENT(type, AgentFactory::Get(), StringIntern(#type))
 #define AGENT(type) virtual StringIntern GetFullName() const override { return StringIntern(#type); } \
@@ -104,6 +138,9 @@ protected:
 						if(s.elapsed >= GetFreq()) { Update({params.world, params.sector, params.pos, s.elapsed, params.render}); s.executed = true; }  \
 					} \
 				    virtual void __AfterUpdate() override { auto & s = Agent::GetSync<type>();  s.first = true; if(s.executed) { s.elapsed = 0.f; } s.executed = false; }
+
+#define REQUIRE(...) APPLY_ALL(__REQ_STRINGIFY, __VA_ARGS__)
+#define __REQ_STRINGIFY(type) if(auto t = mParent->GetAgent<type>()){}else{throw #type;}
 
 struct AgentFactory : public boost::noncopyable
 {

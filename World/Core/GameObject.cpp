@@ -39,6 +39,14 @@ void GameObject::Interact(InteractParams & params)
 	}
 }
 
+void GameObject::Requirements()
+{
+	for (auto &agent : mAgents)
+	{
+		agent.second->Requirements(this);
+	}
+}
+
 void GameObject::Afterload()
 {
 	for (auto &agent : mAgents)

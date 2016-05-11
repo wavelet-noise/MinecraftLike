@@ -51,13 +51,6 @@ void DB::ReloadDirectory(const std::string & mDir)
 {
   mObjects.clear();
 
-  auto b = std::make_shared<GameObject>(StringIntern("allagents"));
-  for (auto &m : AgentFactory::Get().map_)
-  {
-	  b->mAgents[m.first] = m.second();
-  }
-  mObjects[StringIntern("allagents")] = std::make_tuple(b, false);
-
   boost::filesystem::path targetDir(mDir);
   boost::filesystem::recursive_directory_iterator iter(targetDir);
 
@@ -246,21 +239,27 @@ void DB::ReloadDirectory(const std::string & mDir)
     }
   }
 
-  LOG(info) << mObjects.size() << " loaded, afterload start";
-
-  for (auto &o : mObjects)
-  {
-    std::get<0>(o.second)->Afterload();
-  }
-
-  LOG(info) "afterload done, template expansion";
+  LOG(info) << mObjects.size() << " loaded";
+  LOG(info) "template expansion";
 
   for (auto &t : mTempl)
   {
     t->Generate();
   }
 
-  LOG(info) "expanded to " << mObjects.size() << " objects";
+  LOG(info) "expanded to " << mObjects.size() << " objects, then fill requirements";
+
+  for (auto &o : mObjects)
+  {
+	  std::get<0>(o.second)->Requirements();
+  }
+
+  LOG(info) "done, then afterload";
+
+  for (auto &o : mObjects)
+  {
+	  std::get<0>(o.second)->Afterload();
+  }
 
   TextureManager::Get().Compile();
 
@@ -282,6 +281,13 @@ void DB::ReloadDirectory(const std::string & mDir)
   LOG(info) "expanded to " << mRecipe.size() << " recipes";
 
   LOG(info) << "db done";
+
+  auto b = std::make_shared<GameObject>(StringIntern("allagents"));
+  for (auto &m : AgentFactory::Get().map_)
+  {
+	  b->mAgents[m.first] = m.second();
+  }
+  mObjects[StringIntern("allagents")] = std::make_tuple(b, false);
 }
 
 const std::vector<StringIntern> &DB::Taglist(const StringIntern & name) const

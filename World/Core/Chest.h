@@ -40,3 +40,19 @@ public:
 };
 
 REGISTER_AGENT(Chest)
+
+class InputChest : public Chest
+{
+public:
+	AGENT(InputChest)
+};
+
+REGISTER_AGENT(InputChest)
+
+class OutputChest : public Chest
+{
+public:
+	AGENT(OutputChest)
+};
+
+REGISTER_AGENT(OutputChest)

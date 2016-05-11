@@ -30,6 +30,8 @@ public:
 	//client/server syncronize
 	virtual void Interact(InteractParams &params);
 
+	virtual void Requirements();
+
 	//client/server paralell
 	//выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
 	virtual void Afterload();

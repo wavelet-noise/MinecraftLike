@@ -21,3 +21,53 @@ private:
 };
 
 REGISTER_AGENT(CraftingTable)
+
+class Pulverizer : public Agent
+{
+public:
+	AGENT(Pulverizer)
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	virtual void Update(const GameObjectParams & params) override;
+	virtual void DrawGui() override;
+
+	float base_speed = 1;
+
+	float GetFreq() const override
+	{
+		return 1.0f;
+	}
+
+private:
+
+	float progress = 0;
+};
+
+REGISTER_AGENT(Pulverizer)
+
+class PulverizeTo : public Agent
+{
+public:
+	AGENT(PulverizeTo)
+
+	struct PulverizePart
+	{
+		StringIntern id;
+		int count;
+		float probability;
+	};
+
+	void JsonLoad(const rapidjson::Value &val) override;
+	virtual void Requirements(GameObject * parent) override;
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	virtual void DrawGui() override;
+
+	std::vector<PulverizePart> output;
+};
+
+REGISTER_AGENT(PulverizeTo)
