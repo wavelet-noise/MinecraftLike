@@ -111,9 +111,6 @@ void ParticleSystem::Update(float dt)
 			uvs[i * 4 + 2] = uvs[(mCount - 1) * 4 + 2];
 			uvs[i * 4 + 3] = uvs[(mCount - 1) * 4 + 3];
 
-			vext.pop_back();
-			vertex.pop_back();
-			uvs.pop_back(); uvs.pop_back(); uvs.pop_back(); uvs.pop_back();
 			mCount--;
 			i--;
 		}

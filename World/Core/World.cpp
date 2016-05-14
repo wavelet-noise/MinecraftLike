@@ -233,6 +233,27 @@ std::list<std::pair<glm::vec3, PGameObject>>& World::GetStorages()
 	return storages;
 }
 
+std::list<World::RecipeOrder>& World::GetRecipeOrders()
+{
+	return recipe_orders;
+}
+
+void World::QueueRecipeOrder(const RecipeOrder & ro)
+{
+	for (auto &r : recipe_orders)
+	{
+		if (*r.recipe == *ro.recipe)
+		{
+			r.elapsed += ro.elapsed;
+			if (!r.infinite)
+				r.infinite = ro.infinite;
+			return;
+		}
+	}
+
+	recipe_orders.push_back(ro);
+}
+
 int World::GetActiveCount()
 {
 	return mSectors.size();

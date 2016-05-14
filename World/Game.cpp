@@ -26,6 +26,7 @@
 #include "gui\imgui_impl_glfw_gl3.h"
 #include "gui\WS.h"
 #include <gui\WindowInventory.h>
+#include <gui\WindowCraftQueue.h>
 #include <gui\WindowPerfomance.h>
 #include <Render\Resources.h>
 #include <tools\ray.h>
@@ -34,6 +35,7 @@
 #include <Render\ParticleSystem.h>
 #include <core\EventBus.h>
 #include <core\OrderBus.h>
+
 
 Game::Game()
 {
@@ -58,6 +60,8 @@ Game::Game()
 
 	mWorld = std::make_unique<World>();
 	WindowInventory::Get().w = mWorld.get();
+	WindowCraftQueue::Get().w = mWorld.get();
+	WindowDb::Get().w = mWorld.get();
 
 	generateShadowFBO();
 }
@@ -363,7 +367,7 @@ void Game::Draw(float dt)
 
 	WS::Get().Draw(mWindow->GetSize());
 
-	ImGui::Begin("Colony");
+	ImGui::Begin("Colony", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 	int i = 0;
 	for (auto &c : controlled)
 	{
@@ -393,4 +397,11 @@ void Game::Draw(float dt)
 
 	WindowPerfomance::Get().DtUpdate(glfwGetTime() - drawtime, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
 }
+
+World * Game::GetWorld()
+{
+	return mWorld.get();
+}
+
+std::unique_ptr<World> Game::mWorld;
 

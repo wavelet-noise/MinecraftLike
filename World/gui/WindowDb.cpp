@@ -8,6 +8,7 @@
 #include <Core\Chest.h>
 #include <GLFW\glfw3.h>
 #include <gui\WindowRecipe.h>
+#include "WindowTools.h"
 
 void WindowDb::Draw(glm::vec2 mainwin_size)
 {
@@ -51,7 +52,7 @@ void WindowDb::Draw(glm::vec2 mainwin_size)
 					WindowRecipe::Get().ShowUsing(a.first);
 				}
 
-				if(ImGui::IsMouseClicked(0))
+				if (ImGui::IsMouseClicked(0))
 				{
 					selected_id = std::get<0>(a.second)->GetId();
 				}

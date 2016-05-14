@@ -26,6 +26,15 @@ public:
 
   void Update(float dt);
 
+  struct RecipeOrder
+  {
+	  RecipeOrder(PRecipe r, int e, bool i) : recipe(r), elapsed(e), infinite(i) {}
+
+	  PRecipe recipe;
+	  int elapsed = 1;
+	  bool infinite = false;
+  };
+
   // ѕолучить сектор. ≈сли сектор не загружен, будет произведена попытка 
   // загрузить сектор из загрузчика секторов.
   std::shared_ptr<Sector> GetSector(const SPos &position);
@@ -44,7 +53,11 @@ public:
 
   PGameObject Place(const SBPos & position, PGameObject item);
   PGameObject Replace(const SBPos & position, PGameObject item);
+
+
   std::list<std::pair<glm::vec3, PGameObject>> &GetStorages();
+  std::list<RecipeOrder> &GetRecipeOrders();
+  void QueueRecipeOrder(const RecipeOrder &ro);
 
   int GetActiveCount();
 
@@ -54,6 +67,8 @@ public:
 private:
   std::unordered_map<SPos, std::shared_ptr<Sector>> mSectors;
   std::list<std::pair<glm::vec3, PGameObject>> storages;
+
+  std::list<RecipeOrder> recipe_orders;
 
   Sector *mCurrentSector;
 

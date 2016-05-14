@@ -2,7 +2,11 @@
 {  
 	"type":"Block",
 	"id":"calcite",
-	"agents":[  
+	"agents":[
+			{
+				"type":"DeathDrop",
+				"id":"calcite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -20,6 +24,10 @@
 	"type":"Block",
 	"id":"marble",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"marble"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -37,6 +45,10 @@
 	"type":"Block",
 	"id":"limestone",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"limestone"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -54,6 +66,10 @@
 	"type":"Block",
 	"id":"dolomite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"dolomite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -71,6 +87,10 @@
 	"type":"Block",
 	"id":"chalk",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"chalk"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -88,6 +108,10 @@
 	"type":"Block",
 	"id":"alunite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"alunite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -105,6 +129,10 @@
 	"type":"Block",
 	"id":"andesite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"andesite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -121,7 +149,11 @@
 {  
 	"type":"Block",
 	"id":"anhydrite",
-	"agents":[  
+	"agents":[
+			{
+				"type":"DeathDrop",
+				"id":"anhydrite"
+			}	
 	],
 	"tesselator":[  
 		{  
@@ -139,6 +171,10 @@
 	"type":"Block",
 	"id":"basalt",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"basalt"
+			}	
 	],
 	"tesselator":[  
 		{  
@@ -156,6 +192,10 @@
 	"type":"Block",
 	"id":"cassiterite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"cassiterite"
+			}	
 	],
 	"tesselator":[  
 		{  
@@ -173,6 +213,10 @@
 	"type":"Block",
 	"id":"chert",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"chert"
+			}	
 	],
 	"tesselator":[  
 		{  
@@ -190,6 +234,10 @@
 	"type":"Block",
 	"id":"chromite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"chromite"
+			}	
 	],
 	"tesselator":[  
 		{  
@@ -207,6 +255,10 @@
 	"type":"Block",
 	"id":"claystone",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"claystone"
+			}	
 	],
 	"tesselator":[  
 		{  
@@ -223,7 +275,11 @@
 {  
 	"type":"Block",
 	"id":"conglomerate",
-	"agents":[  
+	"agents":[ 
+			{
+				"type":"DeathDrop",
+				"id":"conglomerate"
+			}		
 	],
 	"tesselator":[  
 		{  
@@ -241,6 +297,10 @@
 	"type":"Block",
 	"id":"cobaltite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"cobaltite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -258,6 +318,10 @@
 	"type":"Block",
 	"id":"bauxite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"bauxite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -275,6 +339,10 @@
 	"type":"Block",
 	"id":"chromite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"chromite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -292,6 +360,10 @@
 	"type":"Block",
 	"id":"cryolite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"cryolite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -308,7 +380,11 @@
 {  
 	"type":"Block",
 	"id":"diorite",
-	"agents":[  
+	"agents":[ 
+			{
+				"type":"DeathDrop",
+				"id":"diorite"
+			}	
 	],
 	"tesselator":[  
 		{  
@@ -326,6 +402,10 @@
 	"type":"Block",
 	"id":"gabbro",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"gabbro"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -343,6 +423,10 @@
 	"type":"Block",
 	"id":"galena",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"galena"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -360,6 +444,10 @@
 	"type":"Block",
 	"id":"granite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"granite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -377,6 +465,10 @@
 	"type":"Block",
 	"id":"gypsum",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"gypsum"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -394,6 +486,10 @@
 	"type":"Block",
 	"id":"hematite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"hematite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -411,6 +507,10 @@
 	"type":"Block",
 	"id":"ilmenite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"ilmenite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -428,6 +528,10 @@
 	"type":"Block",
 	"id":"kaolinite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"kaolinite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -445,6 +549,10 @@
 	"type":"Block",
 	"id":"kimberlite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"kimberlite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -462,6 +570,10 @@
 	"type":"Block",
 	"id":"lignite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"lignite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -479,6 +591,10 @@
 	"type":"Block",
 	"id":"magnetite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"magnetite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -496,6 +612,10 @@
 	"type":"Block",
 	"id":"malachite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"malachite"
+			}
 	],
 	"tesselator":[  
 		{  
@@ -513,6 +633,10 @@
 	"type":"Block",
 	"id":"sphalerite",
 	"agents":[  
+			{
+				"type":"DeathDrop",
+				"id":"sphalerite"
+			}
 	],
 	"tesselator":[  
 		{  

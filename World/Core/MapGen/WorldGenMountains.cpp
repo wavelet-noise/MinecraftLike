@@ -47,6 +47,7 @@ void WorldGenMountains::Generate(Sector & s)
 
 	auto bg = DB::Get().Create(StringIntern("grass"));
 
+	auto bd4 = DB::Get().Create(StringIntern("dirt4"));
 	auto bd3 = DB::Get().Create(StringIntern("conglomerate"));
 	auto bd2 = DB::Get().Create(StringIntern("dirt2"));
 	auto bd = DB::Get().Create(StringIntern("dirt"));
@@ -97,7 +98,20 @@ void WorldGenMountains::Generate(Sector & s)
 									if (is_cluster(tx, ty, tz, 4, 0.21))
 										s.SetBlock({ i, j, k }, uranium_ore_block);
 									else
-										s.SetBlock({ i, j, k }, rocks[rand() % rocks.size()]);
+									{
+										bool some = false;
+										for (int l = 0; l < rocks.size(); ++l)
+										{
+											if (is_cluster(tx, ty, tz, 5 + l, 0.3))
+											{
+												s.SetBlock({ i, j, k }, rocks[l]);
+												some = true;
+												break;
+											}
+										}
+										if(!some)
+											s.SetBlock({ i, j, k }, bd4);
+									}
 					}
 					else if (solid(tx, ty, tz + 10))
 						s.SetBlock({ i, j, k }, bd3);

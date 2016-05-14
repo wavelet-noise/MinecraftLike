@@ -4,6 +4,8 @@
 #include <Core\DB.h>
 #include <imgui.h>
 #include <render\TextureManager.h>
+#include <Game.h>
+#include <gui\WindowRecipe.h>
 
 void RecipeIn::JsonLoad(const rapidjson::Value & val)
 {
@@ -15,7 +17,7 @@ void RecipeIn::JsonLoad(const rapidjson::Value & val)
 void RecipeOut::JsonLoad(const rapidjson::Value & val)
 {
 	id = val.Begin()->GetString();
-	if(val.Capacity() >= 2)
+	if (val.Capacity() >= 2)
 		count = val[1].GetInt();
 	if (val.Capacity() >= 3)
 		chance = val[2].GetDouble();
@@ -40,6 +42,20 @@ void DrawSprite(const StringIntern &s)
 	auto uv2 = glm::vec2(atluv.z, atluv.w);
 
 	ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
+
+	if (s != "arrow_right" && ImGui::IsItemHovered())
+	{
+		if (ImGui::IsKeyPressed(GLFW_KEY_R))
+		{
+			WindowRecipe::Get().ShowRecipe(s);
+		}
+
+		if (ImGui::IsKeyPressed(GLFW_KEY_U))
+		{
+			WindowRecipe::Get().ShowUsing(s);
+		}
+	}
+
 }
 
 void Recipe::DrawSome(const StringIntern &s)
@@ -77,8 +93,25 @@ void Recipe::DrawGui()
 			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(inp.count).c_str());
 	}
 
-	ImGui::SameLine();
-	DrawSprite(StringIntern("arrow_right"));
+	{
+		auto &atl = TextureManager::Get().GetTexture("arrow_right");
+		auto &tex = std::get<0>(atl);
+		auto &atluv = std::get<1>(atl);
+
+		auto uv = glm::vec2(atluv.x, atluv.y);
+		auto uv2 = glm::vec2(atluv.z, atluv.w);
+
+		ImGui::SameLine();
+		ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::SetTooltip("craft this recipe");
+			if (ImGui::IsMouseClicked(0))
+			{
+				Game::GetWorld()->QueueRecipeOrder({ static_cast<PRecipe>(shared_from_this()), 1, false });
+			}
+		}
+	}
 
 	for (const auto &out : output)
 	{
@@ -122,7 +155,7 @@ std::list<PRecipe> Recipe::Expand()
 		auto nr = std::make_shared<Recipe>(*this);
 		for (auto &inp : nr->input)
 		{
-			inp.id = StringIntern(myreplace(inp.id.get(),"%material%", s));
+			inp.id = StringIntern(myreplace(inp.id.get(), "%material%", s));
 		}
 
 		for (auto &out : nr->output)

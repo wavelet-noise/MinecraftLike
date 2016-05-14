@@ -48,6 +48,7 @@ bool Chest::Push(PGameObject go, int count, int pos)
 				return true;
 			}
 		}
+		return false;
 	}
 
 	if (pos >= size)
@@ -202,3 +203,16 @@ void Chest::DrawGui()
 	}
 }
 
+PAgent InputChest::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<InputChest>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+PAgent OutputChest::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<OutputChest>(*this);
+	t->mParent = parent;
+	return t;
+}

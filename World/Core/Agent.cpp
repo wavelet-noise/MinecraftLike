@@ -5,7 +5,7 @@ void Agent::Update(const GameObjectParams & params)
 {
 }
 
-void Agent::Requirements(GameObject * parent)
+void Agent::Requirements()
 {
 }
 

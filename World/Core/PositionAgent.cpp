@@ -177,7 +177,7 @@ std::list<glm::vec3> Astar(const glm::vec3 &start, const glm::vec3 &goal, World 
 	// For the first node, that value is completely heuristic.
 	fScore[start] = glm::distance(start, goal);
 
-	while (!openSet.empty() && closedSet.size() < 1024 && openSet.size() < 4096)
+	while (!openSet.empty() && closedSet.size() < 100 && openSet.size() < 200)
 	{
 		glm::vec3 current = openSet.top();// the node in openSet having the lowest fScore[] value
 		if (current == goal)
@@ -285,19 +285,27 @@ void Controlable::Update(const GameObjectParams & params)
 			if (i.obj)
 			{
 				auto &storages = params.world->GetStorages();
-				auto tpos = storages.begin()->first + glm::vec3(0, 0, 1);
-				if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
+				if (!storages.empty())
 				{
-					auto i = ch->PopFirst();
-					nearest_order = std::make_shared<OrderDrop>(storages.begin()->first + glm::vec3(0, 0, 1), i.obj, i.count);
-					nearest = tpos;
+					auto tpos = storages.begin()->first + glm::vec3(0, 0, 1);
+					if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
+					{
+						auto i = ch->PopFirst();
+						nearest_order = std::make_shared<OrderDrop>(storages.begin()->first + glm::vec3(0, 0, 1), i.obj, i.count);
+						nearest = tpos;
+					}
 				}
 			}
 		}
 
 		auto c = mParent->GetAgent<Creature>();
-		if (c->personal.size() > 0)
+		if (!c->personal.empty())
 		{
+			if (!c->personal.begin()->get())
+			{
+				c->personal.pop_front();
+			}
+			else
 			if (glm::distance(p->Get(), (*c->personal.begin())->GetPos()) < glm::distance(p->Get(), nearest))
 			{
 				nearest = (*c->personal.begin())->GetPos();
@@ -528,9 +536,10 @@ void Creature::DrawGui()
 		else
 			ImGui::Text("Order: none");
 
-		int j = 0;
+		static int j = 0;
 		if (ImGui::TreeNode((boost::format("Self orders##%1%") % j).str().c_str()))
 		{
+			j++;
 			for (const auto &i : personal)
 			{
 				ImGui::Text(i->to_string().c_str());

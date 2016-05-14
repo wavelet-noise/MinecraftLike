@@ -247,7 +247,6 @@
     <ClCompile Include="Core\MetalSmelter.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="gui\WindowRecipe.cpp" />
     <ClCompile Include="Core\ChestSlot.cpp" />
     <ClCompile Include="Core\Recipe.cpp">
       <Filter>Core</Filter>
@@ -263,18 +262,28 @@
       <Filter>Core\tessellator</Filter>
     </ClCompile>
     <ClCompile Include="Core\Xyz.cpp" />
-    <ClCompile Include="gui\WindowEventlog.cpp" />
     <ClCompile Include="Core\EventBus.cpp">
       <Filter>Core\events</Filter>
     </ClCompile>
     <ClCompile Include="gui\WS.cpp" />
-    <ClCompile Include="gui\WindowTools.cpp" />
     <ClCompile Include="Core\GameObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Core\OrderBus.cpp">
       <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\WindowCraftQueue.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\WindowTools.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\WindowEventlog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\WindowRecipe.cpp">
+      <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -574,6 +583,9 @@
     <ClInclude Include="Core\CalorieConsumer.h" />
     <ClInclude Include="core\Effect.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\WindowCraftQueue.h">
+      <Filter>gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,8 @@ enum class SelectedOrder
 	NONE,
 	DIG_SQUARE,
 	COLLECT_SQUARE,
-	PLACE_BLOCK
+	PLACE_BLOCK,
+	CRAFT_ONE
 };
 
 class WindowTools : public WindowBase

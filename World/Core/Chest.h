@@ -45,6 +45,7 @@ class InputChest : public Chest
 {
 public:
 	AGENT(InputChest)
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 };
 
 REGISTER_AGENT(InputChest)
@@ -53,6 +54,7 @@ class OutputChest : public Chest
 {
 public:
 	AGENT(OutputChest)
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 };
 
 REGISTER_AGENT(OutputChest)

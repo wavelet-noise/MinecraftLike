@@ -9,6 +9,7 @@
 #include "gui\WindowRecipe.h"
 #include "gui\WindowEventlog.h"
 #include "gui\WindowTools.h"
+#include "gui\WindowCraftQueue.h"
 
 class World;
 

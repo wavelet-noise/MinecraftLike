@@ -68,7 +68,7 @@ void Pulverizer::Update(const GameObjectParams & params)
 			{
 				for (const auto &i : p->output)
 				{
-					int rnd = rand() / float(RAND_MAX);
+					float rnd = rand() / float(RAND_MAX);
 
 					if (rnd <= i.probability)
 					{
@@ -91,14 +91,16 @@ void PulverizeTo::JsonLoad(const rapidjson::Value & val)
 {
 }
 
-void PulverizeTo::Requirements(GameObject * parent)
+void PulverizeTo::Requirements()
 {
-	REQUIRE(InputChest);
+	REQUIRE(OutputChest) REQUIRE(InputChest)
 }
 
 PAgent PulverizeTo::Clone(GameObject * parent, const std::string & name)
 {
-	return PAgent();
+	auto t = MakeAgent<PulverizeTo>(*this);
+	t->mParent = parent;
+	return t;
 }
 
 void PulverizeTo::DrawGui()

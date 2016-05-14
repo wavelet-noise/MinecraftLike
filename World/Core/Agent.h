@@ -64,7 +64,7 @@ public:
 		return ag;
 	}
 
-	virtual void Requirements(GameObject * parent);
+	virtual void Requirements();
 
 	// client/server paralell
 	// выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
@@ -129,6 +129,9 @@ static void __req_helper(const First &first, const Rest&... rest)
 #define APPLY_ALL_H2(t, n, ...) APPLY_ALL_H3(t, n, __VA_ARGS__)
 #define APPLY_ALL(t, ...) APPLY_ALL_H2(t, NUM_ARGS(__VA_ARGS__), __VA_ARGS__)
 
+//#define __REQ_STRINGIFY(type) {if(type * temp_ag = mParent->GetAgent<type>()){;} else throw #type;}
+#define REQUIRE(type) {if(type * temp_ag = mParent->GetAgent<type>()){;} else throw #type;}
+
 #define REGISTER_AGENT(type) REGISTER_ELEMENT(type, AgentFactory::Get(), StringIntern(#type))
 #define AGENT(type) virtual StringIntern GetFullName() const override { return StringIntern(#type); } \
 					static StringIntern TypeName() { return StringIntern(#type); } \
@@ -138,9 +141,6 @@ static void __req_helper(const First &first, const Rest&... rest)
 						if(s.elapsed >= GetFreq()) { Update({params.world, params.sector, params.pos, s.elapsed, params.render}); s.executed = true; }  \
 					} \
 				    virtual void __AfterUpdate() override { auto & s = Agent::GetSync<type>();  s.first = true; if(s.executed) { s.elapsed = 0.f; } s.executed = false; }
-
-#define REQUIRE(...) APPLY_ALL(__REQ_STRINGIFY, __VA_ARGS__)
-#define __REQ_STRINGIFY(type) if(auto t = mParent->GetAgent<type>()){}else{throw #type;}
 
 struct AgentFactory : public boost::noncopyable
 {

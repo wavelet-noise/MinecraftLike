@@ -61,7 +61,7 @@ public:
 	};
 
 	void JsonLoad(const rapidjson::Value &val) override;
-	virtual void Requirements(GameObject * parent) override;
+	virtual void Requirements() override;
 
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;

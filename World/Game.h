@@ -29,6 +29,8 @@ public:
 
   void Draw(float dt);
 
+  static World * GetWorld();
+
 private:
 
   bool Initialized = false;
@@ -39,7 +41,7 @@ private:
   std::unique_ptr<RenderSector> mRenderSector;
   std::shared_ptr<Camera> mCamera;
   std::shared_ptr<Camera> mSun;
-  std::unique_ptr<World> mWorld;
+  static std::unique_ptr<World> mWorld;
   std::unique_ptr<Tessellator> mTessellator;
 
   std::unique_ptr<SectorLoader> mSectorLoader;

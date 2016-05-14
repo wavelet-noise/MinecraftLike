@@ -43,7 +43,7 @@ void GameObject::Requirements()
 {
 	for (auto &agent : mAgents)
 	{
-		agent.second->Requirements(this);
+		agent.second->Requirements();
 	}
 }
 

@@ -5,7 +5,7 @@ public:
 	Settings();
 	~Settings();
 
-	static Settings Get()
+	static Settings &Get()
 	{
 		static Settings s;
 		return s;
