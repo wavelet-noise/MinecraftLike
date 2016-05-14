@@ -37,6 +37,15 @@ void World::Update(float dt)
 	{
 		c.second->__AfterUpdate();
 	}
+
+	static float ro_delay = 0;
+	ro_delay += dt;
+	if (ro_delay >= 30)
+	{
+		ro_delay = 0;
+		recipe_orders.insert(recipe_orders.begin(), delayed_recipe_orders.begin(), delayed_recipe_orders.end());
+		delayed_recipe_orders.clear();
+	}
 }
 
 
@@ -105,7 +114,7 @@ bool World::IsWalkable(const WBPos &wbpos)
 			return false;
 	}
 
-	spos = cs::WBtoS(wbpos - glm::ivec3(0,0,1));
+	spos = cs::WBtoS(wbpos - glm::ivec3(0, 0, 1));
 	if (auto sector = FindSector(spos))
 	{
 		if (auto b = sector->GetBlock(cs::WBtoSB(wbpos - glm::ivec3(0, 0, 1), spos)))
@@ -173,7 +182,7 @@ PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block)
 		if (block) // may be nullptr on place air
 		{
 			block->OnCreate({ this, sec.get(), wbpos, 0 });
-			
+
 			if (block->GetId() == storage)
 			{
 				storages.push_back(std::make_pair(wbpos, block));
@@ -238,6 +247,11 @@ std::list<World::RecipeOrder>& World::GetRecipeOrders()
 	return recipe_orders;
 }
 
+std::list<World::RecipeOrder>& World::GetDelayedRecipeOrders()
+{
+	return delayed_recipe_orders;
+}
+
 void World::QueueRecipeOrder(const RecipeOrder & ro)
 {
 	for (auto &r : recipe_orders)
@@ -254,6 +268,31 @@ void World::QueueRecipeOrder(const RecipeOrder & ro)
 	recipe_orders.push_back(ro);
 }
 
+void World::DelayRecipeOrder(const PRecipe & ro)
+{
+	for (auto &r : recipe_orders)
+	{
+		if (*r.recipe == *ro)
+		{
+			delayed_recipe_orders.push_back(r);
+			recipe_orders.remove(r);
+		}
+	}
+}
+
+void World::DoneRecipeOrder(const PRecipe & ro, int count)
+{
+	for (auto &r : recipe_orders)
+	{
+		if (*r.recipe == *ro)
+		{
+			r.elapsed -= count;
+			if (r.elapsed <= 0 && !r.infinite)
+				recipe_orders.remove(r);
+		}
+	}
+}
+
 int World::GetActiveCount()
 {
 	return mSectors.size();
@@ -267,4 +306,15 @@ void World::SetTessellator(Tessellator *tess)
 Tessellator * World::GetTessellator()
 {
 	return mTesselator;
+}
+
+void World::SetSlise(int s)
+{
+
+	slise = s;
+	for (auto &se : mSectors)
+	{
+		se.second->SetSlise(s);
+	}
+
 }

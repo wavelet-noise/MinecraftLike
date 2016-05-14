@@ -73,7 +73,7 @@ PGameObjectTessellator SplitConnectionTesselator::Clone()
 	return PGameObjectTessellator();
 }
 
-PModel SplitConnectionTesselator::GetModel(const TessellatorParams & params)
+PModel SplitConnectionTesselator::GetModel(const TessellatorParams & params, int slise)
 {
 	static glm::ivec3 neib[] = {
 		{  0, -1,  0 },	//FRONT 

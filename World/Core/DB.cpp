@@ -94,12 +94,14 @@ void DB::ReloadDirectory(const std::string & mDir)
             dyn = val["dynamic"].GetBool_();;
           }
 
-          if (!val.HasMember("id"))
+		  std::string id = "noid";
+          if (val.HasMember("id"))
           {
-            LOG(error) << "record #" << i + 1 << " from " << file << " has no \"id\"";
-            continue;
+			  id = val["id"].GetString();
           }
-          std::string id = val["id"].GetString();
+		  else
+			  LOG(error) << "record #" << i + 1 << " from " << file << " has no \"id\"";
+          
           LOG(trace) << "\"" << id << "\" parsing";
 
           auto b = std::make_shared<GameObject>(StringIntern(id));

@@ -25,7 +25,7 @@ public:
 	void SayChanged();
 
 	// Если сектор был изменен, обновляет геометрию и посылает в рендер.
-	bool Update(class Tessellator *tesselator, class RenderSector &render);
+	bool Update(class Tessellator *tesselator, class RenderSector &render, int slise = 99999);
 
 	// требует загруженых шейдеров в Resources
 	static void Init();

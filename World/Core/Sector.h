@@ -36,6 +36,8 @@ public:
 
   void Draw(class Tessellator *tess);
 
+  void SetSlise(int s);
+
 private:
   SPos mPos;
 

@@ -28,6 +28,8 @@ public:
 	// —ообщить сектору, что он изменилс€.
 	void SayChanged(const SPos &pos);
 	void SayCamera(std::shared_ptr<Camera> c);
+	void SetSlise(int s);
+	int GetSlise();
 
 public:
 	// ћетоды не предназначенные дл€ использовани€ вне потока тессел€тора.
@@ -45,6 +47,7 @@ private:
 
 	class RenderSector &mRender;
 	std::shared_ptr<Camera> cam;
+	int slise = 0;
 
 private:
 	// Ќайти сектор по позиции сектора.

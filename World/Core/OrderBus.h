@@ -5,6 +5,7 @@
 #include <glm\glm.hpp>
 #include <Core\GameObject.h>
 #include <tools\CoordSystem.h>
+#include <Core\Recipe.h>
 
 using POrder = std::shared_ptr<class Order>;
 
@@ -215,6 +216,32 @@ struct OrderWander : public NumberedOrder<OrderWander>
 			return false;
 
 		const auto &o = static_cast<const OrderWander &>(rhs);
+
+		return o.pos == pos;
+	}
+};
+
+
+struct OrderCraft : public NumberedOrder<OrderCraft>
+{
+	OrderCraft(glm::vec3 v, PRecipe r, int c = 1);
+
+	std::string to_string() const override;
+	glm::vec3 pos;
+	PRecipe item;
+	int count = 1;
+
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
+
+	virtual bool IsEquals(const Order &rhs) override
+	{
+		if (rhs.GetId() != GetId())
+			return false;
+
+		const auto &o = static_cast<const OrderCraft &>(rhs);
 
 		return o.pos == pos;
 	}

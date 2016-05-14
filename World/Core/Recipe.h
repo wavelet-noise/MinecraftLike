@@ -43,6 +43,7 @@ public:
 };
 
 class Recipe;
+class Chest;
 
 using PRecipe = std::shared_ptr<Recipe>;
 using PCRecipe = std::shared_ptr<const Recipe>;
@@ -64,6 +65,8 @@ public:
 	std::list<std::shared_ptr<Recipe>> Expand();
 
 	virtual void JsonLoad(const rapidjson::Value &val);
+
+	bool CraftIn(Chest &c, int count = 1);
 
 	bool operator == (const Recipe &other) const
 	{

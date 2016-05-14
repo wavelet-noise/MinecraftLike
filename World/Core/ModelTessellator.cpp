@@ -69,7 +69,7 @@ PGameObjectTessellator ModelTessellator::Clone()
 	return PGameObjectTessellator();
 }
 
-PModel ModelTessellator::GetModel(const TessellatorParams & params)
+PModel ModelTessellator::GetModel(const TessellatorParams & params, int slise)
 {
 	return mModel;
 }

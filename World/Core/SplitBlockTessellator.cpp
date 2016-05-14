@@ -14,7 +14,7 @@ SplitBlockTessellator::SplitBlockTessellator()
 }
 
 
-PModel SplitBlockTessellator::GetModel(const TessellatorParams &params)
+PModel SplitBlockTessellator::GetModel(const TessellatorParams &params, int slise)
 {
 	const int32_t size = static_cast<int32_t>(SECTOR_SIZE);
 
@@ -118,30 +118,36 @@ PModel SplitBlockTessellator::GetModel(const TessellatorParams &params)
 		}
 	}
 
-	if (pos.z < size - 1)
+	if (params.wbpos.z != slise) //do not c;ip last last layer
 	{
-		++pos.z;
-		if (auto block = params.sector->GetBlock(pos))
+		if (pos.z < size - 1)
 		{
-			if (!block->IsTransparent())
+			++pos.z;
+			auto block = params.sector->GetBlock(pos);
+			if (block)
 			{
-				sides &= ~MeshPartialBlockGenerator::TOP;
+				if (!block->IsTransparent())
+				{
+					sides &= ~MeshPartialBlockGenerator::TOP;
+				}
+			}
+			--pos.z;
+		}
+		else
+		{
+			auto pos = static_cast<WBPos>(params.wbpos);
+			++pos.z;
+			auto block = params.tesselator->GetBlock(pos);
+			if (block)
+			{
+				if (!block->IsTransparent())
+				{
+					sides &= ~MeshPartialBlockGenerator::TOP;
+				}
 			}
 		}
-		--pos.z;
 	}
-	else
-	{
-		auto pos = static_cast<WBPos>(params.wbpos);
-		++pos.z;
-		if (auto block = params.tesselator->GetBlock(pos))
-		{
-			if (!block->IsTransparent())
-			{
-				sides &= ~MeshPartialBlockGenerator::TOP;
-			}
-		}
-	}
+
 	if (pos.z > 0)
 	{
 		--pos.z;
@@ -171,22 +177,25 @@ PModel SplitBlockTessellator::GetModel(const TessellatorParams &params)
 											   {  1, -1,  1 }, {  1,  1, -1 }, { -1,  1,  1 }, {  1,  1,  1 } };
 
 	std::array<char, 8> a;
-
 	for (int i = 0; i < 8; i++)
 	{
 		a[i] = 1;
-
-		glm::ivec3 npos[] = { pos + ofs[i],  pos + glm::ivec3{ ofs[i].x, 0, ofs[i].z }, pos + glm::ivec3(0, ofs[i].y, ofs[i].z) };
-		for (int j = 0; j < 3; j++)
-		if (npos[j].x > 0 && npos[j].y > 0 && npos[j].z > 0 && npos[j].z < size - 1 && npos[j].x < size - 1 && npos[j].y < size - 1)
-		{
-			if (auto block = params.sector->GetBlock(npos[j]))
-			{
-				if (!block->IsTransparent())
-					a[i]++;
-			}
-		}
 	}
+
+	//for (int i = 0; i < 8; i++)
+	//{
+
+	//	glm::ivec3 npos[] = { pos + ofs[i],  pos + glm::ivec3{ ofs[i].x, 0, ofs[i].z }, pos + glm::ivec3(0, ofs[i].y, ofs[i].z) };
+	//	for (int j = 0; j < 3; j++)
+	//		if (npos[j].x > 0 && npos[j].y > 0 && npos[j].z > 0 && npos[j].z < size - 1 && npos[j].x < size - 1 && npos[j].y < size - 1)
+	//		{
+	//			if (auto block = params.sector->GetBlock(npos[j]))
+	//			{
+	//				if (!block->IsTransparent())
+	//					a[i]++;
+	//			}
+	//		}
+	//}
 
 	mModel->GetMesh() = mGenerator.Create(static_cast<MeshPartialBlockGenerator::Side>(sides), a);
 

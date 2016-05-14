@@ -13,9 +13,9 @@ using PPositionAgent = std::unique_ptr<class PositionAgent>;
 class PositionAgent : public Agent
 {
 public:
-	AGENT(PositionAgent)
+	AGENT(PositionAgent);
 
-		PAgent Clone(GameObject *parent, const std::string &name = "") override;
+	PAgent Clone(GameObject *parent, const std::string &name = "") override;
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -57,7 +57,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 1/2.0f;
+		return 1 / 2.0f;
 	}
 };
 
@@ -66,10 +66,10 @@ REGISTER_AGENT(Controlable)
 class Creature : public Agent
 {
 public:
-	AGENT(Creature)
+	AGENT(Creature);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Clear();
 
@@ -97,10 +97,10 @@ REGISTER_AGENT(Creature)
 class WalkingPossibility : public Agent
 {
 public:
-	AGENT(WalkingPossibility)
+	AGENT(WalkingPossibility);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 
@@ -127,10 +127,10 @@ REGISTER_AGENT(CrawlingPossibility)
 class WaterConsumer : public Agent
 {
 public:
-	AGENT(WaterConsumer)
+	AGENT(WaterConsumer);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 
@@ -149,10 +149,10 @@ REGISTER_AGENT(WaterConsumer)
 class CalorieConsumer : public Agent
 {
 public:
-	AGENT(CalorieConsumer)
+	AGENT(CalorieConsumer);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 
@@ -177,9 +177,9 @@ struct Mind
 class Anatomic : public Agent
 {
 public:
-	AGENT(Anatomic)
+	AGENT(Anatomic);
 
-		Anatomic();
+	Anatomic();
 
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
@@ -201,10 +201,10 @@ REGISTER_AGENT(Anatomic)
 class Morale : public Agent
 {
 public:
-	AGENT(Morale)
+	AGENT(Morale);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 
@@ -218,10 +218,10 @@ REGISTER_AGENT(Morale)
 class Named : public Agent
 {
 public:
-	AGENT(Named)
+	AGENT(Named);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 
@@ -238,10 +238,10 @@ REGISTER_AGENT(Named)
 class DeathDrop : public Agent
 {
 public:
-	AGENT(DeathDrop)
+	AGENT(DeathDrop);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 
@@ -257,10 +257,10 @@ REGISTER_AGENT(DeathDrop)
 class Wander : public Agent
 {
 public:
-	AGENT(Wander)
+	AGENT(Wander);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 
@@ -275,7 +275,7 @@ REGISTER_AGENT(Wander)
 class Food : public Agent
 {
 public:
-	AGENT(Food)
+	AGENT(Food);
 
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;

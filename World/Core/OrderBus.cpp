@@ -124,3 +124,12 @@ std::string OrderEat::to_string() const
 {
 	return (boost::format("OrderEat: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
 }
+
+OrderCraft::OrderCraft(glm::vec3 v, PRecipe r, int c) : pos(v), item(r), count(c)
+{
+}
+
+std::string OrderCraft::to_string() const
+{
+	return (boost::format("OrderCraft: pos = %1% count = %2% resilt[0] = %3%") % glm::to_string(pos) % count % (item ? item->output[0].id : StringIntern("ERROR"))).str();
+}

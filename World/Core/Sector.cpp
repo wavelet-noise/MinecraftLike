@@ -138,3 +138,8 @@ void Sector::Draw(class Tessellator *tess)
 		//LOG(trace) << "SectorOnDraw: " << glfwGetTime() - currentTime;
 	}
 }
+
+void Sector::SetSlise(int s)
+{
+	mTessellator->SetSlise(s);
+}

@@ -6,6 +6,7 @@
 #include <render\TextureManager.h>
 #include <Game.h>
 #include <gui\WindowRecipe.h>
+#include <Core\Chest.h>
 
 void RecipeIn::JsonLoad(const rapidjson::Value & val)
 {
@@ -152,7 +153,7 @@ std::list<PRecipe> Recipe::Expand()
 	std::list<PRecipe> list;
 	for (const auto &s : expanded)
 	{
-		auto nr = std::make_shared<Recipe>(*this);
+		auto nr = static_cast<PRecipe>(std::make_shared<Recipe>(*this));
 		for (auto &inp : nr->input)
 		{
 			inp.id = StringIntern(myreplace(inp.id.get(), "%material%", s));
@@ -171,4 +172,51 @@ std::list<PRecipe> Recipe::Expand()
 void Recipe::JsonLoad(const rapidjson::Value & val)
 {
 	JSONLOAD(NVP(input), NVP(output), NVP(tools), NVP(machine), NVP(duration), NVP(materials));
+}
+
+bool Recipe::CraftIn(Chest & c, int count)
+{
+	auto backup = c.slots;
+
+	bool enought = true;
+	for (const auto &i : input)
+	{
+		auto check = c.GetByPredicate([&](const ChestSlot &cs)->bool {
+			return cs.obj->GetId() == i.id;
+		});
+		if (check.obj == nullptr || check.count < i.count)
+		{
+			enought = false;
+			break;
+		}
+	}
+
+	if (!enought)
+		return false;
+
+	for (const auto &i : input)
+	{
+		auto remove = c.PopByPredicate([&](const ChestSlot &cs)->bool {
+			return cs.obj->GetId() == i.id;
+		});
+
+		remove.count -= i.count;
+		if (remove.count > 0)
+			c.Push(remove.obj, remove.count);
+	}
+
+	for (const auto &o : output)
+	{
+		float prob = (rand() / float(RAND_MAX));
+		if (o.chance >= prob)
+		{
+			if (!c.Push(DB::Get().Create(o.id), o.count))
+			{
+				c.slots = backup;
+				return false;
+			}
+		}
+	}
+
+	return true;
 }

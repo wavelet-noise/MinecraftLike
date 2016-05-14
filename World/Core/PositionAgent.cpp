@@ -63,6 +63,8 @@ namespace std
 
 int heuristic_cost_estimate(const glm::vec3 &start, const glm::vec3 &goal, World *w)
 {
+	if (start == goal)
+		return 0;
 	if (auto b = w->GetBlock(start))
 	{
 		return std::numeric_limits<int>().max();
@@ -228,58 +230,13 @@ void Controlable::Update(const GameObjectParams & params)
 		auto p = mParent->GetAgent<PositionAgent>();
 
 		for (const auto &i : o)
-		{
-			if (!i->IsTaken())
+			if (!i->IsTaken() && glm::distance(p->Get(), i->GetPos()) < glm::distance(p->Get(), nearest))
 			{
-				if (i->GetId() == Order::Idfor<OrderDig>())
-				{
-					const auto &d = std::static_pointer_cast<OrderDig>(i);
-					if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
-					{
-						nearest = d->pos;
-						nearest_order = d;
-					}
-				}
-				else if (i->GetId() == Order::Idfor<OrderGet>())
-				{
-					const auto &d = std::static_pointer_cast<OrderGet>(i);
-					if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
-					{
-						nearest = d->pos;
-						nearest_order = d;
-					}
-				}
-				else if (i->GetId() == Order::Idfor<OrderWalk>())
-				{
-					const auto &d = std::static_pointer_cast<OrderWalk>(i);
-					if (glm::distance(p->Get(), d->pos) < glm::distance(p->Get(), nearest))
-					{
-						nearest = d->pos;
-						nearest_order = d;
-					}
-				}
-				else if (i->GetId() == Order::Idfor<OrderPlace>())
-				{
-					const auto &d = std::static_pointer_cast<OrderPlace>(i);
-					if (glm::distance(p->Get(), glm::vec3(d->pos)) < glm::distance(p->Get(), nearest))
-					{
-						nearest = d->pos;
-						nearest_order = d;
-					}
-				}
-				else if (i->GetId() == Order::Idfor<OrderDrop>())
-				{
-					const auto &d = std::static_pointer_cast<OrderDrop>(i);
-					if (glm::distance(p->Get(), glm::vec3(d->pos)) < glm::distance(p->Get(), nearest))
-					{
-						nearest = d->pos;
-						nearest_order = d;
-					}
-				}
+				nearest = i->GetPos();
+				nearest_order = i;
 			}
-		}
 
-		if (auto ch = mParent->GetAgent<Chest>())
+		if (auto ch = mParent->GetAgent<Chest>()) //empty pockets order
 		{
 			auto &i = ch->GetFirst();
 			if (i.obj)
@@ -287,11 +244,11 @@ void Controlable::Update(const GameObjectParams & params)
 				auto &storages = params.world->GetStorages();
 				if (!storages.empty())
 				{
-					auto tpos = storages.begin()->first + glm::vec3(0, 0, 1);
+					auto tpos = storages.begin()->first;
 					if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
 					{
 						auto i = ch->PopFirst();
-						nearest_order = std::make_shared<OrderDrop>(storages.begin()->first + glm::vec3(0, 0, 1), i.obj, i.count);
+						nearest_order = std::make_shared<OrderDrop>(storages.begin()->first, i.obj, i.count);
 						nearest = tpos;
 					}
 				}
@@ -306,11 +263,27 @@ void Controlable::Update(const GameObjectParams & params)
 				c->personal.pop_front();
 			}
 			else
-			if (glm::distance(p->Get(), (*c->personal.begin())->GetPos()) < glm::distance(p->Get(), nearest))
+				if (glm::distance(p->Get(), (*c->personal.begin())->GetPos()) < glm::distance(p->Get(), nearest))
+				{
+					nearest = (*c->personal.begin())->GetPos();
+					nearest_order = c->personal.front();
+					c->personal.pop_front();
+				}
+		}
+
+		{
+			auto &ro = params.world->GetRecipeOrders();
+			auto &storages = params.world->GetStorages();
+			if (!storages.empty() && !ro.empty() && ro.begin()->elapsed > 0)
 			{
-				nearest = (*c->personal.begin())->GetPos();
-				nearest_order = c->personal.front();
-				c->personal.pop_front();
+				auto tpos = storages.begin()->first;
+				if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
+				{
+					auto i = *ro.begin();
+
+					nearest_order = std::make_shared<OrderCraft>(storages.begin()->first, i.recipe, i.elapsed);
+					nearest = tpos;
+				}
 			}
 		}
 
@@ -318,6 +291,11 @@ void Controlable::Update(const GameObjectParams & params)
 		{
 			nearest_order->Take();
 			c->order = nearest_order;
+			if (nearest_order->GetId() == Order::Idfor<OrderCraft>())
+			{
+				auto &ro = params.world->GetRecipeOrders();
+				params.world->DoneRecipeOrder(ro.begin()->recipe);
+			}
 		}
 	}
 }
@@ -340,7 +318,7 @@ void Creature::Clear()
 
 void Creature::Update(const GameObjectParams & params)
 {
-	if (order)
+	if (order) //TODO: move to order methods
 	{
 		auto p = mParent->GetAgent<PositionAgent>();
 
@@ -349,7 +327,7 @@ void Creature::Update(const GameObjectParams & params)
 			auto &pos = std::static_pointer_cast<OrderDig>(order)->pos;
 
 			if (path.empty())
-				wishpos = pos + glm::vec3(0, 0, 1);
+				wishpos = pos;
 			else
 			{
 				p->Set(path.back());
@@ -454,7 +432,7 @@ void Creature::Update(const GameObjectParams & params)
 				if (path.empty())
 				{
 					bool placed = false;
-					if (auto b = params.world->GetBlock(pos - glm::ivec3(0, 0, 1)))
+					if (auto b = params.world->GetBlock(pos))
 					{
 						if (auto ch = b->GetAgent<Chest>())
 						{
@@ -486,7 +464,7 @@ void Creature::Update(const GameObjectParams & params)
 
 				if (path.empty())
 				{
-					if (auto b = params.world->GetBlock(pos - glm::ivec3(0, 0, 1)))
+					if (auto b = params.world->GetBlock(pos))
 					{
 						if (auto ch = b->GetAgent<Chest>())
 						{
@@ -499,13 +477,43 @@ void Creature::Update(const GameObjectParams & params)
 								if (auto cal = mParent->GetAgent<CalorieConsumer>())
 								{
 									if (cal->calorie <= 100 - poped.obj->GetAgent<Food>()->nutrition)
-									cal->calorie += poped.obj->GetAgent<Food>()->nutrition;
+										cal->calorie += poped.obj->GetAgent<Food>()->nutrition;
 								}
 
 								if (poped.count > 0)
 								{
 									ch->Push(poped.obj, poped.count);
 								}
+							}
+						}
+					}
+
+					Clear();
+				}
+			}
+		}
+		else if (order->GetId() == Order::Idfor<OrderCraft>())
+		{
+			auto &ord = std::static_pointer_cast<OrderCraft>(order);
+			glm::ivec3 pos = ord->pos;
+
+			if (path.empty())
+				wishpos = pos;
+			else
+			{
+				p->Set(path.back());
+				path.pop_back();
+
+				if (path.empty())
+				{
+					if (auto b = params.world->GetBlock(pos))
+					{
+						if (auto c = b->GetAgent<Chest>())
+						{
+							if (!ord->item->CraftIn(*c))
+							{
+								params.world->QueueRecipeOrder(ord->item);
+								params.world->DelayRecipeOrder(ord->item);
 							}
 						}
 					}
@@ -645,7 +653,7 @@ void CalorieConsumer::Update(const GameObjectParams & params)
 		if (auto c = mParent->GetAgent<Creature>())
 		{
 			auto &storages = params.world->GetStorages();
-			auto tpos = storages.begin()->first + glm::vec3(0, 0, 1);
+			auto tpos = storages.begin()->first;
 			if (storages.size() > 0)
 			{
 				auto ch = storages.begin()->second->GetAgent<Chest>();
@@ -757,7 +765,7 @@ void Anatomic::Afterload(GameObject * parent)
 
 void Anatomic::DrawGui()
 {
-	int j = 0;
+	static int j = 0;
 	if (ImGui::TreeNode((boost::format("Mind##%1%") % j).str().c_str()))
 	{
 		for (int i = 0; i < minds.size(); i++)

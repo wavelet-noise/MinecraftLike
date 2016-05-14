@@ -29,7 +29,7 @@ void SectorTessellator::SayChanged()
 	mChanged = true;
 }
 
-bool SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
+bool SectorTessellator::Update(Tessellator *tesselator, RenderSector &render, int slise)
 {
 	if (!mChanged)
 	{
@@ -47,7 +47,9 @@ bool SectorTessellator::Update(Tessellator *tesselator, RenderSector &render)
 		{
 			auto sbpos = cs::ItoSB(i);
 			params.wbpos = cs::SBtoWB(sbpos, mPos);
-			__PushMmodel(*GetBlock(i)->GetModel(params), sbpos);
+			if (params.wbpos.z > slise)
+				continue;
+			__PushMmodel(*GetBlock(i)->GetModel(params, slise), sbpos);
 		}
 	};
 

@@ -291,10 +291,12 @@ void Game::Draw(float dt)
 
 	static std::unordered_map<glm::ivec3, PGameObject> opened_w;
 
-	if(WindowTools::Get().selected == SelectedOrder::PLACE_BLOCK)
-		selection_pos = PickPrefirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
-		return mWorld->GetBlock(pos).get();
-	});
+	if (WindowTools::Get().selected != SelectedOrder::DIG_SQUARE || WindowTools::Get().selected != SelectedOrder::PLACE_BLOCK)
+	{
+		selection_pos = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
+			return pos.z == mWorld->GetSlise();
+		});
+	}
 	else
 		selection_pos = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
 			return mWorld->GetBlock(pos).get();
@@ -307,7 +309,7 @@ void Game::Draw(float dt)
 		static int minmaxstate = 0;
 		if (WindowTools::Get().selected != SelectedOrder::DIG_SQUARE)
 		{
-			min = max = glm::vec3{ 99999 };
+			min = max = glm::vec3{ std::numeric_limits<float>().max() };
 			minmaxstate = 0;
 		}
 
@@ -392,6 +394,10 @@ void Game::Draw(float dt)
 	{
 		opened_w.clear();
 	}
+
+	int slise = mWorld->GetSlise();
+	float prewheel = ImGui::GetIO().MouseWheel;
+	mWorld->SetSlise(slise + glm::sign(prewheel));
 
 	ImGui::Render();
 

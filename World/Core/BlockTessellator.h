@@ -49,7 +49,7 @@ public:
 
 	virtual void JsonLoad(const rapidjson::Value &val);
 
-	virtual PModel GetModel(const TessellatorParams &params) = 0;
+	virtual PModel GetModel(const TessellatorParams &params, int slise = 9999) = 0;
 
 	// Прозрачен ли блок?
 	inline bool IsTransparent() const noexcept

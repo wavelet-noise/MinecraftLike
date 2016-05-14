@@ -15,7 +15,7 @@ public:
 
 	PGameObjectTessellator Clone() override;
 
-	PModel GetModel(const TessellatorParams &params) override;
+	PModel GetModel(const TessellatorParams &params, int slise = 9999) override;
 
 private:
 	PModel mModel;

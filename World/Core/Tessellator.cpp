@@ -66,6 +66,21 @@ void Tessellator::SayCamera(std::shared_ptr<Camera> c)
 	cam = c;
 }
 
+void Tessellator::SetSlise(int s)
+{
+	if (s != slise)
+		for (auto it = mSectors.begin(); it != mSectors.end(); ++it)
+		{
+			it->second->SayChanged();
+		}
+	slise = s;
+}
+
+int Tessellator::GetSlise()
+{
+	return slise;
+}
+
 void Tessellator::Start()
 {
 	//TODO:???
@@ -80,7 +95,9 @@ void Tessellator::Process()
 		{
 			glm::vec3 min = it->second->GetPos();
 			if (cam->BoxWithinFrustum(min * float(SECTOR_SIZE), (min + glm::vec3(1, 1, 1)) * float(SECTOR_SIZE)))
-				it->second->Update(this, mRender);
+			{
+				it->second->Update(this, mRender, slise);
+			}
 		}
 	}
 	auto end = glfwGetTime();
@@ -106,7 +123,7 @@ PGameObjectTessellator Tessellator::GetBlock(const WBPos &pos)
 
 std::shared_ptr<SectorTessellator> Tessellator::FindSector(const SPos &pos)
 {
-	static SPos last{-99999};
+	static SPos last{ -99999 };
 	static std::shared_ptr<SectorTessellator> lasttess;
 
 	if (last == pos)

@@ -247,7 +247,6 @@
     <ClCompile Include="Core\MetalSmelter.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="Core\ChestSlot.cpp" />
     <ClCompile Include="Core\Recipe.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -284,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="gui\WindowRecipe.cpp">
       <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ChestSlot.cpp">
+      <Filter>Core\Agents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -580,12 +582,14 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Settings.h" />
-    <ClInclude Include="Core\CalorieConsumer.h" />
     <ClInclude Include="core\Effect.h">
       <Filter>Core\Agents</Filter>
     </ClInclude>
     <ClInclude Include="gui\WindowCraftQueue.h">
       <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CalorieConsumer.h">
+      <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

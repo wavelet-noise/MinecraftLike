@@ -16,20 +16,40 @@ void WindowCraftQueue::Draw(glm::vec2 mainwin_size)
 	if (mOpen)
 	{
 		ImGui::Begin("WindowCraftQueue", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
-		auto &c = w->GetRecipeOrders();
-		if (c.empty())
 		{
-			ImGui::Text("No craft orders");
+			auto &c = w->GetRecipeOrders();
+			if (c.empty())
+			{
+				ImGui::Text("No craft orders");
+			}
+
+			for (const auto &i : c)
+			{
+				i.recipe->DrawGui();
+				ImGui::SameLine();
+				if (i.infinite)
+					ImGui::Text("x inf");
+				else
+					ImGui::Text("x %d", i.elapsed);
+			}
 		}
 
-		for (const auto &i : c)
 		{
-			i.recipe->DrawGui();
-			ImGui::SameLine();
-			if (i.infinite)
-				ImGui::Text("x inf");
-			else
-				ImGui::Text("x %d", i.elapsed);
+			auto &c = w->GetDelayedRecipeOrders();
+			if (!c.empty())
+			{
+				ImGui::Text("Delayed:");
+			}
+
+			for (const auto &i : c)
+			{
+				i.recipe->DrawGui();
+				ImGui::SameLine();
+				if (i.infinite)
+					ImGui::Text("x inf");
+				else
+					ImGui::Text("x %d", i.elapsed);
+			}
 		}
 
 		ImGui::End();
