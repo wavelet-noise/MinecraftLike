@@ -341,7 +341,6 @@ void Creature::Update(const GameObjectParams & params)
 			tire->Tire(order->Tiring());
 			if (tire->IsTired())
 			{
-				AddPersinal(std::make_shared<OrderSleep>(p->Get()));
 				Clear();
 			}
 		}
@@ -593,7 +592,7 @@ void Creature::Update(const GameObjectParams & params)
 						tire->Tire(-.2f);
 						if (tire->IsRested())
 						{
-							if(auto anat = mParent->GetAgent<Anatomic>())
+							if (auto anat = mParent->GetAgent<Anatomic>())
 								anat->Think("Rested :)");
 							order->Done();
 						}
@@ -994,7 +993,15 @@ PAgent ActivityConsumer::Clone(GameObject * parent, const std::string & name)
 
 void ActivityConsumer::Update(const GameObjectParams & params)
 {
-	activity -= params.dt / 10.f;
+	activity -= params.dt / 5.f;
+
+	if (activity <= 5)
+	{
+		if (auto c = mParent->GetAgent<Creature>())
+		{
+			c->AddPersinal(std::make_shared<OrderSleep>(mParent->GetAgent<PositionAgent>()->Get()));
+		}
+	}
 }
 
 void ActivityConsumer::DrawGui()
