@@ -1,0 +1,8 @@
+[{
+"type":"Recipe",
+"recipe":{
+			"input":[["grass", 1]],
+			"output":[["flax_0", 1]]
+		}
+}
+]

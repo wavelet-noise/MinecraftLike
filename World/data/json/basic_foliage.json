@@ -1,0 +1,56 @@
+[
+{
+		"type":"Fileinfo",
+		"name":"Basic foliage"
+},
+{
+		"type":"Block",
+		"id":"bush",
+		"agents":[
+		],
+		"tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"bush"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+		"placeable":true,
+		"dynamic":false,
+		"walkable":true
+},
+{
+		"type":"Block",
+		"id":"tree",
+		"agents":[
+		],
+		"tesselator":[  
+            {  
+                "type":"ModelTessellator",
+				"sides":[  
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"tree"
+				],
+				"model":"data/models/test.obj",
+                "transparent":true
+            }
+        ],
+		"placeable":true,
+		"dynamic":false,
+		"walkable":true
+}
+]
