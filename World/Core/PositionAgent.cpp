@@ -13,6 +13,7 @@
 #include <unordered_set>
 #include <queue>
 #include <Render\ParticleSystem.h>
+#include <core\Ore.h>
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -179,7 +180,7 @@ std::list<glm::vec3> Astar(const glm::vec3 &start, const glm::vec3 &goal, World 
 	// For the first node, that value is completely heuristic.
 	fScore[start] = glm::distance(start, goal);
 
-	while (!openSet.empty() && closedSet.size() < 100 && openSet.size() < 200)
+	while (!openSet.empty() && closedSet.size() < 1000 && openSet.size() < 2000)
 	{
 		glm::vec3 current = openSet.top();// the node in openSet having the lowest fScore[] value
 		if (current == goal)
@@ -247,7 +248,6 @@ void Controlable::Update(const GameObjectParams & params)
 					auto tpos = storages.begin()->first;
 					if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
 					{
-						auto i = ch->PopFirst();
 						nearest_order = std::make_shared<OrderDrop>(storages.begin()->first, i.obj, i.count);
 						nearest = tpos;
 					}
@@ -310,10 +310,20 @@ PAgent Creature::Clone(GameObject * parent, const std::string & name)
 
 void Creature::Clear()
 {
-	order->Done();
-	order = nullptr;
-	path.clear();
-	wishpos = {};
+	if (order->IsDone())
+	{
+		order = nullptr;
+		path.clear();
+		wishpos = {};
+	}
+	else
+	{
+		OrderBus::Get().IssueDelayedOrder(order);
+		order->Drop();
+		order = nullptr;
+		path.clear();
+		wishpos = {};
+	}
 }
 
 void Creature::Update(const GameObjectParams & params)
@@ -335,8 +345,26 @@ void Creature::Update(const GameObjectParams & params)
 
 				if (path.empty())
 				{
-					params.world->SetBlock(pos, nullptr);
-					Clear();
+					bool remove = true;
+					if (auto orb = params.world->GetBlock(pos))
+					{
+						if (auto ore = orb->GetAgent<Ore>())
+						{
+							remove = false;
+							auto ch = mParent->GetAgent<Chest>();
+							auto cs = ore->DigSome();
+							ch->Push(cs.obj, cs.count);
+
+							if (ore->Expire())
+								remove = true;
+						}
+					}
+
+					if (remove)
+					{
+						params.world->SetBlock(pos, nullptr);
+						order->Done();
+					}
 				}
 			}
 		}
@@ -359,7 +387,7 @@ void Creature::Update(const GameObjectParams & params)
 					auto p = mParent->GetAgent<Chest>();
 					p->Push(ord->item);
 
-					Clear();
+					order->Done();
 				}
 			}
 		}
@@ -376,7 +404,7 @@ void Creature::Update(const GameObjectParams & params)
 
 				if (path.empty())
 				{
-					Clear();
+					order->Done();
 				}
 			}
 		}
@@ -393,7 +421,7 @@ void Creature::Update(const GameObjectParams & params)
 
 				if (path.empty())
 				{
-					Clear();
+					order->Done();
 				}
 			}
 		}
@@ -413,7 +441,7 @@ void Creature::Update(const GameObjectParams & params)
 				{
 					params.world->SetBlock(pos, ord->item);
 
-					Clear();
+					order->Done();
 				}
 			}
 		}
@@ -436,6 +464,7 @@ void Creature::Update(const GameObjectParams & params)
 					{
 						if (auto ch = b->GetAgent<Chest>())
 						{
+							//TODO:broken
 							ch->Push(ord->item, ord->count);
 							placed = true;
 						}
@@ -443,10 +472,11 @@ void Creature::Update(const GameObjectParams & params)
 
 					if (!placed)
 					{
-						//
+						auto ch = mParent->GetAgent<Chest>();
+						ch->Push(ord->item, ord->count);
 					}
 
-					Clear();
+					order->Done();
 				}
 			}
 		}
@@ -488,7 +518,7 @@ void Creature::Update(const GameObjectParams & params)
 						}
 					}
 
-					Clear();
+					order->Done();
 				}
 			}
 		}
@@ -518,18 +548,20 @@ void Creature::Update(const GameObjectParams & params)
 						}
 					}
 
-					Clear();
+					order->Done();
 				}
 			}
 		}
 
-		if (path.empty() && order)
+		if (order)
 		{
-			path = Astar(glm::trunc(p->Get()), wishpos, params.world);
 			if (path.empty())
 			{
-				Clear();
-				return;
+				path = Astar(glm::trunc(p->Get()), wishpos, params.world);
+				if (path.empty() || order->IsDone())
+				{
+					Clear();
+				}
 			}
 		}
 	}
@@ -555,6 +587,11 @@ void Creature::DrawGui()
 			ImGui::TreePop();
 		}
 	}
+}
+
+void Creature::Requirements()
+{
+	//REQUIRE(Chest);
 }
 
 void Creature::AddPersinal(POrder o)
@@ -877,7 +914,7 @@ void Wander::Update(const GameObjectParams & params)
 	if (auto c = mParent->GetAgent<Creature>())
 	{
 		auto p = mParent->GetAgent<PositionAgent>();
-		auto npos = p->Get() + glm::vec3((rand() % 60 - 30) / 10.f, (rand() % 60 - 30) / 10.f, 0);
+		auto npos = glm::ivec3(p->Get().x + rand()%3-1, p->Get().y + rand()%3-1, p->Get().z);
 		if (params.world->IsWalkable(npos))
 		{
 			c->AddPersinal(std::make_shared<OrderWander>(npos));

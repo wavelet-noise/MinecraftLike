@@ -77,6 +77,8 @@ public:
 
 	void DrawGui() override;
 
+	void Requirements() override;
+
 	float GetFreq() const override
 	{
 		return 1 / 10.f;
@@ -141,7 +143,7 @@ public:
 		return 5.0f;
 	}
 
-	float water = 0, full = 100;
+	float water = 100, full = 100;
 };
 
 REGISTER_AGENT(WaterConsumer)
@@ -163,7 +165,7 @@ public:
 		return 5.0f;
 	}
 
-	float calorie = 0, full = 100;
+	float calorie = 100, full = 100;
 	bool want_to_eat = false;
 };
 

@@ -182,7 +182,7 @@ void Game::Update(float dt)
 	}
 
 	mWorld->Update(static_cast<float>(dt));
-	OrderBus::Get().Update();
+	OrderBus::Get().Update(dt);
 	EventBus::Get().Update();
 }
 
@@ -303,7 +303,7 @@ void Game::Draw(float dt)
 		});
 
 	mRender->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
-	if (!ImGui::IsAnyItemHovered())
+	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
 	{
 		static glm::vec3 min, max;
 		static int minmaxstate = 0;
@@ -366,6 +366,18 @@ void Game::Draw(float dt)
 	}
 
 	ImGui_ImplGlfwGL3_NewFrame();
+	{
+		if (auto b = mWorld->GetBlock(static_cast<WBPos>(std::get<0>(selection_pos))))
+		{
+			ImGui::SetNextWindowPos({ mWindow->GetSize().x / 2.f - 70, 0});
+			ImGui::SetNextWindowSize({140,50});
+			ImGui::Begin("Selected");
+			b->DrawGui();
+			ImGui::Text("%s", b->GetDescription().c_str());
+			ImGui::End();
+		}
+		
+	}
 
 	WS::Get().Draw(mWindow->GetSize());
 
@@ -384,7 +396,7 @@ void Game::Draw(float dt)
 
 	for (auto &w : opened_w)
 	{
-		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize || ImGuiWindowFlags_NoSavedSettings);
+		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings);
 
 		std::get<1>(w)->DrawGui();
 		ImGui::End();
@@ -395,9 +407,12 @@ void Game::Draw(float dt)
 		opened_w.clear();
 	}
 
-	int slise = mWorld->GetSlise();
-	float prewheel = ImGui::GetIO().MouseWheel;
-	mWorld->SetSlise(slise + glm::sign(prewheel));
+	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
+	{
+		int slise = mWorld->GetSlise();
+		float prewheel = ImGui::GetIO().MouseWheel;
+		mWorld->SetSlise(slise + glm::sign(prewheel));
+	}
 
 	ImGui::Render();
 

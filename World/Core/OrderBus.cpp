@@ -2,6 +2,22 @@
 #include <Core\EventBus.h>
 #include <glm\gtx\string_cast.hpp>
 
+void OrderBus::IssueDelayedOrder(POrder ord)
+{
+	if (delayed_orders.size() >= 10000)
+	{
+		LOG(error) << "too much delayed orders";
+		delayed_orders.clear();
+	}
+
+	for (const auto o : delayed_orders)
+	{
+		if (o->IsEquals(*ord))
+			return;
+	}
+	delayed_orders.push_back(ord);
+}
+
 void OrderBus::IssueOrder(POrder ord)
 {
 	if (orders.size() >= 10000)
@@ -23,8 +39,17 @@ void OrderBus::Clear()
 	orders.clear();
 }
 
-void OrderBus::Update()
+void OrderBus::Update(float dt)
 {
+	static float ro_delay = 0;
+	ro_delay += dt;
+	if (ro_delay >= 5)
+	{
+		ro_delay = 0;
+		orders.insert(orders.begin(), delayed_orders.begin(), delayed_orders.end());
+		delayed_orders.clear();
+	}
+
 	for (auto i = orders.begin(); i != orders.end(); ++i)
 	{
 		if ((*i)->IsTaken())
@@ -69,6 +94,11 @@ void Order::Done()
 {
 	EventBus::Get().Publish<EventOrderDone>(shared_from_this());
 	mDone = true;
+}
+
+void Order::Drop()
+{
+	mTaken = false;
 }
 
 OrderGet::OrderGet(glm::vec3 v, PGameObject i) : pos(v), item(i)

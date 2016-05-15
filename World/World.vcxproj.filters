@@ -287,6 +287,9 @@
     <ClCompile Include="Core\ChestSlot.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Ore.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -589,6 +592,9 @@
       <Filter>gui</Filter>
     </ClInclude>
     <ClInclude Include="Core\CalorieConsumer.h">
+      <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Ore.h">
       <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>

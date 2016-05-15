@@ -29,6 +29,7 @@ public:
 
 	void Take();
 	void Done();
+	void Drop();
 
 	inline bool IsTaken() const
 	{
@@ -250,12 +251,14 @@ struct OrderCraft : public NumberedOrder<OrderCraft>
 class OrderBus
 {
 public:
-	std::list<POrder> orders, orders_taken;
+	std::list<POrder> orders, orders_taken, delayed_orders;
+
+	void IssueDelayedOrder(POrder ord);
 
 	void IssueOrder(POrder ord);
 	void Clear();
 
-	void Update();
+	void Update(float dt);
 
 	static OrderBus &Get()
 	{

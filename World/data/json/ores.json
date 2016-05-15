@@ -3,7 +3,11 @@
         "type":"Block",
         "id":"coal_ore_block",
         "agents":[  
-
+			{
+				"type":"Ore",
+				"contains":[["coal_lump", 1, 0.4]],
+				"size":100
+			}
         ],
         "tesselator":[  
             {  
@@ -14,13 +18,18 @@
                 "transparent":false
             }
         ],
-        "placeable":true
+        "placeable":true,
+		"dynamic":true
     },
     {  
         "type":"Block",
         "id":"copper_ore_block",
         "agents":[  
-
+			{
+				"type":"Ore",
+				"contains":[["coal_lump", 1, 0.4]],
+				"size":100
+			}
         ],
         "tesselator":[  
             {  
@@ -31,13 +40,18 @@
                 "transparent":false
             }
         ],
-        "placeable":true
+        "placeable":true,
+		"dynamic":true
     },
     {  
         "type":"Block",
         "id":"iron_ore_block",
         "agents":[  
-
+			{
+				"type":"Ore",
+				"contains":[["coal_lump", 1, 0.4]],
+				"size":100
+			}
         ],
         "tesselator":[  
             {  
@@ -48,13 +62,18 @@
                 "transparent":false
             }
         ],
-        "placeable":true
+        "placeable":true,
+		"dynamic":true
     },
     {  
         "type":"Block",
         "id":"uranium_ore_block",
         "agents":[  
-
+			{
+				"type":"Ore",
+				"contains":[["coal_lump", 1, 0.4]],
+				"size":100
+			}
         ],
         "tesselator":[  
             {  
@@ -65,6 +84,7 @@
                 "transparent":false
             }
         ],
-        "placeable":true
+        "placeable":true,
+		"dynamic":true
     }
 ]

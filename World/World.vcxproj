@@ -47,6 +47,7 @@
     <ClCompile Include="Core\MetalSmelter.cpp" />
     <ClCompile Include="Core\ModelTessellator.cpp" />
     <ClCompile Include="Core\OrderBus.cpp" />
+    <ClCompile Include="Core\Ore.cpp" />
     <ClCompile Include="Core\Plant.cpp" />
     <ClCompile Include="Core\Recipe.cpp" />
     <ClCompile Include="Core\SectorTessellator.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Core\MetalSmelter.h" />
     <ClInclude Include="Core\ModelTessellator.h" />
     <ClInclude Include="core\OrderBus.h" />
+    <ClInclude Include="Core\Ore.h" />
     <ClInclude Include="Core\Plant.h" />
     <ClInclude Include="Core\Recipe.h" />
     <ClInclude Include="Core\SectorBase.h" />
