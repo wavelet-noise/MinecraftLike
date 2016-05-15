@@ -26,6 +26,7 @@ public:
 	virtual bool IsEquals(const Order &rhs) = 0;
 	virtual glm::vec3 GetPos() const = 0;
 	virtual std::string to_string() const;
+	virtual float Tiring() const;
 
 	void Take();
 	void Done();
@@ -67,6 +68,11 @@ struct OrderDig : public NumberedOrder<OrderDig>
 	std::string to_string() const override;
 	glm::vec3 pos;
 
+	virtual float Tiring() const override
+	{
+		return 0.3f;
+	}
+
 	virtual glm::vec3 GetPos() const
 	{
 		return pos;
@@ -90,6 +96,11 @@ struct OrderGet : public NumberedOrder<OrderGet>
 	glm::vec3 pos;
 	PGameObject item;
 
+	virtual float Tiring() const override
+	{
+		return 0.05f;
+	}
+
 	virtual glm::vec3 GetPos() const
 	{
 		return pos;
@@ -112,6 +123,11 @@ struct OrderPlace : public NumberedOrder<OrderPlace>
 	std::string to_string() const override;
 	WBPos pos;
 	PGameObject item;
+
+	virtual float Tiring() const override
+	{
+		return 0.05f;
+	}
 
 	virtual glm::vec3 GetPos() const
 	{
@@ -232,6 +248,11 @@ struct OrderCraft : public NumberedOrder<OrderCraft>
 	PRecipe item;
 	int count = 1;
 
+	virtual float Tiring() const override
+	{
+		return 0.1f;
+	}
+
 	virtual glm::vec3 GetPos() const
 	{
 		return pos;
@@ -243,6 +264,30 @@ struct OrderCraft : public NumberedOrder<OrderCraft>
 			return false;
 
 		const auto &o = static_cast<const OrderCraft &>(rhs);
+
+		return o.pos == pos;
+	}
+};
+
+struct OrderSleep : public NumberedOrder<OrderSleep>
+{
+	OrderSleep(glm::vec3 v) : pos(v){}
+
+	std::string to_string() const override;
+
+	glm::vec3 pos;
+
+	virtual glm::vec3 GetPos() const
+	{
+		return pos;
+	}
+
+	virtual bool IsEquals(const Order &rhs) override
+	{
+		if (rhs.GetId() != GetId())
+			return false;
+
+		const auto &o = static_cast<const OrderSleep &>(rhs);
 
 		return o.pos == pos;
 	}

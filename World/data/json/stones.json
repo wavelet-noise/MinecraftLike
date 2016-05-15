@@ -237,7 +237,12 @@
 			{
 				"type":"DeathDrop",
 				"id":"chromite"
-			}	
+			},
+			{
+				"type":"Ore",
+				"contains":[["chromite_ore", 1, 0.1]],
+				"size":1000
+			}
 	],
 	"tesselator":[  
 		{  
@@ -249,7 +254,13 @@
 		}
 	],
 	"placeable":true,
-	"tags":["rock", "flux"]
+	"tags":["rock", "flux", "ore_dots"]
+},
+{
+	"type":"Item",
+    "id":"chromite_ore",
+    "agents":[
+    ]
 },
 {  
 	"type":"Block",
@@ -300,6 +311,11 @@
 			{
 				"type":"DeathDrop",
 				"id":"cobaltite"
+			},
+			{
+				"type":"Ore",
+				"contains":[["cobaltite_ore", 1, 0.1]],
+				"size":1000
 			}
 	],
 	"tesselator":[  
@@ -312,7 +328,13 @@
 		}
 	],
 	"placeable":true,
-	"tags":["rock", "flux"]
+	"tags":["rock", "flux", "ore_dots"]
+},
+{
+	"type":"Item",
+    "id":"cobaltite_ore",
+    "agents":[
+    ]
 },
 {  
 	"type":"Block",
@@ -321,6 +343,11 @@
 			{
 				"type":"DeathDrop",
 				"id":"bauxite"
+			},
+			{
+				"type":"Ore",
+				"contains":[["bauxite_ore", 1, 0.1]],
+				"size":1000
 			}
 	],
 	"tesselator":[  
@@ -333,28 +360,13 @@
 		}
 	],
 	"placeable":true,
-	"tags":["rock", "flux"]
+	"tags":["rock", "flux", "ore_dots"]
 },
-{  
-	"type":"Block",
-	"id":"chromite",
-	"agents":[  
-			{
-				"type":"DeathDrop",
-				"id":"chromite"
-			}
-	],
-	"tesselator":[  
-		{  
-			"type":"SplitBlockTessellator",
-			"generator":{  
-				"all":"chromite"
-			},
-			"transparent":false
-		}
-	],
-	"placeable":true,
-	"tags":["rock", "flux"]
+{
+	"type":"Item",
+    "id":"bauxite_ore",
+    "agents":[
+    ]
 },
 {  
 	"type":"Block",
@@ -426,6 +438,11 @@
 			{
 				"type":"DeathDrop",
 				"id":"galena"
+			},
+			{
+				"type":"Ore",
+				"contains":[["galena_ore", 1, 0.1]],
+				"size":1000
 			}
 	],
 	"tesselator":[  
@@ -438,7 +455,13 @@
 		}
 	],
 	"placeable":true,
-	"tags":["rock", "flux"]
+	"tags":["rock", "flux", "ore_dots"]
+},
+{
+	"type":"Item",
+    "id":"galena_ore",
+    "agents":[
+    ]
 },
 {  
 	"type":"Block",
@@ -489,6 +512,11 @@
 			{
 				"type":"DeathDrop",
 				"id":"hematite"
+			},
+			{
+				"type":"Ore",
+				"contains":[["hematite_ore", 1, 0.1]],
+				"size":1000
 			}
 	],
 	"tesselator":[  
@@ -501,7 +529,13 @@
 		}
 	],
 	"placeable":true,
-	"tags":["rock", "flux"]
+	"tags":["rock", "flux", "ore_dots"]
+},
+{
+	"type":"Item",
+    "id":"hematite_ore",
+    "agents":[
+    ]
 },
 {  
 	"type":"Block",
@@ -594,6 +628,11 @@
 			{
 				"type":"DeathDrop",
 				"id":"magnetite"
+			},
+			{
+				"type":"Ore",
+				"contains":[["magnetite_ore", 1, 0.1]],
+				"size":1000
 			}
 	],
 	"tesselator":[  
@@ -606,7 +645,13 @@
 		}
 	],
 	"placeable":true,
-	"tags":["rock", "flux"]
+	"tags":["rock", "flux", "ore_dots"]
+},
+{
+	"type":"Item",
+    "id":"magnetite_ore",
+    "agents":[
+    ]
 },
 {  
 	"type":"Block",

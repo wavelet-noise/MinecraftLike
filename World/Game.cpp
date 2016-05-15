@@ -217,7 +217,7 @@ void Game::Draw(float dt)
 	mCamera->Update();
 
 	static float phi = 0;
-	//phi += dt / 20.f;
+	phi += dt / 20.f;
 	mSun->SetPos(mCamera->GetPos() + glm::vec3{ glm::sin(phi) + glm::cos(phi), 0, -glm::sin(phi) + glm::cos(phi) });
 	mSun->LookAt(mCamera->GetPos());
 	mSun->Update();

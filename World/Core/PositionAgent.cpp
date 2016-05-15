@@ -233,6 +233,11 @@ void Controlable::Update(const GameObjectParams & params)
 		for (const auto &i : o)
 			if (!i->IsTaken() && glm::distance(p->Get(), i->GetPos()) < glm::distance(p->Get(), nearest))
 			{
+				if (auto tire = mParent->GetAgent<ActivityConsumer>())
+				{
+					if (tire->IsTired() && i->Tiring() > 0) // tired creatures cannot take tiring orders
+						continue;
+				}
 				nearest = i->GetPos();
 				nearest_order = i;
 			}
@@ -328,10 +333,21 @@ void Creature::Clear()
 
 void Creature::Update(const GameObjectParams & params)
 {
+	auto p = mParent->GetAgent<PositionAgent>();
+
+	if (order && order->Tiring() > 0)
+		if (auto tire = mParent->GetAgent<ActivityConsumer>())
+		{
+			tire->Tire(order->Tiring());
+			if (tire->IsTired())
+			{
+				AddPersinal(std::make_shared<OrderSleep>(p->Get()));
+				Clear();
+			}
+		}
+
 	if (order) //TODO: move to order methods
 	{
-		auto p = mParent->GetAgent<PositionAgent>();
-
 		if (order->GetId() == Order::Idfor<OrderDig>())
 		{
 			auto &pos = std::static_pointer_cast<OrderDig>(order)->pos;
@@ -367,6 +383,7 @@ void Creature::Update(const GameObjectParams & params)
 					}
 				}
 			}
+
 		}
 		else if (order->GetId() == Order::Idfor<OrderGet>())
 		{
@@ -464,16 +481,21 @@ void Creature::Update(const GameObjectParams & params)
 					{
 						if (auto ch = b->GetAgent<Chest>())
 						{
-							//TODO:broken
 							ch->Push(ord->item, ord->count);
 							placed = true;
 						}
 					}
 
-					if (!placed)
+					if (placed)
 					{
 						auto ch = mParent->GetAgent<Chest>();
-						ch->Push(ord->item, ord->count);
+						auto item = ch->PopByPredicate([&](const ChestSlot &cs)->bool {
+							return cs.obj == ord->item;
+						});
+
+						item.count -= ord->count;
+						if (item.count >= 1)
+							ch->Push(item.obj, item.count);
 					}
 
 					order->Done();
@@ -552,6 +574,35 @@ void Creature::Update(const GameObjectParams & params)
 				}
 			}
 		}
+		else if (order->GetId() == Order::Idfor<OrderSleep>())
+		{
+			auto &ord = std::static_pointer_cast<OrderSleep>(order);
+			auto &pos = ord->pos;
+
+			if (path.empty())
+				wishpos = pos;
+			else
+			{
+				p->Set(path.back());
+				path.pop_back();
+
+				if (path.empty())
+				{
+					if (auto tire = mParent->GetAgent<ActivityConsumer>())
+					{
+						tire->Tire(-.2f);
+						if (tire->IsRested())
+						{
+							if(auto anat = mParent->GetAgent<Anatomic>())
+								anat->Think("Rested :)");
+							order->Done();
+						}
+					}
+					else
+						order->Done();
+				}
+			}
+		}
 
 		if (order)
 		{
@@ -597,6 +648,8 @@ void Creature::Requirements()
 void Creature::AddPersinal(POrder o)
 {
 	std::remove_if(personal.begin(), personal.end(), [&](const POrder &p)->bool {
+		if (!p)
+			return true;
 		return p->GetId() == o->GetId();
 	});
 
@@ -802,15 +855,13 @@ void Anatomic::Afterload(GameObject * parent)
 
 void Anatomic::DrawGui()
 {
-	static int j = 0;
-	if (ImGui::TreeNode((boost::format("Mind##%1%") % j).str().c_str()))
+	if (ImGui::TreeNode("Mind"))
 	{
 		for (int i = 0; i < minds.size(); i++)
 		{
 			if (!(minds[i].mind.empty()))
 				ImGui::Text(minds[i].mind.c_str());
 		}
-		j++;
 		ImGui::TreePop();
 	}
 }
@@ -914,7 +965,7 @@ void Wander::Update(const GameObjectParams & params)
 	if (auto c = mParent->GetAgent<Creature>())
 	{
 		auto p = mParent->GetAgent<PositionAgent>();
-		auto npos = glm::ivec3(p->Get().x + rand()%3-1, p->Get().y + rand()%3-1, p->Get().z);
+		auto npos = glm::ivec3(p->Get().x + rand() % 3 - 1, p->Get().y + rand() % 3 - 1, p->Get().z);
 		if (params.world->IsWalkable(npos))
 		{
 			c->AddPersinal(std::make_shared<OrderWander>(npos));
@@ -932,4 +983,61 @@ PAgent Food::Clone(GameObject * parent, const std::string & name)
 void Food::JsonLoad(const rapidjson::Value & val)
 {
 	JSONLOAD(NVP(nutrition));
+}
+
+PAgent ActivityConsumer::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<ActivityConsumer>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void ActivityConsumer::Update(const GameObjectParams & params)
+{
+	activity -= params.dt / 10.f;
+}
+
+void ActivityConsumer::DrawGui()
+{
+	if (Settings::Get().IsDebug())
+	{
+		ImGui::Text("Activity: %g", activity);
+	}
+
+	if (activity >= 50)
+	{
+		ImGui::TextColored({ 0,1,0.5,1 }, "Rested");
+	}
+	else if (activity >= 40)
+	{
+		ImGui::TextColored({ 0,1,0,1 }, "Not tired");
+	}
+	else if (activity >= 30)
+	{
+		ImGui::TextColored({ 0.5,1,0,1 }, "Slightly tired");
+	}
+	else if (activity >= 20)
+	{
+		ImGui::TextColored({ 1,1,0,1 }, "Moderately tired");
+	}
+	else
+	{
+		ImGui::TextColored({ 1,0,0,1 }, "Seriously tired");
+		mParent->GetAgent<Anatomic>()->Think("I'm so tired :(");
+	}
+}
+
+void ActivityConsumer::Tire(float t)
+{
+	activity -= t;
+}
+
+bool ActivityConsumer::IsTired()
+{
+	return activity <= 20;
+}
+
+bool ActivityConsumer::IsRested()
+{
+	return activity >= 100;
 }

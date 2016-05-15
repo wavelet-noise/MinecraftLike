@@ -140,7 +140,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 5.0f;
+		return 4.0f;
 	}
 
 	float water = 100, full = 100;
@@ -268,7 +268,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 1.0f;
+		return 10.0f;
 	}
 };
 
@@ -292,3 +292,29 @@ public:
 };
 
 REGISTER_AGENT(Food)
+
+class ActivityConsumer : public Agent
+{
+public:
+	AGENT(ActivityConsumer);
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui() override;
+
+	void Tire(float t);
+	bool IsTired();
+	bool IsRested();
+
+	float GetFreq() const override
+	{
+		return 6.0f;
+	}
+
+	float activity = 100, full = 100;
+};
+
+REGISTER_AGENT(ActivityConsumer)

@@ -60,17 +60,19 @@ void WorldGenMountains::Generate(Sector & s)
 	auto bf6 = DB::Get().Create(StringIntern("grass_high_small_red"));
 	auto bfb = DB::Get().Create(StringIntern("grass_high_small_bad"));
 
-	auto coal_ore_block = DB::Get().Create(StringIntern("coal_ore_block"));
-	auto iron_ore_block = DB::Get().Create(StringIntern("iron_ore_block"));
-	auto copper_ore_block = DB::Get().Create(StringIntern("copper_ore_block"));
-	auto uranium_ore_block = DB::Get().Create(StringIntern("uranium_ore_block"));
-
-	auto rock = DB::Get().Taglist("rock");
-	std::vector<PGameObject> rocks;
-	for (const auto &r : rock)
+	auto ore_dot = DB::Get().Taglist("ore_dots");
+	std::vector<PGameObject> ore_dots;
+	for (const auto &r : ore_dot)
 	{
-		rocks.push_back(DB::Get().Create(r));
+		ore_dots.push_back(DB::Get().Create(r));
 	}
+
+	//auto rock = DB::Get().Taglist("rock");
+	//std::vector<PGameObject> rocks;
+	//for (const auto &r : rock)
+	//{
+	//	rocks.push_back(DB::Get().Create(r));
+	//}
 
 	for (int i = 0; i < SECTOR_SIZE; ++i)
 	{
@@ -86,32 +88,20 @@ void WorldGenMountains::Generate(Sector & s)
 				{
 					if (solid(tx, ty, tz + 15))
 					{
-						if (is_cluster(tx, ty, tz, 1, 0.28))
-							s.SetBlock({ i, j, k }, coal_ore_block);
-						else
-							if (is_cluster(tx, ty, tz, 2, 0.25))
-								s.SetBlock({ i, j, k }, iron_ore_block);
-							else
-								if (is_cluster(tx, ty, tz, 3, 0.25))
-									s.SetBlock({ i, j, k }, copper_ore_block);
-								else
-									if (is_cluster(tx, ty, tz, 4, 0.21))
-										s.SetBlock({ i, j, k }, uranium_ore_block);
-									else
-									{
-										bool some = false;
-										for (int l = 0; l < rocks.size(); ++l)
-										{
-											if (is_cluster(tx, ty, tz, 5 + l, 0.3))
-											{
-												s.SetBlock({ i, j, k }, rocks[l]);
-												some = true;
-												break;
-											}
-										}
-										if(!some)
-											s.SetBlock({ i, j, k }, bd4);
-									}
+						{
+							bool some = false;
+							for (int l = 0; l < ore_dots.size(); ++l)
+							{
+								if (is_cluster(tx, ty, tz, 5 + l, 0.3))
+								{
+									s.SetBlock({ i, j, k }, ore_dots[l]->Clone());
+									some = true;
+									break;
+								}
+							}
+							if (!some)
+								s.SetBlock({ i, j, k }, bd4);
+						}
 					}
 					else if (solid(tx, ty, tz + 10))
 						s.SetBlock({ i, j, k }, bd3);

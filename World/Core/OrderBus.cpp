@@ -101,6 +101,11 @@ void Order::Drop()
 	mTaken = false;
 }
 
+float Order::Tiring() const
+{
+	return 0.f;
+}
+
 OrderGet::OrderGet(glm::vec3 v, PGameObject i) : pos(v), item(i)
 {
 }
@@ -162,4 +167,9 @@ OrderCraft::OrderCraft(glm::vec3 v, PRecipe r, int c) : pos(v), item(r), count(c
 std::string OrderCraft::to_string() const
 {
 	return (boost::format("OrderCraft: pos = %1% count = %2% resilt[0] = %3%") % glm::to_string(pos) % count % (item ? item->output[0].id : StringIntern("ERROR"))).str();
+}
+
+std::string OrderSleep::to_string() const
+{
+	return (boost::format("OrderSleep: pos = %1%") % glm::to_string(pos)).str();
 }
