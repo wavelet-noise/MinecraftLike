@@ -62,6 +62,19 @@ public:
 		return nullptr;
 	}
 
+	template<class T>
+	bool HasAgent()
+	{
+		StringIntern name = T::TypeName();
+		auto it = mAgents.find(name);
+		if (it != mAgents.end())
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 	void PushAgent(PAgent go);
 	inline bool IsPlacable()
 	{

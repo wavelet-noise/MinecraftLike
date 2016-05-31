@@ -36,6 +36,7 @@
 #include <core\EventBus.h>
 #include <core\OrderBus.h>
 
+#include <Core\Ore.h>
 
 Game::Game()
 {
@@ -217,7 +218,7 @@ void Game::Draw(float dt)
 	mCamera->Update();
 
 	static float phi = 0;
-	phi += dt / 20.f;
+	//phi += dt / 20.f;
 	mSun->SetPos(mCamera->GetPos() + glm::vec3{ glm::sin(phi) + glm::cos(phi), 0, -glm::sin(phi) + glm::cos(phi) });
 	mSun->LookAt(mCamera->GetPos());
 	mSun->Update();
@@ -348,7 +349,8 @@ void Game::Draw(float dt)
 						{
 							if(auto b = mWorld->GetBlock(glm::vec3{ i,j,k }))
 							{
-								OrderBus::Get().IssueOrder(std::make_shared<OrderDig>(glm::vec3{ i,j,k }));
+								if(Settings::Get().dig_ores || !b->HasAgent<Ore>())
+									OrderBus::Get().IssueOrder(std::make_shared<OrderDig>(glm::vec3{ i,j,k }));
 							}
 						}
 

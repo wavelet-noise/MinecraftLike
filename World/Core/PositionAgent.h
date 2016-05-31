@@ -73,6 +73,8 @@ public:
 
 	void Clear();
 
+	void make_step(float dt);
+
 	void Update(const GameObjectParams &params) override;
 
 	void DrawGui() override;
@@ -81,7 +83,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 1 / 10.f;
+		return 1 / 20.f;
 	}
 
 	void AddPersinal(POrder o);
@@ -92,6 +94,8 @@ public:
 
 	std::list<glm::vec3> path;
 	glm::vec3 wishpos;
+	float step_step = 0;
+	glm::vec3 newpos;
 };
 
 REGISTER_AGENT(Creature)

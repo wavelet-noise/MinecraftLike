@@ -21,6 +21,7 @@ void WindowTools::Draw(glm::vec2 wsize)
 
 		if (ImGui::TreeNode("Digging"))
 		{
+			ImGui::Checkbox("Dig ores", &Settings::Get().dig_ores);
 			if (ImGui::Button("Dig square"))
 			{
 				selected = SelectedOrder::DIG_SQUARE;

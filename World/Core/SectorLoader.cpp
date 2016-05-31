@@ -44,7 +44,7 @@ void SectorLoader::SetRadius(size_t radius)
   int end = static_cast<int>(mRadius);
   glm::ivec3 pos(begin); 
   //pos.z = 0;
-  for (pos.z = begin; pos.z <= end; ++pos.z)
+  for (pos.z = end; pos.z >= begin; --pos.z)
   for (pos.y = begin; pos.y <= end; ++pos.y)
   for (pos.x = begin; pos.x <= end; ++pos.x)
   {

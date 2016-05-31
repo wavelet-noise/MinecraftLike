@@ -17,5 +17,6 @@ public:
 	}
 
 	bool debug = true;
+	bool dig_ores = false;
 };
 

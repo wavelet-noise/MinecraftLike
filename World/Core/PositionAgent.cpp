@@ -331,6 +331,21 @@ void Creature::Clear()
 	}
 }
 
+void Creature::make_step(float dt)
+{
+	auto p = mParent->GetAgent<PositionAgent>();
+	p->Set(glm::mix(p->Get(), newpos, step_step * 2));
+
+	step_step+=dt;
+	if (step_step >= 0.5)
+	{
+		p->Set(newpos);
+		newpos = path.back();
+		path.pop_back();
+		step_step = 0;
+	}
+}
+
 void Creature::Update(const GameObjectParams & params)
 {
 	auto p = mParent->GetAgent<PositionAgent>();
@@ -355,8 +370,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -393,8 +407,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -415,8 +428,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -432,8 +444,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -450,8 +461,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -470,8 +480,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -510,8 +519,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -552,8 +560,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -582,8 +589,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				p->Set(path.back());
-				path.pop_back();
+				make_step(params.dt);
 
 				if (path.empty())
 				{
@@ -627,9 +633,11 @@ void Creature::DrawGui()
 			ImGui::Text("Order: none");
 
 		static int j = 0;
-		if (ImGui::TreeNode((boost::format("Self orders##%1%") % j).str().c_str()))
+		if (ImGui::TreeNode("Self orders"))
 		{
-			j++;
+			if (personal.empty())
+				ImGui::Text("empty");
+
 			for (const auto &i : personal)
 			{
 				ImGui::Text(i->to_string().c_str());

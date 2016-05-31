@@ -69,10 +69,17 @@ void Tessellator::SayCamera(std::shared_ptr<Camera> c)
 void Tessellator::SetSlise(int s)
 {
 	if (s != slise)
+	{
+		auto ss1 = cs::WBtoS({ 0,0,s });
+		auto ss2 = cs::WBtoS({ 0,0,slise });
+		if (ss1.z > ss2.z)
+			std::swap(ss1, ss2);
 		for (auto it = mSectors.begin(); it != mSectors.end(); ++it)
 		{
-			it->second->SayChanged();
+			if (it->first.z >= ss1.z && it->first.z <= ss2.z)
+				it->second->SayChanged();
 		}
+	}
 	slise = s;
 }
 

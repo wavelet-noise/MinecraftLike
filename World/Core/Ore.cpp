@@ -19,6 +19,10 @@ PAgent Ore::Clone(GameObject * parent, const std::string &name)
 
 void Ore::DrawGui()
 {
+	if (Settings::Get().IsDebug())
+	{
+		ImGui::Text((boost::format("%1% strikes left") % size).str().c_str());
+	}
 }
 
 ChestSlot Ore::DigSome()

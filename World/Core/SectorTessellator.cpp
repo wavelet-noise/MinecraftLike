@@ -31,7 +31,7 @@ void SectorTessellator::SayChanged()
 
 bool SectorTessellator::Update(Tessellator *tesselator, RenderSector &render, int slise)
 {
-	if (!mChanged)
+	if (!mChanged || mBlocks.empty())
 	{
 		return false;
 	}
@@ -41,20 +41,20 @@ bool SectorTessellator::Update(Tessellator *tesselator, RenderSector &render, in
 	auto currentTime = glfwGetTime();
 	TessellatorParams params{ tesselator, this, mPos,{} };
 
-	for (size_t i = 0; i < mBlocks.size(); ++i)
+	for (int k = 0; k < SECTOR_SIZE; k++)
 	{
-		if (mBlocks[i])
-		{
-			auto sbpos = cs::ItoSB(i);
-			params.wbpos = cs::SBtoWB(sbpos, mPos);
-			if (params.wbpos.z > slise)
-				continue;
-			__PushMmodel(*GetBlock(i)->GetModel(params, slise), sbpos);
-		}
-	};
-
-	//LOG(trace) << "SectorTessellated: " << glfwGetTime() - currentTime;
-	//LOG(trace) << "SectorTessellated: [" << mPos.x << "," << mPos.y << "," << mPos.z << "]";
+		if (k + mPos.z * SECTOR_SIZE <= slise)
+			for (int i = 0; i < SECTOR_SIZE; i++)
+				for (int j = 0; j < SECTOR_SIZE; j++)
+				{
+					params.wbpos = cs::SBtoWB({ i,j,k }, mPos);
+					auto ind = cs::SBtoI({ i,j,k }) ;
+					if (mBlocks[ind])
+					{
+						__PushMmodel(*GetBlock(ind)->GetModel(params, slise), { i,j,k });
+					}
+				}
+	}
 
 	using MeshType = std::remove_reference_t<decltype(mModel.GetMesh())>::element_type;
 
@@ -97,6 +97,6 @@ void SectorTessellator::__PushMmodel(const Model &model, const SBPos &pos)
 	}
 	//else
 	{
-	//	LOG(warning) << "Батчинг меша в секторе пропущен. Текстуры не совпадают.";
+		//	LOG(warning) << "Батчинг меша в секторе пропущен. Текстуры не совпадают.";
 	}
 }
