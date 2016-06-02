@@ -260,8 +260,8 @@ void Game::Draw(float dt)
 	auto ray = mCamera->GetRay(ImGui::GetMousePos());
 	std::tuple<glm::ivec3, glm::vec3> selection_pos; // pos, normal
 
-	static size_t select_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
-	static size_t square_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
+	static size_t select_model = mRender->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
+	static size_t square_model = mRender->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
 
 	int j = 0;
 	auto ord = OrderBus::Get().orders.begin();
@@ -382,6 +382,9 @@ void Game::Draw(float dt)
 		}
 	}
 
+	sb->SetCam(mCamera);
+	sb->Render();
+
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
 		if (auto b = mWorld->GetBlock(static_cast<WBPos>(std::get<0>(selection_pos))))
@@ -432,9 +435,6 @@ void Game::Draw(float dt)
 	}
 
 	ImGui::Render();
-
-	sb->SetCam(mCamera);
-	sb->Render();
 
 	WindowPerfomance::Get().DtUpdate(glfwGetTime() - drawtime, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
 }

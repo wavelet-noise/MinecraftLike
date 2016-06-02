@@ -28,4 +28,5 @@ public:
 
 private:
 	StringIntern selected_id;
+	char flt[100] = { 0 };
 };

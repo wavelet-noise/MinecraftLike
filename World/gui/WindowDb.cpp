@@ -19,11 +19,20 @@ void WindowDb::Draw(glm::vec2 mainwin_size)
 	if (mOpen)
 	{
 		ImGui::Begin("Database", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::InputText("Filter", flt, 100);
+
 		ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
 		auto p = ImGui::GetWindowPos();
 		for (const auto &a : DB::Get().mObjects)
 		{
+			if (flt)
+			{
+				auto fstring = std::get<0>(a.second)->GetDescription();
+				if (fstring.find(std::string(flt)) == -1)
+					continue;
+			}
+
 			auto &atl = TextureManager::Get().GetTexture(a.first);
 			auto &tex = std::get<0>(atl);
 			auto &atluv = std::get<1>(atl);
