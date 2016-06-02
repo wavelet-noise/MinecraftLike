@@ -78,6 +78,7 @@
     <ClCompile Include="gui\WindowInventory.cpp" />
     <ClCompile Include="gui\WindowPerfomance.cpp" />
     <ClCompile Include="gui\WindowRecipe.cpp" />
+    <ClCompile Include="gui\WindowRooms.cpp" />
     <ClCompile Include="gui\WindowTools.cpp" />
     <ClCompile Include="gui\WS.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="gui\WindowInventory.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="gui\WindowRecipe.h" />
+    <ClInclude Include="gui\WindowRooms.h" />
     <ClInclude Include="gui\WindowTools.h" />
     <ClInclude Include="gui\WS.h" />
     <ClInclude Include="network\NetworkManager.h" />

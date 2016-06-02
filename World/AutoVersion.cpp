@@ -11,11 +11,11 @@ std::string AutoVersion::GetTitle()
     std::string s1 = Time;
     time_t t = atol(s1.c_str());
     std::string s2 = Ver;
-    struct tm  ts;
-    ts = *localtime(&t);
+    struct tm ts;
+    localtime_s(&ts, &t);
     char buf[80];
     strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S", &ts);
-    sprintf(buff, "%s %s %s %s\0", "Space", s2.c_str(), "from", buf);
+    sprintf_s(buff, "%s %s %s %s\0", "Alpha Mensae", s2.c_str(), "from", buf);
     title_ = buff;
     ready_ = true;
     return title_;

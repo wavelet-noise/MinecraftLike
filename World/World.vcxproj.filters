@@ -294,6 +294,9 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="AutoVersion.cpp" />
+    <ClCompile Include="gui\WindowRooms.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -605,6 +608,9 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="AutoVersion.h" />
+    <ClInclude Include="gui\WindowRooms.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.glsl" />

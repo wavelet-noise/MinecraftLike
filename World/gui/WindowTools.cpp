@@ -2,6 +2,8 @@
 #include <Core\OrderBus.h>
 #include <GLFW\glfw3.h>
 #include "WindowCraftQueue.h"
+#include "WindowRooms.h"
+
 
 WindowTools::WindowTools()
 {
@@ -65,6 +67,23 @@ void WindowTools::Draw(glm::vec2 wsize)
 			if (ImGui::Button("Crafting queue"))
 			{
 				WindowCraftQueue::Get().SetVisibility(true);
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Regions"))
+		{
+			if (ImGui::Button("Room managment"))
+			{
+				WindowRooms::Get().Show();
+			}
+
+			if (ImGui::Button("New rectangle region"))
+			{
+				WindowRooms::Get().Show();
+				WindowRooms::Get().selected.reset();
+				selected = SelectedOrder::MARK_AS_ROOM;
 			}
 
 			ImGui::TreePop();

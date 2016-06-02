@@ -13,6 +13,7 @@
 #include <Core\Chest.h>
 #include <Core\EventBus.h>
 #include <memory>
+#include <Core\PositionAgent.h>
 
 World::World()
 {
@@ -291,6 +292,32 @@ void World::DoneRecipeOrder(const PRecipe & ro, int count)
 				recipe_orders.remove(r);
 		}
 	}
+}
+
+void World::RegisterCreature(PGameObject go)
+{
+	creatures.insert({ go->GetAgent<Creature>()->uid, go });
+}
+
+std::list<PGameObject> World::GetCreaturesAt(const glm::ivec3 & cell)
+{
+	std::list<PGameObject> list;
+
+	auto spos = cs::WBtoS(cell);
+	if (auto sector = FindSector(spos))
+	{
+		auto creatures = sector->GetCreatures();
+		for (auto &c : creatures)
+		{
+			auto pos = c->GetAgent<PositionAgent>();
+			if (glm::ivec3(pos->Get()) == cell)
+			{
+				list.push_back(c);
+			}
+		}
+	} 
+
+	return list;
 }
 
 int World::GetActiveCount()

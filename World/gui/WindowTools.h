@@ -11,7 +11,8 @@ enum class SelectedOrder
 	DIG_CIRCLE,
 	COLLECT_SQUARE,
 	PLACE_BLOCK,
-	CRAFT_ONE
+	CRAFT_ONE,
+	MARK_AS_ROOM
 };
 
 class WindowTools : public WindowBase

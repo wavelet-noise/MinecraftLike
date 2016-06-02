@@ -6,6 +6,7 @@
 #include "GameObjectParams.h"
 #include "Agent.h"
 #include "..\tools\StringIntern.h"
+#include <memory>
 
 using PGameObject = std::shared_ptr<GameObject>;
 
@@ -15,7 +16,7 @@ inline std::shared_ptr<T> MakeGameObject(Args&&... args)
 	return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
-class GameObject
+class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:
 	GameObject(const StringIntern &__id);

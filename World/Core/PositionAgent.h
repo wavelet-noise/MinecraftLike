@@ -63,6 +63,14 @@ public:
 
 REGISTER_AGENT(Controlable)
 
+struct Relationships
+{
+	float value = 0;
+
+	std::string to_string();
+	std::string with;
+};
+
 class Creature : public Agent
 {
 public:
@@ -88,6 +96,8 @@ public:
 		return 1 / 10.f;
 	}
 
+	void OnCreate(const GameObjectParams & params) override;
+
 	void AddPersinal(POrder o);
 
 	POrder order;
@@ -98,6 +108,11 @@ public:
 	glm::vec3 wishpos;
 	float step_step = 0;
 	glm::vec3 newpos;
+
+	size_t uid = 0;
+	static size_t global_uid;
+
+	std::map<size_t, Relationships> relationships;
 };
 
 REGISTER_AGENT(Creature)

@@ -10,6 +10,7 @@
 #include "gui\WindowEventlog.h"
 #include "gui\WindowTools.h"
 #include "gui\WindowCraftQueue.h"
+#include "gui\WindowRooms.h"
 
 class World;
 

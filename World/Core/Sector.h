@@ -29,6 +29,7 @@ public:
   void Spawn(const SBPos &position, PGameObject creature);
   void Place(const SBPos &position, PGameObject creature);
   void Repace(const SBPos &position, PGameObject creature);
+  std::list<PGameObject> GetCreatures();
 
   void SayChanged();
 

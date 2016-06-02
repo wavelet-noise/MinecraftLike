@@ -14,9 +14,35 @@
 
 #include "../Render/Render.h"
 #include "EventBus.h"
-
+#include <boost\serialization\serialization.hpp>
 
 class Tessellator;
+
+enum class RoomType
+{
+	UNSETTED,
+	PERSONAL_ROOM
+};
+
+using PRoom = std::shared_ptr<struct Room>;
+
+struct Room
+{
+	std::vector<glm::ivec3> cells;
+	std::string name = "no name";
+
+	RoomType type = RoomType::UNSETTED;
+
+	friend class boost::serialization::access;
+
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int)
+	{
+		ar & cells;
+		ar & name;
+		ar & type;
+	}
+};
 
 class World
 {
@@ -68,6 +94,10 @@ public:
   void DelayRecipeOrder(const PRecipe &ro);
   void DoneRecipeOrder(const PRecipe &ro, int count = 1);
 
+  void RegisterCreature(PGameObject go);
+
+  std::list<PGameObject> GetCreaturesAt(const glm::ivec3 &cell);
+
   int GetActiveCount();
 
   void SetTessellator(Tessellator *tess);
@@ -81,12 +111,16 @@ public:
 	  return slise;
   }
 
+  std::list<std::shared_ptr<Room>> rooms;
+
 private:
   std::unordered_map<SPos, std::shared_ptr<Sector>> mSectors;
   std::list<std::pair<glm::vec3, PGameObject>> storages;
 
   std::list<RecipeOrder> recipe_orders;
   std::list<RecipeOrder> delayed_recipe_orders;
+
+  std::map<size_t, PGameObject> creatures;
 
   Sector *mCurrentSector;
 

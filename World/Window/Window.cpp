@@ -4,6 +4,7 @@
 #include <iostream>
 #include <tools\Log.h>
 #include <gui\imgui_impl_glfw_gl3.h>
+#include <AutoVersion.h>
 
 Window::Window(const glm::uvec2 &size)
 {
@@ -17,7 +18,7 @@ Window::Window(const glm::uvec2 &size)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_SAMPLES, 0);
 
-	mWindow = (decltype(mWindow))(glfwCreateWindow(mSize.x, mSize.y, "title", monitor, nullptr));
+	mWindow = (decltype(mWindow))(glfwCreateWindow(mSize.x, mSize.y, AutoVersion::GetTitle().c_str(), monitor, nullptr));
 
 	if (!mWindow)
 	{
@@ -26,7 +27,7 @@ Window::Window(const glm::uvec2 &size)
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 		glfwWindowHint(GLFW_SAMPLES, 0);
 
-		mWindow = (decltype(mWindow))(glfwCreateWindow(mSize.x, mSize.y, "title", monitor, nullptr));
+		mWindow = (decltype(mWindow))(glfwCreateWindow(mSize.x, mSize.y, AutoVersion::GetTitle().c_str(), monitor, nullptr));
 	}
 
 	if (!mWindow)

@@ -11,6 +11,7 @@ void WS::Draw(glm::vec2 wsize)
 	WindowEventlog &we = WindowEventlog::Get();
 	WindowTools &wt = WindowTools::Get();
 	WindowCraftQueue &wcq = WindowCraftQueue::Get();
+	WindowRooms &wro = WindowRooms::Get();
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_F3))
 	{
@@ -34,4 +35,5 @@ void WS::Draw(glm::vec2 wsize)
 	we.Draw(wsize);
 	wt.Draw(wsize);
 	wcq.Draw(wsize);
+	wro.Draw(wsize);
 }

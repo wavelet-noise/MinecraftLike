@@ -68,6 +68,11 @@ void Sector::Repace(const SBPos & position, PGameObject creature)
 	items.remove(std::make_tuple( creature, position ));
 }
 
+std::list<PGameObject> Sector::GetCreatures()
+{
+	return creatures;
+}
+
 void Sector::Update(World *world, float dt)
 {
 	GameObjectParams gop{ world, this, {}, dt };

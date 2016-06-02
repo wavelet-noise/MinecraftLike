@@ -377,6 +377,25 @@ void Creature::Update(const GameObjectParams & params)
 {
 	auto p = mParent->GetAgent<PositionAgent>();
 
+	auto in_cell = params.world->GetCreaturesAt(p->Get());
+	for (const auto &in: in_cell)
+	{
+		if (auto c = in->GetAgent<Creature>())
+		{
+			auto i = relationships.find(c->uid);
+			if (i == relationships.end())
+			{
+				Relationships rr;
+				if (auto n = in->GetAgent<Named>())
+				{
+					rr.with = n->name;
+				}
+
+				relationships.insert({ c->uid, rr });
+			}
+		}
+	}
+
 	if (order && order->Tiring() > 0)
 		if (auto tire = mParent->GetAgent<ActivityConsumer>())
 		{
@@ -671,12 +690,29 @@ void Creature::DrawGui()
 			}
 			ImGui::TreePop();
 		}
+
+		if (ImGui::TreeNode("Relationships"))
+		{
+			for (auto &r : relationships)
+			{
+				ImGui::Text(r.second.with.c_str());
+			}
+			ImGui::TreePop();
+		}
 	}
 }
 
 void Creature::Requirements()
 {
 	//REQUIRE(Chest);
+}
+
+void Creature::OnCreate(const GameObjectParams & params)
+{
+	uid = global_uid;
+	global_uid++;
+
+	params.world->RegisterCreature(mParent->shared_from_this());
 }
 
 void Creature::AddPersinal(POrder o)
@@ -1088,4 +1124,11 @@ bool ActivityConsumer::IsTired()
 bool ActivityConsumer::IsRested()
 {
 	return activity >= 100;
+}
+
+size_t Creature::global_uid = 0;
+
+std::string Relationships::to_string()
+{
+	return std::to_string(value);
 }

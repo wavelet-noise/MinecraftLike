@@ -35,6 +35,7 @@
 #include <Render\ParticleSystem.h>
 #include <core\EventBus.h>
 #include <core\OrderBus.h>
+#include <gui\WindowRooms.h>
 
 #include <Core\Ore.h>
 
@@ -60,9 +61,11 @@ Game::Game()
 	//GL_CALL(glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y)); 
 
 	mWorld = std::make_unique<World>();
-	WindowInventory::Get().w = mWorld.get();
-	WindowCraftQueue::Get().w = mWorld.get();
-	WindowDb::Get().w = mWorld.get();
+	World * ww = mWorld.get();
+	WindowInventory::Get().w = ww;
+	WindowCraftQueue::Get().w = ww;
+	WindowDb::Get().w = ww;
+	WindowRooms::Get().w = ww;
 
 	generateShadowFBO();
 }
@@ -265,7 +268,7 @@ void Game::Draw(float dt)
 
 	int j = 0;
 	auto ord = OrderBus::Get().orders.begin();
-	for (auto i : OrderBus::Get().orders)
+	for (auto &i : OrderBus::Get().orders)
 	{
 		if (i->GetId() == Order::Idfor<OrderDig>())
 		{
@@ -278,6 +281,23 @@ void Game::Draw(float dt)
 			sb->AddCube(od->pos + glm::vec3(0, 0, 1.05), od->pos + glm::vec3(1, 1, 1.05), uv1, uv2, std::get<0>(tex_tuple));
 		}
 	}
+
+	if (WindowRooms::Get().GetVisibility())
+	{
+		for (auto &i : mWorld->rooms)
+		{
+			for (auto &j : i->cells)
+			{
+				auto tex_tuple = TextureManager::Get().GetTexture("selection_y");
+				auto tex4 = std::get<1>(tex_tuple);
+				glm::vec2 uv1 = { tex4.x, tex4.y };
+				glm::vec2 uv2 = { tex4.z, tex4.w };
+
+				sb->AddCube(glm::vec3(j) + glm::vec3(0, 0, 1.05), glm::vec3(j) + glm::vec3(1, 1, 1.05), uv1, uv2, std::get<0>(tex_tuple), { 1,0,0,1 });
+			}
+		}
+	}
+
 
 	static std::unordered_map<glm::ivec3, PGameObject> opened_w;
 
@@ -297,7 +317,8 @@ void Game::Draw(float dt)
 	{
 		static glm::vec3 min, max;
 		static int minmaxstate = 0;
-		if (WindowTools::Get().selected != SelectedOrder::DIG_SQUARE)
+		if (WindowTools::Get().selected != SelectedOrder::MARK_AS_ROOM && WindowTools::Get().selected !=  SelectedOrder::DIG_CIRCLE &&
+			WindowTools::Get().selected != SelectedOrder::DIG_SQUARE)
 		{
 			min = max = glm::vec3{ std::numeric_limits<float>().max() };
 			minmaxstate = 0;
@@ -307,6 +328,7 @@ void Game::Draw(float dt)
 		{
 			switch (WindowTools::Get().selected)
 			{
+			case SelectedOrder::MARK_AS_ROOM:
 			case SelectedOrder::DIG_CIRCLE:
 			case SelectedOrder::DIG_SQUARE:
 				switch (minmaxstate)
@@ -333,6 +355,8 @@ void Game::Draw(float dt)
 				glm::ivec3 s1 = { glm::min(min.x, max.x), glm::min(min.y, max.y), glm::min(min.z, max.z) };
 				glm::ivec3 s2 = { glm::max(min.x, max.x), glm::max(min.y, max.y), glm::max(min.z, max.z) };
 
+				auto r = std::make_shared<Room>();
+
 				for (int i = s1.x; i <= s2.x; i++)
 					for (int j = s1.y; j <= s2.y; j++)
 						for (int k = s1.z; k <= s2.z; k++)
@@ -344,6 +368,14 @@ void Game::Draw(float dt)
 									if (Settings::Get().dig_ores || !b->HasAgent<Ore>())
 										OrderBus::Get().IssueOrder(std::make_shared<OrderDig>(glm::vec3{ i,j,k }));
 								}
+
+							if (WindowTools::Get().selected == SelectedOrder::MARK_AS_ROOM)
+							{
+								r->cells.push_back({i,j,k});
+								WindowRooms::Get().selected = r;
+								if(*(--mWorld->rooms.end()) != r)
+									mWorld->rooms.push_back(r);
+							}
 						}
 
 				minmaxstate = 0;
@@ -359,7 +391,7 @@ void Game::Draw(float dt)
 					for (int j = s1.y; j <= s2.y; j++)
 						for (int k = s1.z; k <= s2.z; k++)
 						{
-							if (WindowTools::Get().selected == SelectedOrder::DIG_SQUARE ||
+							if (WindowTools::Get().selected == SelectedOrder::DIG_SQUARE || WindowTools::Get().selected == SelectedOrder::MARK_AS_ROOM ||
 								(WindowTools::Get().selected == SelectedOrder::DIG_CIRCLE && glm::distance(glm::vec3(i, j, k), glm::vec3(s1 + s2) / 2.f) <= glm::distance(glm::vec3(s1), glm::vec3(s2)) / 2.f))
 							{
 								auto tex_tuple = TextureManager::Get().GetTexture("selection_y");
