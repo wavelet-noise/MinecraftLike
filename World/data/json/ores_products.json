@@ -1,0 +1,42 @@
+[
+    {
+        "type":"Item",
+        "id":"chromite_ore",
+        "agents":[
+            {
+                "type":"PulverizeTo",
+                "result":[["impure_chrome_dust", 1, 1.0],["impure_chrome_dust",1,0.1]]
+            }
+        ]
+    },
+    {
+        "type":"Item",
+        "id":"impure_chrome_dust",
+        "agent":[
+            {
+                "type":"PuringTo",
+                "result":[["chrome_dust", 1, 1.0]]
+            }
+        ]
+    },
+    {
+        "type":"Item",
+        "id":"cobaltite_ore",
+        "agents":[
+            {
+                "type":"PulverizeTo",
+                "result":[["impure_cobalt_dust", 1, 1.0],["impure_cobalt_dust",1,0.1]]
+            }
+        ]
+    },
+    {
+        "type":"Item",
+        "id":"impure_cobalt_dust",
+        "agent":[
+            {
+                "type":"PuringTo",
+                "result":[["cobalt_dust", 1, 1.0]]
+            }
+        ]
+    },
+]
