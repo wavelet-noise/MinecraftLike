@@ -290,6 +290,9 @@
     <ClCompile Include="Core\Ore.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="Render\spritebatch.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -596,6 +599,9 @@
     </ClInclude>
     <ClInclude Include="Core\Ore.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\spritebatch.h">
+      <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

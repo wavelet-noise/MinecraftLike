@@ -73,7 +73,9 @@ public:
 
 	void Clear();
 
-	void make_step(float dt);
+	void look_around(const GameObjectParams & params);
+
+	void make_step(const GameObjectParams & params);
 
 	void Update(const GameObjectParams &params) override;
 
@@ -83,7 +85,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 1 / 20.f;
+		return 1 / 10.f;
 	}
 
 	void AddPersinal(POrder o);
@@ -200,6 +202,7 @@ public:
 	boost::circular_buffer<Mind> minds;
 
 	void Think(const std::string &s);
+	void Interest(const std::string &s, glm::vec3 &p);
 };
 
 REGISTER_AGENT(Anatomic)

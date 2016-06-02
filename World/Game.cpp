@@ -102,6 +102,8 @@ int Game::Run()
 
 	DB::Get().ReloadDirectory("data\\json\\");
 
+	sb = std::make_unique<SpriteBatch>();
+
 	boost::thread gen_thread([]() {
 		while (true)
 		{
@@ -261,33 +263,20 @@ void Game::Draw(float dt)
 	static size_t select_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
 	static size_t square_model = mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl");
 
-	static std::vector<size_t> order_models = [&]() -> std::vector<size_t>
-	{
-		std::vector<size_t> t;
-		for (int i = 0; i < 1000; i++)
-		{
-			t.push_back(mRender->AddModel("data/models/selection.obj", "selection", "shaders/basic.glsl"));
-		}
-		return t;
-	}();
-
-
 	int j = 0;
 	auto ord = OrderBus::Get().orders.begin();
-	for (auto i : order_models)
+	for (auto i : OrderBus::Get().orders)
 	{
-		if (OrderBus::Get().orders.size() > j && (*ord)->GetId() == Order::Idfor<OrderDig>())
+		if (i->GetId() == Order::Idfor<OrderDig>())
 		{
-			auto od = std::static_pointer_cast<OrderDig>(*ord);
-			mRender->SetModelMatrix(i, glm::translate(glm::mat4(1), od->pos));
-			ord++;
-		}
-		else
-		{
-			mRender->SetModelMatrix(i, glm::translate(glm::mat4(1), glm::vec3{ 99999 }));
-		}
+			auto od = std::static_pointer_cast<OrderDig>(i);
+			auto tex_tuple = TextureManager::Get().GetTexture("selection_y");
+			auto tex4 = std::get<1>(tex_tuple);
+			glm::vec2 uv1 = { tex4.x, tex4.y };
+			glm::vec2 uv2 = { tex4.z, tex4.w };
 
-		j++;
+			sb->AddCube(od->pos + glm::vec3(0, 0, 1.05), od->pos + glm::vec3(1, 1, 1.05), uv1, uv2, std::get<0>(tex_tuple));
+		}
 	}
 
 	static std::unordered_map<glm::ivec3, PGameObject> opened_w;
@@ -300,8 +289,8 @@ void Game::Draw(float dt)
 	}
 	else
 		selection_pos = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
-			return mWorld->GetBlock(pos).get();
-		});
+		return mWorld->GetBlock(pos).get();
+	});
 
 	mRender->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
 	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
@@ -318,6 +307,7 @@ void Game::Draw(float dt)
 		{
 			switch (WindowTools::Get().selected)
 			{
+			case SelectedOrder::DIG_CIRCLE:
 			case SelectedOrder::DIG_SQUARE:
 				switch (minmaxstate)
 				{
@@ -333,28 +323,53 @@ void Game::Draw(float dt)
 			}
 		}
 
-		if (!ImGui::IsMouseDown(0))
+		if (minmaxstate == 1)
 		{
-			if (minmaxstate == 1)
+			if (!ImGui::IsMouseDown(0))
 			{
+
 				max = std::get<0>(selection_pos);
 
-				if (min.x > max.x) std::swap(min.x, max.x);
-				if (min.y > max.y) std::swap(min.y, max.y);
-				if (min.z > max.z) std::swap(min.z, max.z);
+				glm::ivec3 s1 = { glm::min(min.x, max.x), glm::min(min.y, max.y), glm::min(min.z, max.z) };
+				glm::ivec3 s2 = { glm::max(min.x, max.x), glm::max(min.y, max.y), glm::max(min.z, max.z) };
 
-				for (int i = min.x; i <= max.x; i++)
-					for (int j = min.y; j <= max.y; j++)
-						for (int k = min.z; k <= max.z; k++)
+				for (int i = s1.x; i <= s2.x; i++)
+					for (int j = s1.y; j <= s2.y; j++)
+						for (int k = s1.z; k <= s2.z; k++)
 						{
-							if(auto b = mWorld->GetBlock(glm::vec3{ i,j,k }))
-							{
-								if(Settings::Get().dig_ores || !b->HasAgent<Ore>())
-									OrderBus::Get().IssueOrder(std::make_shared<OrderDig>(glm::vec3{ i,j,k }));
-							}
+							if (WindowTools::Get().selected == SelectedOrder::DIG_SQUARE ||
+								(WindowTools::Get().selected == SelectedOrder::DIG_CIRCLE && glm::distance(glm::vec3(i, j, k), glm::vec3(s1 + s2) / 2.f) <= glm::distance(glm::vec3(s1), glm::vec3(s2)) / 2.f))
+								if (auto b = mWorld->GetBlock(glm::vec3{ i,j,k }))
+								{
+									if (Settings::Get().dig_ores || !b->HasAgent<Ore>())
+										OrderBus::Get().IssueOrder(std::make_shared<OrderDig>(glm::vec3{ i,j,k }));
+								}
 						}
 
 				minmaxstate = 0;
+			}
+			else
+			{
+				max = std::get<0>(selection_pos);
+
+				glm::ivec3 s1 = { glm::min(min.x, max.x), glm::min(min.y, max.y), glm::min(min.z, max.z) };
+				glm::ivec3 s2 = { glm::max(min.x, max.x), glm::max(min.y, max.y), glm::max(min.z, max.z) };
+
+				for (int i = s1.x; i <= s2.x; i++)
+					for (int j = s1.y; j <= s2.y; j++)
+						for (int k = s1.z; k <= s2.z; k++)
+						{
+							if (WindowTools::Get().selected == SelectedOrder::DIG_SQUARE ||
+								(WindowTools::Get().selected == SelectedOrder::DIG_CIRCLE && glm::distance(glm::vec3(i, j, k), glm::vec3(s1 + s2) / 2.f) <= glm::distance(glm::vec3(s1), glm::vec3(s2)) / 2.f))
+							{
+								auto tex_tuple = TextureManager::Get().GetTexture("selection_y");
+								auto tex4 = std::get<1>(tex_tuple);
+								glm::vec2 uv1 = { tex4.x, tex4.y };
+								glm::vec2 uv2 = { tex4.z, tex4.w };
+
+								sb->AddCube(glm::vec3(i, j, k + 1.05), glm::vec3(i + 1, j + 1, k + 1.05), uv1, uv2, std::get<0>(tex_tuple), glm::vec4(0, 1, 0, 1));
+							}
+						}
 			}
 		}
 
@@ -371,14 +386,14 @@ void Game::Draw(float dt)
 	{
 		if (auto b = mWorld->GetBlock(static_cast<WBPos>(std::get<0>(selection_pos))))
 		{
-			ImGui::SetNextWindowPos({ mWindow->GetSize().x / 2.f - 70, 0});
-			ImGui::SetNextWindowSize({140,50});
+			ImGui::SetNextWindowPos({ mWindow->GetSize().x / 2.f - 70, 0 });
+			ImGui::SetNextWindowSize({ 140,50 });
 			ImGui::Begin("Selected");
 			b->DrawGui();
 			ImGui::Text("%s", b->GetDescription().c_str());
 			ImGui::End();
 		}
-		
+
 	}
 
 	WS::Get().Draw(mWindow->GetSize());
@@ -417,6 +432,9 @@ void Game::Draw(float dt)
 	}
 
 	ImGui::Render();
+
+	sb->SetCam(mCamera);
+	sb->Render();
 
 	WindowPerfomance::Get().DtUpdate(glfwGetTime() - drawtime, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
 }

@@ -29,7 +29,7 @@ void WindowTools::Draw(glm::vec2 wsize)
 
 			if (ImGui::Button("Dig circle"))
 			{
-
+				selected = SelectedOrder::DIG_CIRCLE;
 			}
 
 			if (ImGui::Button("Dig line"))

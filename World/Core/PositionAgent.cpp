@@ -331,19 +331,46 @@ void Creature::Clear()
 	}
 }
 
-void Creature::make_step(float dt)
+void Creature::look_around(const GameObjectParams & params)
+{
+	if (auto m = mParent->GetAgent<Anatomic>())
+	{
+		for (int i = -3; i <= 3; i++)
+			for (int j = -3; j <= 3; j++)
+			{
+				auto cpos = params.pos + glm::vec3{ i, j, 0 };
+				if (auto b = params.world->GetBlock(cpos))
+				{
+					if (b->HasAgent<Chest>())
+					{
+						m->Interest("storage", cpos);
+					}
+				}
+			}
+	}
+}
+
+void Creature::make_step(const GameObjectParams & params)
 {
 	auto p = mParent->GetAgent<PositionAgent>();
-	p->Set(glm::mix(p->Get(), newpos, step_step * 2));
+	newpos = path.back();
+	p->Set(newpos);
+	path.pop_back();
+	//p->Set(glm::mix(p->Get(), newpos, step_step * 2));
 
-	step_step+=dt;
-	if (step_step >= 0.5)
-	{
-		p->Set(newpos);
-		newpos = path.back();
-		path.pop_back();
-		step_step = 0;
-	}
+	//if (!path.empty())
+	//{
+	//	step_step += params.dt;
+
+	//	if (step_step >= 0.5)
+	//	{
+	//		p->Set(newpos);
+	//		newpos = path.back();
+	//		look_around(params);
+	//		path.pop_back();
+	//		step_step = 0;
+	//	}
+	//}
 }
 
 void Creature::Update(const GameObjectParams & params)
@@ -370,7 +397,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -407,7 +434,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -428,7 +455,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -444,7 +471,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -461,7 +488,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -480,7 +507,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -519,7 +546,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -560,7 +587,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -589,7 +616,7 @@ void Creature::Update(const GameObjectParams & params)
 				wishpos = pos;
 			else
 			{
-				make_step(params.dt);
+				make_step(params);
 
 				if (path.empty())
 				{
@@ -880,6 +907,12 @@ void Anatomic::Think(const std::string &s)
 	{
 		minds.push_back({ s });
 	}
+}
+
+void Anatomic::Interest(const std::string & s, glm::vec3 & p)
+{
+	interest_points[StringIntern(s)] = p;
+	Think((boost::format("I see some %1% :|") % s).str());
 }
 
 PAgent Named::Clone(GameObject * parent, const std::string & name)

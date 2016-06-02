@@ -98,6 +98,7 @@
     <ClCompile Include="Render\Model.cpp" />
     <ClCompile Include="Render\RenderSector.cpp" />
     <ClCompile Include="Render\Shader.cpp" />
+    <ClCompile Include="Render\spritebatch.cpp" />
     <ClCompile Include="Render\Texture.cpp" />
     <ClCompile Include="Render\TextureManager.cpp" />
     <ClCompile Include="Settings.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="render\ParticleSystem.h" />
     <ClInclude Include="Render\RenderSector.h" />
+    <ClInclude Include="Render\spritebatch.h" />
     <ClInclude Include="Serealize.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />

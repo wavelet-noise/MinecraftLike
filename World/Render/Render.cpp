@@ -70,6 +70,10 @@ Render::Render()
   par->SetUniform(TEXTURE_SLOT_2, "shadowmap");
   par->SetUniform(TEXTURE_SLOT_4, "rgbtable");
 
+  auto colo = Resources::Get().LoadShader("shaders/color.glsl");
+  colo->Use();
+  colo->SetUniform(TEXTURE_SLOT_0, "atlas");
+
   int ntex, texss;
   glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &ntex);
   glGetIntegerv(GL_MAX_TEXTURE_SIZE, &texss);

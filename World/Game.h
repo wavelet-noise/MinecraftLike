@@ -12,6 +12,7 @@
 #include "FpsCounter.h"
 #include "Render\RenderSector.h"
 #include "network\NetworkManager.h"
+#include <render\spritebatch.h>
 
 class Game
 {
@@ -46,6 +47,7 @@ private:
 
   std::unique_ptr<SectorLoader> mSectorLoader;
   std::list<PGameObject> controlled;
+  std::unique_ptr<SpriteBatch> sb;
 
   PTexture depthTextureId;
   unsigned fboId = 0;

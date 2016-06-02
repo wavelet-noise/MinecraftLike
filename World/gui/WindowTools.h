@@ -8,6 +8,7 @@ enum class SelectedOrder
 {
 	NONE,
 	DIG_SQUARE,
+	DIG_CIRCLE,
 	COLLECT_SQUARE,
 	PLACE_BLOCK,
 	CRAFT_ONE
