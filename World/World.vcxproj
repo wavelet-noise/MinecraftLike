@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AutoVersion.cpp" />
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Chest.cpp" />
     <ClCompile Include="Core\ChestSlot.cpp" />
@@ -115,6 +116,7 @@
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AutoVersion.h" />
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\CalorieConsumer.h" />
     <ClInclude Include="core\Chest.h" />
@@ -223,6 +225,7 @@
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BuildVersion.bat" />
     <None Include="json\items.json" />
     <None Include="json\materials.json" />
     <None Include="json\model.json" />
@@ -372,6 +375,9 @@
       <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
     </Link>
+    <PreBuildEvent>
+      <Command>call ..\World\BuildVersion.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugOptimize|Win32'">
     <ClCompile>

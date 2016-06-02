@@ -293,6 +293,7 @@
     <ClCompile Include="Render\spritebatch.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="AutoVersion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -603,6 +604,7 @@
     <ClInclude Include="Render\spritebatch.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="AutoVersion.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.glsl" />
@@ -615,5 +617,6 @@
     <None Include="json\model.json">
       <Filter>Core</Filter>
     </None>
+    <None Include="BuildVersion.bat" />
   </ItemGroup>
 </Project>
