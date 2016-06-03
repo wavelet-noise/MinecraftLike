@@ -1,6 +1,6 @@
 ﻿#include "OrderTalk.h"
 #include <boost/format/format_fwd.hpp>
-#include "PositionAgent.h"
+#include "../PositionAgent.h"
 
 std::string OrderTalk::to_string() const
 {

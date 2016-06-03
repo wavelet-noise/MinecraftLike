@@ -1,14 +1,15 @@
 ﻿#pragma once
-#include "GameObject.h"
+#include "../GameObject.h"
 #include "OrderBus.h"
 
-struct OrderDrop : NumberedOrder<OrderDrop>
+struct GameObjectParams;
+
+struct OrderEat : NumberedOrder<OrderEat>
 {
-	OrderDrop(WBPos v, PGameObject i, int c);
+	OrderEat(WBPos v, PGameObject i);
 	std::string to_string() const override;
 	WBPos pos;
 	PGameObject item;
-	int count;
 
 	glm::vec3 GetPos() const override
 	{
@@ -20,9 +21,9 @@ struct OrderDrop : NumberedOrder<OrderDrop>
 		if (rhs.GetId() != GetId())
 			return false;
 
-		const auto &o = static_cast<const OrderDrop &>(rhs);
+		const auto &o = static_cast<const OrderEat &>(rhs);
 
-		return o.pos == pos && item == item && count == o.count;
+		return o.pos == pos && item == item;
 	}
 
 	void Perform(const GameObjectParams & params, PGameObject performer) override;

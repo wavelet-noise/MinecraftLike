@@ -269,9 +269,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Settings.cpp" />
-    <ClCompile Include="Core\OrderBus.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
     <ClCompile Include="gui\WindowCraftQueue.cpp">
       <Filter>gui</Filter>
     </ClCompile>
@@ -297,34 +294,37 @@
     <ClCompile Include="gui\WindowRooms.cpp">
       <Filter>gui</Filter>
     </ClCompile>
-    <ClCompile Include="OrderDig.cpp">
+    <ClCompile Include="Core\orders\OrderBus.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderGet.cpp">
+    <ClCompile Include="Core\orders\OrderCraft.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderPlace.cpp">
+    <ClCompile Include="Core\orders\OrderDrop.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderDrop.cpp">
+    <ClCompile Include="Core\orders\OrderEat.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderEat.cpp">
+    <ClCompile Include="Core\orders\OrderGet.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderWalk.cpp">
+    <ClCompile Include="Core\orders\OrderPlace.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderWander.cpp">
+    <ClCompile Include="Core\orders\OrderSleep.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderTalk.cpp">
+    <ClCompile Include="Core\orders\OrderTalk.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderCraft.cpp">
+    <ClCompile Include="Core\orders\OrderWalk.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
-    <ClCompile Include="Core\OrderSleep.cpp">
+    <ClCompile Include="Core\orders\OrderWander.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\orders\OrderDig.cpp">
       <Filter>Core\orders</Filter>
     </ClCompile>
   </ItemGroup>
@@ -606,9 +606,6 @@
     <ClInclude Include="Core\EventBus.h">
       <Filter>Core\events</Filter>
     </ClInclude>
-    <ClInclude Include="core\OrderBus.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
     <ClInclude Include="gui\WindowTools.h">
       <Filter>gui</Filter>
     </ClInclude>
@@ -641,34 +638,37 @@
     <ClInclude Include="gui\WindowRooms.h">
       <Filter>gui</Filter>
     </ClInclude>
-    <ClInclude Include="OrderDig.h">
+    <ClInclude Include="Core\orders\OrderBus.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderGet.h">
+    <ClInclude Include="Core\orders\OrderCraft.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderPlace.h">
+    <ClInclude Include="Core\orders\OrderDrop.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderDrop.h">
+    <ClInclude Include="Core\orders\OrderEat.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderEat.h">
+    <ClInclude Include="Core\orders\OrderGet.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderWalk.h">
+    <ClInclude Include="Core\orders\OrderPlace.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderWander.h">
+    <ClInclude Include="Core\orders\OrderSleep.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderTalk.h">
+    <ClInclude Include="Core\orders\OrderTalk.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderCraft.h">
+    <ClInclude Include="Core\orders\OrderWalk.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
-    <ClInclude Include="Core\OrderSleep.h">
+    <ClInclude Include="Core\orders\OrderWander.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\orders\OrderDig.h">
       <Filter>Core\orders</Filter>
     </ClInclude>
   </ItemGroup>

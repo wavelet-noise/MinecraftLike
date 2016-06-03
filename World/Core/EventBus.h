@@ -2,12 +2,11 @@
 #include <map>
 #include <memory>
 #include <vector>
-#include <GL\glew.h>
-#include <boost\format.hpp>
-#include <glm\glm.hpp>
-#include <core\Sector.h>
-#include <core\GameObject.h>
-#include <Core\OrderBus.h>
+#include <boost/format.hpp>
+#include <glm/glm.hpp>
+#include <core/Sector.h>
+#include <core/GameObject.h>
+#include <Core/orders/OrderBus.h>
 
 using PEvent = std::shared_ptr<class Event>;
 

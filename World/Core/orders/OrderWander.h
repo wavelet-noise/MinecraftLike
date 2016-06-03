@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "GameObject.h"
+#include "../GameObject.h"
 #include "OrderBus.h"
 
 struct OrderWander : NumberedOrder<OrderWander>

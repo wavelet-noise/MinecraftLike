@@ -1,17 +1,14 @@
-#pragma once
-#include "Core/GameObject.h"
-#include "Core/OrderBus.h"
+﻿#pragma once
+#include "../GameObject.h"
+#include "OrderBus.h"
 
-struct OrderDig : NumberedOrder<OrderDig>
+struct OrderSleep : public NumberedOrder<OrderSleep>
 {
-	OrderDig(glm::vec3 v);
-	std::string to_string() const override;
-	glm::vec3 pos;
+	OrderSleep(glm::vec3 v) : pos(v) {}
 
-	float Tiring() const override
-	{
-		return 0.3f;
-	}
+	std::string to_string() const override;
+
+	glm::vec3 pos;
 
 	glm::vec3 GetPos() const override
 	{
@@ -23,7 +20,7 @@ struct OrderDig : NumberedOrder<OrderDig>
 		if (rhs.GetId() != GetId())
 			return false;
 
-		const auto &o = static_cast<const OrderDig &>(rhs);
+		const auto &o = static_cast<const OrderSleep &>(rhs);
 
 		return o.pos == pos;
 	}

@@ -3,7 +3,7 @@
 
 #include "Agent.h"
 #include "..\tools\CoordSystem.h"
-#include <Core\OrderBus.h>
+#include <Core\orders\OrderBus.h>
 #include <unordered_map>
 #include <boost\circular_buffer.hpp>
 #include <deque>

@@ -1,9 +1,8 @@
 #include "PositionAgent.h"
-#include <Core\OrderBus.h>
+#include <Core/orders/OrderBus.h>
 #include <Core\GameObject.h>
 #include <core\PhysicAgent.h>
 #include <core\EventBus.h>
-#include <core\OrderBus.h>
 #include <core\World.h>
 #include <imgui.h>
 #include <glm\gtx\string_cast.hpp>
@@ -11,16 +10,14 @@
 #include <core\Chest.h>
 #include <queue>
 #include <unordered_set>
-#include <queue>
 #include <Render\ParticleSystem.h>
-#include <core\Ore.h>
-#include "OrderGet.h"
-#include "OrderWander.h"
-#include "OrderSleep.h"
-#include "OrderTalk.h"
-#include "OrderCraft.h"
-#include "OrderEat.h"
-#include "OrderDrop.h"
+#include <Core/orders/OrderGet.h>
+#include <Core/orders/OrderWander.h>
+#include <Core/orders/OrderSleep.h>
+#include <Core/orders/OrderTalk.h>
+#include <Core/orders/OrderCraft.h>
+#include <Core/orders/OrderEat.h>
+#include <Core/orders/OrderDrop.h>
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {

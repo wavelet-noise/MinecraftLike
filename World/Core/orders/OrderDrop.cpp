@@ -1,8 +1,8 @@
 ﻿#include "OrderDrop.h"
 #include <core/World.h>
 #include <glm/gtx/string_cast.inl>
-#include "ChestSlot.h"
-#include "PositionAgent.h"
+#include "../ChestSlot.h"
+#include "../PositionAgent.h"
 #include <core/chest.h>
 
 OrderDrop::OrderDrop(WBPos v, PGameObject i, int c) : pos(v), item(i), count(c)

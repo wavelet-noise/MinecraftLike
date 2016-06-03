@@ -27,12 +27,12 @@
 #include <core\Chest.h>
 #include <Render\ParticleSystem.h>
 #include <core\EventBus.h>
-#include <core\OrderBus.h>
+#include <core\orders/OrderBus.h>
 #include <gui\WindowRooms.h>
 
 #include <Core\Ore.h>
-#include "OrderDig.h"
-#include "Core/OrderPlace.h"
+#include <core/orders/OrderDig.h>
+#include <Core/orders/OrderPlace.h>
 
 Game::Game()
 {

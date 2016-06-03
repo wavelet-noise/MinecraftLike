@@ -1,17 +1,22 @@
 ﻿#pragma once
-#include "GameObject.h"
+#include "../GameObject.h"
 #include "OrderBus.h"
 
-struct OrderPlace : NumberedOrder<OrderPlace>
+struct OrderCraft : NumberedOrder<OrderCraft>
 {
-	OrderPlace(WBPos v, PGameObject i);
+	OrderCraft(glm::vec3 v, PRecipe r, int c = 1) : pos(v), item(r), count(c)
+	{
+	}
+
 	std::string to_string() const override;
-	WBPos pos;
-	PGameObject item;
+
+	glm::vec3 pos;
+	PRecipe item;
+	int count = 1;
 
 	float Tiring() const override
 	{
-		return 0.05f;
+		return 0.1f;
 	}
 
 	glm::vec3 GetPos() const override
@@ -24,9 +29,9 @@ struct OrderPlace : NumberedOrder<OrderPlace>
 		if (rhs.GetId() != GetId())
 			return false;
 
-		const auto &o = static_cast<const OrderPlace &>(rhs);
+		const auto &o = static_cast<const OrderCraft &>(rhs);
 
-		return o.pos == pos && item == item;
+		return o.pos == pos;
 	}
 
 	void Perform(const GameObjectParams & params, PGameObject performer) override;
