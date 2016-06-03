@@ -41,6 +41,9 @@
 		},
 		{
 			"type":"PhysicAgent"
+		},
+		{
+			"type":"Talker"
 		}
 	],
 	"dynamic":true

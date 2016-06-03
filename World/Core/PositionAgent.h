@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <boost\circular_buffer.hpp>
 #include <deque>
+#include <boost\format.hpp>
 
 using PPositionAgent = std::unique_ptr<class PositionAgent>;
 
@@ -48,10 +49,10 @@ REGISTER_AGENT(PositionAgent)
 class Controlable : public Agent
 {
 public:
-	AGENT(Controlable)
+	AGENT(Controlable);
 
-		// Унаследовано через Agent
-		virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 
@@ -62,14 +63,6 @@ public:
 };
 
 REGISTER_AGENT(Controlable)
-
-struct Relationships
-{
-	float value = 0;
-
-	std::string to_string();
-	std::string with;
-};
 
 class Creature : public Agent
 {
@@ -111,8 +104,6 @@ public:
 
 	size_t uid = 0;
 	static size_t global_uid;
-
-	std::map<size_t, Relationships> relationships;
 };
 
 REGISTER_AGENT(Creature)
@@ -212,6 +203,8 @@ public:
 	void Afterload(GameObject * parent) override;
 
 	void DrawGui() override;
+
+	void Think(const boost::format & s);
 
 	std::unordered_map<StringIntern, glm::vec3> interest_points;
 	boost::circular_buffer<Mind> minds;
@@ -340,3 +333,33 @@ public:
 };
 
 REGISTER_AGENT(ActivityConsumer)
+
+struct Relationships
+{
+	float value = 0;
+
+	std::string to_string();
+	std::string with;
+};
+
+class Talker : public Agent
+{
+public:
+	AGENT(Talker);
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui() override;
+
+	float GetFreq() const override
+	{
+		return 4.5f;
+	}
+
+	std::map<size_t, Relationships> relationships;
+};
+
+REGISTER_AGENT(Talker)

@@ -3,6 +3,7 @@
 
 WindowEventlog::WindowEventlog()
 {
+	mOpen = false;
 	evlog.resize(1000);
 }
 

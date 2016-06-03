@@ -261,7 +261,7 @@ void Controlable::Update(const GameObjectParams & params)
 		}
 
 		auto c = mParent->GetAgent<Creature>();
-		if (!c->personal.empty())
+		if (!c->personal.empty() && !nearest_order)
 		{
 			if (!c->personal.begin()->get())
 			{
@@ -377,25 +377,6 @@ void Creature::Update(const GameObjectParams & params)
 {
 	auto p = mParent->GetAgent<PositionAgent>();
 
-	auto in_cell = params.world->GetCreaturesAt(p->Get());
-	for (const auto &in: in_cell)
-	{
-		if (auto c = in->GetAgent<Creature>())
-		{
-			auto i = relationships.find(c->uid);
-			if (i == relationships.end())
-			{
-				Relationships rr;
-				if (auto n = in->GetAgent<Named>())
-				{
-					rr.with = n->name;
-				}
-
-				relationships.insert({ c->uid, rr });
-			}
-		}
-	}
-
 	if (order && order->Tiring() > 0)
 		if (auto tire = mParent->GetAgent<ActivityConsumer>())
 		{
@@ -408,43 +389,9 @@ void Creature::Update(const GameObjectParams & params)
 
 	if (order) //TODO: move to order methods
 	{
-		if (order->GetId() == Order::Idfor<OrderDig>())
-		{
-			auto &pos = std::static_pointer_cast<OrderDig>(order)->pos;
+		order->Perform(params, mParent->shared_from_this());
 
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					bool remove = true;
-					if (auto orb = params.world->GetBlock(pos))
-					{
-						if (auto ore = orb->GetAgent<Ore>())
-						{
-							remove = false;
-							auto ch = mParent->GetAgent<Chest>();
-							auto cs = ore->DigSome();
-							ch->Push(cs.obj, cs.count);
-
-							if (ore->Expire())
-								remove = true;
-						}
-					}
-
-					if (remove)
-					{
-						params.world->SetBlock(pos, nullptr);
-						order->Done();
-					}
-				}
-			}
-
-		}
-		else if (order->GetId() == Order::Idfor<OrderGet>())
+		if (order->GetId() == Order::Idfor<OrderGet>())
 		{
 			auto &ord = std::static_pointer_cast<OrderGet>(order);
 			auto &pos = ord->pos;
@@ -685,17 +632,9 @@ void Creature::DrawGui()
 				ImGui::Text("empty");
 
 			for (const auto &i : personal)
-			{
-				ImGui::Text(i->to_string().c_str());
-			}
-			ImGui::TreePop();
-		}
-
-		if (ImGui::TreeNode("Relationships"))
-		{
-			for (auto &r : relationships)
-			{
-				ImGui::Text(r.second.with.c_str());
+			{	
+				if(i)
+					ImGui::Text(i->to_string().c_str());
 			}
 			ImGui::TreePop();
 		}
@@ -936,6 +875,11 @@ void Anatomic::DrawGui()
 	}
 }
 
+void Anatomic::Think(const boost::format &s)
+{
+	Think(s.str());
+}
+
 void Anatomic::Think(const std::string &s)
 {
 	auto f = std::find_if(minds.begin(), minds.end(), [&](const Mind &m) -> bool { return m.mind == s; });
@@ -1131,4 +1075,39 @@ size_t Creature::global_uid = 0;
 std::string Relationships::to_string()
 {
 	return std::to_string(value);
+}
+
+PAgent Talker::Clone(GameObject * parent, const std::string & name)
+{
+	auto t = MakeAgent<Talker>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void Talker::Update(const GameObjectParams & params)
+{
+	if (auto c = mParent->GetAgent<Creature>())
+	{
+		auto p = mParent->GetAgent<PositionAgent>();
+		auto in_cell = params.world->GetCreaturesAt(p->Get());
+		if(in_cell.size() > 1)
+			for (const auto &in : in_cell)
+			{
+				auto it = in_cell.begin();
+				std::advance(it, rand() % in_cell.size());
+				c->AddPersinal(std::make_shared<OrderTalk>(*it));
+			}
+	}
+}
+
+void Talker::DrawGui()
+{
+	if (ImGui::TreeNode("Relationships"))
+	{
+		for (auto &r : relationships)
+		{
+			ImGui::Text(r.second.with.c_str());
+		}
+		ImGui::TreePop();
+	}
 }
