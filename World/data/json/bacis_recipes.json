@@ -1,8 +1,30 @@
-[{
-"type":"Recipe",
-"recipe":{
-			"input":[["grass", 1]],
-			"output":[["flax_0", 1]]
-		}
+[
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["grass", 1]],
+				"output":[["flax_0", 1]]
+			}
+},
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["lumber", 1]],
+				"output":[["stick", 20]]
+			}
+},
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["plank", 1]],
+				"output":[["stick", 5]]
+			}
+},
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["lumber", 1]],
+				"output":[["plank", 4]]
+			}
 }
 ]

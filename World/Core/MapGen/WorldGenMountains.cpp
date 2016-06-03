@@ -59,6 +59,7 @@ void WorldGenMountains::Generate(Sector & s)
 	auto bf5 = DB::Get().Create(StringIntern("grass_high_small_blue"));
 	auto bf6 = DB::Get().Create(StringIntern("grass_high_small_red"));
 	auto bfb = DB::Get().Create(StringIntern("grass_high_small_bad"));
+	auto bt = DB::Get().Create(StringIntern("tree"));
 
 	auto ore_dot = DB::Get().Taglist("ore_dots");
 	std::vector<PGameObject> ore_dots;
@@ -134,6 +135,9 @@ void WorldGenMountains::Generate(Sector & s)
 									break;
 								case 3:
 									s.SetBlock({ i, j, k }, bf6);
+									break;
+								case 4:
+									s.SetBlock({ i, j, k }, bt->Clone());
 									break;
 								default:
 									s.SetBlock({ i, j, k }, bf2);

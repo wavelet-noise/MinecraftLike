@@ -73,6 +73,10 @@
 	"type":"Item",
     "id":"stick",
     "agents":[
+		{
+			"type":"Fuel",
+			"heat":0.6
+		}
     ]
 },
 {
@@ -123,6 +127,26 @@
 		"type":"Food",
 		"nutrition":100
 	}
+    ]
+},
+{
+	"type":"Item",
+    "id":"lumber",
+    "agents":[
+		{
+			"type":"Fuel",
+			"heat":14
+		}
+    ]
+},
+{
+	"type":"Item",
+    "id":"plank",
+    "agents":[
+		{
+			"type":"Fuel",
+			"heat":3.5
+		}
     ]
 }
 ]

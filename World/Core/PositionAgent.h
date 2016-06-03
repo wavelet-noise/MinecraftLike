@@ -227,7 +227,7 @@ public:
 
 	void DrawGui() override;
 
-	float morale;
+	float morale = 100;
 };
 
 REGISTER_AGENT(Morale)

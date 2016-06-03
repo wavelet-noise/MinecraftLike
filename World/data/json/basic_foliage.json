@@ -32,6 +32,11 @@
 		"type":"Block",
 		"id":"tree",
 		"agents":[
+			{
+				"type":"Ore",
+				"contains":[["lumber", 1, 0.1]],
+				"size":100
+			}
 		],
 		"tesselator":[  
             {  
@@ -50,7 +55,7 @@
             }
         ],
 		"placeable":true,
-		"dynamic":false,
+		"dynamic":true,
 		"walkable":true
 }
 ]

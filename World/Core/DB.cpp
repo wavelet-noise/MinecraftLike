@@ -71,6 +71,7 @@ void DB::ReloadDirectory(const std::string & mDir)
         LOG(error) << d.GetParseError();
         LOG(error) << all.substr(glm::max<int>(d.GetErrorOffset() - 20, 0), glm::min<int>(all.length(), 40));
         LOG(error) << "                    ^";
+		throw;
       }
 
       if (d.IsArray())

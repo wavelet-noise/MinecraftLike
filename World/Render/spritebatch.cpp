@@ -115,8 +115,6 @@ void SpriteBatch::Render()
 	if (cur == 0 || !curent_texture)
 		return;
 
-	glEnable(GL_BLEND);
-	glDisable(GL_CULL_FACE);
 	curent_shader->Use();
 	curent_shader->SetUniform(current_camera->GetViewProject(), "transform_VP");
 
