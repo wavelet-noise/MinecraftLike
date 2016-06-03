@@ -1,18 +1,13 @@
 ﻿#include "Game.h"
 
 #include <gl/glew.h>
-#include <iostream>
-#include <sstream>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost\circular_buffer.hpp>
 
-#include <fstream>
 #include <memory>
 #include <vector>
-#include <thread>
-#include <atomic>
 #include "tools/Bresenham3D.h"
 #include "tools/CoordSystem.h"
 #include "Core\MapGen\WorldWorker.h"
@@ -21,7 +16,6 @@
 #include "Core/SplitBlockTessellator.h"
 #include "tools/Log.h"
 #include "tools\wset.h"
-#include "tools\order_casters.h"
 
 #include "gui\imgui_impl_glfw_gl3.h"
 #include "gui\WS.h"
@@ -31,13 +25,14 @@
 #include <Render\Resources.h>
 #include <tools\ray.h>
 #include <core\Chest.h>
-#include <core\Tool.h>
 #include <Render\ParticleSystem.h>
 #include <core\EventBus.h>
 #include <core\OrderBus.h>
 #include <gui\WindowRooms.h>
 
 #include <Core\Ore.h>
+#include "OrderDig.h"
+#include "Core/OrderPlace.h"
 
 Game::Game()
 {

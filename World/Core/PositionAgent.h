@@ -321,8 +321,8 @@ public:
 	void DrawGui() override;
 
 	void Tire(float t);
-	bool IsTired();
-	bool IsRested();
+	bool IsTired() const;
+	bool IsRested() const;
 
 	float GetFreq() const override
 	{
@@ -338,7 +338,7 @@ struct Relationships
 {
 	float value = 0;
 
-	std::string to_string();
+	std::string to_string() const;
 	std::string with;
 };
 

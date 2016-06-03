@@ -48,6 +48,15 @@
     <ClCompile Include="Core\MetalSmelter.cpp" />
     <ClCompile Include="Core\ModelTessellator.cpp" />
     <ClCompile Include="Core\OrderBus.cpp" />
+    <ClCompile Include="Core\OrderCraft.cpp" />
+    <ClCompile Include="Core\OrderDrop.cpp" />
+    <ClCompile Include="Core\OrderEat.cpp" />
+    <ClCompile Include="Core\OrderGet.cpp" />
+    <ClCompile Include="Core\OrderPlace.cpp" />
+    <ClCompile Include="Core\OrderSleep.cpp" />
+    <ClCompile Include="Core\OrderTalk.cpp" />
+    <ClCompile Include="Core\OrderWalk.cpp" />
+    <ClCompile Include="Core\OrderWander.cpp" />
     <ClCompile Include="Core\Ore.cpp" />
     <ClCompile Include="Core\Plant.cpp" />
     <ClCompile Include="Core\Recipe.cpp" />
@@ -87,6 +96,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\network.cpp" />
     <ClCompile Include="network\NetworkManager.cpp" />
+    <ClCompile Include="OrderDig.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
     <ClCompile Include="Render\Bitmap.cpp" />
@@ -141,6 +151,15 @@
     <ClInclude Include="Core\MetalSmelter.h" />
     <ClInclude Include="Core\ModelTessellator.h" />
     <ClInclude Include="core\OrderBus.h" />
+    <ClInclude Include="Core\OrderCraft.h" />
+    <ClInclude Include="Core\OrderDrop.h" />
+    <ClInclude Include="Core\OrderEat.h" />
+    <ClInclude Include="Core\OrderGet.h" />
+    <ClInclude Include="Core\OrderPlace.h" />
+    <ClInclude Include="Core\OrderSleep.h" />
+    <ClInclude Include="Core\OrderTalk.h" />
+    <ClInclude Include="Core\OrderWalk.h" />
+    <ClInclude Include="Core\OrderWander.h" />
     <ClInclude Include="Core\Ore.h" />
     <ClInclude Include="Core\Plant.h" />
     <ClInclude Include="Core\Recipe.h" />
@@ -180,6 +199,7 @@
     <ClInclude Include="gui\WindowTools.h" />
     <ClInclude Include="gui\WS.h" />
     <ClInclude Include="network\NetworkManager.h" />
+    <ClInclude Include="OrderDig.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="render\ParticleSystem.h" />
     <ClInclude Include="Render\RenderSector.h" />

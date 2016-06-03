@@ -14,6 +14,13 @@
 #include <queue>
 #include <Render\ParticleSystem.h>
 #include <core\Ore.h>
+#include "OrderGet.h"
+#include "OrderWander.h"
+#include "OrderSleep.h"
+#include "OrderTalk.h"
+#include "OrderCraft.h"
+#include "OrderEat.h"
+#include "OrderDrop.h"
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -133,7 +140,7 @@ static const glm::vec3 nieb[] = {
 
 int asearch(std::unordered_map<glm::vec3, int> &set, const glm::vec3 &where)
 {
-	auto &i = set.find(where);
+	auto i = set.find(where);
 	if (i != set.end())
 	{
 		return i->second;
@@ -148,7 +155,7 @@ public:
 
 	static glm::vec3 goal;
 
-	bool operator()(const glm::vec3 & t1, const glm::vec3 & t2)
+	bool operator()(const glm::vec3 & t1, const glm::vec3 & t2) const
 	{
 		return glm::distance(t1, goal) > glm::distance(t2, goal);
 	}
@@ -260,7 +267,6 @@ void Controlable::Update(const GameObjectParams & params)
 			}
 		}
 
-		auto c = mParent->GetAgent<Creature>();
 		if (!c->personal.empty() && !nearest_order)
 		{
 			if (!c->personal.begin()->get())
@@ -391,217 +397,6 @@ void Creature::Update(const GameObjectParams & params)
 	{
 		order->Perform(params, mParent->shared_from_this());
 
-		if (order->GetId() == Order::Idfor<OrderGet>())
-		{
-			auto &ord = std::static_pointer_cast<OrderGet>(order);
-			auto &pos = ord->pos;
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					params.world->Replace(pos, ord->item);
-
-					auto p = mParent->GetAgent<Chest>();
-					p->Push(ord->item);
-
-					order->Done();
-				}
-			}
-		}
-		else if (order->GetId() == Order::Idfor<OrderWalk>())
-		{
-			auto &pos = std::static_pointer_cast<OrderWalk>(order)->pos;
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					order->Done();
-				}
-			}
-		}
-		else if (order->GetId() == Order::Idfor<OrderWander>())
-		{
-			auto &pos = std::static_pointer_cast<OrderWander>(order)->pos;
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					order->Done();
-				}
-			}
-		}
-		else if (order->GetId() == Order::Idfor<OrderPlace>())
-		{
-			auto &ord = std::static_pointer_cast<OrderPlace>(order);
-			auto &pos = ord->pos;
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					params.world->SetBlock(pos, ord->item);
-
-					order->Done();
-				}
-			}
-		}
-		else if (order->GetId() == Order::Idfor<OrderDrop>())
-		{
-			auto &ord = std::static_pointer_cast<OrderDrop>(order);
-			auto &pos = ord->pos;
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					bool placed = false;
-					if (auto b = params.world->GetBlock(pos))
-					{
-						if (auto ch = b->GetAgent<Chest>())
-						{
-							ch->Push(ord->item, ord->count);
-							placed = true;
-						}
-					}
-
-					if (placed)
-					{
-						auto ch = mParent->GetAgent<Chest>();
-						auto item = ch->PopByPredicate([&](const ChestSlot &cs)->bool {
-							return cs.obj == ord->item;
-						});
-
-						item.count -= ord->count;
-						if (item.count >= 1)
-							ch->Push(item.obj, item.count);
-					}
-
-					order->Done();
-				}
-			}
-		}
-		else if (order->GetId() == Order::Idfor<OrderEat>())
-		{
-			auto &ord = std::static_pointer_cast<OrderEat>(order);
-			auto &pos = ord->pos;
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					if (auto b = params.world->GetBlock(pos))
-					{
-						if (auto ch = b->GetAgent<Chest>())
-						{
-							auto poped = ch->PopByPredicate([&](const ChestSlot &o)->bool {
-								return o.obj && o.obj->GetAgent<Food>();
-							});
-							if (poped.obj)
-							{
-								--poped.count;
-								if (auto cal = mParent->GetAgent<CalorieConsumer>())
-								{
-									if (cal->calorie <= 100 - poped.obj->GetAgent<Food>()->nutrition)
-										cal->calorie += poped.obj->GetAgent<Food>()->nutrition;
-								}
-
-								if (poped.count > 0)
-								{
-									ch->Push(poped.obj, poped.count);
-								}
-							}
-						}
-					}
-
-					order->Done();
-				}
-			}
-		}
-		else if (order->GetId() == Order::Idfor<OrderCraft>())
-		{
-			auto &ord = std::static_pointer_cast<OrderCraft>(order);
-			glm::ivec3 pos = ord->pos;
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					if (auto b = params.world->GetBlock(pos))
-					{
-						if (auto c = b->GetAgent<Chest>())
-						{
-							if (!ord->item->CraftIn(*c))
-							{
-								params.world->QueueRecipeOrder(ord->item);
-								params.world->DelayRecipeOrder(ord->item);
-							}
-						}
-					}
-
-					order->Done();
-				}
-			}
-		}
-		else if (order->GetId() == Order::Idfor<OrderSleep>())
-		{
-			auto &ord = std::static_pointer_cast<OrderSleep>(order);
-			auto &pos = ord->pos;
-
-			if (path.empty())
-				wishpos = pos;
-			else
-			{
-				make_step(params);
-
-				if (path.empty())
-				{
-					if (auto tire = mParent->GetAgent<ActivityConsumer>())
-					{
-						tire->Tire(-.2f);
-						if (tire->IsRested())
-						{
-							if (auto anat = mParent->GetAgent<Anatomic>())
-								anat->Think("Rested :)");
-							order->Done();
-						}
-					}
-					else
-						order->Done();
-				}
-			}
-		}
-
 		if (order)
 		{
 			if (path.empty())
@@ -625,7 +420,6 @@ void Creature::DrawGui()
 		else
 			ImGui::Text("Order: none");
 
-		static int j = 0;
 		if (ImGui::TreeNode("Self orders"))
 		{
 			if (personal.empty())
@@ -1060,19 +854,19 @@ void ActivityConsumer::Tire(float t)
 	activity -= t;
 }
 
-bool ActivityConsumer::IsTired()
+bool ActivityConsumer::IsTired() const
 {
 	return activity <= 20;
 }
 
-bool ActivityConsumer::IsRested()
+bool ActivityConsumer::IsRested() const
 {
 	return activity >= 100;
 }
 
 size_t Creature::global_uid = 0;
 
-std::string Relationships::to_string()
+std::string Relationships::to_string() const
 {
 	return std::to_string(value);
 }

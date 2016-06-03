@@ -297,6 +297,36 @@
     <ClCompile Include="gui\WindowRooms.cpp">
       <Filter>gui</Filter>
     </ClCompile>
+    <ClCompile Include="OrderDig.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderGet.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderPlace.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderDrop.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderEat.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderWalk.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderWander.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderTalk.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderCraft.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\OrderSleep.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -610,6 +640,36 @@
     <ClInclude Include="AutoVersion.h" />
     <ClInclude Include="gui\WindowRooms.h">
       <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderDig.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderGet.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderPlace.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderDrop.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderEat.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderWalk.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderWander.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderTalk.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderCraft.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\OrderSleep.h">
+      <Filter>Core\orders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

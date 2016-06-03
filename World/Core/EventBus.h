@@ -41,7 +41,7 @@ private:
 template<typename T> 
 struct NumberedEvent : public Event
 {
-	virtual size_t GetId() 
+	size_t GetId() override
 	{
 		return Idfor<T>();
 	}
@@ -49,7 +49,7 @@ struct NumberedEvent : public Event
 
 struct EventSound : public NumberedEvent<EventSound>
 {
-	std::string to_string() const
+	std::string to_string() const override
 	{
 		return std::string("EventSound:");
 	}
@@ -60,7 +60,7 @@ struct EventOrderStart : public NumberedEvent<EventOrderStart>
 	EventOrderStart(POrder p) : ord(p) {}
 	POrder ord;
 
-	std::string to_string() const
+	std::string to_string() const override
 	{
 		if (!ord)
 			return "EventOrderStart: none";
@@ -73,7 +73,7 @@ struct EventOrderDone : public NumberedEvent<EventOrderDone>
 	EventOrderDone(POrder p) : ord(p) {}
 	POrder ord;
 
-	std::string to_string() const
+	std::string to_string() const override
 	{
 		if(!ord)
 			return "EventOrderDone: none";
@@ -86,7 +86,7 @@ struct EventSectorReady : public NumberedEvent<EventOrderStart>
 	EventSectorReady(std::shared_ptr<Sector> p) : sec(p) {}
 	std::shared_ptr<Sector> sec;
 
-	std::string to_string() const
+	std::string to_string() const override
 	{
 		if (!sec)
 			return "EventSectorReady: none";
@@ -99,7 +99,7 @@ struct EventCreatureSpawn : public NumberedEvent<EventCreatureSpawn>
 	EventCreatureSpawn(PGameObject p) : obj(p) {}
 	PGameObject obj;
 
-	std::string to_string() const
+	std::string to_string() const override
 	{
 		return (boost::format("EventCreatureSpawn: obj = %1%") % obj->GetId()).str();
 	}
@@ -110,7 +110,7 @@ struct EventItemPlace : public NumberedEvent<EventItemPlace>
 	EventItemPlace(PGameObject p) : obj(p) {}
 	PGameObject obj;
 
-	std::string to_string() const
+	std::string to_string() const override
 	{
 		return (boost::format("EventItemPlace: obj = %1%") % obj->GetId()).str();
 	}
