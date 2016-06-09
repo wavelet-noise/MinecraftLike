@@ -1,7 +1,15 @@
 #include "WS.h"
 #include <Settings.h>
+#include "WindowPerfomance.h"
+#include "WindowInventory.h"
+#include "WindowDb.h"
+#include "WindowTools.h"
+#include "WindowEventlog.h"
+#include "WindowCraftQueue.h"
+#include "WindowRecipe.h"
+#include "WindowRooms.h"
 
-void WS::Draw(glm::vec2 wsize)
+void WS::Draw(glm::vec2 wsize, float gt)
 {
 
 	WindowPerfomance &wp = WindowPerfomance::Get();
@@ -28,12 +36,12 @@ void WS::Draw(glm::vec2 wsize)
 		Settings::Get().debug = !Settings::Get().debug;
 	}
 
-	wp.Draw(wsize);
-	wdb.Draw(wsize);
-	winv.Draw(wsize);
-	wr.Draw(wsize);
-	we.Draw(wsize);
-	wt.Draw(wsize);
-	wcq.Draw(wsize);
-	wro.Draw(wsize);
+	wp.Draw(wsize, gt);
+	wdb.Draw(wsize, gt);
+	winv.Draw(wsize, gt);
+	wr.Draw(wsize, gt);
+	we.Draw(wsize, gt);
+	wt.Draw(wsize, gt);
+	wcq.Draw(wsize, gt);
+	wro.Draw(wsize, gt);
 }

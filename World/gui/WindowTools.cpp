@@ -1,15 +1,15 @@
 #include "WindowTools.h"
-#include <Core\OrderBus.h>
 #include <GLFW\glfw3.h>
 #include "WindowCraftQueue.h"
 #include "WindowRooms.h"
+#include <Core/orders/OrderBus.h>
 
 
 WindowTools::WindowTools()
 {
 }
 
-void WindowTools::Draw(glm::vec2 wsize)
+void WindowTools::Draw(glm::vec2 wsize, float gt)
 {
 
 	if (mOpen)

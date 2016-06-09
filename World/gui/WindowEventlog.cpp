@@ -7,7 +7,7 @@ WindowEventlog::WindowEventlog()
 	evlog.resize(1000);
 }
 
-void WindowEventlog::Draw(glm::vec2 mainwin_size)
+void WindowEventlog::Draw(glm::vec2 mainwin_size, float gt)
 {
 	if (mOpen)
 	{

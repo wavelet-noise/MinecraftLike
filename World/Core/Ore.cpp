@@ -17,7 +17,7 @@ PAgent Ore::Clone(GameObject * parent, const std::string &name)
 	return t;
 }
 
-void Ore::DrawGui()
+void Ore::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{

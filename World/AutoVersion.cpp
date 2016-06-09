@@ -1,16 +1,27 @@
 #include "AutoVersion.h"
 #include <stdio.h>
 #include <time.h>
+#include <fstream>
 
 std::string AutoVersion::GetTitle()
 {
     if(ready_){
         return title_;
     }
+
+	std::ifstream ifs("ver", std::ifstream::in);
+
     char buff[100];
-    std::string s1 = Time;
+    std::string s1;
+	ifs >> s1;
     time_t t = atol(s1.c_str());
-    std::string s2 = Ver;
+
+	char c;
+	ifs >> c;
+
+    std::string s2;
+	ifs >> s2;
+
     struct tm ts;
     localtime_s(&ts, &t);
     char buf[80];

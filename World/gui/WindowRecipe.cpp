@@ -5,7 +5,7 @@ WindowRecipe::WindowRecipe()
 {
 }
 
-void WindowRecipe::Draw(glm::vec2 mainwin_size)
+void WindowRecipe::Draw(glm::vec2 mainwin_size, float gt)
 {
 	ImGui::SetNextWindowSize({ 250, 500 });
 
@@ -19,7 +19,7 @@ void WindowRecipe::Draw(glm::vec2 mainwin_size)
 			if (!t.empty())
 				for (const auto &r : t)
 				{
-					r->DrawGui();
+					r->DrawGui(gt);
 				}
 		}
 		else
@@ -29,7 +29,7 @@ void WindowRecipe::Draw(glm::vec2 mainwin_size)
 			if (!t.empty())
 				for (const auto &r : t)
 				{
-					r->DrawGui();
+					r->DrawGui(gt);
 				}
 		}
 		ImGui::End();

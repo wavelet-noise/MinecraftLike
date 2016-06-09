@@ -11,7 +11,7 @@ public:
 	WindowRecipe();
 
 	// Унаследовано через WindowBase
-	virtual void Draw(glm::vec2 mainwin_size) override;
+	virtual void Draw(glm::vec2 mainwin_size, float gt) override;
 
 	void ShowRecipe(const StringIntern &s);
 	void ShowUsing(const StringIntern &s);

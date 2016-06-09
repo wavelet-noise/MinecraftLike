@@ -8,7 +8,7 @@
 class WindowPerfomance : public WindowBase
 {
 public:
-	void Draw(glm::vec2 mainwin_size) override;
+	void Draw(glm::vec2 mainwin_size, float gt) override;
 	void DtUpdate(float dt, int, int, int);
 	void TesselatorDt(float dt);
 	void GeneratorDt(float dt);

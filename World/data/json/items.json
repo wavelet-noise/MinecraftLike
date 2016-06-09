@@ -81,7 +81,8 @@
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_wood"]
-	}
+	},
+	"tags":["tag_stick"]
 },
 {
 	"type":"Item",
@@ -145,7 +146,8 @@
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_wood"]
-	}
+	},
+	"tags":["tag_lumber"]
 },
 {
 	"type":"Item",
@@ -159,7 +161,8 @@
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_wood"]
-	}
+	},
+	"tags":["tag_plank"]
 },
 {
 	"type":"Item",
@@ -203,8 +206,7 @@
     ],
     "placeable":true,
     "dynamic":true
-}
-,
+},
 {
 	"type":"Item",
     "id":"wooden_crate",
@@ -219,5 +221,31 @@
     ],
     "placeable":true,
     "dynamic":true
+},
+{
+	"type":"Item",
+    "id":"wooden_chair",
+    "agents":[
+		{
+			"type":"Fuel",
+			"heat":14
+		},
+		{
+		    "type":"ComplexItem"
+		}
+    ],
+    "placeable":true,
+    "dynamic":true
+},
+{
+	"type":"Item",
+    "id":"nail",
+    "agents":[
+    ],
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	},
+	"tags":["tag_nail"]
 }
 ]

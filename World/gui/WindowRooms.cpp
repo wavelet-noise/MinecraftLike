@@ -7,7 +7,7 @@ WindowRooms::WindowRooms()
 {
 }
 
-void WindowRooms::Draw(glm::vec2 wsize)
+void WindowRooms::Draw(glm::vec2 wsize, float gt)
 {
 	ImGui::Begin("Room managment", &mOpen);
 	if (selected)

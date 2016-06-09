@@ -23,11 +23,11 @@ void GameObject::Update(GameObjectParams &params)
 	}
 }
 
-void GameObject::DrawGui()
+void GameObject::DrawGui(float gt)
 {
 	for (auto &agent : mAgents)
 	{
-		agent.second->DrawGui();
+		agent.second->DrawGui(gt);
 	}
 }
 

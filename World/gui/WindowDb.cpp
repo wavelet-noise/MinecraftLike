@@ -10,7 +10,7 @@
 #include <gui\WindowRecipe.h>
 #include "WindowTools.h"
 
-void WindowDb::Draw(glm::vec2 mainwin_size)
+void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 {
 	ImGui::SetNextWindowSize(ImVec2(500, mainwin_size.y - 20), ImGuiSetCond_Always);
 	ImGui::SetNextWindowPos(ImVec2(mainwin_size.x - 500, 0), ImGuiSetCond_Always);

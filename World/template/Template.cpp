@@ -1,6 +1,10 @@
 #include "Template.h"
 #include <Core\DB.h>
 
+Template::~Template()
+{
+}
+
 void Template::JsonLoad(const rapidjson::Value & val)
 {
 }

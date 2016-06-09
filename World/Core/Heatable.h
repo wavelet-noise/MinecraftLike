@@ -18,7 +18,7 @@ public:
 		return T;
 	}
 
-	void DrawGui() override;
+	void DrawGui(float gt) override;
 
 private:
 	float T;

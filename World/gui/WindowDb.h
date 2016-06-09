@@ -11,14 +11,12 @@ public:
 	World * w;
 
 	// Унаследовано через WindowBase
-	virtual void Draw(glm::vec2 mainwin_size) override;
+	void Draw(glm::vec2 mainwin_size, float gt) override;
 
-	StringIntern GetSelectedId()
+	StringIntern GetSelectedId() const
 	{
 		return selected_id;
 	}
-
-
 
 	static WindowDb &Get()
 	{

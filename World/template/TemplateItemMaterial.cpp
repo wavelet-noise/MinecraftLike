@@ -4,21 +4,25 @@
 #include <Render\TextureManager.h>
 #include <Core\SplitBlockTessellator.h>
 
-void TemplateItemMaterial::Generate()
+std::list<PGameObject> TemplateItemMaterial::Generate()
 {
-  Expand(materials);
-  
-  for (const auto &s : materials)
-  {
-    auto ngo = go->Clone();
-    ngo->id = go->id + StringIntern("_") + s;
+	std::list<PGameObject> ngo_list;
+	Expand(materials);
 
-    TextureManager::Get().LoadTextureMultiplied(go->id, s);
-    DB::Get().Registry(ngo->id, std::shared_ptr<GameObject>(ngo));
-  }
+	for (const auto &s : materials)
+	{
+		auto ngo = go->Clone();
+		ngo->id = go->id + StringIntern("_") + s;
+
+		TextureManager::Get().LoadTextureMultiplied(go->id, s);
+
+		ngo_list.push_back(ngo);
+	}
+
+	return ngo_list;
 }
 
 void TemplateItemMaterial::JsonLoad(const rapidjson::Value & val)
 {
-  JSONLOAD(NVP(materials));
+	JSONLOAD(NVP(materials));
 }

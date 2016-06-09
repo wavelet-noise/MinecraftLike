@@ -4,35 +4,37 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost\circular_buffer.hpp>
+#include <boost/circular_buffer.hpp>
 
 #include <memory>
 #include <vector>
 #include "tools/Bresenham3D.h"
 #include "tools/CoordSystem.h"
-#include "Core\MapGen\WorldWorker.h"
+#include "Core/MapGen/WorldWorker.h"
 #include "Render/TextureManager.h"
 #include "Core/DB.h"
 #include "Core/SplitBlockTessellator.h"
 #include "tools/Log.h"
-#include "tools\wset.h"
+#include "tools/wset.h"
 
-#include "gui\imgui_impl_glfw_gl3.h"
-#include "gui\WS.h"
-#include <gui\WindowInventory.h>
-#include <gui\WindowCraftQueue.h>
-#include <gui\WindowPerfomance.h>
-#include <Render\Resources.h>
-#include <tools\ray.h>
-#include <core\Chest.h>
-#include <Render\ParticleSystem.h>
-#include <core\EventBus.h>
-#include <core\orders/OrderBus.h>
-#include <gui\WindowRooms.h>
+#include "gui/imgui_impl_glfw_gl3.h"
+#include "gui/WS.h"
+#include <gui/WindowInventory.h>
+#include <gui/WindowCraftQueue.h>
+#include <gui/WindowPerfomance.h>
+#include <Render/Resources.h>
+#include <tools/ray.h>
+#include <core/Chest.h>
+#include <Render/ParticleSystem.h>
+#include <core/EventBus.h>
+#include <core/orders/OrderBus.h>
+#include "gui/WindowRooms.h"
 
-#include <Core\Ore.h>
+#include "Core/Ore.h"
 #include <core/orders/OrderDig.h>
 #include <Core/orders/OrderPlace.h>
+#include "gui/WindowDb.h"
+#include "gui/WindowTools.h"
 
 Game::Game()
 {
@@ -258,8 +260,8 @@ void Game::Draw(float dt)
 	auto ray = mCamera->GetRay(ImGui::GetMousePos());
 	std::tuple<glm::ivec3, glm::vec3> selection_pos; // pos, normal
 
-	static size_t select_model = mRender->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
-	static size_t square_model = mRender->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
+	static auto select_model = mRender->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
+	static auto square_model = mRender->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
 
 	int j = 0;
 	auto ord = OrderBus::Get().orders.begin();
@@ -352,9 +354,9 @@ void Game::Draw(float dt)
 
 				auto r = std::make_shared<Room>();
 
-				for (int i = s1.x; i <= s2.x; i++)
-					for (int j = s1.y; j <= s2.y; j++)
-						for (int k = s1.z; k <= s2.z; k++)
+				for (auto i = s1.x; i <= s2.x; i++)
+					for (auto j = s1.y; j <= s2.y; j++)
+						for (auto k = s1.z; k <= s2.z; k++)
 						{
 							if (WindowTools::Get().selected == SelectedOrder::DIG_SQUARE ||
 								(WindowTools::Get().selected == SelectedOrder::DIG_CIRCLE && glm::distance(glm::vec3(i, j, k), glm::vec3(s1 + s2) / 2.f) <= glm::distance(glm::vec3(s1), glm::vec3(s2)) / 2.f))
@@ -419,14 +421,14 @@ void Game::Draw(float dt)
 			ImGui::SetNextWindowPos({ mWindow->GetSize().x / 2.f - 70, 0 });
 			ImGui::SetNextWindowSize({ 140,50 });
 			ImGui::Begin("Selected");
-			b->DrawGui();
+			b->DrawGui(dt);
 			ImGui::Text("%s", b->GetDescription().c_str());
 			ImGui::End();
 		}
 
 	}
 
-	WS::Get().Draw(mWindow->GetSize());
+	WS::Get().Draw(mWindow->GetSize(), dt);
 
 	ImGui::Begin("Colony", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 	int i = 0;
@@ -434,7 +436,7 @@ void Game::Draw(float dt)
 	{
 		if (ImGui::TreeNode((std::string("creature_") + std::to_string(i)).c_str()))
 		{
-			c->DrawGui();
+			c->DrawGui(dt);
 			ImGui::TreePop();
 		}
 		i++;
@@ -445,7 +447,7 @@ void Game::Draw(float dt)
 	{
 		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings);
 
-		std::get<1>(w)->DrawGui();
+		std::get<1>(w)->DrawGui(dt);
 		ImGui::End();
 	}
 

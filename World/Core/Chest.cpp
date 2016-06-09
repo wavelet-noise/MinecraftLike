@@ -176,7 +176,7 @@ int Chest::GetSelected()
 	return mSelected;
 }
 
-void Chest::DrawGui()
+void Chest::DrawGui(float gt)
 {
 	ImGui::Text("Storage");
 	int jj = 666;

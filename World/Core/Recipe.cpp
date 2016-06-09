@@ -59,9 +59,21 @@ void DrawSprite(const StringIntern &s)
 
 }
 
-void Recipe::DrawSome(const StringIntern &s)
+void Recipe::DrawSome(const StringIntern &s, float gt) const
 {
-	auto t = DB::Get().mObjects.find(s);
+	static float tt = 0;
+	tt += gt;
+
+	auto ss = s.get();
+	if (ss.find("tag_") != -1)
+	{
+		auto list = DB::Get().Taglist(ss);
+		srand(int(tt));
+		if (!list.empty())
+			ss = list[rand() % list.size()];
+	}
+
+	auto t = DB::Get().mObjects.find(StringIntern(ss));
 	if (t != DB::Get().mObjects.end())
 	{
 		auto &a = *t;
@@ -73,7 +85,7 @@ void Recipe::DrawSome(const StringIntern &s)
 	}
 }
 
-void Recipe::DrawGui()
+void Recipe::DrawGui(float gt)
 {
 	bool first = true;
 	for (const auto &inp : input)
@@ -83,7 +95,7 @@ void Recipe::DrawGui()
 		else
 			ImGui::SameLine();
 
-		DrawSome(inp.id);
+		DrawSome(inp.id, gt);
 		auto draw_list = ImGui::GetWindowDrawList();
 
 		if (inp.count >= 100)
@@ -117,7 +129,7 @@ void Recipe::DrawGui()
 	for (const auto &out : output)
 	{
 		ImGui::SameLine();
-		DrawSome(out.id);
+		DrawSome(out.id, gt);
 		auto draw_list = ImGui::GetWindowDrawList();
 
 		if (out.count >= 100)

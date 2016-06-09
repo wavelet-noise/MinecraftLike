@@ -13,7 +13,7 @@ void Agent::Afterload(GameObject * parent)
 {
 }
 
-void Agent::DrawGui()
+void Agent::DrawGui(float gt)
 {
 }
 

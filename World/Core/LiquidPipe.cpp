@@ -52,7 +52,7 @@ void LiquidPipe::Update(const GameObjectParams & params)
 	}
 }
 
-void LiquidPipe::DrawGui()
+void LiquidPipe::DrawGui(float gt)
 {
 	ImGui::Text("LiquidPipe");
 	ImGui::Checkbox("Locked", &mLocked);

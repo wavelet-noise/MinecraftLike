@@ -8,7 +8,7 @@ WindowCraftQueue::WindowCraftQueue()
 {
 }
 
-void WindowCraftQueue::Draw(glm::vec2 mainwin_size)
+void WindowCraftQueue::Draw(glm::vec2 mainwin_size, float gt)
 {
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
@@ -25,7 +25,7 @@ void WindowCraftQueue::Draw(glm::vec2 mainwin_size)
 
 			for (const auto &i : c)
 			{
-				i.recipe->DrawGui();
+				i.recipe->DrawGui(gt);
 				ImGui::SameLine();
 				if (i.infinite)
 					ImGui::Text("x inf");
@@ -43,7 +43,7 @@ void WindowCraftQueue::Draw(glm::vec2 mainwin_size)
 
 			for (const auto &i : c)
 			{
-				i.recipe->DrawGui();
+				i.recipe->DrawGui(gt);
 				ImGui::SameLine();
 				if (i.infinite)
 					ImGui::Text("x inf");

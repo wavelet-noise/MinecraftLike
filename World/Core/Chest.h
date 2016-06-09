@@ -31,7 +31,7 @@ public:
 
   // client
   // рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
-	void DrawGui() override;
+	void DrawGui(float gt) override;
 
   int columns = 10;
   int size = 40;

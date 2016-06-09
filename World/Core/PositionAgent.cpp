@@ -36,7 +36,7 @@ void PositionAgent::Update(const GameObjectParams &params)
 
 }
 
-void PositionAgent::DrawGui()
+void PositionAgent::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -408,7 +408,7 @@ void Creature::Update(const GameObjectParams & params)
 	}
 }
 
-void Creature::DrawGui()
+void Creature::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -467,7 +467,7 @@ void WalkingPossibility::Update(const GameObjectParams & params)
 {
 }
 
-void WalkingPossibility::DrawGui()
+void WalkingPossibility::DrawGui(float gt)
 {
 	ImGui::Text("Can walk");
 }
@@ -483,7 +483,7 @@ void CrawlingPossibility::Update(const GameObjectParams & params)
 {
 }
 
-void CrawlingPossibility::DrawGui()
+void CrawlingPossibility::DrawGui(float gt)
 {
 	ImGui::Text("Can crawl");
 }
@@ -500,7 +500,7 @@ void WaterConsumer::Update(const GameObjectParams & params)
 	water -= params.dt / 10.f;
 }
 
-void WaterConsumer::DrawGui()
+void WaterConsumer::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -561,7 +561,7 @@ void CalorieConsumer::Update(const GameObjectParams & params)
 		}
 }
 
-void CalorieConsumer::DrawGui()
+void CalorieConsumer::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -603,7 +603,7 @@ void Morale::Update(const GameObjectParams & params)
 {
 }
 
-void Morale::DrawGui()
+void Morale::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -653,7 +653,7 @@ void Anatomic::Afterload(GameObject * parent)
 {
 }
 
-void Anatomic::DrawGui()
+void Anatomic::DrawGui(float gt)
 {
 	if (ImGui::TreeNode("Mind"))
 	{
@@ -736,7 +736,7 @@ void Named::OnCreate(const GameObjectParams & params)
 	}
 }
 
-void Named::DrawGui()
+void Named::DrawGui(float gt)
 {
 	ImGui::Text("Name: %s", name.c_str());
 }
@@ -816,7 +816,7 @@ void ActivityConsumer::Update(const GameObjectParams & params)
 	}
 }
 
-void ActivityConsumer::DrawGui()
+void ActivityConsumer::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -891,7 +891,7 @@ void Talker::Update(const GameObjectParams & params)
 	}
 }
 
-void Talker::DrawGui()
+void Talker::DrawGui(float gt)
 {
 	if (ImGui::TreeNode("Relationships"))
 	{

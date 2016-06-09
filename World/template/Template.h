@@ -4,24 +4,26 @@
 #include "../tools/StringIntern.h"
 #include <rapidjson\document.h>
 #include <vector>
-
-class GameObject;
+#include <Core/GameObject.h>
+#include <list>
 
 struct Template
 {
-  virtual void Generate() = 0;
-  virtual void JsonLoad(const rapidjson::Value &val) = 0;
+	virtual ~Template();
 
-  GameObject *go;
+	virtual std::list<PGameObject> Generate() = 0;
+	virtual void JsonLoad(const rapidjson::Value &val) = 0;
+
+	GameObject *go;
 
 protected:
-  void Expand(std::vector<StringIntern> &vec);
+	void Expand(std::vector<StringIntern> &vec);
 };
 
 #define REGISTER_TEMPLATE(type) REGISTER_ELEMENT(type, ObjectTemplateFactory::Get(), StringIntern(#type))
 
 struct ObjectTemplateFactory : public boost::noncopyable
 {
-  using FactoryType = TemplateFactory<StringIntern, Template>;
-  static FactoryType &Get();
+	using FactoryType = TemplateFactory<StringIntern, Template>;
+	static FactoryType &Get();
 };

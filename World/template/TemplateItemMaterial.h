@@ -5,11 +5,11 @@
 
 struct TemplateItemMaterial : public Template
 {
-  // Унаследовано через Template
-  virtual void Generate() override;
-  virtual void JsonLoad(const rapidjson::Value & val) override;
+	// Унаследовано через Template
+	std::list<PGameObject> Generate() override;
+	void JsonLoad(const rapidjson::Value & val) override;
 
-  std::vector<StringIntern> materials;
+	std::vector<StringIntern> materials;
 };
 
 REGISTER_TEMPLATE(TemplateItemMaterial)

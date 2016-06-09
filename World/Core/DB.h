@@ -16,9 +16,12 @@ public:
   void Registry(const StringIntern &name, PGameObject block, bool isStatic = true);
   void RegistryTesselator(const StringIntern &name, PGameObjectTessellator tess);
   void ReloadDirectory(const std::string &mDir);
-  const std::vector<StringIntern> &Taglist(const StringIntern &name) const;
 
-  const std::vector<StringIntern>& Taglist(const std::string & name) const;
+  const std::vector<StringIntern> &Taglist(const StringIntern &tag) const;
+  const std::vector<StringIntern> &Taglist(const std::string & tag) const;
+
+  const std::vector<StringIntern> &Tag(const StringIntern &id) const;
+  const std::vector<StringIntern> &Tag(const std::string & id) const;
 
   // Создать блок.
   // Если блок статический, возвращается указатель на экземпляр блока, хранящийся в библиотеке.
@@ -42,8 +45,10 @@ private:
   friend class Recipe;
   std::unordered_map<StringIntern, std::tuple<PGameObject, bool>> mObjects;
   std::unordered_map<StringIntern, PGameObjectTessellator> mTess;
-  std::unordered_map<StringIntern, std::vector<StringIntern>> mTags;
+  std::unordered_map<StringIntern, std::vector<StringIntern>> mTags; // what, where
+  std::unordered_map<StringIntern, std::vector<StringIntern>> mObjTags; // where, what
   std::list<std::shared_ptr<Template>> mTempl;
+  std::vector<StringIntern> mTagsEmptyDummy;
 
   std::list<PRecipe> mRecipe;
   std::unordered_map<StringIntern, std::list<PRecipe>> mUsingCache;

@@ -8,7 +8,7 @@ WindowInventory::WindowInventory()
 {
 }
 
-void WindowInventory::Draw(glm::vec2 mainwin_size)
+void WindowInventory::Draw(glm::vec2 mainwin_size, float gt)
 {
   ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
   ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);

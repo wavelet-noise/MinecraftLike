@@ -51,6 +51,8 @@ using PCRecipe = std::shared_ptr<const Recipe>;
 class Recipe : public std::enable_shared_from_this<Recipe>
 {
 public:
+	virtual ~Recipe(){}
+
 	std::vector<RecipeIn> input;
 	std::vector<RecipeOut> output;
 	std::vector<StringIntern> tools;
@@ -58,9 +60,9 @@ public:
 	std::vector<StringIntern> materials;
 	float duration = 0;
 
-	void DrawSome(const StringIntern & s);
+	void DrawSome(const StringIntern & s, float gt) const;
 
-	void DrawGui();
+	void DrawGui(float gt);
 
 	std::list<std::shared_ptr<Recipe>> Expand();
 

@@ -39,6 +39,6 @@ void WaterBoiler::Update(const GameObjectParams & params)
 	}
 }
 
-void WaterBoiler::DrawGui()
+void WaterBoiler::DrawGui(float gt)
 {
 }

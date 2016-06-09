@@ -5,7 +5,11 @@
 class WindowBase
 {
 public:
-  virtual void Draw(glm::vec2 mainwin_size) = 0;
+	virtual ~WindowBase()
+	{
+	}
+
+	virtual void Draw(glm::vec2 mainwin_size, float gt) = 0;
 
   void Hide()
   {

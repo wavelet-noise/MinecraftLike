@@ -1,16 +1,6 @@
 #pragma once
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include "WindowBase.h"
-#include <tools\StringIntern.h>
-
-#include "gui\WindowPerfomance.h"
-#include "gui\WindowDb.h"
-#include "gui\WindowInventory.h"
-#include "gui\WindowRecipe.h"
-#include "gui\WindowEventlog.h"
-#include "gui\WindowTools.h"
-#include "gui\WindowCraftQueue.h"
-#include "gui\WindowRooms.h"
 
 class World;
 
@@ -18,7 +8,7 @@ class WS
 {
 public:
 
-	void Draw(glm::vec2 wsize);
+	void Draw(glm::vec2 wsize, float gt);
 
 	static WS &Get()
 	{

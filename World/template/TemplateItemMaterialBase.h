@@ -6,8 +6,8 @@
 struct TemplateItemMaterialBase : public Template
 {
   // Унаследовано через Template
-  virtual void Generate() override;
-  virtual void JsonLoad(const rapidjson::Value & val) override;
+  std::list<PGameObject> Generate() override;
+  void JsonLoad(const rapidjson::Value & val) override;
 
   StringIntern material_base;
   std::vector<StringIntern> materials;
