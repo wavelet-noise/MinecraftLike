@@ -148,5 +148,64 @@
 			"heat":3.5
 		}
     ]
+},
+{
+	"type":"Item",
+    "id":"hard_bed",
+    "agents":[
+		{
+			"type":"Fuel",
+			"heat":20
+		},
+		{
+		    "type":"ComplexItem"
+		}
+    ]
+},
+{
+	"type":"Item",
+    "id":"wooden_bed",
+    "agents":[
+		{
+			"type":"Fuel",
+			"heat":25
+		},
+		{
+		    "type":"ComplexItem"
+		}
+    ],
+    "placeable":true,
+    "dynamic":true
+},
+{
+	"type":"Item",
+    "id":"wooden_door",
+    "agents":[
+		{
+			"type":"Fuel",
+			"heat":14
+		},
+		{
+		    "type":"ComplexItem"
+		}
+    ],
+    "placeable":true,
+    "dynamic":true
+}
+,
+{
+	"type":"Item",
+    "id":"wooden_crate",
+    "agents":[
+		{
+			"type":"Fuel",
+			"heat":14
+		},
+		{
+		    "type":"ComplexItem"
+		}
+    ],
+    "placeable":true,
+    "dynamic":true
 }
 ]
