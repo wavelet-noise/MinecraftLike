@@ -26,5 +26,40 @@
 				"input":[["lumber", 1]],
 				"output":[["plank", 4]]
 			}
+},
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["tag_plank", 4], ["tag_stick", 6], ["tag_cloth", 4], ["tag_nail", 8]],
+				"output":[["hard_wooden_bed", 1]]
+			}
+},
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["tag_plank", 4], ["tag_nail", 8]],
+				"output":[["wooden_door", 1]]
+			}
+},
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["tag_plank", 4], ["tag_nail", 8]],
+				"output":[["wooden_crate", 1]]
+			}
+},
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["tag_plank", 2], ["tag_stick", 4], ["tag_nail", 6]],
+				"output":[["wooden_chair", 1]]
+			}
+},
+{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["hard_bed", 1], ["tag_cloth", 4]],
+				"output":[["wooden_bed", 1]]
+			}
 }
 ]
