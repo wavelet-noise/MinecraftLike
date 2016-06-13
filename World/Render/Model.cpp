@@ -10,7 +10,7 @@
 
 Model::Model()
 {
-  mShader = Resources::Get().GetShader("shaders/basic.glsl");
+  //mShader = Resources::Get().GetShader("shaders/basic.glsl");
 }
 
 void Model::JsonLoad(const rapidjson::Value & val)
