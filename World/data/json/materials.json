@@ -6,7 +6,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_brass",
-		"dens":8525
+		"dens":8525,
+		"cost":2.5
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -17,7 +18,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_aluminum",
-		"dens":2712
+		"dens":2712,
+		"cost":1.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -28,7 +30,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_beryllium",
-		"dens":1840
+		"dens":1840,
+		"cost":4.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -39,7 +42,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_beryllium_copper",
-		"dens":8100
+		"dens":8100,
+		"cost":3.5
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -50,7 +54,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_vanadium",
-		"dens":5494
+		"dens":5494,
+		"cost":3.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -61,7 +66,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_tungsten",
-		"dens":19600
+		"dens":19600,
+		"cost":8.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -72,7 +78,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_iron",
-		"dens":7850
+		"dens":7850,
+		"cost":1.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -83,7 +90,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_gold",
-		"dens":19320
+		"dens":19320,
+		"cost":5.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -94,7 +102,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_cobolt",
-		"dens":8746
+		"dens":8746,
+		"cost":3.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -105,7 +114,8 @@
 		{
 		"type":"Material",
 		"dens":1738,
-		"mtex":"material_magnesium"
+		"mtex":"material_magnesium",
+		"cost":2.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -116,7 +126,8 @@
 		{
 		"type":"Material",
 		"dens":8930,
-		"mtex":"material_copper"
+		"mtex":"material_copper",
+		"cost":2.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -127,7 +138,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_cupronickel",
-		"dens":8940
+		"dens":8940,
+		"cost":3.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -138,7 +150,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_molybdenum",
-		"dens":10188
+		"dens":10188,
+		"cost":3.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -149,7 +162,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_stainless_steel",
-		"dens":8000
+		"dens":8000,
+		"cost":2.5
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -160,7 +174,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_nickel",
-		"dens":8800
+		"dens":8800,
+		"cost":1.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -171,7 +186,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_tin",
-		"dens":7280
+		"dens":7280,
+		"cost":0.8
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -182,7 +198,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_platinum",
-		"dens":21400
+		"dens":21400,
+		"cost":9.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -193,10 +210,11 @@
 		{
 		"type":"Material",
 		"mtex":"material_plutonium",
-		"dens":19816
+		"dens":19816,
+		"cost":9.0
 		}
 	],
-	"tags":["tag_material_metal"]
+	"tags":["tag_material_metal", "radioactive"]
 },{
 	"type":"dummy",
 	"id":"material_solder",
@@ -204,7 +222,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_solder",
-		"dens":8885
+		"dens":8885,
+		"cost":0.6
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -215,7 +234,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_silver",
-		"dens":10490
+		"dens":10490,
+		"cost":4.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -226,7 +246,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_lead",
-		"dens":11340
+		"dens":11340,
+		"cost":0.8
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -237,7 +258,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_titanium",
-		"dens":4500
+		"dens":4500,
+		"cost":4.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -248,7 +270,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_steel",
-		"dens":7850
+		"dens":7850,
+		"cost":2.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -259,10 +282,11 @@
 		{
 		"type":"Material",
 		"mtex":"material_uranium",
-		"dens":18900
+		"dens":18900,
+		"cost":8.0
 		}
 	],
-	"tags":["tag_material_metal"]
+	"tags":["tag_material_metal", "radioactive"]
 },{
 	"type":"dummy",
 	"id":"material_zinc",
@@ -270,7 +294,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_zinc",
-		"dens":7135
+		"dens":7135,
+		"cost":1.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -281,7 +306,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_electrum",
-		"dens":8900
+		"dens":8900,
+		"cost":5.0
 		}
 	],
 	"tags":["tag_material_metal"]
@@ -292,7 +318,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_brick",
-		"dens":1100
+		"dens":1100,
+		"cost":1.0
 		}
 	]
 },{
@@ -302,7 +329,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_steam",
-		"dens":1
+		"dens":1,
+		"cost":0.0
 		}
 	]
 },{
@@ -312,7 +340,8 @@
 		{
 		"type":"Material",
 		"mtex":"material_birch",
-		"dens":1
+		"dens":1,
+		"cost":1.2
 		}
 	],
 	"tags":["tag_material_wood"]
