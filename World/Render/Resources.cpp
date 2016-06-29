@@ -27,7 +27,7 @@ PShader Resources::GetShader(const std::string &name) const
 	if (it == mShaders.end())
 	{
 		LOG(fatal) << name << " shader missed";
-		return nullptr;
+		throw;
 	}
 
 	return it->second;

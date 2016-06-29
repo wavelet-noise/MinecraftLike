@@ -20,20 +20,49 @@ void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 	{
 		ImGui::Begin("Database", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
 		ImGui::InputText("Filter", flt, 100);
+		ImGui::Checkbox("Only craftable", &only_craftable);
 
 		ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
 		auto p = ImGui::GetWindowPos();
-		for (const auto &a : DB::Get().mObjects)
+		auto craftable_it = DB::Get().mRecipeCache.begin();
+		auto all_it = DB::Get().mObjects.begin();
+
+		bool cont = true;
+		while (cont)
 		{
+			StringIntern id;
+			std::tuple<PGameObject, bool> pgo;
+			if (only_craftable)
+			{
+				id = craftable_it->first;
+				auto f = DB::Get().mObjects.find(id);
+
+				craftable_it++;
+				if (craftable_it == DB::Get().mRecipeCache.end())
+					cont = false;
+				if (f == DB::Get().mObjects.end())
+					continue;
+
+				pgo = f->second;
+			}
+			else
+			{
+				id = all_it->first;
+				pgo = all_it->second;
+				all_it++;
+				if (all_it == DB::Get().mObjects.end())
+					cont = false;
+			}
+
 			if (flt)
 			{
-				auto fstring = std::get<0>(a.second)->GetDescription();
+				auto fstring = std::get<0>(pgo)->GetDescription();
 				if (fstring.find(std::string(flt)) == -1)
 					continue;
 			}
 
-			auto &atl = TextureManager::Get().GetTexture(a.first);
+			auto &atl = TextureManager::Get().GetTexture(id);
 			auto &tex = std::get<0>(atl);
 			auto &atluv = std::get<1>(atl);
 
@@ -49,24 +78,23 @@ void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 
 			if (ImGui::IsItemHovered())
 			{
-				ImGui::SetTooltip("%s\n%s", a.first.get().c_str(), std::get<0>(a.second)->GetDescription().c_str());
+				ImGui::SetTooltip("%s\n%s", id.get().c_str(), std::get<0>(pgo)->GetDescription().c_str());
 
 				if (ImGui::IsKeyPressed(GLFW_KEY_R))
 				{
-					WindowRecipe::Get().ShowRecipe(a.first);
+					WindowRecipe::Get().ShowRecipe(id);
 				}
 
 				if (ImGui::IsKeyPressed(GLFW_KEY_U))
 				{
-					WindowRecipe::Get().ShowUsing(a.first);
+					WindowRecipe::Get().ShowUsing(id);
 				}
 
 				if (ImGui::IsMouseClicked(0))
 				{
-					selected_id = std::get<0>(a.second)->GetId();
+					selected_id = std::get<0>(pgo)->GetId();
 				}
 			}
-
 		}
 		ImGui::End();
 	}

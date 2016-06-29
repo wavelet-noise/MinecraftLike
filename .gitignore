@@ -31,3 +31,7 @@ World.VC.opendb
 *.~vsd
 *.psess
 *.vsp
+/World.VC.db
+/World.VC.VC.opendb
+/World/ver
+*.txt

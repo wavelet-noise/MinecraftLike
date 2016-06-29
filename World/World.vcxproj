@@ -95,8 +95,6 @@
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="network\network.cpp" />
-    <ClCompile Include="network\NetworkManager.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
     <ClCompile Include="Render\Bitmap.cpp" />
@@ -199,7 +197,6 @@
     <ClInclude Include="gui\WindowRooms.h" />
     <ClInclude Include="gui\WindowTools.h" />
     <ClInclude Include="gui\WS.h" />
-    <ClInclude Include="network\NetworkManager.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="render\ParticleSystem.h" />
     <ClInclude Include="Render\RenderSector.h" />
@@ -212,8 +209,6 @@
     <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="lodepng\lodepng.h" />
-    <ClInclude Include="network\network.h" />
-    <ClInclude Include="network\packet.h" />
     <ClInclude Include="network\packetrequestplayers.h" />
     <ClInclude Include="Render\Atlas.h" />
     <ClInclude Include="Render\Bitmap.h" />
@@ -394,7 +389,7 @@
       <GenerateDebugInformation>No</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3dll.lib;MSVCRT.LIB;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
     </Link>
     <PreBuildEvent>

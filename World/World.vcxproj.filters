@@ -123,9 +123,6 @@
     <ClCompile Include="Render\RenderMeshVao.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="network\network.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
     <ClCompile Include="imgui\imgui_draw.cpp">
       <Filter>3rdparty\imgui</Filter>
     </ClCompile>
@@ -158,9 +155,6 @@
     </ClCompile>
     <ClCompile Include="PerlinNoise.cpp">
       <Filter>Core\MapGen</Filter>
-    </ClCompile>
-    <ClCompile Include="network\NetworkManager.cpp">
-      <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp">
       <Filter>Core\MapGen</Filter>
@@ -424,12 +418,6 @@
     <ClInclude Include="Render\RenderMeshVao.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="network\packet.h">
-      <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="network\network.h">
-      <Filter>network</Filter>
-    </ClInclude>
     <ClInclude Include="imgui\imgui_internal.h">
       <Filter>3rdparty\imgui</Filter>
     </ClInclude>
@@ -472,9 +460,6 @@
     </ClInclude>
     <ClInclude Include="tools\order_casters.h">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="network\NetworkManager.h">
-      <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="tools\QueuedThread.h">
       <Filter>tools</Filter>

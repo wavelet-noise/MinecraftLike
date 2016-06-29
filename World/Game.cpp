@@ -155,7 +155,7 @@ void Game::Update(float dt)
 	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
 	{
 		auto del = glm::vec3(ImGui::GetMouseDragDelta(1).y / mWindow->GetSize().y, ImGui::GetMouseDragDelta(1).x / mWindow->GetSize().x, 0);
-		del = mCamera->GetDirection() * del;
+		del = mCamera->GetDirection() * del * 4.f;
 		del.z = 0;
 		mCamera->SetPos(mCamera->GetPos() - del);
 	}

@@ -58,6 +58,7 @@ public:
 	std::vector<StringIntern> tools;
 	StringIntern machine;
 	std::vector<StringIntern> materials;
+
 	float duration = 0;
 
 	void DrawSome(const StringIntern & s, float gt) const;

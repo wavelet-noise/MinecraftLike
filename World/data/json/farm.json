@@ -74,7 +74,30 @@
 				]
 		},
 		"placeable":false,
-		"dynamic":true
+		"dynamic":true,
+		"recipe":{
+			"input":[["hoe_head_%material%", 1], ["tag_stick", 1]],
+			"output":[["hoe_%material%", 1]],
+			"materials":["tag_material_metal"]
+		}
+	},{
+		"type":"Item",
+		"id":"hoe_head",
+		"agents":[
+		],
+		"template":{  
+				"type":"TemplateItemMaterial",
+				"materials":[  
+					"tag_material_metal"
+				]
+		},
+		"placeable":false,
+		"dynamic":true,
+		"recipe":{
+			"input":[["ingot_%material%", 2]],
+			"output":[["hoe_head_%material%", 1]],
+			"materials":["tag_material_metal"]
+		}
 	},{
 		"type":"Item",
 		"id":"watering_can",
@@ -92,7 +115,12 @@
 				]
 		},
 		"placeable":false,
-		"dynamic":true
+		"dynamic":true,
+		"recipe":{
+			"input":[["ingot_%material%", 5]],
+			"output":[["watering_can_%material%", 1]],
+			"materials":["tag_material_metal"]
+		}
 	},{
 		"type":"Item",
 		"id":"sickle",
@@ -113,11 +141,9 @@
 		"placeable":false,
 		"dynamic":true,
 		"recipe":{
-			"input":[["sickle_head_%material%", 1], ["stick", 1]],
+			"input":[["sickle_head_%material%", 1], ["tag_stick", 1]],
 			"output":[["sickle_%material%", 1]],
-			"materials":[  
-					"tag_material_metal"
-				]
+			"materials":["tag_material_metal"]
 		}
 	},{
 		"type":"Item",
@@ -131,7 +157,12 @@
 				]
 		},
 		"placeable":false,
-		"dynamic":false
+		"dynamic":false,
+		"recipe":{
+			"input":[["ingot_%material%", 3]],
+			"output":[["sickle_head_%material%", 1]],
+			"materials":["tag_material_metal"]
+		}
 	},{
 		"type":"Item",
 		"id":"flax_0",
