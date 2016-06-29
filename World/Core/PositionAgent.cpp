@@ -445,6 +445,11 @@ void Creature::OnCreate(const GameObjectParams & params)
 	params.world->RegisterCreature(mParent->shared_from_this());
 }
 
+void Creature::OnDestroy(const GameObjectParams& params)
+{
+	EventBus::Get().Publish<EventCreatureDeath>(1);
+}
+
 void Creature::AddPersinal(POrder o)
 {
 	std::remove_if(personal.begin(), personal.end(), [&](const POrder &p)->bool {

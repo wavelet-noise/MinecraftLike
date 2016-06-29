@@ -7,6 +7,7 @@
 #include <core/Sector.h>
 #include <core/GameObject.h>
 #include <Core/orders/OrderBus.h>
+#include <imgui.h>
 
 using PEvent = std::shared_ptr<class Event>;
 
@@ -27,7 +28,15 @@ public:
 		return -1;
 	}
 
-	virtual std::string to_string() const = 0;
+	virtual boost::optional<glm::vec3> GetPos()
+	{
+		return {};
+	}
+
+	virtual void DrawGui(float gt)
+	{
+		ImGui::Text("unimplemented event");
+	}
 
 private:
 	static size_t Nextid()
@@ -48,10 +57,6 @@ struct NumberedEvent : public Event
 
 struct EventSound : public NumberedEvent<EventSound>
 {
-	std::string to_string() const override
-	{
-		return std::string("EventSound:");
-	}
 };
 
 struct EventOrderStart : public NumberedEvent<EventOrderStart>
@@ -59,12 +64,6 @@ struct EventOrderStart : public NumberedEvent<EventOrderStart>
 	EventOrderStart(POrder p) : ord(p) {}
 	POrder ord;
 
-	std::string to_string() const override
-	{
-		if (!ord)
-			return "EventOrderStart: none";
-		return (boost::format("EventOrderStart: %1%") % ord->to_string()).str();
-	}
 };
 
 struct EventOrderDone : public NumberedEvent<EventOrderDone>
@@ -72,12 +71,6 @@ struct EventOrderDone : public NumberedEvent<EventOrderDone>
 	EventOrderDone(POrder p) : ord(p) {}
 	POrder ord;
 
-	std::string to_string() const override
-	{
-		if(!ord)
-			return "EventOrderDone: none";
-		return (boost::format("EventOrderDone: %1%") % ord->to_string()).str();
-	}
 };
 
 struct EventSectorReady : public NumberedEvent<EventOrderStart>
@@ -85,12 +78,6 @@ struct EventSectorReady : public NumberedEvent<EventOrderStart>
 	EventSectorReady(std::shared_ptr<Sector> p) : sec(p) {}
 	std::shared_ptr<Sector> sec;
 
-	std::string to_string() const override
-	{
-		if (!sec)
-			return "EventSectorReady: none";
-		return (boost::format("EventSectorReady: pos = {%1%, %2%, %3%}") % sec->GetPos().x % sec->GetPos().y % sec->GetPos().z).str();
-	}
 };
 
 struct EventCreatureSpawn : public NumberedEvent<EventCreatureSpawn>
@@ -98,10 +85,18 @@ struct EventCreatureSpawn : public NumberedEvent<EventCreatureSpawn>
 	EventCreatureSpawn(PGameObject p) : obj(p) {}
 	PGameObject obj;
 
-	std::string to_string() const override
+	void DrawGui(float gt) override
 	{
-		return (boost::format("EventCreatureSpawn: obj = %1%") % obj->GetId()).str();
+		ImGui::Text((boost::format("EventCreatureSpawn: obj = %1%") % obj->GetId()).str().c_str());
 	}
+};
+
+struct EventCreatureDeath : public NumberedEvent<EventCreatureDeath>
+{
+	EventCreatureDeath(Goid p) : obj(p) {}
+	Goid obj;
+	WPos pos;
+
 };
 
 struct EventItemPlace : public NumberedEvent<EventItemPlace>
@@ -109,10 +104,6 @@ struct EventItemPlace : public NumberedEvent<EventItemPlace>
 	EventItemPlace(PGameObject p) : obj(p) {}
 	PGameObject obj;
 
-	std::string to_string() const override
-	{
-		return (boost::format("EventItemPlace: obj = %1%") % obj->GetId()).str();
-	}
 };
 
 class EventBus

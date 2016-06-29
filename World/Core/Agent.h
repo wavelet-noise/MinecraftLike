@@ -13,7 +13,6 @@
 #include "GameObjectParams.h"
 #include <memory>
 #include <type_traits>
-#include <string>
 
 class GameObject;
 

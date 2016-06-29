@@ -9,6 +9,7 @@
 #include <memory>
 
 using PGameObject = std::shared_ptr<GameObject>;
+using Goid = int;
 
 template<class T, class... Args>
 inline std::shared_ptr<T> MakeGameObject(Args&&... args)

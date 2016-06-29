@@ -90,6 +90,7 @@ public:
 	}
 
 	void OnCreate(const GameObjectParams & params) override;
+	void OnDestroy(const GameObjectParams & params) override;
 
 	void AddPersinal(POrder o);
 
