@@ -3,7 +3,7 @@
 
 
 #include "GameObject.h"
-
+#include <boost/serialization/shared_ptr.hpp>
 
 
 GameObject::GameObject(const StringIntern &__id) :id(__id)
@@ -95,6 +95,19 @@ PGameObject GameObject::Clone()
 StringIntern GameObject::GetId()
 {
 	return id;
+}
+
+void GameObject::save(boost::archive::binary_oarchive& ar, const unsigned) const
+{
+	ar << std::string(id);
+	for(const auto &a : mAgents)
+	{
+		ar << a;
+	}
+}
+
+void GameObject::load(boost::archive::binary_oarchive& ar, const unsigned)
+{
 }
 
 void GameObject::PushAgent(PAgent go)

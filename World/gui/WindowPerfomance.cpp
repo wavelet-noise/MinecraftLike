@@ -1,6 +1,7 @@
 #include "WindowPerfomance.h"
 #include <tools\order_casters.h>
 #include <tools\wset.h>
+#include <VerticalText.h>
 
 void WindowPerfomance::Draw(glm::vec2 mainwin_size, float gt)
 {
@@ -11,6 +12,9 @@ void WindowPerfomance::Draw(glm::vec2 mainwin_size, float gt)
 	if (mOpen)
 	{
 		ImGui::Begin("Perfomance monitor", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::TextVertical("Gather");
+		ImGui::TextVertical("Gather");
+		ImGui::TextVertical("Gather");
 		ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
 		if (ImGui::TreeNode("mem"))
 		{

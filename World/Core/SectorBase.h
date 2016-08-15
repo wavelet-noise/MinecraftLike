@@ -18,7 +18,6 @@ public:
   SectorBase()
   {
     mUniqueBlocks.emplace_back(nullptr);
-	mUniquePoses.emplace_back(0);
   }
 
   BlockType GetBlock(const SBPos &pos)
@@ -45,7 +44,6 @@ public:
 protected:
   std::vector<IndexType> mBlocks;
   std::vector<BlockType> mUniqueBlocks;
-  std::vector<size_t> mUniquePoses;
 
   size_t mCountBlocks = 0;
 
@@ -85,7 +83,6 @@ protected:
       {
         empty = mUniqueBlocks.size();
         mUniqueBlocks.push_back(block);
-		mUniquePoses.push_back(index);
       }
       unique = empty;
     }
@@ -143,9 +140,7 @@ protected:
       {
         // TODO. Освобождать память, если capacity > size на N %.
         mUniqueBlocks.resize(mUniqueBlocks.size() - eraseCount);
-		mUniquePoses.resize(mUniquePoses.size() - eraseCount);
         mUniqueBlocks.shrink_to_fit();
-		mUniquePoses.shrink_to_fit();
       }
     }
 

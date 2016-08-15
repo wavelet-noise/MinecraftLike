@@ -56,7 +56,7 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
 	auto it = mSectors.find(position);
 	if (it == mSectors.end())
 	{
-		if (auto psec = WorldWorker::Get().GetSector(position))
+		if (auto psec = WorldWorker::Get(*this).GetSector(position))
 		{
 			mSectors[position] = psec;
 			psec->Draw(mTesselator);
@@ -161,7 +161,7 @@ static glm::ivec3 neib[] = {
 	{  0,  0, -1 }
 };
 
-PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block)
+PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block, bool no_replace)
 {
 	auto spos = cs::WBtoS(wbpos);
 	std::shared_ptr<Sector> sec;
@@ -169,6 +169,9 @@ PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block)
 
 	if (auto l = GetBlock(wbpos, sec))
 	{
+		if (no_replace)
+			return nullptr;
+
 		l->OnDestroy({ this, sec.get(), wbpos, 0 });
 
 		if (l->GetId() == storage)

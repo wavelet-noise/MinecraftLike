@@ -42,6 +42,7 @@ void Sector::SetBlock(const SBPos &pos, PGameObject block)
 		{
 			mTessellator->Set(cs::SBtoWB(pos, mPos), nullptr);
 			mTessellator->SayChanged(mPos);
+			mTessellator->SayChanged(mPos - SPos(0,0,1));
 		}
 	}
 }
@@ -76,10 +77,10 @@ std::list<PGameObject> Sector::GetCreatures()
 void Sector::Update(World *world, float dt)
 {
 	GameObjectParams gop{ world, this, {}, dt };
-	for (size_t i = 0; i < mUniqueBlocks.size(); ++i)
+	for (size_t i = 0; i < mActive.size(); ++i)
 	{
-		gop.pos = cs::SBtoWB(cs::ItoSB(mUniquePoses[i]), mPos);
-		if (mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);
+		//gop.pos = cs::SBtoWB(cs::ItoSB(mUniquePoses[i]), mPos);
+		//if (mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);
 	}
 
 
@@ -147,4 +148,16 @@ void Sector::Draw(class Tessellator *tess)
 void Sector::SetSlise(int s)
 {
 	mTessellator->SetSlise(s);
+}
+
+void Sector::save(boost::archive::binary_oarchive& ar, const unsigned) const
+{
+	ar << mUniqueBlocks;
+	ar << mBlocks;
+}
+
+void Sector::load(boost::archive::binary_oarchive& ar, const unsigned)
+{
+	//ar >> mUniqueBlocks;
+	//ar >> mBlocks;
 }

@@ -7,6 +7,8 @@
 #include "Agent.h"
 #include "..\tools\StringIntern.h"
 #include <memory>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/utility.hpp>
 
 using PGameObject = std::shared_ptr<GameObject>;
 using Goid = int;
@@ -103,6 +105,11 @@ public:
 
 	StringIntern GetId();
 
+	void save(boost::archive::binary_oarchive& ar, const unsigned int) const;
+
+	void load(boost::archive::binary_oarchive& ar, const unsigned int);
+
+	BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 protected:
 	friend class DB;

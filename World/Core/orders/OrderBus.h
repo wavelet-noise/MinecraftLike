@@ -26,7 +26,7 @@ public:
 	virtual glm::vec3 GetPos() const = 0;
 	virtual std::string to_string() const;
 	virtual float Tiring() const;
-	virtual void Perform(const GameObjectParams & params, PGameObject performer);
+	virtual void Perform(const GameObjectParams & params, PGameObject performer) = 0;
 
 	void Take();
 	void Done();
@@ -56,7 +56,7 @@ private:
 template<typename T>
 struct NumberedOrder : Order
 {
-	size_t GetId() const override
+	size_t GetId() const override final
 	{
 		return Idfor<T>();
 	}

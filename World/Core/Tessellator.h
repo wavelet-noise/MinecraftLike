@@ -41,7 +41,7 @@ public:
 	void Stop();
 
 	PGameObjectTessellator GetBlock(const WBPos &pos);
-
+	void Interrupt();
 private:
 	std::unordered_map<SPos, std::shared_ptr<SectorTessellator>> mSectors;
 

@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AutoVersion.cpp" />
+    <ClCompile Include="Cooker.cpp" />
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\Chest.cpp" />
     <ClCompile Include="Core\ChestSlot.cpp" />
@@ -78,8 +79,10 @@
     <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="Core\Xyz.cpp" />
     <ClCompile Include="DragNDrop.cpp" />
+    <ClCompile Include="EveryProf.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gatherer.cpp" />
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="gui\WindowBase.h" />
     <ClCompile Include="gui\WindowCraftQueue.cpp" />
@@ -95,7 +98,10 @@
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Medic.cpp" />
+    <ClCompile Include="Miner.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
+    <ClCompile Include="Profession.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
     <ClCompile Include="Render\Bitmap.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
@@ -122,10 +128,12 @@
     <ClCompile Include="tools\ray.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
     <ClCompile Include="tools\wset.h" />
+    <ClCompile Include="WindowProfesions.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
+    <ClInclude Include="Cooker.h" />
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\CalorieConsumer.h" />
     <ClInclude Include="core\Chest.h" />
@@ -185,8 +193,10 @@
     <ClInclude Include="Core\World.h" />
     <ClInclude Include="Core\Xyz.h" />
     <ClInclude Include="DragNDrop.h" />
+    <ClInclude Include="EveryProf.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Gatherer.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
     <ClInclude Include="gui\WindowCraftQueue.h" />
     <ClInclude Include="gui\WindowDb.h" />
@@ -197,6 +207,9 @@
     <ClInclude Include="gui\WindowRooms.h" />
     <ClInclude Include="gui\WindowTools.h" />
     <ClInclude Include="gui\WS.h" />
+    <ClInclude Include="Medic.h" />
+    <ClInclude Include="Miner.h" />
+    <ClInclude Include="Profession.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="render\ParticleSystem.h" />
     <ClInclude Include="Render\RenderSector.h" />
@@ -239,6 +252,8 @@
     <ClInclude Include="tools\QueuedThread.h" />
     <ClInclude Include="tools\ray.h" />
     <ClInclude Include="tools\StringIntern.h" />
+    <ClInclude Include="VerticalText.h" />
+    <ClInclude Include="WindowProfesions.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -350,7 +365,7 @@
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <ExpandAttributedSource>false</ExpandAttributedSource>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
-      <AdditionalOptions> /D "_CRT_SECURE_NO_WARNINGS" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions> /D "_CRT_SECURE_NO_WARNINGS" /Gm %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -384,6 +399,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <StringPooling>true</StringPooling>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <MinimalRebuild>true</MinimalRebuild>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>No</GenerateDebugInformation>

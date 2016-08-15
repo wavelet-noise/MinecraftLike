@@ -12,7 +12,7 @@ Chest::Chest()
 
 void Chest::JsonLoad(const rapidjson::Value &val)
 {
-	JSONLOAD(NVP(columns), NVP(size));
+	JSONLOAD(NVP(columns), NVP(size), NVP(volume));
 	slots.resize(size);
 }
 
@@ -38,12 +38,26 @@ bool Chest::Push(PGameObject go, int count, int pos)
 		{
 			if (!i.obj)
 			{
+				if (max_volume != -1)
+				{
+					if (volume + count > max_volume)
+						return false;
+
+					volume += count;
+				}
 				i.obj = go;
 				i.count = count;
 				return true;
 			}
 			else if (*i.obj == *go)
 			{
+				if (max_volume != -1)
+				{
+					if (volume + count > max_volume)
+						return false;
+
+					volume += count;
+				}
 				i.count += count;
 				return true;
 			}
@@ -53,6 +67,14 @@ bool Chest::Push(PGameObject go, int count, int pos)
 
 	if (pos >= size)
 		return false;
+
+	if (max_volume != -1)
+	{
+		if (volume + count > max_volume)
+			return false;
+
+		volume += count;
+	}
 
 	if (slots[pos].obj && *slots[pos].obj == *go)
 	{
@@ -98,9 +120,15 @@ ChestSlot Chest::PopFirst()
 	for (auto &cs : slots)
 	{
 		if (cs.obj)
+		{
+			if (max_volume != -1)
+			{
+				volume -= cs.count;
+			}
 			return std::move(cs);
+		}
 	}
-	return std::move(*slots.begin());
+	return{};
 }
 
 ChestSlot Chest::PopSlot(int slot)
@@ -109,6 +137,12 @@ ChestSlot Chest::PopSlot(int slot)
 		return{};
 	if (slot >= size)
 		return{};
+
+	if (max_volume != -1)
+	{
+		volume -= slots[slot].count;
+	}
+
 	return std::move(slots[slot]);
 }
 
@@ -120,12 +154,16 @@ ChestSlot Chest::PopFirst(int &pos)
 		if (cs.obj)
 		{
 			pos = i;
+			if (max_volume != -1)
+			{
+				volume -= cs.count;
+			}
 			return std::move(cs);
 		}
 		i++;
 	}
 	pos = -1;
-	return std::move(*slots.begin());
+	return{};
 }
 
 ChestSlot Chest::PopSelected()
@@ -139,12 +177,18 @@ ChestSlot Chest::PopByPredicate(std::function<bool(const ChestSlot&)> pred)
 	{
 		if (cs.obj)
 		{
-			if(pred(cs))
+			if (pred(cs))
+			{
+				if (max_volume != -1)
+				{
+					volume -= cs.count;
+				}
 				return std::move(cs);
+			}
 		}
 	}
 
-	return {};
+	return{};
 }
 
 ChestSlot Chest::GetByPredicate(std::function<bool(const ChestSlot&)> pred)
@@ -201,6 +245,8 @@ void Chest::DrawGui(float gt)
 		}
 		ii++;
 	}
+	if (max_volume != -1)
+		ImGui::Text("Volume %d of %d", volume, max_volume);
 }
 
 PAgent InputChest::Clone(GameObject * parent, const std::string & name)

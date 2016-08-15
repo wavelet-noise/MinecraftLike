@@ -2,23 +2,37 @@
 #include <thread>
 #include "tools\CoordSystem.h"
 #include "Core\Sector.h"
-#include "Core\MapGen\PerlinNoise.h"
-#include "..\DB.h"
-#include "..\..\tools\Log.h"
 #include <gui\WindowPerfomance.h>
-#include "WorldGenFlat.h"
 #include "WorldGenMountains.h"
-#include <Core\EventBus.h>
+#include <boost/asio/streambuf.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <fstream>
 
-WorldWorker &WorldWorker::Get()
+WorldWorker &WorldWorker::Get(World &w)
 {
   static WorldWorker object;
+  object.w = &w;
   return object;
 }
 
 WorldWorker::WorldWorker()
 {
   mGenerator = std::make_unique<WorldGenMountains>();
+}
+
+WorldWorker::~WorldWorker()
+{
+	for(const auto &s : mReady)
+	{
+		//boost::asio::streambuf b;
+		std::ofstream os((boost::format("Save\\%1%_%2%_%3%.sec") % s.first.x % s.first.y % s.first.z).str().c_str());
+		if (os.is_open())
+		{
+			boost::archive::binary_oarchive oa(os);
+
+			oa << *s.second;
+		}
+	}
 }
 
 std::shared_ptr<Sector> WorldWorker::GetSector(const SPos &v)
@@ -56,13 +70,19 @@ void WorldWorker::Process()
     mQueueMutex.unlock();
   }
   else
-    mQueueMutex.unlock();
+  {
+	  WorldPass();
+	  mQueueMutex.unlock();
+  }
 
   auto end = glfwGetTime();
   WindowPerfomance::Get().GeneratorDt(end - start);
 }
 
-
+inline void WorldWorker::WorldPass()
+{
+	mGenerator->WorldPass(*w);
+}
 
 inline std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
 {

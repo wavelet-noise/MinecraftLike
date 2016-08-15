@@ -31,11 +31,12 @@ public:
 
   // client
   // рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
-	void DrawGui(float gt) override;
+  void DrawGui(float gt) override;
 
   int columns = 10;
   int size = 40;
   std::vector<ChestSlot> slots;
+  float max_volume = -1, volume = 0;
   int mSelected = -1;
 };
 

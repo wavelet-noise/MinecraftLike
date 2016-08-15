@@ -79,7 +79,7 @@ public:
 
   // Установить блок в заданную позицию.
   // Существующий блок будет удален.
-  PGameObject SetBlock(const WBPos &pos, PGameObject block);
+  PGameObject SetBlock(const WBPos &pos, PGameObject block, bool no_replace = false);
 
   PGameObject Spawn(const WBPos &position, PGameObject creature);
 
@@ -112,6 +112,7 @@ public:
   }
 
   std::list<std::shared_ptr<Room>> rooms;
+  std::list<PGameObject> controlled;
 
 private:
   std::unordered_map<SPos, std::shared_ptr<Sector>> mSectors;

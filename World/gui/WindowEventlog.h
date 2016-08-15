@@ -3,6 +3,7 @@
 #include "WindowBase.h"
 #include <tools\StringIntern.h>
 #include <boost\circular_buffer.hpp>
+#include <Core/EventBus.h>
 
 class World;
 
@@ -22,5 +23,5 @@ public:
 	}
 
 private:
-	boost::circular_buffer<std::string> evlog;
+	boost::circular_buffer<PEvent> evlog;
 };

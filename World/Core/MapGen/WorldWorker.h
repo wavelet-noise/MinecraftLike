@@ -14,19 +14,23 @@ class Sector;
 class WorldWorker : public boost::noncopyable
 {
 public:
-  static WorldWorker &Get();
-  WorldWorker();
+	static WorldWorker &Get(World &w);
+	WorldWorker();
+	~WorldWorker();
+
+	World *w;
 
 	std::shared_ptr<Sector> GetSector(const SPos &v);
 	void Process();
+	void WorldPass();
 
 private:
-  std::shared_ptr<Sector> Generate(const SPos &spos);
-  SPos mLast; //replace with queue
-  
-  std::mutex mQueueMutex;
+	std::shared_ptr<Sector> Generate(const SPos &spos);
+	SPos mLast; //replace with queue
+
+	std::mutex mQueueMutex;
 	std::unordered_map<SPos, std::shared_ptr<Sector>> mReady;
 	std::unordered_set<SPos> mRequested;
 
-  std::unique_ptr<GenStrategy> mGenerator;
+	std::unique_ptr<GenStrategy> mGenerator;
 };

@@ -128,6 +128,11 @@ PGameObjectTessellator Tessellator::GetBlock(const WBPos &pos)
 	return nullptr;
 }
 
+void Tessellator::Interrupt()
+{
+	//mThread.release();
+}
+
 std::shared_ptr<SectorTessellator> Tessellator::FindSector(const SPos &pos)
 {
 	static SPos last{ -99999 };

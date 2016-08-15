@@ -13,7 +13,7 @@ class DB
 public:
   static DB &Get();
 
-  void Registry(const StringIntern &name, PGameObject block, bool isStatic = true);
+  void Registry(const StringIntern &name, PGameObject block, bool isStatic = true, bool isActive = false);
   void RegistryTesselator(const StringIntern &name, PGameObjectTessellator tess);
   void ReloadDirectory(const std::string &mDir);
 
@@ -43,7 +43,7 @@ public:
 private:
   friend class WindowDb;
   friend class Recipe;
-  std::unordered_map<StringIntern, std::tuple<PGameObject, bool>> mObjects;
+  std::unordered_map<StringIntern, std::tuple<PGameObject, bool, bool>> mObjects; //etalon, dynamic, active
   std::unordered_map<StringIntern, PGameObjectTessellator> mTess;
   std::unordered_map<StringIntern, std::vector<StringIntern>> mTags; // what, where
   std::unordered_map<StringIntern, std::vector<StringIntern>> mObjTags; // where, what

@@ -23,7 +23,7 @@ std::string AutoVersion::GetTitle()
 	ifs >> s2;
 
     struct tm ts;
-    localtime_s(&ts, &t);
+    gmtime_s(&ts, &t);
     char buf[80];
     strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S", &ts);
     sprintf_s(buff, "%s %s %s %s\0", "Alpha Mensae", s2.c_str(), "from", buf);

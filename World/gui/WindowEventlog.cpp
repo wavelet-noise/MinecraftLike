@@ -4,7 +4,7 @@
 WindowEventlog::WindowEventlog()
 {
 	mOpen = false;
-	evlog.resize(1000);
+	evlog.resize(100);
 }
 
 void WindowEventlog::Draw(glm::vec2 mainwin_size, float gt)
@@ -13,14 +13,17 @@ void WindowEventlog::Draw(glm::vec2 mainwin_size, float gt)
 	{
 		for (const auto &e : EventBus::Get().ListenChannel<Event>())
 		{
-			evlog.push_back(e->to_string());
+			evlog.push_back(e);
 		}
 
 		ImGui::SetNextWindowSize({500,400});
 		ImGui::Begin("Eventlog", &mOpen);
 		for (const auto &s : evlog)
 		{
-			ImGui::Text(s.c_str());
+			if(s)
+			{
+				s->DrawGui(gt);
+			}
 		}
 		ImGui::End();
 	}

@@ -8,6 +8,7 @@
 #include "WindowCraftQueue.h"
 #include "WindowRecipe.h"
 #include "WindowRooms.h"
+#include <WindowProfesions.h>
 
 void WS::Draw(glm::vec2 wsize, float gt)
 {
@@ -20,10 +21,16 @@ void WS::Draw(glm::vec2 wsize, float gt)
 	WindowTools &wt = WindowTools::Get();
 	WindowCraftQueue &wcq = WindowCraftQueue::Get();
 	WindowRooms &wro = WindowRooms::Get();
+	WindowProfessions &wpr = WindowProfessions::Get();
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_F3))
 	{
 		wp.Toggle();
+	}
+
+	if (ImGui::IsKeyPressed(GLFW_KEY_F4))
+	{
+		wpr.Toggle();
 	}
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_F5))
@@ -44,4 +51,5 @@ void WS::Draw(glm::vec2 wsize, float gt)
 	wt.Draw(wsize, gt);
 	wcq.Draw(wsize, gt);
 	wro.Draw(wsize, gt);
+	wpr.Draw(wsize, gt);
 }

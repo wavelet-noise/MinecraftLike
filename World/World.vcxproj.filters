@@ -49,6 +49,9 @@
     <Filter Include="Core\events">
       <UniqueIdentifier>{c0ae2a91-b8ce-4959-bbc3-ed4469afb2a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\orders\professions">
+      <UniqueIdentifier>{c376dbd4-f6fa-4e79-b741-8ce5d9032284}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsCounter.cpp" />
@@ -320,6 +323,27 @@
     </ClCompile>
     <ClCompile Include="Core\orders\OrderDig.cpp">
       <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Profession.cpp">
+      <Filter>Core\orders\professions</Filter>
+    </ClCompile>
+    <ClCompile Include="Gatherer.cpp">
+      <Filter>Core\orders\professions</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowProfesions.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Cooker.cpp">
+      <Filter>Core\orders\professions</Filter>
+    </ClCompile>
+    <ClCompile Include="Medic.cpp">
+      <Filter>Core\orders\professions</Filter>
+    </ClCompile>
+    <ClCompile Include="EveryProf.cpp">
+      <Filter>Core\orders\professions</Filter>
+    </ClCompile>
+    <ClCompile Include="Miner.cpp">
+      <Filter>Core\orders\professions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -655,6 +679,30 @@
     </ClInclude>
     <ClInclude Include="Core\orders\OrderDig.h">
       <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Profession.h">
+      <Filter>Core\orders\professions</Filter>
+    </ClInclude>
+    <ClInclude Include="Gatherer.h">
+      <Filter>Core\orders\professions</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowProfesions.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="VerticalText.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Cooker.h">
+      <Filter>Core\orders\professions</Filter>
+    </ClInclude>
+    <ClInclude Include="Medic.h">
+      <Filter>Core\orders\professions</Filter>
+    </ClInclude>
+    <ClInclude Include="EveryProf.h">
+      <Filter>Core\orders\professions</Filter>
+    </ClInclude>
+    <ClInclude Include="Miner.h">
+      <Filter>Core\orders\professions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

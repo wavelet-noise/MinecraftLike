@@ -4,7 +4,8 @@ class WorldGenMountains : public GenStrategy
 {
 public:
 
-  // Унаследовано через GenStrategy
+	void WorldPass(World& w);
+	// Унаследовано через GenStrategy
   virtual void Generate(Sector & s) override;
 };
 

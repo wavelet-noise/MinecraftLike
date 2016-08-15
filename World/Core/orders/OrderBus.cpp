@@ -102,7 +102,3 @@ float Order::Tiring() const
 {
 	return 0.f;
 }
-
-void Order::Perform(const GameObjectParams & params, PGameObject performer)
-{
-}

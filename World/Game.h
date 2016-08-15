@@ -46,7 +46,6 @@ private:
   std::unique_ptr<Tessellator> mTessellator;
 
   std::unique_ptr<SectorLoader> mSectorLoader;
-  std::list<PGameObject> controlled;
   std::unique_ptr<SpriteBatch> sb;
 
   PTexture depthTextureId;

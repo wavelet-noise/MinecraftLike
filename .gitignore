@@ -35,3 +35,12 @@ World.VC.opendb
 /World.VC.VC.opendb
 /World/ver
 *.txt
+/World/Save
+/World/Save
+/CoreAgents
+*.sec
+__SkipCodeRush
+AMlib/AMlib.vcxproj
+AMlib/AMlib.vcxproj.filters
+*.i-*
+*.vspx

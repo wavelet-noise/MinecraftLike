@@ -229,22 +229,31 @@ void Controlable::Update(const GameObjectParams & params)
 
 	if (!c->order || c->order->GetId() == Order::Idfor<OrderWander>())
 	{
-		const auto &o = OrderBus::Get().orders;
+		const auto &all_orders_queue = OrderBus::Get().orders;
 		glm::vec3 nearest{ 99999 };
 		POrder nearest_order;
 		auto p = mParent->GetAgent<PositionAgent>();
 
-		for (const auto &i : o)
+		for (const auto &i : all_orders_queue)
+		{
 			if (!i->IsTaken() && glm::distance(p->Get(), i->GetPos()) < glm::distance(p->Get(), nearest))
 			{
 				if (auto tire = mParent->GetAgent<ActivityConsumer>())
 				{
 					if (tire->IsTired() && i->Tiring() > 0) // tired creatures cannot take tiring orders
 						continue;
+
+					if (auto prof = mParent->GetAgent<ProfessionPerformer>())
+					{
+						if (!prof->CanPeformOrder(i))
+							continue;
+					}
 				}
+
 				nearest = i->GetPos();
 				nearest_order = i;
 			}
+		}
 
 		if (auto ch = mParent->GetAgent<Chest>()) //empty pockets order
 		{
@@ -316,7 +325,7 @@ PAgent Creature::Clone(GameObject * parent, const std::string & name)
 	return t;
 }
 
-void Creature::Clear()
+void Creature::DiscardCurrentOrder()
 {
 	if (order->IsDone())
 	{
@@ -386,7 +395,7 @@ void Creature::Update(const GameObjectParams & params)
 			tire->Tire(order->Tiring());
 			if (tire->IsTired())
 			{
-				Clear();
+				DiscardCurrentOrder();
 			}
 		}
 
@@ -401,7 +410,7 @@ void Creature::Update(const GameObjectParams & params)
 				path = Astar(glm::trunc(p->Get()), wishpos, params.world);
 				if (path.empty() || order->IsDone())
 				{
-					Clear();
+					DiscardCurrentOrder();
 				}
 			}
 		}
@@ -423,8 +432,8 @@ void Creature::DrawGui(float gt)
 				ImGui::Text("empty");
 
 			for (const auto &i : personal)
-			{	
-				if(i)
+			{
+				if (i)
 					ImGui::Text(i->to_string().c_str());
 			}
 			ImGui::TreePop();
@@ -886,7 +895,7 @@ void Talker::Update(const GameObjectParams & params)
 	{
 		auto p = mParent->GetAgent<PositionAgent>();
 		auto in_cell = params.world->GetCreaturesAt(p->Get());
-		if(in_cell.size() > 1)
+		if (in_cell.size() > 1)
 			for (const auto &in : in_cell)
 			{
 				auto it = in_cell.begin();
@@ -906,4 +915,84 @@ void Talker::DrawGui(float gt)
 		}
 		ImGui::TreePop();
 	}
+}
+
+PAgent ProfessionPerformer::Clone(GameObject* parent, const std::string& name)
+{
+	auto t = MakeAgent<ProfessionPerformer>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void ProfessionPerformer::Update(const GameObjectParams& params)
+{
+	for (const auto &p : prof)
+	{
+		p->Perform(params, mParent->shared_from_this());
+	}
+}
+
+void ProfessionPerformer::DrawGui(float gt)
+{
+	if (ImGui::TreeNode("Professions"))
+	{
+		for (const auto &p : prof)
+		{
+			ImGui::Text(p->Name().c_str());
+		}
+		ImGui::TreePop();
+	}
+}
+
+bool ProfessionPerformer::CanPeformOrder(POrder o)
+{
+	for (const auto &p : prof)
+	{
+		if (p->CanPeformOrder(o))
+			return true;
+	}
+
+	return false;
+}
+
+PAgent ChainDestruction::Clone(GameObject* parent, const std::string& name)
+{
+	auto t = MakeAgent<ChainDestruction>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void ChainDestruction::Update(const GameObjectParams& params)
+{
+}
+
+void ChainDestruction::DrawGui(float gt)
+{
+}
+
+void ChainDestruction::OnDestroy(const GameObjectParams& params)
+{
+	if (destroyed)
+		return;
+
+	destroyed = true;
+
+	std::vector<glm::vec3> neib = {{ 0,  0, -1 }, {  0, 0, 1 },
+	                               { 1,  0,  0 }, { -1, 0, 0 },
+	                               { 0, -1,  0 }, {  0, 1, 0 }};
+
+	for(const auto &n : neib)
+	{
+		if (auto ne = params.world->GetBlock(params.pos + n))
+		{
+			auto dest_it = std::find(destroys.begin(), destroys.end(), ne->GetId());
+			if(dest_it != destroys.end())
+				params.world->SetBlock(params.pos + n, nullptr);
+		}
+	}
+}
+
+void ChainDestruction::JsonLoad(const rapidjson::Value& val)
+{
+	JSONLOAD(NVP(destroys));
 }

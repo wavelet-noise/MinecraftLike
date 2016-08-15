@@ -3,7 +3,11 @@
 class GenStrategy
 {
 public:
+	virtual ~GenStrategy()
+	{
+	}
 
-  virtual void Generate(Sector &s) = 0;
+	virtual void Generate(Sector &s) = 0;
+	virtual void WorldPass(World &w) = 0;
 };
 

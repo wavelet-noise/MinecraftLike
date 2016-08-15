@@ -1,5 +1,6 @@
 #include "WorldGenMountains.h"
 #include "Core\MapGen\PerlinNoise.h"
+#include "Core\World.h"
 
 #define GEN_OCT 5
 float flatness(float tx, float ty)
@@ -40,6 +41,49 @@ bool solid(float tx, float ty, float tz)
 }
 #undef GEN_OCT
 
+static std::vector<glm::vec3> treepos;
+static std::vector<glm::vec3> bushpos;
+
+void WorldGenMountains::WorldPass(World &w)
+{
+	auto log = DB::Get().Create(StringIntern("log"));
+	auto leaves = DB::Get().Create(StringIntern("leaves"));
+	auto berry_bush = DB::Get().Create(StringIntern("berry_bush"));
+
+	for (auto &tp : treepos)
+	{
+		int h = rand() % 10;
+
+		for(int i = -3; i < 3; i++)
+			for (int j = -3; j < 3; j++)
+				for (int k = -3; k < 3; k++)
+			{
+				if(glm::length(glm::vec3(i,j,k)) <= 3)
+				{
+					w.SetBlock(tp + glm::vec3(0 + i, 0 + j, h + k), leaves->Clone(), true);
+				}
+			}
+
+		for (int i = 0; i < h; i++)
+		{
+			w.SetBlock(tp + glm::vec3(0, 0, i), log->Clone(), true);
+		}
+	}
+
+	for (auto &tp : bushpos)
+	{
+		int h = rand() % 3;
+		for (int i = -3; i < 3; i++)
+			for (int j = -3; j < 3; j++)
+			{
+				w.SetBlock(tp + glm::vec3(0 + i, 0 + j, 0), berry_bush->Clone(), true);
+			}
+	}
+
+	treepos.clear();
+	bushpos.clear();
+}
+
 void WorldGenMountains::Generate(Sector & s)
 {
 	const size_t size = static_cast<size_t>(SECTOR_SIZE);
@@ -67,6 +111,16 @@ void WorldGenMountains::Generate(Sector & s)
 	{
 		ore_dots.push_back(DB::Get().Create(r));
 	}
+
+	auto place_tree = [&](const glm::vec3 &pos) {
+		if(rand()%8 == 1)
+			treepos.push_back(pos);
+	};
+
+	auto place_berry = [&](const glm::vec3 &pos) {
+		if (rand() % 8 == 1)
+			bushpos.push_back(pos);
+	};
 
 	//auto rock = DB::Get().Taglist("rock");
 	//std::vector<PGameObject> rocks;
@@ -137,7 +191,10 @@ void WorldGenMountains::Generate(Sector & s)
 									s.SetBlock({ i, j, k }, bf6);
 									break;
 								case 4:
-									s.SetBlock({ i, j, k }, bt->Clone());
+									place_tree({ tx, ty, tz });
+									break;
+								case 5:
+									place_berry({ tx, ty, tz });
 									break;
 								default:
 									s.SetBlock({ i, j, k }, bf2);

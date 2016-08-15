@@ -37,9 +37,9 @@ DB &DB::Get()
 	return obj;
 }
 
-void DB::Registry(const StringIntern &name, PGameObject block, bool isStatic)
+void DB::Registry(const StringIntern &name, PGameObject block, bool isStatic, bool isActive)
 {
-	mObjects[name] = std::make_tuple(block, isStatic);
+	mObjects[name] = std::make_tuple(block, isStatic, isActive);
 }
 
 void DB::RegistryTesselator(const StringIntern & name, PGameObjectTessellator tess)
@@ -93,6 +93,12 @@ void DB::ReloadDirectory(const std::string & mDir)
 					if (val.HasMember("dynamic"))
 					{
 						dyn = val["dynamic"].GetBool_();;
+					}
+
+					bool act = false;
+					if (val.HasMember("active"))
+					{
+						act = val["active"].GetBool_();;
 					}
 
 					std::string id = "noid";
@@ -236,7 +242,7 @@ void DB::ReloadDirectory(const std::string & mDir)
 					}
 
 
-					mObjects[StringIntern(id)] = std::make_tuple(b, dyn);
+					mObjects[StringIntern(id)] = std::make_tuple(b, dyn, act);
 				}
 
 			}
@@ -254,7 +260,7 @@ void DB::ReloadDirectory(const std::string & mDir)
 
 		for(auto & n : ngo)
 		{
-			mObjects[n->GetId()] = std::make_tuple(n, std::get<1>(oldgo));
+			mObjects[n->GetId()] = std::make_tuple(n, std::get<1>(oldgo), std::get<2>(oldgo));
 			auto &l = mObjTags[n->GetId()];
 			l.insert(l.end(), objtags.begin(), objtags.end());
 
@@ -305,7 +311,7 @@ void DB::ReloadDirectory(const std::string & mDir)
 	{
 		b->mAgents[m.first] = m.second();
 	}
-	mObjects[StringIntern("allagents")] = std::make_tuple(b, false);
+	mObjects[StringIntern("allagents")] = std::make_tuple(b, false, false);
 }
 
 const std::vector<StringIntern> &DB::Taglist(const StringIntern & name) const

@@ -44,6 +44,9 @@
 		},
 		{
 			"type":"Talker"
+		},
+		{
+			"type":"ProfessionPerformer"
 		}
 	],
 	"dynamic":true

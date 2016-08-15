@@ -98,7 +98,10 @@
         "type":"Block",
         "id":"log",
         "agents":[  
-
+			{
+				"type":"ChainDestruction",
+				"destroys":["leaves", "log"]
+			}
         ],
         "tesselator":[  
             {  
@@ -109,13 +112,17 @@
                 "transparent":false
             }
         ],
+		"dynamic":true,
         "placeable":true
     },
     {  
         "type":"Block",
         "id":"leaves",
         "agents":[  
-
+			{
+				"type":"ChainDestruction",
+				"destroys":["leaves"]
+			}
         ],
         "tesselator":[  
             {  
@@ -126,6 +133,7 @@
                 "transparent":false
             }
         ],
+		"dynamic":true,
         "placeable":true
     },
     {  

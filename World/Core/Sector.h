@@ -8,7 +8,8 @@
 #include "Config.h"
 #include "DB.h"
 
-#include <boost\serialization\serialization.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 #include <list>
 #include "SectorBase.h"
 
@@ -17,78 +18,61 @@ class Creature;
 class Sector : public SectorBase<PGameObject>
 {
 public:
-  Sector(const SPos &position);
-  ~Sector();
+	Sector(const SPos &position);
+	~Sector();
 
-  const SPos &GetPos() const;
+	const SPos &GetPos() const;
 
-  // Установить блок в заданную позицию.
-  // Существующий блок будет удален.
-  void SetBlock(const SBPos &pos, PGameObject block);
+	// Установить блок в заданную позицию.
+	// Существующий блок будет удален.
+	void SetBlock(const SBPos &pos, PGameObject block);
 
-  void Spawn(const SBPos &position, PGameObject creature);
-  void Place(const SBPos &position, PGameObject creature);
-  void Repace(const SBPos &position, PGameObject creature);
-  std::list<PGameObject> GetCreatures();
+	void Spawn(const SBPos &position, PGameObject creature);
+	void Place(const SBPos &position, PGameObject creature);
+	void Repace(const SBPos &position, PGameObject creature);
+	std::list<PGameObject> GetCreatures();
 
-  void SayChanged();
+	void SayChanged();
 
-  void Update(class World *world, float dt);
+	void Update(class World *world, float dt);
 
-  void Draw(class Tessellator *tess);
+	void Draw(class Tessellator *tess);
 
-  void SetSlise(int s);
+	void SetSlise(int s);
 
 private:
-  SPos mPos;
+	SPos mPos;
 
-  class Tessellator *mTessellator = nullptr;
+	class Tessellator *mTessellator = nullptr;
 
-  std::list<PGameObject> creatures;
-  std::list<std::tuple<PGameObject, glm::vec3>> items;
+	std::list<PGameObject> creatures;
+	std::list<std::tuple<PGameObject, glm::vec3>> items;
+	std::vector<PGameObject> mActive; //only dynamic too
 
-//   friend class boost::serialization::access;
-// 
-//   template<class Archive>
-//   void save(Archive &ar, const unsigned int) const
-//   {
-//     for (int i = 0; i < SECTOR_CAPACITY; ++i)
-//     {
-//       ar << std::string(mBlocks[i]->GetId());
-//     }
-//   }
-// 
-//   template<class Archive>
-//   void load(Archive &ar, const unsigned int)
-//   {
-//     for (int i = 0; i < SECTOR_CAPACITY; ++i)
-//     {
-//       std::string b;
-//       ar >> b;
-// 
-//       mBlocks[i] = DB::Get().Create(StringIntern(b));
-//     }
-//   }
-// 
-//   BOOST_SERIALIZATION_SPLIT_MEMBER()
+	friend class boost::serialization::access;
+
+	void save(boost::archive::binary_oarchive& ar, const unsigned int) const;
+	void load(boost::archive::binary_oarchive& ar, const unsigned int);
+
+	BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 };
 
-// namespace boost {
-//   namespace serialization {
-//     template<class Archive>
-//     inline void save_construct_data(Archive &ar, const Sector *t, const unsigned int)
-//     {
-//       ar << t->GetPos();
-//     }
-// 
-//     template<class Archive>
-//     inline void load_construct_data(Archive &ar, Sector *t, const unsigned int)
-//     {
-//       glm::vec3 spos;
-//       ar >> spos;
-// 
-//       new (t) Sector(spos);
-//     }
-//   }
-// }
+//namespace boost {
+//  namespace serialization {
+//    template<class Archive>
+//    inline void save_construct_data(Archive &ar, const Sector *t, const unsigned int)
+//    {
+//      ar << t->GetPos();
+//    }
+//
+//    template<class Archive>
+//    inline void load_construct_data(Archive &ar, Sector *t, const unsigned int)
+//    {
+//      glm::vec3 spos;
+//      ar >> spos;
+//
+//      new (t) Sector(spos);
+//    }
+//  }
+//}

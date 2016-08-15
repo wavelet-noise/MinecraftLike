@@ -10,6 +10,8 @@ public:
 
 	void Draw(glm::vec2 wsize, float gt);
 
+	World * w;
+
 	static WS &Get()
 	{
 		static WS w;

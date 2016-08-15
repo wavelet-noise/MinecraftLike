@@ -8,6 +8,7 @@
 #include <boost\circular_buffer.hpp>
 #include <deque>
 #include <boost\format.hpp>
+#include <Profession.h>
 
 using PPositionAgent = std::unique_ptr<class PositionAgent>;
 
@@ -72,7 +73,7 @@ public:
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
-	void Clear();
+	void DiscardCurrentOrder();
 
 	void look_around(const GameObjectParams & params);
 
@@ -364,3 +365,54 @@ public:
 };
 
 REGISTER_AGENT(Talker)
+
+class ProfessionPerformer : public Agent
+{
+public:
+	AGENT(ProfessionPerformer);
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui(float gt) override;
+
+	float GetFreq() const override
+	{
+		return 4.5f;
+	}
+
+	bool CanPeformOrder(POrder o);
+
+	std::vector<PProfession> prof;
+};
+
+REGISTER_AGENT(ProfessionPerformer)
+
+class ChainDestruction : public Agent
+{
+public:
+	AGENT(ChainDestruction);
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui(float gt) override;
+
+	void OnDestroy(const GameObjectParams &params) override;
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	float GetFreq() const override
+	{
+		return 4.5f;
+	}
+
+	std::vector<StringIntern> destroys;
+	bool destroyed = false;
+};
+
+REGISTER_AGENT(ChainDestruction)

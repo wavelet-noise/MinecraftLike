@@ -30,6 +30,39 @@
 },
 {
 		"type":"Block",
+		"id":"berry_bush",
+		"agents":[
+			{
+				"type":"Ore",
+				"contains":[["raspberry", 1, 0.1]],
+				"size":100
+			}
+		],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "all":"berry_bush"
+                },
+                "transparent":false
+            }
+        ],
+		"placeable":true,
+		"dynamic":true,
+		"walkable":true
+},
+{
+	"type":"Item",
+    "id":"raspberry",
+    "agents":[
+	{
+		"type":"Food",
+		"nutrition":20
+	}
+    ]
+},
+{
+		"type":"Block",
 		"id":"tree",
 		"agents":[
 			{

@@ -63,6 +63,7 @@ Game::Game()
 	WindowCraftQueue::Get().w = ww;
 	WindowDb::Get().w = ww;
 	WindowRooms::Get().w = ww;
+	WS::Get().w = ww;
 
 	generateShadowFBO();
 }
@@ -107,7 +108,7 @@ int Game::Run()
 	boost::thread gen_thread([]() {
 		while (true)
 		{
-			WorldWorker::Get().Process();
+			WorldWorker::Get(*mWorld).Process();
 			boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
 		}
 	});
@@ -128,13 +129,16 @@ int Game::Run()
 		currTime = static_cast<float>(glfwGetTime());
 
 		Update(currTime - lastTime);
+
+		currTime = static_cast<float>(glfwGetTime());
 		Draw(currTime - lastTime);
 
 		mWindow->Update();
 		//std::this_thread::sleep_for(std::chrono::milliseconds(1)); ?!
 	}
 
-	mTessellator.reset();
+	mTessellator->Interrupt();
+	mTessellator.release();
 
 	gen_thread.interrupt();
 
@@ -167,20 +171,22 @@ void Game::Update(float dt)
 		{
 			auto c = DB::Get().Create("caracter");
 			c->GetAgent<Chest>()->Push(DB::Get().Create("nutrition"), 100);
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, c));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			c->GetAgent<Chest>()->Push(DB::Get().Create("nail_material_iron"), 200);
+
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, c));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
 		}
 	}
 
@@ -432,7 +438,7 @@ void Game::Draw(float dt)
 
 	ImGui::Begin("Colony", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 	int i = 0;
-	for (auto &c : controlled)
+	for (auto &c : mWorld->controlled)
 	{
 		if (ImGui::TreeNode((std::string("creature_") + std::to_string(i)).c_str()))
 		{
@@ -465,7 +471,7 @@ void Game::Draw(float dt)
 
 	ImGui::Render();
 
-	WindowPerfomance::Get().DtUpdate(glfwGetTime() - drawtime, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
+	WindowPerfomance::Get().DtUpdate(dt, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
 }
 
 World * Game::GetWorld()
