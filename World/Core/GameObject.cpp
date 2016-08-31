@@ -100,10 +100,10 @@ StringIntern GameObject::GetId()
 void GameObject::save(boost::archive::binary_oarchive& ar, const unsigned) const
 {
 	ar << std::string(id);
-	for(const auto &a : mAgents)
-	{
-		ar << a;
-	}
+	//for(const auto &a : mAgents)
+	//{
+//		ar << a;
+	//}
 }
 
 void GameObject::load(boost::archive::binary_oarchive& ar, const unsigned)

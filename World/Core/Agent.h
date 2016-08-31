@@ -14,6 +14,12 @@
 #include <memory>
 #include <type_traits>
 
+namespace boost{
+	namespace archive{
+		class binary_oarchive;
+	}
+}
+
 class GameObject;
 
 using PAgent = std::shared_ptr<class Agent>;
@@ -31,12 +37,18 @@ struct AgSync
 	bool executed;
 };
 
+#ifdef _MSC_VER > 0
+#define AM_NOVTABLE __declspec(novtable)
+#elif
+#define AM_NOVTABLE /*__declspec(novtable)*/
+#endif
+
 // Агент.
 // Тип агента задается потомками на этапе компиляции и не меняется. Аналогичен типу объекта.
 // Имя агента задается потомками в конструкторе. Может использоваться для идентификации
 // экземпляров агентов. Также может отсутствовать.
 // У агентов, которые обязательно присутствуют в игровом объекте, имя должно отсутствовать.
-class Agent
+AM_NOVTABLE class Agent
 {
 public:
 	Agent() = default;
@@ -86,6 +98,10 @@ public:
 
 	// client/server paralell
 	virtual void JsonLoad(const rapidjson::Value &val);
+
+	void save(boost::archive::binary_oarchive& ar, const unsigned) const;
+
+	void load(boost::archive::binary_oarchive& ar, const unsigned);
 
 protected:
 	GameObject *mParent;

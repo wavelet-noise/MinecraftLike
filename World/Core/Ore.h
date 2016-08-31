@@ -20,7 +20,7 @@ public:
 			if (val.Capacity() >= 2)
 				count = val[1].GetInt();
 			if (val.Capacity() >= 3)
-				chance = val[2].GetDouble();
+				chance = static_cast<float>(val[2].GetDouble());
 		}
 	};
 

@@ -19,5 +19,5 @@ DragNDrop & DragNDrop::Get()
 
 bool DragNDrop::Busy()
 {
-  return dragged.obj.get();
+  return !!dragged.obj.get();
 }
