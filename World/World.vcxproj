@@ -100,6 +100,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Medic.cpp" />
     <ClCompile Include="Miner.cpp" />
+    <ClCompile Include="miniz.c" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Profession.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />

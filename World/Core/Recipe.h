@@ -48,6 +48,8 @@ class Chest;
 using PRecipe = std::shared_ptr<Recipe>;
 using PCRecipe = std::shared_ptr<const Recipe>;
 
+using PDeepRecipe = std::shared_ptr <class DeepRecipe>;
+
 class Recipe : public std::enable_shared_from_this<Recipe>
 {
 public:
@@ -60,8 +62,6 @@ public:
 	std::vector<StringIntern> materials;
 
 	float duration = 0;
-
-	void DrawSome(const StringIntern & s, float gt) const;
 
 	void DrawGui(float gt);
 
@@ -107,4 +107,16 @@ public:
 
 		return false;
 	}
+};
+
+class DeepRecipe
+{
+public:
+	PRecipe recipe;
+	std::vector<PDeepRecipe> input_expantion;
+	bool incomplete = false;
+	float need_count = 1;
+	bool first_show = true;
+
+	void DrawGui(float gt);
 };

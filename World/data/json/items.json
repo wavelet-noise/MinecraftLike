@@ -25,6 +25,11 @@
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
+	},
+	"recipe":{
+		"input":[["ingot_%material%", 1]],
+		"output":[["bar_%material%", 4]],
+		"materials":["tag_material_metal"]
 	}
 },{
 	"type":"Item",
@@ -52,6 +57,11 @@
 	"template":{
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
+	},
+	"recipe":{
+		"input":[["bar_%material%", 1]],
+		"output":[["wire_%material%", 4]],
+		"materials":["tag_material_metal"]
 	}
 },{
 	"type":"Item",
@@ -75,7 +85,12 @@
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_wood"]
 	},
-	"tags":["tag_stick"]
+	"tags":["tag_stick"],
+	"recipe":{
+			"input":[["plank_%material%", 1]],
+			"output":[["stick_%material%", 5]],
+			"materials":["tag_material_wood"]
+		}
 },{
 	"type":"Item",
     "id":"metal_plate",
@@ -148,7 +163,12 @@
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_wood"]
 	},
-	"tags":["tag_plank"]
+	"tags":["tag_plank"],
+	"recipe":{
+			"input":[["lumber_%material%", 1]],
+			"output":[["plank_%material%", 4]],
+			"materials":["tag_material_wood"]
+		}
 },{
 	"type":"Item",
     "id":"hard_bed",
@@ -202,7 +222,11 @@
 		}
     ],
     "placeable":true,
-    "dynamic":true
+    "dynamic":true,
+	"recipe":{
+				"input":[["tag_plank", 4], ["tag_nail", 8]],
+				"output":[["wooden_crate", 1]]
+			}
 },{
 	"type":"Item",
     "id":"wooden_chair",
@@ -216,7 +240,11 @@
 		}
     ],
     "placeable":true,
-    "dynamic":true
+    "dynamic":true,
+	"recipe":{
+				"input":[["tag_plank", 2], ["tag_stick", 4], ["tag_nail", 6]],
+				"output":[["wooden_chair", 1]]
+			}
 },{
 	"type":"Item",
     "id":"nail",
@@ -226,7 +254,12 @@
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_metal"]
 	},
-	"tags":["tag_nail"]
+	"tags":["tag_nail"],
+	"recipe":{
+			"input":[["wire_%material%", 1]],
+			"output":[["nail_%material%", 10]],
+			"materials":["tag_material_metal"]
+		}
 },{
 	"type":"Item",
     "id":"pickaxe",
@@ -262,9 +295,8 @@
     "agents":[
     ],
 	"template":{
-		"type":"TemplateItemMaterialBase",
-		"materials":["tag_material_metal"],
-		"material_base":"pickaxe_stick"
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
 	},
 	"recipe":{
 				"input":[["ingot_%material%", 1]],
@@ -277,8 +309,9 @@
     "agents":[
     ],
 	"template":{
-		"type":"TemplateItemMaterial",
-		"materials":["tag_material_metal"]
+		"type":"TemplateItemMaterialBase",
+		"materials":["tag_material_metal"],
+		"material_base":"pickaxe_stick"
 	},
 	"recipe":{
 				"input":[["hammer_head_%material%", 1], ["tag_stick", 1]],
@@ -291,8 +324,9 @@
     "agents":[
     ],
 	"template":{
-		"type":"TemplateItemMaterial",
-		"materials":["tag_material_metal"]
+		"type":"TemplateItemMaterialBase",
+		"materials":["tag_material_metal"],
+		"material_base":"file_base"
 	},
 	"recipe":{
 				"input":[["bar_%material%", 1], ["tag_stick", 1]],
@@ -305,8 +339,9 @@
     "agents":[
     ],
 	"template":{
-		"type":"TemplateItemMaterial",
-		"materials":["tag_material_metal"]
+		"type":"TemplateItemMaterialBase",
+		"materials":["tag_material_metal"],
+		"material_base":"screwdriver_base"
 	},
 	"recipe":{
 				"input":[["bar_%material%", 1], ["tag_stick", 1]],

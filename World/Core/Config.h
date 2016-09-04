@@ -13,7 +13,7 @@
 
 namespace detail
 {
-	using TypesSize = std::tuple<uint8_t, uint16_t, uint32_t, uint32_t>;
+	using TypesSize = std::tuple<uint8_t, uint16_t, uint32_t, uint64_t>;
 
 	constexpr size_t NumberOfBits(size_t x)
 	{

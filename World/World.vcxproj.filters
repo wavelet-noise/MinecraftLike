@@ -345,6 +345,7 @@
     <ClCompile Include="Miner.cpp">
       <Filter>Core\orders\professions</Filter>
     </ClCompile>
+    <ClCompile Include="miniz.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />

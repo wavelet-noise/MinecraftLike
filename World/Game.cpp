@@ -154,7 +154,7 @@ int Game::Run()
 void Game::Update(float dt)
 {
 	SPos secPos = { 0,0,0 };
-	mSectorLoader->SetPos(secPos);
+	mSectorLoader->SetPos(mCamera->GetPos() / float(SECTOR_SIZE));
 
 	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
 	{

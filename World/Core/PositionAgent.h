@@ -416,3 +416,25 @@ public:
 };
 
 REGISTER_AGENT(ChainDestruction)
+
+class Workshop : public Agent
+{
+public:
+	AGENT(Workshop);
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui(float gt) override;
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	float GetFreq() const override
+	{
+		return 5.0f;
+	}
+};
+
+REGISTER_AGENT(Workshop)

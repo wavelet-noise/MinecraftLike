@@ -63,7 +63,7 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
 			EventBus::Get().Publish<EventSectorReady>(psec);
 
 			// Добавлен новый сектор, сообщим соседним секторам, что б перестроились.
-			/*SPos offset[] =
+			SPos offset[] =
 			{
 			  {  1,  0,  0 },
 			  { -1,  0,  0 },
@@ -74,11 +74,11 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
 			};
 			for (const auto &i : offset)
 			{
-			  if (auto &sector = FindSector(position + i))
-			  {
-				sector->SayChanged();
-			  }
-			}*/
+				if (auto sector = FindSector(position + i))
+				{
+					sector->SayChanged();
+				}
+			}
 			return psec;
 		}
 
@@ -205,7 +205,7 @@ PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block, bool no_repla
 
 PGameObject World::Spawn(const WBPos & position, PGameObject creature)
 {
-	if (auto &s = GetSector(cs::WBtoS(position)))
+	if (auto s = GetSector(cs::WBtoS(position)))
 	{
 		s->Spawn(position, creature);
 		creature->OnCreate({ this, s.get(), position, 0 });
@@ -218,7 +218,7 @@ PGameObject World::Spawn(const WBPos & position, PGameObject creature)
 
 PGameObject World::Place(const SBPos & position, PGameObject item)
 {
-	if (auto &s = GetSector(cs::WBtoS(position)))
+	if (auto s = GetSector(cs::WBtoS(position)))
 	{
 		s->Place(position, item);
 		item->OnCreate({ this, s.get(), position, 0 });
@@ -231,7 +231,7 @@ PGameObject World::Place(const SBPos & position, PGameObject item)
 
 PGameObject World::Replace(const SBPos & position, PGameObject item)
 {
-	if (auto &s = GetSector(cs::WBtoS(position)))
+	if (auto s = GetSector(cs::WBtoS(position)))
 	{
 		s->Repace(position, item);
 	}
@@ -318,7 +318,7 @@ std::list<PGameObject> World::GetCreaturesAt(const glm::ivec3 & cell)
 				list.push_back(c);
 			}
 		}
-	} 
+	}
 
 	return list;
 }

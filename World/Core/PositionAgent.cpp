@@ -996,3 +996,27 @@ void ChainDestruction::JsonLoad(const rapidjson::Value& val)
 {
 	JSONLOAD(NVP(destroys));
 }
+
+PAgent Workshop::Clone(GameObject* parent, const std::string& name)
+{
+	auto t = MakeAgent<Workshop>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void Workshop::Update(const GameObjectParams& params)
+{
+}
+
+void Workshop::DrawGui(float gt)
+{
+	auto rec = DB::Get().GetMachine(mParent->GetId());
+	for(const auto &a : rec)
+	{
+		a->DrawGui(gt);
+	}
+}
+
+void Workshop::JsonLoad(const rapidjson::Value& val)
+{
+}

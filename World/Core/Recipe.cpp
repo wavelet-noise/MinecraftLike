@@ -33,7 +33,7 @@ std::string myreplace(std::string s, const std::string &toReplace, const std::st
 	return s.replace(t, toReplace.length(), replaceWith);
 }
 
-void DrawSprite(const StringIntern &s)
+void DrawSprite(const StringIntern &s, ImColor c)
 {
 	auto &atl = TextureManager::Get().GetTexture(s);
 	auto &tex = std::get<0>(atl);
@@ -42,7 +42,7 @@ void DrawSprite(const StringIntern &s)
 	auto uv = glm::vec2(atluv.x, atluv.y);
 	auto uv2 = glm::vec2(atluv.z, atluv.w);
 
-	ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
+	ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv, -1, c);
 
 	if (s != "arrow_right" && ImGui::IsItemHovered())
 	{
@@ -59,7 +59,7 @@ void DrawSprite(const StringIntern &s)
 
 }
 
-void Recipe::DrawSome(const StringIntern &s, float gt) const
+void DrawSome(const StringIntern &s, float gt, ImColor c = {0,0,0,0})
 {
 	static float tt = 0;
 	tt += gt;
@@ -70,14 +70,14 @@ void Recipe::DrawSome(const StringIntern &s, float gt) const
 		auto list = DB::Get().Taglist(ss);
 		srand(int(tt));
 		if (!list.empty())
-			ss = list[rand() % list.size()];
+			ss = list[0];
 	}
 
 	auto t = DB::Get().mObjects.find(StringIntern(ss));
 	if (t != DB::Get().mObjects.end())
 	{
 		auto &a = *t;
-		DrawSprite(a.first);
+		DrawSprite(a.first, c);
 		if (ImGui::IsItemHovered())
 		{
 			ImGui::SetTooltip("%s\n%s", a.first.get().c_str(), std::get<0>(a.second)->GetDescription().c_str());
@@ -231,4 +231,39 @@ bool Recipe::CraftIn(Chest & c, int count)
 	}
 
 	return true;
+}
+
+void DeepRecipe::DrawGui(float gt)
+{
+	ImColor col = { 0,0,0,0 };
+	if (incomplete)
+		col = { 255,0,0,128 };
+
+	if (recipe)
+	{
+		for (const auto &outp : recipe->output)
+		{
+			DrawSome(outp.id, gt, col);
+		}
+
+		if (first_show)
+		{
+			ImGui::SetNextTreeNodeOpened(true);
+			first_show = false;
+		}
+		if (ImGui::TreeNode(""))
+		{
+
+			for (int i = 0; i < recipe->input.size(); i++)
+			{
+				if (input_expantion.size() > i && input_expantion[i])
+					input_expantion[i]->DrawGui(gt);
+				else
+					DrawSome(recipe->input[i].id, gt, col);
+
+			}
+
+			ImGui::TreePop();
+		}
+	}
 }

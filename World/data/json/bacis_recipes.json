@@ -16,22 +16,9 @@
 {
 	"type":"Recipe",
 	"recipe":{
-				"input":[["plank", 1]],
-				"output":[["stick", 5]]
-			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
-				"input":[["lumber", 1]],
-				"output":[["plank", 4]]
-			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
 				"input":[["tag_plank", 4], ["tag_stick", 6], ["tag_cloth", 4], ["tag_nail", 8]],
-				"output":[["hard_wooden_bed", 1]]
+				"output":[["hard_wooden_bed", 1]],
+				"machine":"caprenter_workshop"
 			}
 },
 {
@@ -39,20 +26,6 @@
 	"recipe":{
 				"input":[["tag_plank", 4], ["tag_nail", 8]],
 				"output":[["wooden_door", 1]]
-			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
-				"input":[["tag_plank", 4], ["tag_nail", 8]],
-				"output":[["wooden_crate", 1]]
-			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
-				"input":[["tag_plank", 2], ["tag_stick", 4], ["tag_nail", 6]],
-				"output":[["wooden_chair", 1]]
 			}
 },
 {

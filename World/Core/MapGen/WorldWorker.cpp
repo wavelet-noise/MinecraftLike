@@ -1,3 +1,5 @@
+#define MINIZ_HEADER_FILE_ONLY
+#include "miniz.c"
 #include "WorldWorker.h"
 #include <thread>
 #include "tools\CoordSystem.h"
@@ -22,15 +24,21 @@ WorldWorker::WorldWorker()
 
 WorldWorker::~WorldWorker()
 {
+	remove("Save\\worldsave.world");
+
 	for(const auto &s : mReady)
 	{
 		//boost::asio::streambuf b;
-		std::ofstream os((boost::format("Save\\%1%_%2%_%3%.sec") % s.first.x % s.first.y % s.first.z).str().c_str());
-		if (os.is_open())
+		auto a_name = (boost::format("%1%_%2%_%3%.sec") % s.first.x % s.first.y % s.first.z).str();
+		//std::ofstream os(a_name.c_str());
+		boost::asio::streambuf sb;
+		//if (os.is_open())
 		{
-			boost::archive::binary_oarchive oa(os);
+			boost::archive::binary_oarchive oa(sb);
 
 			oa << *s.second;
+
+			mz_zip_add_mem_to_archive_file_in_place("Save\\worldsave.world", a_name.c_str(), boost::asio::buffer_cast<const char*>(sb.data()), sb.size(), nullptr, 0, MZ_BEST_COMPRESSION);
 		}
 	}
 }

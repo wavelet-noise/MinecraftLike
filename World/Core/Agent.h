@@ -37,7 +37,7 @@ struct AgSync
 	bool executed;
 };
 
-#ifdef _MSC_VER > 0
+#ifdef _MSC_VER
 #define AM_NOVTABLE __declspec(novtable)
 #elif
 #define AM_NOVTABLE /*__declspec(novtable)*/
@@ -48,7 +48,7 @@ struct AgSync
 // Имя агента задается потомками в конструкторе. Может использоваться для идентификации
 // экземпляров агентов. Также может отсутствовать.
 // У агентов, которые обязательно присутствуют в игровом объекте, имя должно отсутствовать.
-AM_NOVTABLE class Agent
+class AM_NOVTABLE Agent
 {
 public:
 	Agent() = default;
