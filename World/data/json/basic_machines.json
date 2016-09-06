@@ -1,0 +1,69 @@
+[
+{
+	"type":"Block",
+	"id":"basic_macerator",
+	"agents":[
+		{
+			"type":"Workshop"
+		}
+	],
+	"tags":["tag_macerator"],
+    "tesselator":[  
+        {  
+            "type":"SplitBlockTessellator",
+            "generator":{  
+                "separate":[
+					"caprenter_workshop",
+					"material_steel",
+					"material_steel",
+					"material_steel",
+					"material_steel",
+					"material_steel"
+				]
+            },
+            "transparent":false
+        }
+    ],
+    "dynamic":true,
+    "placeable":true,
+	"active":true
+},
+{
+	"type":"Block",
+	"id":"basic_steam_turbine",
+	"agents":[
+		{
+			"type":"LiquidPipe",
+			"max_volume":24000
+		},{
+			"type":"EnergyProducer",
+			"voltage":32,
+			"amperage":1,
+			"buffer_size":1000
+		},{
+			"type":"SteamGenerator",
+			"efficiency":0.9
+		}
+	],
+	"tags":["tag_macerator"],
+    "tesselator":[  
+        {  
+            "type":"SplitBlockTessellator",
+            "generator":{  
+                "separate":[
+					"caprenter_workshop",
+					"material_steel",
+					"material_steel",
+					"material_steel",
+					"material_steel",
+					"material_steel"
+				]
+            },
+            "transparent":false
+        }
+    ],
+    "dynamic":true,
+    "placeable":true,
+	"active":true
+}
+]

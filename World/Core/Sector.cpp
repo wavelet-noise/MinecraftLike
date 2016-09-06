@@ -82,7 +82,7 @@ void Sector::SayChanged()
 void Sector::Update(World *world, float dt)
 {
 	GameObjectParams gop{ world, this, {}, dt };
-	for (size_t i = 0; i < mActive.size(); ++i)
+	for (size_t i = 0; i < mUniqueBlocks.size(); ++i)
 	{
 		gop.pos = cs::SBtoWB(cs::ItoSB(mUniquePoses[i]), mPos);
 		if (mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);

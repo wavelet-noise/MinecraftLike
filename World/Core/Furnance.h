@@ -17,6 +17,11 @@ public:
 	virtual void DrawGui(float gt) override;
 	virtual void Interact(const InteractParams &params) override;
 
+	float GetFreq() const override
+	{
+		return 1 / 10.f;
+	}
+
 private:
 	float T;
 	float remain_heat, heat;

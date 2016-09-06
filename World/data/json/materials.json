@@ -345,5 +345,113 @@
 		}
 	],
 	"tags":["tag_material_wood"]
+},{
+	"type":"dummy",
+	"id":"material_sulfur",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone"]
+},{
+	"type":"dummy",
+	"id":"material_silicon",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone"]
+},{
+	"type":"dummy",
+	"id":"material_stone",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone"]
+},{
+	"type":"dummy",
+	"id":"material_diamond",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone", "tag_material_gem"]
+},{
+	"type":"dummy",
+	"id":"material_ruby",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone", "tag_material_gem"]
+},{
+	"type":"dummy",
+	"id":"material_emerald",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone", "tag_material_gem"]
+},{
+	"type":"dummy",
+	"id":"material_topaz",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone", "tag_material_gem"]
+},{
+	"type":"dummy",
+	"id":"material_amethyst",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone", "tag_material_gem"]
+},{
+	"type":"dummy",
+	"id":"material_zirkon",
+    "agents":[
+		{
+		"type":"Material",
+		"mtex":"material_birch",
+		"dens":1,
+		"cost":1.2
+		}
+	],
+	"tags":["tag_material_stone", "tag_material_gem"]
 }
 ]

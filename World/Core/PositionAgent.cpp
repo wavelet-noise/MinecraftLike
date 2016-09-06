@@ -18,6 +18,7 @@
 #include <Core/orders/OrderCraft.h>
 #include <Core/orders/OrderEat.h>
 #include <Core/orders/OrderDrop.h>
+#include "LiquidPipe.h"
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -1019,4 +1020,130 @@ void Workshop::DrawGui(float gt)
 
 void Workshop::JsonLoad(const rapidjson::Value& val)
 {
+}
+
+//-------------------------------------------------------------------
+
+PAgent EnergyProducer::Clone(GameObject* parent, const std::string& name)
+{
+	auto t = MakeAgent<EnergyProducer>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void EnergyProducer::Update(const GameObjectParams& params)
+{
+}
+
+void EnergyProducer::DrawGui(float gt)
+{
+	if (Settings::Get().IsDebug())
+	{
+		ImGui::Text("EnergyProducer");
+		ImGui::Text("producing %fv %fa", voltage, amperage);
+		ImGui::Text("buffer %f / %f", buffer, buffer_size);
+	}
+}
+
+void EnergyProducer::JsonLoad(const rapidjson::Value& val)
+{
+	JSONLOAD(NVP(amperage), NVP(voltage), NVP(buffer_size));
+}
+
+void EnergyProducer::ProduceEnergy(float power)
+{
+	buffer += power / voltage;
+
+	if (buffer > buffer_size)
+		buffer = buffer_size;
+}
+
+//-------------------------------------------------------------------
+
+PAgent EnergyConsumer::Clone(GameObject* parent, const std::string& name)
+{
+	auto t = MakeAgent<EnergyConsumer>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void EnergyConsumer::Update(const GameObjectParams& params)
+{
+}
+
+void EnergyConsumer::DrawGui(float gt)
+{
+	if (Settings::Get().IsDebug())
+	{
+		ImGui::Text("EnergyConsumer");
+	}
+}
+
+void EnergyConsumer::JsonLoad(const rapidjson::Value& val)
+{
+}
+
+//-------------------------------------------------------------------
+
+PAgent EnergyWire::Clone(GameObject* parent, const std::string& name)
+{
+	auto t = MakeAgent<EnergyWire>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void EnergyWire::Update(const GameObjectParams& params)
+{
+}
+
+void EnergyWire::DrawGui(float gt)
+{
+	if (Settings::Get().IsDebug())
+	{
+		ImGui::Text("EnergyWire");
+	}
+}
+
+void EnergyWire::JsonLoad(const rapidjson::Value& val)
+{
+}
+
+//-------------------------------------------------------------------
+
+PAgent SteamGenerator::Clone(GameObject* parent, const std::string& name)
+{
+	auto t = MakeAgent<SteamGenerator>(*this);
+	t->mParent = parent;
+	return t;
+}
+
+void SteamGenerator::Update(const GameObjectParams& params)
+{
+	if(auto lp = mParent->GetAgent<LiquidPipe>())
+	{
+		if(lp->GetLiquidID() == StringIntern("material_steam"))
+		{
+			auto count = lp->GetLiquidCount();
+			lp->SetLiquidCount(0);
+
+			if(auto ep = mParent->GetAgent<EnergyProducer>())
+			{
+				ep->ProduceEnergy(count * efficiency);
+			}
+		}
+	}
+}
+
+void SteamGenerator::DrawGui(float gt)
+{
+	if (Settings::Get().IsDebug())
+	{
+		ImGui::Text("SteamGenerator");
+		ImGui::Text("efficiency %f%", efficiency * 100);
+	}
+}
+
+void SteamGenerator::JsonLoad(const rapidjson::Value& val)
+{
+	JSONLOAD(NVP(efficiency));
 }

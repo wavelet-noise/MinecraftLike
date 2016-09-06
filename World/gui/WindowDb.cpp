@@ -9,6 +9,7 @@
 #include <GLFW\glfw3.h>
 #include <gui\WindowRecipe.h>
 #include "WindowTools.h"
+#include <DragNDrop.h>
 
 void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 {
@@ -98,6 +99,13 @@ void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 				if (ImGui::IsMouseClicked(0))
 				{
 					selected_id = std::get<0>(pgo)->GetId();
+				}
+
+				auto &dnd = DragNDrop::Get();
+				if (ImGui::IsItemHovered())
+				{
+					if (!dnd.Busy())
+						dnd.Drag({ DB::Get().Create(id), 999});
 				}
 			}
 		}

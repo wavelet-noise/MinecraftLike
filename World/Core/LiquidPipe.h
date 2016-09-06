@@ -44,6 +44,11 @@ public:
 	bool PushLiquid(ChestSlot cs);
 	
 
+	float GetFreq() const override
+	{
+		return 1 / 10.f;
+	}
+
 private:
 	bool mLocked = false;
 	bool mDisabled = false;

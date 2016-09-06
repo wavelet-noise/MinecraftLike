@@ -33,6 +33,11 @@ public:
 	ChestSlot DigSome();
 	bool Expire();
 
+	float GetFreq() const override
+	{
+		return std::numeric_limits<float>::max();
+	}
+
 private:
 	std::vector<OrePart> contains;
 	int size = 1;

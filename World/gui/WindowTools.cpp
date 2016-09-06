@@ -3,6 +3,8 @@
 #include "WindowCraftQueue.h"
 #include "WindowRooms.h"
 #include <Core/orders/OrderBus.h>
+#include <Game.h>
+#include <Core/PositionAgent.h>
 
 
 WindowTools::WindowTools()
@@ -84,6 +86,20 @@ void WindowTools::Draw(glm::vec2 wsize, float gt)
 				WindowRooms::Get().Show();
 				WindowRooms::Get().selected.reset();
 				selected = SelectedOrder::MARK_AS_ROOM;
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Cheats"))
+		{
+			if (ImGui::Button("Refill activity"))
+			{
+				auto w = Game::GetWorld();
+				for(const auto &c : w->controlled)
+				{
+					c->GetAgent<ActivityConsumer>()->Tire(-100);
+				}
 			}
 
 			ImGui::TreePop();

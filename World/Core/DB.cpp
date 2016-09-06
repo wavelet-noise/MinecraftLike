@@ -243,6 +243,21 @@ void DB::ReloadDirectory(const std::string & mDir)
 						r->JsonLoad(part);
 					}
 
+					if (val.HasMember("recipes"))
+					{
+						rapidjson::Value &part = val["recipes"];
+
+						for(int i = 0; i < part.Size(); i++)
+						{
+							rapidjson::Value &sub_part = part[i];
+
+							auto r = std::make_shared<Recipe>();
+							mRecipe.push_back(r);
+
+							r->JsonLoad(sub_part);
+						}
+					}
+
 
 					mObjects[StringIntern(id)] = std::make_tuple(b, dyn, act);
 				}

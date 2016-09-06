@@ -12,6 +12,11 @@ public:
 	virtual void Update(const GameObjectParams & params) override;
 	virtual void DrawGui(float gt) override;
 
+	float GetFreq() const override
+	{
+		return 1 / 10.f;
+	}
+
 private:
 	float steam;
 };
