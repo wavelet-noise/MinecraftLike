@@ -4,7 +4,7 @@
 
 #include "GameObject.h"
 #include <boost/serialization/shared_ptr.hpp>
-
+#include <boost/serialization/map.hpp>
 
 GameObject::GameObject(const StringIntern &__id) :id(__id)
 {
@@ -99,15 +99,30 @@ StringIntern GameObject::GetId()
 
 void GameObject::save(boost::archive::binary_oarchive& ar, const unsigned) const
 {
-	ar << std::string(id);
-	//for(const auto &a : mAgents)
-	//{
-//		ar << a;
-	//}
+	ar & std::string(id);
+	ar & mAgents.size();
+	for (auto i = mAgents.begin(); i != mAgents.end(); ++i)
+	{
+		ar & i->second->GetFullName();
+		ar & *i->second;
+	}
 }
 
-void GameObject::load(boost::archive::binary_oarchive& ar, const unsigned)
+void GameObject::load(boost::archive::binary_iarchive& ar, const unsigned v)
 {
+	std::string id;
+	size_t size;
+	ar & id & size;
+
+	for(int i = 0; i < size; ++i)
+	{
+		std::string fullname;
+		ar & fullname;
+
+		auto ag = AgentFactory::Get().Create(StringIntern(fullname));
+
+		ag->load(ar, v);
+	}
 }
 
 void GameObject::PushAgent(PAgent go)

@@ -17,6 +17,9 @@ Sector::Sector(const SPos &position)
 {
 }
 
+Sector::Sector()
+{
+}
 
 Sector::~Sector()
 {
@@ -157,12 +160,13 @@ void Sector::SetSlise(int s)
 
 void Sector::save(boost::archive::binary_oarchive& ar, const unsigned) const
 {
+	ar << mPos;
 	ar << mUniqueBlocks;
 	ar << mBlocks;
 }
 
-void Sector::load(boost::archive::binary_oarchive& ar, const unsigned)
+void Sector::load(boost::archive::binary_iarchive& ar, const unsigned)
 {
-	//ar >> mUniqueBlocks;
+	ar >> mPos;
 	//ar >> mBlocks;
 }

@@ -19,6 +19,7 @@ class Sector : public SectorBase<PGameObject>
 {
 public:
 	Sector(const SPos &position);
+	Sector();
 	~Sector();
 
 	const SPos &GetPos() const;
@@ -52,7 +53,7 @@ private:
 	friend class boost::serialization::access;
 
 	void save(boost::archive::binary_oarchive& ar, const unsigned int) const;
-	void load(boost::archive::binary_oarchive& ar, const unsigned int);
+	void load(boost::archive::binary_iarchive& ar, const unsigned int);
 
 	BOOST_SERIALIZATION_SPLIT_MEMBER()
 

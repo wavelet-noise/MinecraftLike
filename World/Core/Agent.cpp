@@ -39,10 +39,9 @@ void Agent::JsonLoad(const rapidjson::Value & val)
 
 void Agent::save(boost::archive::binary_oarchive& ar, const unsigned) const
 {
-	ar << GetFullName();
 }
 
-void Agent::load(boost::archive::binary_oarchive& ar, const unsigned)
+void Agent::load(boost::archive::binary_iarchive& ar, const unsigned)
 {
 }
 

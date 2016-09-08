@@ -8,6 +8,7 @@
 #include "WorldGenMountains.h"
 #include <boost/asio/streambuf.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 #include <fstream>
 
 WorldWorker &WorldWorker::Get(World &w)
@@ -20,6 +21,55 @@ WorldWorker &WorldWorker::Get(World &w)
 WorldWorker::WorldWorker()
 {
   mGenerator = std::make_unique<WorldGenMountains>();
+
+  mz_zip_archive zip_archive;
+  mz_bool status;
+
+  memset(&zip_archive, 0, sizeof(zip_archive));
+
+  status = mz_zip_reader_init_file(&zip_archive, "Save\\worldsave.world", 0);
+
+  if (!status)
+  {
+	  LOG(error) << "zip file appears invalid...";
+	  return;
+  }
+
+  for (int i = 0; i < static_cast<int>(mz_zip_reader_get_num_files(&zip_archive)); i++)
+  {
+
+	  mz_zip_archive_file_stat file_stat;
+	  if (!mz_zip_reader_file_stat(&zip_archive, i, &file_stat))
+	  {
+		  LOG(error) << "zip file read error...";
+		  mz_zip_reader_end(&zip_archive);
+		  return;
+	  }
+
+	  size_t uncompressed_size = file_stat.m_uncomp_size;
+	  void* p = mz_zip_reader_extract_file_to_heap(&zip_archive, file_stat.m_filename, &uncompressed_size, 0);
+	  if (!p)
+	  {
+		  LOG(error) << "mz_zip_reader_extract_file_to_heap() failed...";
+		  mz_zip_reader_end(&zip_archive);
+		  return;
+	  }
+	  
+	  auto s = std::make_shared<Sector>(SPos(0, 0, 0));
+
+	  boost::asio::streambuf sb;
+	  sb.pubsetbuf(static_cast<char*>(p), uncompressed_size);
+
+	  boost::archive::binary_iarchive ia(sb);
+
+	  ia >> s;
+
+	  mReady[s->GetPos()] = s;
+
+	  mz_free(p);
+  }
+
+  mz_zip_reader_end(&zip_archive);
 }
 
 WorldWorker::~WorldWorker()
@@ -38,7 +88,7 @@ WorldWorker::~WorldWorker()
 
 			oa << *s.second;
 
-			mz_zip_add_mem_to_archive_file_in_place("Save\\worldsave.world", a_name.c_str(), boost::asio::buffer_cast<const char*>(sb.data()), sb.size(), nullptr, 0, MZ_BEST_COMPRESSION);
+			mz_zip_add_mem_to_archive_file_in_place("Save\\worldsave.world", a_name.c_str(), boost::asio::buffer_cast<const char*>(sb.data()), sb.size(), nullptr, 0, 0);
 		}
 	}
 }

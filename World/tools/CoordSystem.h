@@ -17,6 +17,35 @@ using WBPos = glm::ivec3;
 // Координаты блока в секторе.
 using SBPos = glm::ivec3;    
 
+namespace boost
+{
+	namespace serialization
+	{
+		template<class Archive>
+		void serialize(Archive & ar, glm::vec3& si, const unsigned int)
+		{
+			ar & si.x & si.y & si.z;
+		}
+
+		template<class Archive>
+		void serialize(Archive & ar, glm::vec2& si, const unsigned int)
+		{
+			ar & si.x & si.y;
+		}
+
+		template<class Archive>
+		void serialize(Archive & ar, glm::ivec3& si, const unsigned int)
+		{
+			ar & si.x & si.y & si.z;
+		}
+
+		template<class Archive>
+		void serialize(Archive & ar, glm::ivec2& si, const unsigned int)
+		{
+			ar & si.x & si.y;
+		}
+	}
+}
 
 // Система координат.
 namespace cs

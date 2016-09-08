@@ -1,7 +1,3 @@
-
-
-
-
 #pragma once
 #ifndef Agent_h__
 #define Agent_h__
@@ -14,11 +10,8 @@
 #include <memory>
 #include <type_traits>
 
-namespace boost{
-	namespace archive{
-		class binary_oarchive;
-	}
-}
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 
 class GameObject;
 
@@ -38,7 +31,7 @@ struct AgSync
 };
 
 #ifdef _MSC_VER
-#define AM_NOVTABLE __declspec(novtable)
+#define AM_NOVTABLE /*__declspec(novtable)*/
 #elif
 #define AM_NOVTABLE /*__declspec(novtable)*/
 #endif
@@ -99,9 +92,10 @@ public:
 	// client/server paralell
 	virtual void JsonLoad(const rapidjson::Value &val);
 
-	void save(boost::archive::binary_oarchive& ar, const unsigned) const;
+	virtual void save(boost::archive::binary_oarchive& ar, const unsigned) const;
+	virtual void load(boost::archive::binary_iarchive& ar, const unsigned);
 
-	void load(boost::archive::binary_oarchive& ar, const unsigned);
+	BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 protected:
 	GameObject *mParent;
