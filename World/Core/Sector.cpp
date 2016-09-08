@@ -79,7 +79,8 @@ std::list<PGameObject> Sector::GetCreatures()
 
 void Sector::SayChanged()
 {
-	mTessellator->SayChanged(mPos);
+	if(mTessellator)
+		mTessellator->SayChanged(mPos);
 }
 
 void Sector::Update(World *world, float dt)
@@ -155,7 +156,8 @@ void Sector::Draw(class Tessellator *tess)
 
 void Sector::SetSlise(int s)
 {
-	mTessellator->SetSlise(s);
+	if(mTessellator)
+		mTessellator->SetSlise(s);
 }
 
 void Sector::save(boost::archive::binary_oarchive& ar, const unsigned) const
@@ -163,10 +165,13 @@ void Sector::save(boost::archive::binary_oarchive& ar, const unsigned) const
 	ar << mPos;
 	ar << mUniqueBlocks;
 	ar << mBlocks;
+	ar << mUniquePoses;
 }
 
 void Sector::load(boost::archive::binary_iarchive& ar, const unsigned)
 {
 	ar >> mPos;
-	//ar >> mBlocks;
+	ar >> mUniqueBlocks;
+	ar >> mBlocks;
+	ar >> mUniquePoses;
 }

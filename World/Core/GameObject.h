@@ -30,6 +30,7 @@ class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:
 	GameObject(const StringIntern &__id);
+	GameObject();
 	virtual ~GameObject();
 
 	virtual void Update(GameObjectParams &params);

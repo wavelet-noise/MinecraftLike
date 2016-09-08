@@ -98,11 +98,8 @@ public:
 	BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 protected:
+	friend class GameObject;
 	GameObject *mParent;
-
-	const StringIntern mTypeName;
-	StringIntern mAgentName;
-	StringIntern mFullName;
 };
 
 static void __req_helper()

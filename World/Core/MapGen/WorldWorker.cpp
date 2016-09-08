@@ -10,6 +10,7 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <fstream>
+#include <boost/iostreams/stream.hpp>
 
 WorldWorker &WorldWorker::Get(World &w)
 {
@@ -57,14 +58,21 @@ WorldWorker::WorldWorker()
 	  
 	  auto s = std::make_shared<Sector>(SPos(0, 0, 0));
 
-	  boost::asio::streambuf sb;
-	  sb.pubsetbuf(static_cast<char*>(p), uncompressed_size);
+	  boost::iostreams::array_source sr(static_cast<char*>(p), uncompressed_size);
+	  boost::iostreams::stream<decltype(sr)> source(sr);
 
-	  boost::archive::binary_iarchive ia(sb);
+	  try 
+	  {
+		  boost::archive::binary_iarchive ia(source);
 
-	  ia >> s;
+		  ia >> *s;
 
-	  mReady[s->GetPos()] = s;
+		  mReady[s->GetPos()] = s;
+	  } 
+	  catch (...)
+	  {
+		  LOG(error) << "broken sector " << file_stat.m_filename;
+	  }
 
 	  mz_free(p);
   }
