@@ -478,20 +478,6 @@ PDeepRecipe DB::GetDeepRecipe(const StringIntern& name, const std::vector<String
 	return nullptr;
 }
 
-const std::list<PRecipe>& DB::GetMachine(const std::string& name) const
-{
-	return GetMachine(StringIntern(name));
-}
-
-const std::list<PRecipe>& DB::GetMachine(const StringIntern& name) const
-{
-	static auto empty = std::list<PRecipe>();
-	const auto &t = mMachineCache.find(name);
-	if (t != mMachineCache.end())
-		return t->second;
-	return empty;
-}
-
 const std::list<PRecipe>& DB::GetMachineRecipe(const std::string & name) const
 {
 	return GetMachineRecipe(StringIntern(name));
@@ -513,7 +499,7 @@ void DB::AddRecipe(PRecipe r)
 
 	if(!r->machine.get().empty())
 	{
-		mMachineCache[r->machine].push_back(r);
+		mRecipeMachineTag[r->machine].push_back(r);
 	}
 
 	for (const auto &a : r->input)

@@ -260,7 +260,7 @@
 			"input":[["wire_%material%", 1]],
 			"output":[["nail_%material%", 10]],
 			"materials":["tag_material_metal"]
-		}
+		},
 	"tags":["tag_nail", "tag_basic_tool"]
 },{
 	"type":"Item",

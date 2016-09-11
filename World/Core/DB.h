@@ -42,8 +42,8 @@ public:
 	const std::list<PRecipe> &GetRecipe(const StringIntern & name) const;
 	PDeepRecipe GetDeepRecipe(const StringIntern & name, const std::vector<StringIntern> &materials) const;
 
-	const std::list<PRecipe> &GetMachine(const std::string  & name) const;
-	const std::list<PRecipe> &GetMachine(const StringIntern & name) const;
+	const std::list<PRecipe> &GetMachineRecipe(const std::string  & name) const;
+	const std::list<PRecipe> &GetMachineRecipe(const StringIntern & name) const;
 
 	void AddRecipe(PRecipe r);
 

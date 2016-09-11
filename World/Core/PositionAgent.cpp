@@ -1012,7 +1012,7 @@ void Workshop::Update(const GameObjectParams& params)
 
 void Workshop::DrawGui(float gt)
 {
-	auto rec = DB::Get().GetMachine(mParent->GetId());
+	auto rec = DB::Get().GetMachineRecipe(mParent->GetId());
 	for(const auto &a : rec)
 	{
 		a->DrawGui(gt);

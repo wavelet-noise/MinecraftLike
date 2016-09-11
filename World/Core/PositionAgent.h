@@ -544,7 +544,6 @@ private:
 };
 
 REGISTER_AGENT(SteamGenerator)
-REGISTER_AGENT(ChainDestruction)
 
 class BasicWorkbench : public Agent
 {

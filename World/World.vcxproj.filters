@@ -1,734 +1,245 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Core">
-      <UniqueIdentifier>{460c9574-cd3f-4954-95ad-03c59b19ec00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="tools">
-      <UniqueIdentifier>{c1843cdd-5cdb-4df6-80d7-888ba1348c7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\MapGen">
-      <UniqueIdentifier>{c3417e14-6780-4040-8219-9b32aef22c51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Agents">
-      <UniqueIdentifier>{ceb7abd4-d9b3-4d64-91bf-4efd67815e5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Render">
-      <UniqueIdentifier>{cc0a8f1c-3e24-4f58-94d5-aaf0599aa53d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Window">
-      <UniqueIdentifier>{24067ff2-83f3-44f5-8544-3e03654695a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="network">
-      <UniqueIdentifier>{5167f8a9-c11b-46f5-b8c4-6499054292af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\tessellator">
-      <UniqueIdentifier>{2feb6842-a114-4c9f-a902-127e8c8d6473}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rdparty">
-      <UniqueIdentifier>{064589c8-2a89-44ab-8cbc-9a6b22869bbd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rdparty\lodepng">
-      <UniqueIdentifier>{a032ce15-3102-4c85-951b-897c1582c372}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rdparty\imgui">
-      <UniqueIdentifier>{7f7b3b83-cdc1-46e0-bdb7-ea19d9dc9138}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="gui">
-      <UniqueIdentifier>{e3552fd7-a7b1-461a-8ffe-513546b9cae2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Template">
-      <UniqueIdentifier>{9ff9d70a-f382-4254-8b00-4189a4d797ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rdparty\tiny_obj_load">
-      <UniqueIdentifier>{a62715c2-bd5f-452a-8720-2774cb9b1254}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\orders">
-      <UniqueIdentifier>{440cb647-3511-43ea-ad38-2510e230ccdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\events">
-      <UniqueIdentifier>{c0ae2a91-b8ce-4959-bbc3-ed4469afb2a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\orders\professions">
-      <UniqueIdentifier>{c376dbd4-f6fa-4e79-b741-8ce5d9032284}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="AutoVersion.cpp" />
+    <ClCompile Include="Cooker.cpp" />
+    <ClCompile Include="Core\Agent.cpp" />
+    <ClCompile Include="Core\Chest.cpp" />
+    <ClCompile Include="Core\ChestSlot.cpp" />
+    <ClCompile Include="Core\CraftingTable.cpp" />
+    <ClCompile Include="Core\EventBus.cpp" />
+    <ClCompile Include="Core\Farmland.cpp" />
+    <ClCompile Include="Core\Fuel.cpp" />
+    <ClCompile Include="Core\Furnance.cpp" />
+    <ClCompile Include="Core\Foliage.cpp" />
+    <ClCompile Include="Core\GameObject.cpp" />
+    <ClCompile Include="Core\Heatable.cpp" />
+    <ClCompile Include="Core\LiquidPipe.cpp" />
+    <ClCompile Include="Core\MapGen\GenStrategy.cpp" />
+    <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
+    <ClCompile Include="Core\MapGen\WorldGenMountains.cpp" />
+    <ClCompile Include="Core\Material.cpp" />
+    <ClCompile Include="Core\MeshPartialBlockGenerator.cpp" />
+    <ClCompile Include="Core\MetalSmelter.cpp" />
+    <ClCompile Include="Core\ModelTessellator.cpp" />
+    <ClCompile Include="Core\Operatable.cpp" />
+    <ClCompile Include="Core\orders\OrderBus.cpp" />
+    <ClCompile Include="Core\orders\OrderCraft.cpp" />
+    <ClCompile Include="Core\orders\OrderDig.cpp" />
+    <ClCompile Include="Core\orders\OrderDrop.cpp" />
+    <ClCompile Include="Core\orders\OrderEat.cpp" />
+    <ClCompile Include="Core\orders\OrderGet.cpp" />
+    <ClCompile Include="Core\orders\OrderOperate.cpp" />
+    <ClCompile Include="Core\orders\OrderPlace.cpp" />
+    <ClCompile Include="Core\orders\OrderSleep.cpp" />
+    <ClCompile Include="Core\orders\OrderTalk.cpp" />
+    <ClCompile Include="Core\orders\OrderWalk.cpp" />
+    <ClCompile Include="Core\orders\OrderWander.cpp" />
+    <ClCompile Include="Core\Ore.cpp" />
+    <ClCompile Include="Core\Plant.cpp" />
+    <ClCompile Include="Core\Recipe.cpp" />
+    <ClCompile Include="Core\SectorTessellator.cpp" />
+    <ClCompile Include="Core\SplitBlockTessellator.cpp" />
+    <ClCompile Include="Core\DB.cpp" />
+    <ClCompile Include="Core\MapGen\WorldWorker.cpp" />
+    <ClCompile Include="Core\PhysicAgent.cpp" />
+    <ClCompile Include="Core\PositionAgent.cpp" />
+    <ClCompile Include="Core\BlockTessellator.cpp" />
+    <ClCompile Include="Core\Sector.cpp" />
+    <ClCompile Include="Core\SectorLoader.cpp" />
+    <ClCompile Include="Core\SplitConnectionTesselator.cpp" />
+    <ClCompile Include="Core\Tessellator.cpp" />
+    <ClCompile Include="Core\Tool.cpp" />
+    <ClCompile Include="Core\Water.cpp" />
+    <ClCompile Include="Core\WaterBoiler.cpp" />
+    <ClCompile Include="Core\World.cpp" />
+    <ClCompile Include="Core\Xyz.cpp" />
+    <ClCompile Include="DragNDrop.cpp" />
+    <ClCompile Include="EveryProf.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Core\Sector.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\World.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\SectorLoader.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Agent.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\PositionAgent.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\PhysicAgent.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="tools\StringIntern.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
-    <ClCompile Include="tools\Bresenham3D.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\DB.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Atlas.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Bitmap.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Camera.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Color.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Texture.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\TextureManager.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Window\Window.cpp">
-      <Filter>Window</Filter>
-    </ClCompile>
-    <ClCompile Include="lodepng\lodepng.cpp">
-      <Filter>3rdparty\lodepng</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\RenderMeshDList.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Model.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="tools\Log.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Shader.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\RenderMeshVao.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\imgui_draw.cpp">
-      <Filter>3rdparty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\imgui.cpp">
-      <Filter>3rdparty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp">
-      <Filter>3rdparty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Render.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="tools\wset.h">
-      <Filter>tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\BlockTessellator.cpp">
-      <Filter>Core\tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\SectorTessellator.cpp">
-      <Filter>Core\tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\SplitBlockTessellator.cpp">
-      <Filter>Core\tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Tessellator.cpp">
-      <Filter>Core\tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="tools\order_casters.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
-    <ClCompile Include="PerlinNoise.cpp">
-      <Filter>Core\MapGen</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\MapGen\WorldGenFlat.cpp">
-      <Filter>Core\MapGen</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowPerfomance.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowBase.h">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\MapGen\GenStrategy.cpp">
-      <Filter>Core\MapGen</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\MapGen\WorldGenMountains.cpp">
-      <Filter>Core\MapGen</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\RenderSector.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Material.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowDb.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="template\TemplateItemMaterial.cpp">
-      <Filter>Core\Template</Filter>
-    </ClCompile>
-    <ClCompile Include="template\Template.cpp">
-      <Filter>Core\Template</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Chest.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowInventory.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="tiny_obj_loader.cpp">
-      <Filter>3rdparty\tiny_obj_load</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\MeshPartialBlockGenerator.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Water.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Furnance.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="tools\ray.cpp" />
-    <ClCompile Include="DragNDrop.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Fuel.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\ModelTessellator.cpp">
-      <Filter>Core\tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="template\TemplateItemMaterialBase.cpp">
-      <Filter>Core\Template</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Heatable.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Tool.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Foliage.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\ParticleSystem.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Farmland.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Plant.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\WaterBoiler.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\MetalSmelter.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Recipe.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Resources.cpp" />
-    <ClCompile Include="Core\LiquidPipe.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\CraftingTable.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\SplitConnectionTesselator.cpp">
-      <Filter>Core\tessellator</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Xyz.cpp" />
-    <ClCompile Include="Core\EventBus.cpp">
-      <Filter>Core\events</Filter>
-    </ClCompile>
+    <ClCompile Include="Gatherer.cpp" />
+    <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="gui\WindowBase.h" />
+    <ClCompile Include="gui\WindowCraftQueue.cpp" />
+    <ClCompile Include="gui\WindowDb.cpp" />
+    <ClCompile Include="gui\WindowEventlog.cpp" />
+    <ClCompile Include="gui\WindowInventory.cpp" />
+    <ClCompile Include="gui\WindowPerfomance.cpp" />
+    <ClCompile Include="gui\WindowRecipe.cpp" />
+    <ClCompile Include="gui\WindowRooms.cpp" />
+    <ClCompile Include="gui\WindowTools.cpp" />
     <ClCompile Include="gui\WS.cpp" />
-    <ClCompile Include="Core\GameObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Settings.cpp" />
-    <ClCompile Include="gui\WindowCraftQueue.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowTools.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowEventlog.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowRecipe.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\ChestSlot.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Ore.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\spritebatch.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="AutoVersion.cpp" />
-    <ClCompile Include="gui\WindowRooms.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderBus.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderCraft.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderDrop.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderEat.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderGet.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderPlace.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderSleep.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderTalk.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderWalk.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderWander.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderDig.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Profession.cpp">
-      <Filter>Core\orders\professions</Filter>
-    </ClCompile>
-    <ClCompile Include="Gatherer.cpp">
-      <Filter>Core\orders\professions</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowProfesions.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
-    <ClCompile Include="Cooker.cpp">
-      <Filter>Core\orders\professions</Filter>
-    </ClCompile>
-    <ClCompile Include="Medic.cpp">
-      <Filter>Core\orders\professions</Filter>
-    </ClCompile>
-    <ClCompile Include="EveryProf.cpp">
-      <Filter>Core\orders\professions</Filter>
-    </ClCompile>
-    <ClCompile Include="Miner.cpp">
-      <Filter>Core\orders\professions</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\orders\OrderOperate.cpp">
-      <Filter>Core\orders</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Operatable.cpp">
-      <Filter>Core\Agents</Filter>
-    </ClCompile>
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="lodepng\lodepng.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Medic.cpp" />
+    <ClCompile Include="Miner.cpp" />
     <ClCompile Include="miniz.c" />
-    <ClCompile Include="Core\MapGen\WorldWorker.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp" />
+    <ClCompile Include="Profession.cpp" />
+    <ClCompile Include="Render\Atlas.cpp" />
+    <ClCompile Include="Render\Bitmap.cpp" />
+    <ClCompile Include="Render\Camera.cpp" />
+    <ClCompile Include="Render\Color.cpp" />
+    <ClCompile Include="Render\ParticleSystem.cpp" />
+    <ClCompile Include="Render\Resources.cpp" />
+    <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="Render\RenderMeshDList.cpp" />
+    <ClCompile Include="Render\RenderMeshVao.cpp" />
+    <ClCompile Include="Render\Model.cpp" />
+    <ClCompile Include="Render\RenderSector.cpp" />
+    <ClCompile Include="Render\Shader.cpp" />
+    <ClCompile Include="Render\spritebatch.cpp" />
+    <ClCompile Include="Render\Texture.cpp" />
+    <ClCompile Include="Render\TextureManager.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="template\Template.cpp" />
+    <ClCompile Include="template\TemplateItemMaterial.cpp" />
+    <ClCompile Include="template\TemplateItemMaterialBase.cpp" />
+    <ClCompile Include="tiny_obj_loader.cpp" />
+    <ClCompile Include="tools\Bresenham3D.cpp" />
+    <ClCompile Include="tools\Log.cpp" />
+    <ClCompile Include="tools\order_casters.cpp" />
+    <ClCompile Include="tools\ray.cpp" />
+    <ClCompile Include="tools\StringIntern.cpp" />
+    <ClCompile Include="tools\wset.h" />
+    <ClCompile Include="WindowProfesions.cpp" />
+    <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AutoVersion.h" />
+    <ClInclude Include="Cooker.h" />
+    <ClInclude Include="Core\Agent.h" />
+    <ClInclude Include="Core\CalorieConsumer.h" />
+    <ClInclude Include="core\Chest.h" />
+    <ClInclude Include="core\ChestSlot.h" />
+    <ClInclude Include="Core\CraftingTable.h" />
+    <ClInclude Include="core\Effect.h" />
+    <ClInclude Include="Core\EventBus.h" />
+    <ClInclude Include="Core\Farmland.h" />
+    <ClInclude Include="core\Fuel.h" />
+    <ClInclude Include="core\Furnance.h" />
+    <ClInclude Include="core\Foliage.h" />
+    <ClInclude Include="Core\GameObject.h" />
+    <ClInclude Include="core\Heatable.h" />
+    <ClInclude Include="Core\LiquidController.h" />
+    <ClInclude Include="Core\LiquidPipe.h" />
+    <ClInclude Include="Core\MapGen\GenStrategy.h" />
+    <ClInclude Include="Core\MapGen\WorldGenFlat.h" />
+    <ClInclude Include="Core\MapGen\WorldGenMountains.h" />
+    <ClInclude Include="Core\Material.h" />
+    <ClInclude Include="Core\MeshPartialBlockGenerator.h" />
+    <ClInclude Include="Core\MetalSmelter.h" />
+    <ClInclude Include="Core\ModelTessellator.h" />
+    <ClInclude Include="Core\Operatable.h" />
+    <ClInclude Include="Core\orders\OrderBus.h" />
+    <ClInclude Include="Core\orders\OrderCraft.h" />
+    <ClInclude Include="Core\orders\OrderDig.h" />
+    <ClInclude Include="Core\orders\OrderDrop.h" />
+    <ClInclude Include="Core\orders\OrderEat.h" />
+    <ClInclude Include="Core\orders\OrderGet.h" />
+    <ClInclude Include="Core\orders\OrderOperate.h" />
+    <ClInclude Include="Core\orders\OrderPlace.h" />
+    <ClInclude Include="Core\orders\OrderSleep.h" />
+    <ClInclude Include="Core\orders\OrderTalk.h" />
+    <ClInclude Include="Core\orders\OrderWalk.h" />
+    <ClInclude Include="Core\orders\OrderWander.h" />
+    <ClInclude Include="Core\Ore.h" />
+    <ClInclude Include="Core\Plant.h" />
+    <ClInclude Include="Core\Recipe.h" />
+    <ClInclude Include="Core\SectorBase.h" />
+    <ClInclude Include="Core\SectorTessellator.h" />
+    <ClInclude Include="Core\SplitBlockTessellator.h" />
+    <ClInclude Include="Core\DB.h" />
+    <ClInclude Include="Core\Config.h" />
+    <ClInclude Include="Core\GameObjectParams.h" />
+    <ClInclude Include="Core\MapGen\PerlinNoise.h" />
+    <ClInclude Include="Core\MapGen\WorldWorker.h" />
+    <ClInclude Include="Core\PhysicAgent.h" />
+    <ClInclude Include="Core\PositionAgent.h" />
+    <ClInclude Include="Core\BlockTessellator.h" />
+    <ClInclude Include="Core\Sector.h" />
+    <ClInclude Include="Core\SectorLoader.h" />
+    <ClInclude Include="Core\SplitConnectionTesselator.h" />
+    <ClInclude Include="Core\TemplateFactory.h" />
+    <ClInclude Include="Core\Tessellator.h" />
+    <ClInclude Include="Core\TessellatorParams.h" />
+    <ClInclude Include="Core\Tool.h" />
+    <ClInclude Include="Core\Water.h" />
+    <ClInclude Include="Core\WaterBoiler.h" />
+    <ClInclude Include="Core\World.h" />
+    <ClInclude Include="Core\Xyz.h" />
+    <ClInclude Include="DragNDrop.h" />
+    <ClInclude Include="EveryProf.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="tools\StringIntern.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Sector.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\World.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\GameObjectParams.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MapGen\PerlinNoise.h">
-      <Filter>Core\MapGen</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SectorLoader.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Agent.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\PositionAgent.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\PhysicAgent.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\Bresenham3D.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\CoordSystem.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Config.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\DB.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Atlas.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Bitmap.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Camera.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Color.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Texture.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\TextureManager.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Vertex.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\VertexTools.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Window\Window.h">
-      <Filter>Window</Filter>
-    </ClInclude>
-    <ClInclude Include="lodepng\lodepng.h">
-      <Filter>3rdparty\lodepng</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\RenderMeshDList.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplateFactory.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Model.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\Log.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\TemplateFactory.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Shader.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\RenderMeshVao.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui_internal.h">
-      <Filter>3rdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui.h">
-      <Filter>3rdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\stb_truetype.h">
-      <Filter>3rdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\stb_textedit.h">
-      <Filter>3rdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\stb_rect_pack.h">
-      <Filter>3rdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imconfig.h">
-      <Filter>3rdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\imgui_impl_glfw_gl3.h">
-      <Filter>3rdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\ErrorImage.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Render.h">
-      <Filter>Render</Filter>
-    </ClInclude>
+    <ClInclude Include="Gatherer.h" />
+    <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="gui\WindowCraftQueue.h" />
+    <ClInclude Include="gui\WindowDb.h" />
+    <ClInclude Include="gui\WindowEventlog.h" />
+    <ClInclude Include="gui\WindowInventory.h" />
+    <ClInclude Include="gui\WindowPerfomance.h" />
+    <ClInclude Include="gui\WindowRecipe.h" />
+    <ClInclude Include="gui\WindowRooms.h" />
+    <ClInclude Include="gui\WindowTools.h" />
+    <ClInclude Include="gui\WS.h" />
+    <ClInclude Include="Medic.h" />
+    <ClInclude Include="Miner.h" />
+    <ClInclude Include="Profession.h" />
+    <ClInclude Include="Render\IRenderMeshStrategy.h" />
+    <ClInclude Include="render\ParticleSystem.h" />
+    <ClInclude Include="Render\RenderSector.h" />
+    <ClInclude Include="Render\spritebatch.h" />
     <ClInclude Include="Serealize.h" />
-    <ClInclude Include="Core\BlockTessellator.h">
-      <Filter>Core\tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SectorTessellator.h">
-      <Filter>Core\tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Tessellator.h">
-      <Filter>Core\tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\TessellatorParams.h">
-      <Filter>Core\tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\order_casters.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\QueuedThread.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MapGen\WorldGenFlat.h">
-      <Filter>Core\MapGen</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SectorBase.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\WindowPerfomance.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MapGen\GenStrategy.h">
-      <Filter>Core\MapGen</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MapGen\WorldGenMountains.h">
-      <Filter>Core\MapGen</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Material.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\WindowDb.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\RenderSector.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="template\TemplateItemMaterial.h">
-      <Filter>Core\Template</Filter>
-    </ClInclude>
-    <ClInclude Include="template\Template.h">
-      <Filter>Core\Template</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\WindowInventory.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="core\Chest.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\IRenderMeshStrategy.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\TemplateMesh.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="tiny_obj_loader.h">
-      <Filter>3rdparty\tiny_obj_load</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MeshPartialBlockGenerator.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Water.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="core\Furnance.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="core\ChestSlot.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\ray.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="DragNDrop.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="core\Fuel.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="core\Heatable.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SplitBlockTessellator.h">
-      <Filter>Core\tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ModelTessellator.h">
-      <Filter>Core\tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="template\TemplateItemMaterialBase.h">
-      <Filter>Core\Template</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Tool.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="core\Foliage.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="render\ParticleSystem.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Farmland.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Plant.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MetalSmelter.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\WaterBoiler.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\CraftingTable.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\WindowRecipe.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\LiquidPipe.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Recipe.h">
-      <Filter>Core</Filter>
-    </ClInclude>
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\stb_rect_pack.h" />
+    <ClInclude Include="imgui\stb_textedit.h" />
+    <ClInclude Include="imgui\stb_truetype.h" />
+    <ClInclude Include="lodepng\lodepng.h" />
+    <ClInclude Include="network\packetrequestplayers.h" />
+    <ClInclude Include="Render\Atlas.h" />
+    <ClInclude Include="Render\Bitmap.h" />
+    <ClInclude Include="Render\Camera.h" />
+    <ClInclude Include="Render\Color.h" />
     <ClInclude Include="Render\Resources.h" />
-    <ClInclude Include="Core\LiquidController.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SplitConnectionTesselator.h">
-      <Filter>Core\tessellator</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Xyz.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\WindowEventlog.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\EventBus.h">
-      <Filter>Core\events</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\WindowTools.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\WS.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\GameObject.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="network\packetrequestplayers.h">
-      <Filter>Render</Filter>
-    </ClInclude>
+    <ClInclude Include="Render\ErrorImage.h" />
+    <ClInclude Include="Render\TemplateMesh.h" />
+    <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="Render\RenderMeshDList.h" />
+    <ClInclude Include="Render\RenderMeshVao.h" />
+    <ClInclude Include="Render\Model.h" />
+    <ClInclude Include="Render\Shader.h" />
+    <ClInclude Include="Render\Texture.h" />
+    <ClInclude Include="Render\TextureManager.h" />
+    <ClInclude Include="Render\Vertex.h" />
+    <ClInclude Include="Render\VertexTools.h" />
     <ClInclude Include="Settings.h" />
-    <ClInclude Include="core\Effect.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\WindowCraftQueue.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\CalorieConsumer.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Ore.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\spritebatch.h">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoVersion.h" />
-    <ClInclude Include="gui\WindowRooms.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderBus.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderCraft.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderDrop.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderEat.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderGet.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderPlace.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderSleep.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderTalk.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderWalk.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderWander.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderDig.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Profession.h">
-      <Filter>Core\orders\professions</Filter>
-    </ClInclude>
-    <ClInclude Include="Gatherer.h">
-      <Filter>Core\orders\professions</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowProfesions.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="VerticalText.h">
-      <Filter>gui</Filter>
-    </ClInclude>
-    <ClInclude Include="Cooker.h">
-      <Filter>Core\orders\professions</Filter>
-    </ClInclude>
-    <ClInclude Include="Medic.h">
-      <Filter>Core\orders\professions</Filter>
-    </ClInclude>
-    <ClInclude Include="EveryProf.h">
-      <Filter>Core\orders\professions</Filter>
-    </ClInclude>
-    <ClInclude Include="Miner.h">
-      <Filter>Core\orders\professions</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\orders\OrderOperate.h">
-      <Filter>Core\orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Operatable.h">
-      <Filter>Core\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MapGen\WorldWorker.h">
-      <Filter>Core</Filter>
-    </ClInclude>
+    <ClInclude Include="TemplateFactory.h" />
+    <ClInclude Include="template\Template.h" />
+    <ClInclude Include="template\TemplateItemMaterial.h" />
+    <ClInclude Include="template\TemplateItemMaterialBase.h" />
+    <ClInclude Include="tiny_obj_loader.h" />
+    <ClInclude Include="tools\Bresenham3D.h" />
+    <ClInclude Include="tools\CoordSystem.h" />
+    <ClInclude Include="tools\Log.h" />
+    <ClInclude Include="tools\order_casters.h" />
+    <ClInclude Include="tools\QueuedThread.h" />
+    <ClInclude Include="tools\ray.h" />
+    <ClInclude Include="tools\StringIntern.h" />
+    <ClInclude Include="VerticalText.h" />
+    <ClInclude Include="WindowProfesions.h" />
+    <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\basic.glsl" />
-    <None Include="json\items.json">
-      <Filter>Core</Filter>
-    </None>
-    <None Include="json\materials.json">
-      <Filter>Core</Filter>
-    </None>
-    <None Include="json\model.json">
-      <Filter>Core</Filter>
-    </None>
     <None Include="BuildVersion.bat" />
+    <None Include="json\items.json" />
+    <None Include="json\materials.json" />
+    <None Include="json\model.json" />
+    <None Include="shaders\basic.glsl" />
   </ItemGroup>
 </Project>
