@@ -8,8 +8,6 @@
 #include "Config.h"
 #include "DB.h"
 
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 #include <list>
 #include "SectorBase.h"
 
@@ -40,6 +38,9 @@ public:
 
 	void SetSlise(int s);
 
+	void BinLoad(std::istream& stream) const;
+	void BinSave(std::ostream& stream);
+
 private:
 	SPos mPos;
 
@@ -49,14 +50,6 @@ private:
 	std::list<std::tuple<PGameObject, glm::vec3>> items;
 	using ActiveStruct = std::tuple<std::weak_ptr<GameObject>, SBPos>;
 	std::list<ActiveStruct> mActive; //only dynamic too
-
-	friend class boost::serialization::access;
-
-	void save(boost::archive::binary_oarchive& ar, const unsigned int) const;
-	void load(boost::archive::binary_iarchive& ar, const unsigned int);
-
-	BOOST_SERIALIZATION_SPLIT_MEMBER()
-
 };
 
 //namespace boost {

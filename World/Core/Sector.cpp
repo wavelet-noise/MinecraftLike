@@ -170,7 +170,7 @@ void Sector::SetSlise(int s)
 		mTessellator->SetSlise(s);
 }
 
-void Sector::save(boost::archive::binary_oarchive& ar, const unsigned) const
+void BinLoad(std::istream& stream) const
 {
 	ar << mPos;
 	ar << mUniqueBlocks;
@@ -178,7 +178,7 @@ void Sector::save(boost::archive::binary_oarchive& ar, const unsigned) const
 	ar << mUniquePoses;
 }
 
-void Sector::load(boost::archive::binary_iarchive& ar, const unsigned)
+void BinLoad(std::ostream& stream)
 {
 	ar >> mPos;
 	ar >> mUniqueBlocks;
