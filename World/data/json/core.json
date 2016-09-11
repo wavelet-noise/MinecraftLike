@@ -476,18 +476,40 @@
     },
     {  
         "type":"Block",
-        "id":"metal_smelter_iron",
+        "id":"work_dummy",
         "agents":[  
             {  
-                "type":"Chest",
-                "size":3,
-                "columns":3
+                "type":"Operatable"
+            }
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"work_dummy",
+						"work_dummy",
+						"work_dummy",
+						"work_dummy",
+						"work_dummy",
+						"work_dummy"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":true,
+        "placeable":true,
+		"active":true
+    },{  
+        "type":"Block",
+        "id":"basic_workbench",
+        "agents":[  
+            {  
+                "type":"Operatable"
             },
-			{
-				"type":"MetalSmelter"
-			},
-			{
-				"type":"Heatable"
+			{	
+				"type":"BasicWorkbench"
 			}
         ],
         "tesselator":[  
@@ -495,18 +517,19 @@
                 "type":"SplitBlockTessellator",
                 "generator":{  
                     "separate":[
-						"metal_smelter_iron",
-						"metal_big_plate_material_iron",
-						"metal_big_plate_material_iron",
-						"metal_big_plate_material_iron",
-						"metal_big_plate_material_iron",
-						"metal_big_plate_material_iron"
+						"basic_workbench",
+						"basic_workbench",
+						"basic_workbench",
+						"basic_workbench",
+						"basic_workbench",
+						"basic_workbench"
 					]
                 },
                 "transparent":false
             }
         ],
         "dynamic":true,
-        "placeable":true
+        "placeable":true,
+		"active":true
     }
 ]

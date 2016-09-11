@@ -7,7 +7,7 @@ std::string OrderWander::to_string() const
 	return (boost::format("OrderWander: pos = %1%") % glm::to_string(pos)).str();
 }
 
-void OrderWander::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderWander::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 

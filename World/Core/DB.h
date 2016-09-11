@@ -30,6 +30,9 @@ public:
   PGameObject Create(const std::string  & name) const;
   PGameObject Create(const StringIntern & name) const;
 
+  const PGameObject Pick(const std::string  & name) const;
+  const PGameObject Pick(const StringIntern & name) const;
+
   PGameObjectTessellator CreateTesselator(const StringIntern &name) const;
 
   const std::list<PRecipe> &GetUsing(const std::string  & name) const;
@@ -37,6 +40,9 @@ public:
 
   const std::list<PRecipe> &GetRecipe(const std::string  & name) const;
   const std::list<PRecipe> &GetRecipe(const StringIntern & name) const;
+
+  const std::list<PRecipe> &GetMachineRecipe(const std::string  & name) const;
+  const std::list<PRecipe> &GetMachineRecipe(const StringIntern & name) const;
 
   void AddRecipe(PRecipe r);
 
@@ -51,6 +57,7 @@ private:
   std::vector<StringIntern> mTagsEmptyDummy;
 
   std::list<PRecipe> mRecipe;
+  std::unordered_map<StringIntern, std::list<PRecipe>> mRecipeMachineTag;
   std::unordered_map<StringIntern, std::list<PRecipe>> mUsingCache;
   std::unordered_map<StringIntern, std::list<PRecipe>> mRecipeCache;
 

@@ -87,6 +87,11 @@ public:
 	// client/server paralell
 	virtual void JsonLoad(const rapidjson::Value &val);
 
+	GameObject *Parent()
+	{
+		return mParent;
+	}
+
 protected:
 	GameObject *mParent;
 

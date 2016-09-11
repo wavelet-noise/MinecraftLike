@@ -12,7 +12,7 @@ std::string OrderPlace::to_string() const
 	return (boost::format("OrderPlace: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
 }
 
-void OrderPlace::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderPlace::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 

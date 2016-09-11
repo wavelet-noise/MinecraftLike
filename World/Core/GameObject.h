@@ -11,6 +11,7 @@
 #include <boost/serialization/utility.hpp>
 
 using PGameObject = std::shared_ptr<GameObject>;
+using WPGameObject = std::weak_ptr<GameObject>;
 using Goid = int;
 
 template<class T, class... Args>
@@ -50,6 +51,11 @@ public:
 	virtual void OnAdjacentChanged(const GameObjectParams & params);
 
 	virtual PGameObject Clone();
+
+	bool IsActive()
+	{
+		return active;
+	}
 
 	std::string GetDescription();
 
@@ -121,4 +127,5 @@ protected:
 	StringIntern id;
 	bool placable = false;
 	bool walkable = false;
+	bool active = false;
 };

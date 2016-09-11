@@ -9,7 +9,7 @@ std::string OrderCraft::to_string() const
 	return (boost::format("OrderCraft: pos = %1% count = %2% resilt[0] = %3%") % glm::to_string(pos) % count % (item ? item->output[0].id : StringIntern("ERROR"))).str();
 }
 
-void OrderCraft::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderCraft::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 
 	auto c = performer->GetAgent<Creature>();
@@ -26,6 +26,10 @@ void OrderCraft::Perform(const GameObjectParams & params, PGameObject performer)
 			{
 				if (auto c = b->GetAgent<Chest>())
 				{
+					duration_passed += work;
+					if (item->duration > duration_passed)
+						return;
+
 					if (!item->CraftIn(*c))
 					{
 						params.world->QueueRecipeOrder(item);

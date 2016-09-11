@@ -113,7 +113,6 @@ void DB::ReloadDirectory(const std::string & mDir)
 
 					auto b = std::make_shared<GameObject>(StringIntern(id));
 
-
 					if (val.HasMember("placeable"))
 					{
 						b->placable = val["placeable"].GetBool_();;
@@ -209,11 +208,8 @@ void DB::ReloadDirectory(const std::string & mDir)
 					JSONLOAD(NVP(tags));
 					if (!tags.empty())
 					{
-
-						LOG(trace) << "tagged as";
 						for (const std::string &s : tags)
 						{
-							LOG(trace) << "   " << s;
 							mTags[StringIntern(s)].push_back(StringIntern(id));
 							mObjTags[StringIntern(id)].push_back(StringIntern(s));
 						}
@@ -232,13 +228,13 @@ void DB::ReloadDirectory(const std::string & mDir)
 						}
 					}
 
-					if (val.HasMember("recipe"))
+					if (val.HasMember("recipe")) // incomplete, ready after "final recipe filling"
 					{
-						rapidjson::Value &part = val["recipe"];
+						rapidjson::Value &rec = val["recipe"];
 						auto r = std::make_shared<Recipe>();
 						mRecipe.push_back(r);
 
-						r->JsonLoad(part);
+						r->JsonLoad(rec);
 					}
 
 
@@ -287,7 +283,7 @@ void DB::ReloadDirectory(const std::string & mDir)
 
 	TextureManager::Get().Compile();
 
-	std::list<PRecipe> old_recipes = std::move(mRecipe);
+	std::list<PRecipe> old_recipes = std::move(mRecipe); //final recipe filling
 	for (const auto &r : old_recipes)
 	{
 		auto exp = r->Expand();
@@ -365,6 +361,20 @@ PGameObject DB::Create(const StringIntern & name) const
 		return std::get<0>(t);
 }
 
+const PGameObject DB::Pick(const std::string & name) const
+{
+	return Pick(StringIntern(name));
+}
+
+const PGameObject DB::Pick(const StringIntern & name) const
+{
+	auto finded = mObjects.find(name);
+	if(finded != mObjects.end())
+		return std::get<PGameObject>(finded->second);
+
+	return nullptr;
+}
+
 PGameObjectTessellator DB::CreateTesselator(const StringIntern &name) const
 {
 	return mTess.find(name)->second;
@@ -398,6 +408,21 @@ const std::list<PRecipe> &DB::GetRecipe(const StringIntern & name) const
 	return empty;
 }
 
+const std::list<PRecipe>& DB::GetMachineRecipe(const std::string & name) const
+{
+	return GetMachineRecipe(StringIntern(name));
+}
+
+const std::list<PRecipe>& DB::GetMachineRecipe(const StringIntern & name) const
+{
+	static auto empty = std::list<PRecipe>();
+	const auto &t = mRecipeMachineTag.find(name);
+	if (t != mRecipeMachineTag.end())
+		return t->second;
+
+	return empty;
+}
+
 void DB::AddRecipe(PRecipe r)
 {
 	mRecipe.push_back(r);
@@ -411,4 +436,6 @@ void DB::AddRecipe(PRecipe r)
 	{
 		mRecipeCache[a.id].push_back(r);
 	}
+
+	mRecipeMachineTag[r->machine].push_back(r);
 }

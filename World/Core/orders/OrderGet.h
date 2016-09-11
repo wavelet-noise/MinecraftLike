@@ -29,5 +29,5 @@ struct OrderGet : NumberedOrder<OrderGet>
 		return o.pos == pos && item == item;
 	}
 
-	void Perform(const GameObjectParams & params, PGameObject performer) override;
+	void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) override;
 };

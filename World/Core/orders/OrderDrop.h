@@ -25,5 +25,5 @@ struct OrderDrop : NumberedOrder<OrderDrop>
 		return o.pos == pos && item == item && count == o.count;
 	}
 
-	void Perform(const GameObjectParams & params, PGameObject performer) override;
+	void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) override;
 };

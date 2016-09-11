@@ -13,6 +13,7 @@ struct OrderCraft : NumberedOrder<OrderCraft>
 	glm::vec3 pos;
 	PRecipe item;
 	int count = 1;
+	float duration_passed = 0;
 
 	float Tiring() const override
 	{
@@ -34,5 +35,5 @@ struct OrderCraft : NumberedOrder<OrderCraft>
 		return o.pos == pos;
 	}
 
-	void Perform(const GameObjectParams & params, PGameObject performer) override;
+	void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) override;
 };

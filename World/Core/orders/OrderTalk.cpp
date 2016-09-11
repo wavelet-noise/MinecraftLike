@@ -13,7 +13,7 @@ glm::vec3 OrderTalk::GetPos() const
 	return p->Get();
 }
 
-void OrderTalk::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderTalk::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 	auto t = performer->GetAgent<Talker>();

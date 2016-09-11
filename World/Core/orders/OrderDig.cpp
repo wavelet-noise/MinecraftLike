@@ -15,7 +15,7 @@ std::string OrderDig::to_string() const
 	return (boost::format("OrderDig: pos = %1%") % glm::to_string(pos)).str();
 }
 
-void OrderDig::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderDig::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 

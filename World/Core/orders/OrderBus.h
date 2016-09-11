@@ -26,11 +26,11 @@ public:
 	virtual glm::vec3 GetPos() const = 0;
 	virtual std::string to_string() const;
 	virtual float Tiring() const;
-	virtual void Perform(const GameObjectParams & params, PGameObject performer) = 0;
+	virtual void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) = 0;
 
 	void Take();
-	void Done();
-	void Drop();
+	virtual void Done();
+	virtual void Drop();
 
 	bool IsTaken() const
 	{

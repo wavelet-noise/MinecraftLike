@@ -26,7 +26,6 @@ public:
 	// Установить блок в заданную позицию.
 	// Существующий блок будет удален.
 	void SetBlock(const SBPos &pos, PGameObject block);
-
 	void Spawn(const SBPos &position, PGameObject creature);
 	void Place(const SBPos &position, PGameObject creature);
 	void Repace(const SBPos &position, PGameObject creature);
@@ -47,7 +46,8 @@ private:
 
 	std::list<PGameObject> creatures;
 	std::list<std::tuple<PGameObject, glm::vec3>> items;
-	std::vector<PGameObject> mActive; //only dynamic too
+	using ActiveStruct = std::tuple<std::weak_ptr<GameObject>, SBPos>;
+	std::list<ActiveStruct> mActive; //only dynamic too
 
 	friend class boost::serialization::access;
 

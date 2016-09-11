@@ -30,6 +30,14 @@ const SPos & Sector::GetPos() const
 void Sector::SetBlock(const SBPos &pos, PGameObject block)
 {
 	SectorBase<PGameObject>::SetBlock(pos, block);
+	bool active = block->IsActive();
+
+	if (active)
+	{
+		auto finded = std::find_if(mActive.begin(), mActive.end(), [&](const ActiveStruct &as)->bool {return std::get<SBPos>(as) == pos; });
+		if (finded == mActive.end())
+			mActive.push_back(std::make_tuple(block, pos));
+	}
 
 	if (mTessellator)
 	{
@@ -76,10 +84,13 @@ std::list<PGameObject> Sector::GetCreatures()
 
 void Sector::Update(World *world, float dt)
 {
+	std::remove_if(mActive.begin(), mActive.end(), [&](const ActiveStruct &go)->bool {return std::get<0>(go).expired(); });
+
 	GameObjectParams gop{ world, this, {}, dt };
-	for (size_t i = 0; i < mActive.size(); ++i)
+	for (const auto &a : mActive)
 	{
-		//gop.pos = cs::SBtoWB(cs::ItoSB(mUniquePoses[i]), mPos);
+		gop.pos = cs::SBtoWB(std::get<SPos>(a), mPos);
+		std::get<0>(a).lock()->Update(gop);
 		//if (mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);
 	}
 

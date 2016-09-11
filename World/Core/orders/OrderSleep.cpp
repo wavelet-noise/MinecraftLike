@@ -7,7 +7,7 @@ std::string OrderSleep::to_string() const
 	return (boost::format("OrderSleep: pos = %1%") % glm::to_string(pos)).str();
 }
 
-void OrderSleep::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderSleep::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 

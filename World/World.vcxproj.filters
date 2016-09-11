@@ -345,6 +345,12 @@
     <ClCompile Include="Miner.cpp">
       <Filter>Core\orders\professions</Filter>
     </ClCompile>
+    <ClCompile Include="Core\orders\OrderOperate.cpp">
+      <Filter>Core\orders</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Operatable.cpp">
+      <Filter>Core\Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -703,6 +709,12 @@
     </ClInclude>
     <ClInclude Include="Miner.h">
       <Filter>Core\orders\professions</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\orders\OrderOperate.h">
+      <Filter>Core\orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Operatable.h">
+      <Filter>Core\Agents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

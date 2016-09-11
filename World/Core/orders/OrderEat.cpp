@@ -14,7 +14,7 @@ std::string OrderEat::to_string() const
 	return (boost::format("OrderEat: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
 }
 
-void OrderEat::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderEat::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 

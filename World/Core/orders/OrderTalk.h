@@ -11,7 +11,7 @@ struct OrderTalk : NumberedOrder<OrderTalk>
 	std::string to_string() const override;
 
 	PGameObject person;
-	float duration = 10.f;
+	float duration = 2.f;
 
 	glm::vec3 GetPos() const override;
 
@@ -25,5 +25,5 @@ struct OrderTalk : NumberedOrder<OrderTalk>
 		return o.person == person;
 	}
 
-	void Perform(const GameObjectParams & params, PGameObject performer) override;
+	void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) override;
 };

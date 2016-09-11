@@ -13,7 +13,7 @@ std::string OrderGet::to_string() const
 	return (boost::format("OrderGet: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
 }
 
-void OrderGet::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderGet::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 

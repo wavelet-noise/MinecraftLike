@@ -14,7 +14,7 @@ std::string OrderDrop::to_string() const
 	return (boost::format("OrderDrop: pos = %1% id = %2% count = %3%") % glm::to_string(pos) % item->GetId() % count).str();
 }
 
-void OrderDrop::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderDrop::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 

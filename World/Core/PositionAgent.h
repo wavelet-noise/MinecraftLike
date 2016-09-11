@@ -9,6 +9,7 @@
 #include <deque>
 #include <boost\format.hpp>
 #include <Profession.h>
+#include <EveryProf.h>
 
 using PPositionAgent = std::unique_ptr<class PositionAgent>;
 
@@ -45,7 +46,10 @@ private:
 
 };
 
+#ifndef _a_PositionAgent
+#define _a_PositionAgent
 REGISTER_AGENT(PositionAgent)
+#endif
 
 class Controlable : public Agent
 {
@@ -385,7 +389,7 @@ public:
 
 	bool CanPeformOrder(POrder o);
 
-	std::vector<PProfession> prof;
+	std::vector<PProfession> prof = {std::make_shared<EveryProf>()};
 };
 
 REGISTER_AGENT(ProfessionPerformer)
@@ -416,3 +420,21 @@ public:
 };
 
 REGISTER_AGENT(ChainDestruction)
+
+class BasicWorkbench : public Agent
+{
+public:
+	AGENT(BasicWorkbench);
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void DrawGui(float gt) override;
+
+	float GetFreq() const override
+	{
+		return std::numeric_limits<float>::max();
+	}
+};
+
+REGISTER_AGENT(BasicWorkbench)

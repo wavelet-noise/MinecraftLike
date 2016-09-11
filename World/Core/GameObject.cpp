@@ -83,6 +83,8 @@ PGameObject GameObject::Clone()
 {
 	auto a = MakeGameObject<GameObject>(id);
 	a->placable = placable;
+	a->active = active;
+	a->walkable = walkable;
 
 	for (const auto &ag : mAgents)
 	{

@@ -224,9 +224,10 @@
     ],
 	"template":{
 		"type":"TemplateItemMaterial",
-		"materials":["tag_material_metal"]
+		"materials":["tag_material_metal"],
+		"machine":"basic_workbench"
 	},
-	"tags":["tag_nail"]
+	"tags":["tag_nail", "tag_basic_tool"]
 },{
 	"type":"Item",
     "id":"pickaxe",
@@ -240,8 +241,10 @@
 	"recipe":{
 				"input":[["pickaxe_head_%material%", 1], ["tag_stick", 1]],
 				"output":[["pickaxe_%material%", 1]],
-				"materials":["tag_material_metal"]
-			}
+				"materials":["tag_material_metal"],
+				"machine":"basic_workbench"
+			},
+	"tags":["tag_basic_tool"]
 },{
 	"type":"Item",
     "id":"pickaxe_head",
@@ -254,8 +257,10 @@
 	"recipe":{
 				"input":[["ingot_%material%", 2]],
 				"output":[["pickaxe_head_%material%", 1]],
-				"materials":["tag_material_metal"]
-			}
+				"materials":["tag_material_metal"],
+				"machine":"basic_workbench"
+			},
+	"tags":["tag_metal_basic_component"]
 },{
 	"type":"Item",
     "id":"hammer_head",
@@ -269,8 +274,10 @@
 	"recipe":{
 				"input":[["ingot_%material%", 1]],
 				"output":[["hammer_head_%material%", 1]],
-				"materials":["tag_material_metal"]
-			}
+				"materials":["tag_material_metal"],
+				"machine":"basic_workbench"
+			},
+	"tags":["tag_metal_basic_component"]
 },{
 	"type":"Item",
     "id":"hammer",
@@ -283,8 +290,10 @@
 	"recipe":{
 				"input":[["hammer_head_%material%", 1], ["tag_stick", 1]],
 				"output":[["hammer_%material%", 1]],
-				"materials":["tag_material_metal"]
-			}
+				"materials":["tag_material_metal"],
+				"machine":"basic_workbench"
+			},
+	"tags":["tag_basic_tool"]
 },{
 	"type":"Item",
     "id":"file",
@@ -297,8 +306,11 @@
 	"recipe":{
 				"input":[["bar_%material%", 1], ["tag_stick", 1]],
 				"output":[["file_%material%", 1]],
-				"materials":["tag_material_metal"]
-			}
+				"materials":["tag_material_metal"],
+				"duration":50,
+				"machine":"basic_workbench"
+			},
+	"tags":["tag_basic_tool"]
 },{
 	"type":"Item",
     "id":"screwdriver",
@@ -311,7 +323,9 @@
 	"recipe":{
 				"input":[["bar_%material%", 1], ["tag_stick", 1]],
 				"output":[["screwdriver_%material%", 1]],
-				"materials":["tag_material_metal"]
-			}
+				"materials":["tag_material_metal"],
+				"machine":"basic_workbench"
+			},
+	"tags":["tag_basic_tool"]
 }
 ]

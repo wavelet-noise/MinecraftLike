@@ -172,6 +172,8 @@ void Game::Update(float dt)
 			auto c = DB::Get().Create("caracter");
 			c->GetAgent<Chest>()->Push(DB::Get().Create("nutrition"), 100);
 			c->GetAgent<Chest>()->Push(DB::Get().Create("nail_material_iron"), 200);
+			c->GetAgent<Chest>()->Push(DB::Get().Create("stick"), 50);
+			c->GetAgent<Chest>()->Push(DB::Get().Create("bar_material_iron"), 5);
 
 			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, c));
 			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));

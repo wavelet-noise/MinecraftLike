@@ -7,7 +7,7 @@ std::string OrderWalk::to_string() const
 	return (boost::format("OrderWalk: pos = %1%") % glm::to_string(pos)).str();
 }
 
-void OrderWalk::Perform(const GameObjectParams & params, PGameObject performer)
+void OrderWalk::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 	if (c->path.empty())

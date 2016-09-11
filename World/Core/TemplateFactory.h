@@ -18,50 +18,51 @@ template <class IdType, class Base>
 class TemplateFactory : boost::noncopyable
 {
 public:
-  using IdTypeUsing = IdType ;
+	using IdTypeUsing = IdType;
 protected:
-  using BasePtr = std::shared_ptr<Base>;
-  using CreateFunc = std::function<BasePtr()>;
-  using FactoryMap = std::map<IdType, CreateFunc>;
+	using BasePtr = std::shared_ptr<Base>;
+	using CreateFunc = std::function<BasePtr()>;
+	using FactoryMap = std::map<IdType, CreateFunc>;
 
 public:
-  BasePtr Create(const IdType & id) const
-  {
-    typename FactoryMap::const_iterator it = map_.find(id);
-    return (it != map_.end()) ? (it->second)() : BasePtr();
-  }
+	BasePtr Create(const IdType & id) const
+	{
+		typename FactoryMap::const_iterator it = map_.find(id);
+		return (it != map_.end()) ? (it->second)() : BasePtr();
+	}
 
-  void Add(const IdType & id, CreateFunc func)
-  {
-    auto i = map_.find(id);
-    if (i == map_.end())
-    {
-      LOG(trace) << "agent class id = \"" << id << "\" register";
-      map_.insert(FactoryMap::value_type(id, func));
-    }
-    else
-    {
-      LOG(error) << "agent class id = \"" << id << "\" override";
-      i->second = func;
-    }
-  }
+	void Add(const IdType & id, CreateFunc func, const std::string comment = "")
+	{
+		auto i = map_.find(id);
+		if (i == map_.end())
+		{
+			LOG(trace) << "agent class id = \"" << id << "\" register";
+			map_.insert(FactoryMap::value_type(id, func));
+		}
+		else
+		{
+			if(!comment.empty())
+				LOG(trace) << "agent class id = \"" << id << "\" override with message: " << comment;
+			i->second = func;
+		}
+	}
 
-  FactoryMap map_;
+	FactoryMap map_;
 };
 
 template <class T>
 class RegisterElement
 {
 public:
-  using TPtr = std::shared_ptr<T>;
+	using TPtr = std::shared_ptr<T>;
 public:
-  template <class Factory>
-  RegisterElement(Factory & factory, const typename Factory::IdTypeUsing & id)
-  {
-    factory.Add(id, []() -> TPtr {
-      return TPtr(new T());
-    });
-  }
+	template <class Factory>
+	RegisterElement(Factory & factory, const typename Factory::IdTypeUsing & id)
+	{
+		factory.Add(id, []() -> TPtr {
+			return TPtr(new T());
+		});
+	}
 };
 
 
