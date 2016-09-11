@@ -37,6 +37,15 @@ void Agent::JsonLoad(const rapidjson::Value & val)
 {
 }
 
+void Agent::save(boost::archive::binary_oarchive& ar, const unsigned) const
+{
+}
+
+void Agent::load(boost::archive::binary_iarchive& ar, const unsigned)
+{
+}
+
+
 AgentFactory::FactoryType &AgentFactory::Get()
 {
   static FactoryType object;

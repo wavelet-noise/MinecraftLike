@@ -421,6 +421,131 @@ public:
 
 REGISTER_AGENT(ChainDestruction)
 
+class Workshop : public Agent
+{
+public:
+	AGENT(Workshop);
+
+	// Унаследовано через Agent
+	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui(float gt) override;
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	float GetFreq() const override
+	{
+		return 5.0f;
+	}
+};
+
+REGISTER_AGENT(Workshop)
+
+class EnergyProducer : public Agent
+{
+public:
+	AGENT(EnergyProducer);
+
+	// Унаследовано через Agent
+	PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui(float gt) override;
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	float GetFreq() const override
+	{
+		return 1 / 10.f;
+	}
+
+	void ProduceEnergy(float power);
+
+private:
+
+	float amperage = 1;
+	float voltage = 32;
+
+	float buffer = 0;
+	float buffer_size = 100;
+};
+
+REGISTER_AGENT(EnergyProducer)
+
+class EnergyConsumer : public Agent
+{
+public:
+	AGENT(EnergyConsumer);
+
+	// Унаследовано через Agent
+	PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui(float gt) override;
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	float GetFreq() const override
+	{
+		return 1 / 10.f;
+	}
+};
+
+REGISTER_AGENT(EnergyConsumer)
+
+class EnergyWire : public Agent
+{
+public:
+	AGENT(EnergyWire);
+
+	// Унаследовано через Agent
+	PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui(float gt) override;
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	float GetFreq() const override
+	{
+		return 1 / 10.f;
+	}
+};
+
+REGISTER_AGENT(EnergyWire)
+
+class SteamGenerator : public Agent
+{
+public:
+	AGENT(SteamGenerator);
+
+	// Унаследовано через Agent
+	PAgent Clone(GameObject * parent, const std::string & name = "") override;
+
+	void Update(const GameObjectParams &params) override;
+
+	void DrawGui(float gt) override;
+
+	void JsonLoad(const rapidjson::Value &val) override;
+
+	float GetFreq() const override
+	{
+		return 1 / 10.f;
+	}
+
+private:
+	float collected = 0;
+	float efficiency = 1.0;
+};
+
+REGISTER_AGENT(SteamGenerator)
+REGISTER_AGENT(ChainDestruction)
+
 class BasicWorkbench : public Agent
 {
 public:

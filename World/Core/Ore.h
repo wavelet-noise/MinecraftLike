@@ -20,8 +20,13 @@ public:
 			if (val.Capacity() >= 2)
 				count = val[1].GetInt();
 			if (val.Capacity() >= 3)
-				chance = val[2].GetDouble();
+				chance = static_cast<float>(val[2].GetDouble());
 		}
+
+		void save(boost::archive::binary_oarchive& ar, const unsigned) const;
+		void load(boost::archive::binary_iarchive& ar, const unsigned);
+
+		BOOST_SERIALIZATION_SPLIT_MEMBER()
 	};
 
 	void JsonLoad(const rapidjson::Value &val) override;
@@ -31,7 +36,17 @@ public:
 	virtual void DrawGui(float gt) override;
 
 	ChestSlot DigSome();
-	bool Expire();
+	bool Expire() const;
+
+	float GetFreq() const override
+	{
+		return std::numeric_limits<float>::max();
+	}
+
+	void save(boost::archive::binary_oarchive& ar, const unsigned) const override;
+	void load(boost::archive::binary_iarchive& ar, const unsigned) override;
+
+	BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 private:
 	std::vector<OrePart> contains;

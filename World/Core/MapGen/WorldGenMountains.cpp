@@ -2,7 +2,7 @@
 #include "Core\MapGen\PerlinNoise.h"
 #include "Core\World.h"
 
-#define GEN_OCT 5
+#define GEN_OCT 2
 float flatness(float tx, float ty)
 {
 	return (PerlinNoise2D(tx, ty, 2, 2, GEN_OCT) + 1) / 2.f;

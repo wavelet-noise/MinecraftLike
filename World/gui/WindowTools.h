@@ -1,4 +1,5 @@
 #pragma once
+#include "GL/glew.h"
 #include "WindowBase.h"
 #include <tools\StringIntern.h>
 

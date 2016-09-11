@@ -48,8 +48,10 @@ void LiquidPipe::Update(const GameObjectParams & params)
 
 	for (auto r : pipes)
 	{
-		r->SetLiquid({ liq.obj, total / pipes.size() });
+		r->SetLiquid({ liq.obj, total / (pipes.size()+1) });
 	}
+
+	liq.count /= total / (pipes.size() + 1);
 }
 
 void LiquidPipe::DrawGui(float gt)

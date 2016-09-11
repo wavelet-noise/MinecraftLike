@@ -4,6 +4,22 @@
 #include <imgui.h>
 #include <Core\DB.h>
 #include <Core\ChestSlot.h>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/string.hpp>
+
+void Ore::OrePart::save(boost::archive::binary_oarchive& ar, const unsigned) const
+{
+	ar & id & count & chance;
+}
+
+void Ore::OrePart::load(boost::archive::binary_iarchive& ar, const unsigned)
+{
+	std::string sid;
+	ar >> sid;
+	ar >> count;
+	ar >> chance;
+	id = sid;
+}
 
 void Ore::JsonLoad(const rapidjson::Value &val)
 {
@@ -38,9 +54,23 @@ ChestSlot Ore::DigSome()
 	{
 		return ChestSlot{ DB::Get().Create(contains[t].id), float(contains[t].count) };
 	}
+
+	return {};
 }
 
-bool Ore::Expire()
+bool Ore::Expire() const
 {
 	return size <= 0;
+}
+
+void Ore::save(boost::archive::binary_oarchive& ar, const unsigned) const
+{
+	ar & contains;
+	ar & size;
+}
+
+void Ore::load(boost::archive::binary_iarchive& ar, const unsigned)
+{
+	ar & contains;
+	ar & size;
 }

@@ -17,6 +17,9 @@ Sector::Sector(const SPos &position)
 {
 }
 
+Sector::Sector()
+{
+}
 
 Sector::~Sector()
 {
@@ -82,16 +85,21 @@ std::list<PGameObject> Sector::GetCreatures()
 	return creatures;
 }
 
+void Sector::SayChanged()
+{
+	if(mTessellator)
+		mTessellator->SayChanged(mPos);
+}
+
 void Sector::Update(World *world, float dt)
 {
 	std::remove_if(mActive.begin(), mActive.end(), [&](const ActiveStruct &go)->bool {return std::get<0>(go).expired(); });
 
 	GameObjectParams gop{ world, this, {}, dt };
-	for (const auto &a : mActive)
+	for (size_t i = 0; i < mUniqueBlocks.size(); ++i)
 	{
-		gop.pos = cs::SBtoWB(std::get<SPos>(a), mPos);
-		std::get<0>(a).lock()->Update(gop);
-		//if (mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);
+		gop.pos = cs::SBtoWB(cs::ItoSB(mUniquePoses[i]), mPos);
+		if (mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);
 	}
 
 
@@ -158,17 +166,22 @@ void Sector::Draw(class Tessellator *tess)
 
 void Sector::SetSlise(int s)
 {
-	mTessellator->SetSlise(s);
+	if(mTessellator)
+		mTessellator->SetSlise(s);
 }
 
 void Sector::save(boost::archive::binary_oarchive& ar, const unsigned) const
 {
+	ar << mPos;
 	ar << mUniqueBlocks;
 	ar << mBlocks;
+	ar << mUniquePoses;
 }
 
-void Sector::load(boost::archive::binary_oarchive& ar, const unsigned)
+void Sector::load(boost::archive::binary_iarchive& ar, const unsigned)
 {
-	//ar >> mUniqueBlocks;
-	//ar >> mBlocks;
+	ar >> mPos;
+	ar >> mUniqueBlocks;
+	ar >> mBlocks;
+	ar >> mUniquePoses;
 }

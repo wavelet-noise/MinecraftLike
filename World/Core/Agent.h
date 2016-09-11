@@ -1,7 +1,3 @@
-
-
-
-
 #pragma once
 #ifndef Agent_h__
 #define Agent_h__
@@ -13,6 +9,9 @@
 #include "GameObjectParams.h"
 #include <memory>
 #include <type_traits>
+
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 
 class GameObject;
 
@@ -31,12 +30,18 @@ struct AgSync
 	bool executed;
 };
 
+#ifdef _MSC_VER
+#define AM_NOVTABLE /*__declspec(novtable)*/
+#elif
+#define AM_NOVTABLE /*__declspec(novtable)*/
+#endif
+
 // Агент.
 // Тип агента задается потомками на этапе компиляции и не меняется. Аналогичен типу объекта.
 // Имя агента задается потомками в конструкторе. Может использоваться для идентификации
 // экземпляров агентов. Также может отсутствовать.
 // У агентов, которые обязательно присутствуют в игровом объекте, имя должно отсутствовать.
-class Agent
+class AM_NOVTABLE Agent
 {
 public:
 	Agent() = default;
@@ -92,12 +97,14 @@ public:
 		return mParent;
 	}
 
-protected:
-	GameObject *mParent;
+	virtual void save(boost::archive::binary_oarchive& ar, const unsigned) const;
+	virtual void load(boost::archive::binary_iarchive& ar, const unsigned);
 
-	const StringIntern mTypeName;
-	StringIntern mAgentName;
-	StringIntern mFullName;
+	BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+protected:
+	friend class GameObject;
+	GameObject *mParent;
 };
 
 static void __req_helper()

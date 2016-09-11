@@ -3,8 +3,9 @@
 #include <vector>
 #include <tools\StringIntern.h>
 
-struct TemplateItemMaterialBase : public Template
+class TemplateItemMaterialBase : public Template
 {
+public:
   // Унаследовано через Template
   std::list<PGameObject> Generate() override;
   void JsonLoad(const rapidjson::Value & val) override;

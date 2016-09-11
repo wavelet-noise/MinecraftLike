@@ -154,7 +154,7 @@ int Game::Run()
 void Game::Update(float dt)
 {
 	SPos secPos = { 0,0,0 };
-	mSectorLoader->SetPos(secPos);
+	mSectorLoader->SetPos(mCamera->GetPos() / float(SECTOR_SIZE));
 
 	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
 	{
@@ -314,7 +314,7 @@ void Game::Draw(float dt)
 	}
 	else
 		selection_pos = PickFirst(ray.origin(), ray.dir(), 100.f, [&](const glm::ivec3 &pos)->bool {
-		return mWorld->GetBlock(pos).get();
+		return !!mWorld->GetBlock(pos).get();
 	});
 
 	mRender->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
@@ -468,7 +468,7 @@ void Game::Draw(float dt)
 	{
 		int slise = mWorld->GetSlise();
 		float prewheel = ImGui::GetIO().MouseWheel;
-		mWorld->SetSlise(slise + glm::sign(prewheel));
+		mWorld->SetSlise(static_cast<int>(slise + glm::sign(prewheel)));
 	}
 
 	ImGui::Render();

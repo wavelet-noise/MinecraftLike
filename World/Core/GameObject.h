@@ -8,7 +8,14 @@
 #include "..\tools\StringIntern.h"
 #include <memory>
 #include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/utility.hpp>
+
+namespace boost{
+	namespace archive{
+		class binary_iarchive;
+	}
+}
 
 using PGameObject = std::shared_ptr<GameObject>;
 using WPGameObject = std::weak_ptr<GameObject>;
@@ -24,6 +31,7 @@ class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:
 	GameObject(const StringIntern &__id);
+	GameObject();
 	virtual ~GameObject();
 
 	virtual void Update(GameObjectParams &params);
@@ -113,7 +121,7 @@ public:
 
 	void save(boost::archive::binary_oarchive& ar, const unsigned int) const;
 
-	void load(boost::archive::binary_oarchive& ar, const unsigned int);
+	void load(boost::archive::binary_iarchive& ar, const unsigned int);
 
 	BOOST_SERIALIZATION_SPLIT_MEMBER()
 

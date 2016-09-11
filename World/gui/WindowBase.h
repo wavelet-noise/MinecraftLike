@@ -11,31 +11,31 @@ public:
 
 	virtual void Draw(glm::vec2 mainwin_size, float gt) = 0;
 
-  void Hide()
-  {
-    mOpen = false;
-  }
+	void Hide()
+	{
+		mOpen = false;
+	}
 
-  void Show()
-  {
-    mOpen = true;
-  }
+	void Show()
+	{
+		mOpen = true;
+	}
 
-  void Toggle()
-  {
-	  mOpen = !mOpen;
-  }
+	void Toggle()
+	{
+		mOpen = !mOpen;
+	}
 
-  void SetVisibility(bool val)
-  {
-    mOpen = val;
-  }
+	void SetVisibility(bool val)
+	{
+		mOpen = val;
+	}
 
-  bool GetVisibility()
-  {
-    return mOpen;
-  }
+	bool GetVisibility()
+	{
+		return mOpen;
+	}
 
 protected:
-  bool mOpen = true;
+	bool mOpen = true;
 };

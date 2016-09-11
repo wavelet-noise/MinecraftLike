@@ -233,11 +233,7 @@
 {  
 	"type":"Block",
 	"id":"chromite",
-	"agents":[  
-			{
-				"type":"DeathDrop",
-				"id":"chromite"
-			},
+	"agents":[
 			{
 				"type":"Ore",
 				"contains":[["chromite_ore", 1, 0.1]],
@@ -259,6 +255,30 @@
 {
 	"type":"Item",
     "id":"chromite_ore",
+    "agents":[
+    ],
+	"recipes":[
+		{
+			"input":[["chromite_ore", 1]],
+			"output":[["chromite_dust", 2]],
+			"machine":"tag_macerator"
+		},
+		{
+			"input":[["chromite_dust", 3]],
+			"output":[["dust_material_chrome", 2], ["dust_material_iron", 1], ["oxygen", 4]],
+			"machine":"tag_separator"
+		}
+	]
+},
+{
+	"type":"Item",
+    "id":"oxygen",
+    "agents":[
+    ]
+},
+{
+	"type":"Item",
+    "id":"chromite_dust",
     "agents":[
     ]
 },
@@ -332,18 +352,32 @@
 },
 {
 	"type":"Item",
-    "id":"cobaltite_ore",
+    "id":"cobaltite_dust",
     "agents":[
     ]
+},
+{
+	"type":"Item",
+    "id":"cobaltite_ore",
+    "agents":[
+    ],
+	"recipes":[
+		{
+		    "input":[["cobaltite_ore", 1]],
+			"output":[["cobaltite_dust", 2]],
+			"machine":"tag_macerator"
+		},
+		{
+		    "input":[["cobaltite_dust", 3]],
+			"output":[["dust_material_cobalt", 1], ["dust_material_arsenicum", 1], ["dust_material_sulfur", 1]],
+			"machine":"tag_separator"
+		}
+	]
 },
 {  
 	"type":"Block",
 	"id":"bauxite",
-	"agents":[  
-			{
-				"type":"DeathDrop",
-				"id":"bauxite"
-			},
+	"agents":[
 			{
 				"type":"Ore",
 				"contains":[["bauxite_ore", 1, 0.1]],
@@ -360,11 +394,29 @@
 		}
 	],
 	"placeable":true,
-	"tags":["rock", "flux", "ore_dots"]
+	"tags":["rock", "flux", "ore_dots"],
+	"recipes":[
+		{
+			"input":[["bauxite_ore", 1]],
+			"output":[["bauxite_dust", 1]],
+			"machine":"tag_macerator"
+		},
+		{
+			"input":[["bauxite_dust", 6]],
+			"output":[["dust_material_aluminum", 3], ["dust_material_iron", 2], ["dust_material_titanium", 1]],
+			"machine":"tag_separator"
+		}
+	]
 },
 {
 	"type":"Item",
     "id":"bauxite_ore",
+    "agents":[
+    ]
+},
+{
+	"type":"Item",
+    "id":"bauxite_dust",
     "agents":[
     ]
 },
@@ -434,16 +486,12 @@
 {  
 	"type":"Block",
 	"id":"galena",
-	"agents":[  
-			{
-				"type":"DeathDrop",
-				"id":"galena"
-			},
-			{
-				"type":"Ore",
-				"contains":[["galena_ore", 1, 0.1]],
-				"size":1000
-			}
+	"agents":[
+		{
+			"type":"Ore",
+			"contains":[["galena_ore", 1, 0.1]],
+			"size":1000
+		}
 	],
 	"tesselator":[  
 		{  
@@ -461,7 +509,19 @@
 	"type":"Item",
     "id":"galena_ore",
     "agents":[
-    ]
+    ],
+	"recipes":[
+		{
+			"input":[["galena_ore", 1]],
+			"output":[["galena_dust", 1]],
+			"machine":"tag_macerator"
+		},
+		{
+			"input":[["galena_dust", 3]],
+			"output":[["dust_material_sulfur", 1], ["dust_material_silver", 1], ["dust_material_lead", 1]],
+			"machine":"tag_separator"
+		}
+	]
 },
 {  
 	"type":"Block",
@@ -483,8 +543,7 @@
 	],
 	"placeable":true,
 	"tags":["rock", "flux"]
-},
-{  
+},{  
 	"type":"Block",
 	"id":"gypsum",
 	"agents":[  
@@ -504,15 +563,10 @@
 	],
 	"placeable":true,
 	"tags":["rock", "flux"]
-},
-{  
+},{  
 	"type":"Block",
 	"id":"hematite",
-	"agents":[  
-			{
-				"type":"DeathDrop",
-				"id":"hematite"
-			},
+	"agents":[
 			{
 				"type":"Ore",
 				"contains":[["hematite_ore", 1, 0.1]],
@@ -530,21 +584,32 @@
 	],
 	"placeable":true,
 	"tags":["rock", "flux", "ore_dots"]
-},
-{
+},{
 	"type":"Item",
     "id":"hematite_ore",
     "agents":[
-    ]
-},
-{  
+    ],
+	"recipes":[
+		{
+			"input":[["hematite_ore", 1]],
+			"output":[["hematite_dust", 1]],
+			"machine":"tag_macerator"
+		},
+		{
+			"input":[["hematite_dust", 1]],
+			"output":[["dust_material_iron", 1], ["oxygen", 1]],
+			"machine":"tag_separator"
+		}
+	]
+},{  
 	"type":"Block",
 	"id":"ilmenite",
 	"agents":[  
-			{
-				"type":"DeathDrop",
-				"id":"ilmenite"
-			}
+		{
+			"type":"Ore",
+			"contains":[["ilmenite_ore", 1, 0.1]],
+			"size":1000
+		}
 	],
 	"tesselator":[  
 		{  
@@ -557,15 +622,32 @@
 	],
 	"placeable":true,
 	"tags":["rock", "flux"]
-},
-{  
+},{
+	"type":"Item",
+    "id":"ilmenite_ore",
+    "agents":[
+	],
+	"recipes":[
+		{
+			"input":[["ilmenite_ore", 1]],
+			"output":[["ilmenite_dust", 1]],
+			"machine":"tag_macerator"
+		},
+		{
+			"input":[["ilmenite_dust", 2]],
+			"output":[["dust_material_iron", 1], ["dust_material_titanium", 1], ["oxygen", 3]],
+			"machine":"tag_separator"
+		}
+	]
+},{  
 	"type":"Block",
 	"id":"kaolinite",
 	"agents":[  
-			{
-				"type":"DeathDrop",
-				"id":"kaolinite"
-			}
+		{
+			"type":"Ore",
+			"contains":[["kaolinite_ore", 1, 0.1]],
+			"size":1000
+		}
 	],
 	"tesselator":[  
 		{  
@@ -578,6 +660,23 @@
 	],
 	"placeable":true,
 	"tags":["rock", "flux"]
+},{
+	"type":"Item",
+    "id":"kaolinite_ore",
+    "agents":[
+	],
+	"recipes":[
+		{
+			"input":[["kaolinite_ore", 1]],
+			"output":[["kaolinite_dust", 1]],
+			"machine":"tag_macerator"
+		},
+		{
+			"input":[["kaolinite_dust", 2]],
+			"output":[["dust_material_aluminum", 1], ["dust_material_silicon", 1]],
+			"machine":"tag_separator"
+		}
+	]
 },
 {  
 	"type":"Block",
@@ -599,6 +698,64 @@
 	],
 	"placeable":true,
 	"tags":["rock", "flux"]
+},{
+	"type":"Item",
+    "id":"kimberlite_ore",
+    "agents":[
+	],
+	"recipes":[
+		{
+			"input":[["kimberlite_ore", 1]],
+			"output":[["kimberlite_dust", 1]],
+			"machine":"tag_macerator"
+		},
+		{
+			"input":[["kimberlite_dust", 1]],
+			"output":[["dust_material_stone", 1], ["dust_material_diamond", 1, 0.03]],
+			"machine":"tag_separator"
+		},
+		{
+			"input":[["kimberlite_ore", 1]],
+			"output":[["small_gem_material_diamond", 1, 0.01], ["gem_material_diamond", 1, 0.005], ["big_gem_material_diamond", 1, 0.001], ["giant_gem_material_diamond", 1, 0.0001]],
+			"machine":"tag_sifter"
+		}
+	]
+},{
+	"type":"Item",
+    "id":"gem",
+    "agents":[
+    ],
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_gem"]
+	}
+},{
+	"type":"Item",
+    "id":"small_gem",
+    "agents":[
+    ],
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_gem"]
+	}
+},{
+	"type":"Item",
+    "id":"big_gem",
+    "agents":[
+    ],
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_gem"]
+	}
+},{
+	"type":"Item",
+    "id":"giant_gem",
+    "agents":[
+    ],
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_gem"]
+	}
 },
 {  
 	"type":"Block",

@@ -60,10 +60,10 @@ Window::~Window()
 
 void Window::WindowSystemInitialize()
 {
-	glfwSetErrorCallback([](int, const char* description)
-	{
-		std::cout << description << std::endl;
-	});
+	//glfwSetErrorCallback([](int, const char* description)
+	//{
+	//	std::cout << description << std::endl;
+	//});
 
 	if (glfwInit() != GL_TRUE)
 	{

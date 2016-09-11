@@ -31,6 +31,8 @@
 //deserialize autoreg
 #include <Core\SplitBlockTessellator.h>
 
+#include <boost/algorithm/string/predicate.hpp>
+
 DB &DB::Get()
 {
 	static DB obj;
@@ -237,6 +239,21 @@ void DB::ReloadDirectory(const std::string & mDir)
 						r->JsonLoad(rec);
 					}
 
+					if (val.HasMember("recipes"))
+					{
+						rapidjson::Value &part = val["recipes"];
+
+						for(int i = 0; i < part.Size(); i++)
+						{
+							rapidjson::Value &sub_part = part[i];
+
+							auto r = std::make_shared<Recipe>();
+							mRecipe.push_back(r);
+
+							r->JsonLoad(sub_part);
+						}
+					}
+
 
 					mObjects[StringIntern(id)] = std::make_tuple(b, dyn, act);
 				}
@@ -408,6 +425,73 @@ const std::list<PRecipe> &DB::GetRecipe(const StringIntern & name) const
 	return empty;
 }
 
+PDeepRecipe DB::GetDeepRecipe(const StringIntern& name, const std::vector<StringIntern> &materials) const
+{
+	auto dr = std::make_shared<DeepRecipe>();
+	const auto &list = GetRecipe(name);
+	if (!list.empty())
+	{
+		dr->recipe = *list.begin();
+		for (const auto &in : dr->recipe->input)
+		{
+			auto id = in.id;
+			if (id.get().find("tag_") != std::string::npos)
+			{
+				auto taglist = Taglist(id);
+				if (!taglist.empty())
+				{
+					for(const auto &t : taglist)
+					{
+						for(const auto &m : materials)
+						{
+							if(boost::algorithm::ends_with(t.get(), m.get()))
+							{
+								id = t.get();
+								goto _done;
+							}
+						}
+					}
+
+					dr->incomplete = true;
+					goto _failed;
+				}
+			}
+
+			_done:
+
+			{
+				auto dr2 = GetDeepRecipe(id, materials);
+				if (dr2)
+				{
+					dr->input_expantion.push_back(dr2);
+					if (dr2->incomplete)
+						dr->incomplete = true;
+				}
+			}
+
+			_failed:;
+		}
+
+		return dr;
+	}
+
+	return nullptr;
+}
+
+const std::list<PRecipe>& DB::GetMachine(const std::string& name) const
+{
+	return GetMachine(StringIntern(name));
+}
+
+const std::list<PRecipe>& DB::GetMachine(const StringIntern& name) const
+{
+	static auto empty = std::list<PRecipe>();
+	const auto &t = mMachineCache.find(name);
+	if (t != mMachineCache.end())
+		return t->second;
+	return empty;
+}
+
 const std::list<PRecipe>& DB::GetMachineRecipe(const std::string & name) const
 {
 	return GetMachineRecipe(StringIntern(name));
@@ -426,6 +510,11 @@ const std::list<PRecipe>& DB::GetMachineRecipe(const StringIntern & name) const
 void DB::AddRecipe(PRecipe r)
 {
 	mRecipe.push_back(r);
+
+	if(!r->machine.get().empty())
+	{
+		mMachineCache[r->machine].push_back(r);
+	}
 
 	for (const auto &a : r->input)
 	{

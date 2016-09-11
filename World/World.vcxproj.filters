@@ -111,9 +111,6 @@
     <ClCompile Include="Render\RenderMeshDList.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Core\MapGen\WorldWorker.cpp">
-      <Filter>Core\MapGen</Filter>
-    </ClCompile>
     <ClCompile Include="Render\Model.cpp">
       <Filter>Render</Filter>
     </ClCompile>
@@ -351,6 +348,10 @@
     <ClCompile Include="Core\Operatable.cpp">
       <Filter>Core\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="miniz.c" />
+    <ClCompile Include="Core\MapGen\WorldWorker.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsCounter.h" />
@@ -429,9 +430,6 @@
     </ClInclude>
     <ClInclude Include="TemplateFactory.h">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\MapGen\WorldWorker.h">
-      <Filter>Core\MapGen</Filter>
     </ClInclude>
     <ClInclude Include="Render\Model.h">
       <Filter>Render</Filter>
@@ -715,6 +713,9 @@
     </ClInclude>
     <ClInclude Include="Core\Operatable.h">
       <Filter>Core\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MapGen\WorldWorker.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

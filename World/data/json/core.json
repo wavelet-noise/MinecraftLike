@@ -529,7 +529,34 @@
             }
         ],
         "dynamic":true,
+        "placeable":true
+    },
+	{
+		"type":"Block",
+        "id":"caprenter_workshop",
+        "agents":[  
+            {  
+                "type":"Workshop"
+            }
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":true,
         "placeable":true,
 		"active":true
-    }
+	}
 ]

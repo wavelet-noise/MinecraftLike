@@ -9,6 +9,7 @@
 #include <GLFW\glfw3.h>
 #include <gui\WindowRecipe.h>
 #include "WindowTools.h"
+#include <DragNDrop.h>
 
 void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 {
@@ -90,9 +91,21 @@ void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 					WindowRecipe::Get().ShowUsing(id);
 				}
 
+				if (ImGui::IsKeyPressed(GLFW_KEY_R) && ImGui::IsKeyDown(GLFW_KEY_LEFT_SHIFT))
+				{
+					WindowRecipe::Get().ShowDeepRecipe(id);
+				}
+
 				if (ImGui::IsMouseClicked(0))
 				{
 					selected_id = std::get<0>(pgo)->GetId();
+				}
+
+				auto &dnd = DragNDrop::Get();
+				if (ImGui::IsItemHovered())
+				{
+					if (!dnd.Busy())
+						dnd.Drag({ DB::Get().Create(id), 999});
 				}
 			}
 		}

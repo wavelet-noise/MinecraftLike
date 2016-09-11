@@ -51,7 +51,7 @@ void ModelTessellator::JsonLoad(const rapidjson::Value & val)
 		const std::string &mo = val["model"].GetString();
 		PMesh<VertexVTN> m = std::make_shared<TemplateMesh<VertexVTN>>(*Resources::Get().GetMesh(mo));
 		const auto &uv4 = mTextures[6];
-		for (int i = 0; i < m->SizeVertex(); i++)
+		for (size_t i = 0; i < m->SizeVertex(); i++)
 		{
 			m->Vertex(i).texture.x = glm::mix(uv4.x, uv4.z, m->Vertex(i).texture.x);
 			m->Vertex(i).texture.y = glm::mix(uv4.y, uv4.w, m->Vertex(i).texture.y);

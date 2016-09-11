@@ -2,7 +2,7 @@
 #include "WindowBase.h"
 #include <tools\StringIntern.h>
 
-class Room;
+struct Room;
 class World;
 
 class WindowRooms : public WindowBase
