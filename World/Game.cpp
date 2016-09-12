@@ -113,12 +113,12 @@ int Game::Run()
 		}
 	});
 
-	mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
-
 	mTessellator = std::make_unique<Tessellator>(*mRenderSector);
 	mTessellator->SayCamera(mCamera);
 	mWorld->SetTessellator(mTessellator.get());
 	mTessellator->Run();
+
+	mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
 
 	auto currTime = static_cast<float>(glfwGetTime());
 	while (!mWindow->WindowShouldClose())

@@ -22,11 +22,6 @@ public:
 			if (val.Capacity() >= 3)
 				chance = static_cast<float>(val[2].GetDouble());
 		}
-
-		void save(boost::archive::binary_oarchive& ar, const unsigned) const;
-		void load(boost::archive::binary_iarchive& ar, const unsigned);
-
-		BOOST_SERIALIZATION_SPLIT_MEMBER()
 	};
 
 	void JsonLoad(const rapidjson::Value &val) override;
@@ -42,11 +37,6 @@ public:
 	{
 		return std::numeric_limits<float>::max();
 	}
-
-	void save(boost::archive::binary_oarchive& ar, const unsigned) const override;
-	void load(boost::archive::binary_iarchive& ar, const unsigned) override;
-
-	BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 private:
 	std::vector<OrePart> contains;

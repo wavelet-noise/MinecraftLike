@@ -38,8 +38,8 @@ public:
 
 	void SetSlise(int s);
 
-	void BinLoad(std::istream& stream) const;
-	void BinSave(std::ostream& stream);
+	void BinLoad(std::istream& val);
+	void BinSave(std::ostream& val) const;
 
 private:
 	SPos mPos;
@@ -51,22 +51,3 @@ private:
 	using ActiveStruct = std::tuple<std::weak_ptr<GameObject>, SBPos>;
 	std::list<ActiveStruct> mActive; //only dynamic too
 };
-
-//namespace boost {
-//  namespace serialization {
-//    template<class Archive>
-//    inline void save_construct_data(Archive &ar, const Sector *t, const unsigned int)
-//    {
-//      ar << t->GetPos();
-//    }
-//
-//    template<class Archive>
-//    inline void load_construct_data(Archive &ar, Sector *t, const unsigned int)
-//    {
-//      glm::vec3 spos;
-//      ar >> spos;
-//
-//      new (t) Sector(spos);
-//    }
-//  }
-//}

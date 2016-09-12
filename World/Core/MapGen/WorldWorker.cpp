@@ -19,6 +19,14 @@ WorldWorker &WorldWorker::Get(World &w)
   return object;
 }
 
+struct membuf : std::streambuf
+{
+	membuf(char* begin, char* end) {
+		this->setg(begin, begin, end);
+	}
+};
+
+
 WorldWorker::WorldWorker()
 {
   mGenerator = std::make_unique<WorldGenMountains>();
@@ -48,7 +56,7 @@ WorldWorker::WorldWorker()
 	  }
 
 	  size_t uncompressed_size = file_stat.m_uncomp_size;
-	  void* p = mz_zip_reader_extract_file_to_heap(&zip_archive, file_stat.m_filename, &uncompressed_size, 0);
+	  char* p = reinterpret_cast<char *>(mz_zip_reader_extract_file_to_heap(&zip_archive, file_stat.m_filename, &uncompressed_size, 0));
 	  if (!p)
 	  {
 		  LOG(error) << "mz_zip_reader_extract_file_to_heap() failed...";
@@ -58,14 +66,12 @@ WorldWorker::WorldWorker()
 	  
 	  auto s = std::make_shared<Sector>(SPos(0, 0, 0));
 
-	  boost::iostreams::array_source sr(static_cast<char*>(p), uncompressed_size);
-	  boost::iostreams::stream<decltype(sr)> source(sr);
+	  membuf sbuf(p, p + uncompressed_size);
+	  std::istream is(&sbuf);
 
 	  try 
 	  {
-		  boost::archive::binary_iarchive ia(source);
-
-		  ia >> *s;
+		  s->BinLoad(is);
 
 		  mReady[s->GetPos()] = s;
 	  } 
@@ -86,17 +92,17 @@ WorldWorker::~WorldWorker()
 
 	for(const auto &s : mReady)
 	{
-		//boost::asio::streambuf b;
 		auto a_name = (boost::format("%1%_%2%_%3%.sec") % s.first.x % s.first.y % s.first.z).str();
-		//std::ofstream os(a_name.c_str());
-		boost::asio::streambuf sb;
+
+		std::stringbuf str;
+		std::ostream os(nullptr);
+		os.rdbuf(&str);
+
 		//if (os.is_open())
 		{
-			boost::archive::binary_oarchive oa(sb);
+			s.second->BinSave(os);
 
-			oa << *s.second;
-
-			mz_zip_add_mem_to_archive_file_in_place("Save\\worldsave.world", a_name.c_str(), boost::asio::buffer_cast<const char*>(sb.data()), sb.size(), nullptr, 0, 0);
+			mz_zip_add_mem_to_archive_file_in_place("Save\\worldsave.world", a_name.c_str(), str.str().c_str(), str.str().size(), nullptr, 0, 0);
 		}
 	}
 }

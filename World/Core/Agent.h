@@ -10,9 +10,6 @@
 #include <memory>
 #include <type_traits>
 
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-
 class GameObject;
 
 using PAgent = std::shared_ptr<class Agent>;
@@ -31,7 +28,7 @@ struct AgSync
 };
 
 #ifdef _MSC_VER
-#define AM_NOVTABLE /*__declspec(novtable)*/
+#define AM_NOVTABLE __declspec(novtable)
 #elif
 #define AM_NOVTABLE /*__declspec(novtable)*/
 #endif
@@ -96,11 +93,6 @@ public:
 	{
 		return mParent;
 	}
-
-	virtual void save(boost::archive::binary_oarchive& ar, const unsigned) const;
-	virtual void load(boost::archive::binary_iarchive& ar, const unsigned);
-
-	BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 protected:
 	friend class GameObject;

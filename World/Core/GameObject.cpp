@@ -8,6 +8,7 @@
 #include <boost/asio/streambuf.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/serialization/vector.hpp>
+#include <Serealize.h>
 
 GameObject::GameObject(const StringIntern &__id) :id(__id)
 {
@@ -105,52 +106,62 @@ StringIntern GameObject::GetId()
 	return id;
 }
 
-void GameObject::save(boost::archive::binary_oarchive& ar, const unsigned v) const
+void GameObject::BinSave(std::ostream& val) const
 {
-	ar << std::string(id);
-	ar << mAgents.size();
-	for (auto i = mAgents.begin(); i != mAgents.end(); ++i)
-	{
-		ar << i->second->GetFullName().get();
-
-		boost::asio::streambuf sb;
-		boost::archive::binary_oarchive oa(sb);
-		i->second->save(oa, v);
-
-		auto output = std::vector<char>(sb.size());
-		memcpy(&output[0], boost::asio::buffer_cast<const char*>(sb.data()), sb.size());
-
-		ar << sb.size();
-		ar << output;
-	}
+	BINSAVE(id);
 }
 
-void GameObject::load(boost::archive::binary_iarchive& ar, const unsigned v)
+void GameObject::BinLoad(std::istream& val)
 {
-	std::string id;
-	size_t size;
-	ar >> id >> size;
-
-	for(int i = 0; i < size; ++i)
-	{
-		std::string fullname;
-		ar >> fullname;
-
-		auto ag = AgentFactory::Get().Create(StringIntern(fullname));
-		ag->mParent = this;
-
-		int size;
-		ar >> size;
-		auto input = std::vector<char>(size);
-		ar >> input;
-
-		boost::iostreams::array_source sr(&input[0], size);
-		boost::iostreams::stream<decltype(sr)> source(sr);
-	    boost::archive::binary_iarchive ia(source);
-
-		ag->load(ia, v);
-	}
+	BINLOAD(id);
 }
+
+//void GameObject::save(boost::archive::binary_oarchive& ar, const unsigned v) const
+//{
+//	ar << std::string(id);
+//	ar << mAgents.size();
+//	for (auto i = mAgents.begin(); i != mAgents.end(); ++i)
+//	{
+//		ar << i->second->GetFullName().get();
+//
+//		boost::asio::streambuf sb;
+//		boost::archive::binary_oarchive oa(sb);
+//		i->second->save(oa, v);
+//
+//		auto output = std::vector<char>(sb.size());
+//		memcpy(&output[0], boost::asio::buffer_cast<const char*>(sb.data()), sb.size());
+//
+//		ar << sb.size();
+//		ar << output;
+//	}
+//}
+//
+//void GameObject::load(boost::archive::binary_iarchive& ar, const unsigned v)
+//{
+//	std::string id;
+//	size_t size;
+//	ar >> id >> size;
+//
+//	for(int i = 0; i < size; ++i)
+//	{
+//		std::string fullname;
+//		ar >> fullname;
+//
+//		auto ag = AgentFactory::Get().Create(StringIntern(fullname));
+//		ag->mParent = this;
+//
+//		int size;
+//		ar >> size;
+//		auto input = std::vector<char>(size);
+//		ar >> input;
+//
+//		boost::iostreams::array_source sr(&input[0], size);
+//		boost::iostreams::stream<decltype(sr)> source(sr);
+//	    boost::archive::binary_iarchive ia(source);
+//
+//		ag->load(ia, v);
+//	}
+//}
 
 void GameObject::PushAgent(PAgent go)
 {

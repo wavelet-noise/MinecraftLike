@@ -33,14 +33,14 @@ const SPos & Sector::GetPos() const
 void Sector::SetBlock(const SBPos &pos, PGameObject block)
 {
 	SectorBase<PGameObject>::SetBlock(pos, block);
-	bool active = block->IsActive();
+	//bool active = block->IsActive();
 
-	if (active)
-	{
-		auto finded = std::find_if(mActive.begin(), mActive.end(), [&](const ActiveStruct &as)->bool {return std::get<SBPos>(as) == pos; });
-		if (finded == mActive.end())
-			mActive.push_back(std::make_tuple(block, pos));
-	}
+	//if (active)
+	//{
+	//	auto finded = std::find_if(mActive.begin(), mActive.end(), [&](const ActiveStruct &as)->bool {return std::get<SBPos>(as) == pos; });
+	//	if (finded == mActive.end())
+	//		mActive.push_back(std::make_tuple(block, pos));
+	//}
 
 	if (mTessellator)
 	{
@@ -53,10 +53,15 @@ void Sector::SetBlock(const SBPos &pos, PGameObject block)
 		{
 			mTessellator->Set(cs::SBtoWB(pos, mPos), nullptr);
 			mTessellator->SayChanged(mPos);
-			mTessellator->SayChanged(mPos - SPos(0,0,1));
+			mTessellator->SayChanged(mPos - SPos(0, 0, 1));
 		}
 	}
 }
+
+//void Sector::Afterload()
+//{
+	//for(
+//}
 
 void Sector::Spawn(const SBPos & position, PGameObject creature)
 {
@@ -77,7 +82,7 @@ void Sector::Place(const SBPos & position, PGameObject item)
 
 void Sector::Repace(const SBPos & position, PGameObject creature)
 {
-	items.remove(std::make_tuple( creature, position ));
+	items.remove(std::make_tuple(creature, position));
 }
 
 std::list<PGameObject> Sector::GetCreatures()
@@ -87,7 +92,7 @@ std::list<PGameObject> Sector::GetCreatures()
 
 void Sector::SayChanged()
 {
-	if(mTessellator)
+	if (mTessellator)
 		mTessellator->SayChanged(mPos);
 }
 
@@ -113,7 +118,7 @@ void Sector::Update(World *world, float dt)
 		PGameObject c = *c_iter;
 		auto p = c->GetAgent<PositionAgent>();
 
-		ParticleSystem::Get().Add( p->Get() + glm::vec3(0,0,0.5), StringIntern("car"), dt);
+		ParticleSystem::Get().Add(p->Get() + glm::vec3(0, 0, 0.5), StringIntern("car"), dt);
 
 		// если находится за границей сектора -- переносим в новый сектор, если он существует
 		if (p->Get().x > (mPos.x + 1) * SECTOR_SIZE ||
@@ -136,7 +141,7 @@ void Sector::Update(World *world, float dt)
 	for (auto c_iter = items.begin(); c_iter != items.end(); ++c_iter)
 	{
 		std::get<0>(*c_iter)->Update(gop);
-	
+
 		ParticleSystem::Get().Add(std::get<1>(*c_iter) + glm::vec3(0, 0, 0.5), StringIntern("r"), dt);
 	}
 }
@@ -166,22 +171,34 @@ void Sector::Draw(class Tessellator *tess)
 
 void Sector::SetSlise(int s)
 {
-	if(mTessellator)
+	if (mTessellator)
 		mTessellator->SetSlise(s);
 }
 
-void BinLoad(std::istream& stream) const
+void Sector::BinSave(std::ostream& val) const
 {
-	ar << mPos;
-	ar << mUniqueBlocks;
-	ar << mBlocks;
-	ar << mUniquePoses;
+	BINSAVE(mPos, mBlocks, mUniquePoses, mCountBlocks);
+	BINSAVE(mUniqueBlocks.size());
+	for (int i = 1; i < mUniqueBlocks.size(); ++i)
+	{
+		BINSAVE(mUniqueBlocks[i]->GetId());
+	}
 }
 
-void BinLoad(std::ostream& stream)
+void Sector::BinLoad(std::istream& val)
 {
-	ar >> mPos;
-	ar >> mUniqueBlocks;
-	ar >> mBlocks;
-	ar >> mUniquePoses;
+	size_t size;
+	mUniquePoses.clear(); mBlocks.clear(); mUniqueBlocks.clear();
+
+	BINLOAD(mPos, mBlocks, mUniquePoses, mCountBlocks, size);
+	mUniqueBlocks.reserve(size);
+	mUniqueBlocks.push_back(nullptr);
+	for (int i = 1; i < size; ++i)
+	{
+		StringIntern id;
+		BINLOAD(id);
+		mUniqueBlocks.push_back(DB::Get().Create(id));
+	}
+
+	SayChanged();
 }

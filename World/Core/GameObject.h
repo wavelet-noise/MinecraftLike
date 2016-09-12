@@ -7,9 +7,6 @@
 #include "Agent.h"
 #include "..\tools\StringIntern.h"
 #include <memory>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/serialization/utility.hpp>
 
 namespace boost{
 	namespace archive{
@@ -118,13 +115,8 @@ public:
 	}
 
 	StringIntern GetId();
-
-	void save(boost::archive::binary_oarchive& ar, const unsigned int) const;
-
-	void load(boost::archive::binary_iarchive& ar, const unsigned int);
-
-	BOOST_SERIALIZATION_SPLIT_MEMBER()
-
+	void BinSave(std::ostream& val) const;
+	void BinLoad(std::istream& val);
 protected:
 	friend class DB;
 	friend class World;
