@@ -8,7 +8,6 @@ class WindowCraftQueue : public WindowBase
 public:
 
 	WindowCraftQueue();
-	World *w = nullptr;
 
 	// Унаследовано через WindowBase
 	virtual void Draw(glm::vec2 mainwin_size, float gt) override;

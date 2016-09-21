@@ -32,6 +32,7 @@
 #include <Core\SplitBlockTessellator.h>
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <Game.h>
 
 DB &DB::Get()
 {
@@ -53,12 +54,28 @@ void DB::ReloadDirectory(const std::string & mDir)
 {
 	mObjects.clear();
 
+	int json_count = 1;
+	{
+		boost::filesystem::path targetDir(mDir);
+		boost::filesystem::recursive_directory_iterator iter(targetDir);
+
+		for (const boost::filesystem::path &file : iter) {
+			if (boost::filesystem::is_regular_file(file) && boost::filesystem::extension(file) == ".json")
+				json_count++;
+		}
+	}
+
+	Game::SetLoadPhase(0, "Json loading", 0, 4);
+
 	boost::filesystem::path targetDir(mDir);
 	boost::filesystem::recursive_directory_iterator iter(targetDir);
-
+	float json_current = 1;
 	for (const boost::filesystem::path &file : iter) {
 		if (boost::filesystem::is_regular_file(file) && boost::filesystem::extension(file) == ".json")
 		{
+			json_current++;
+			Game::SetLoadPhase(json_current / json_count);
+
 			std::ifstream fs(file.string());
 			std::string all((std::istreambuf_iterator<char>(fs)),
 				std::istreambuf_iterator<char>());
@@ -265,8 +282,12 @@ void DB::ReloadDirectory(const std::string & mDir)
 	LOG(info) << mObjects.size() << " loaded";
 	LOG(info) "template expansion";
 
+	Game::SetLoadPhase(0, "Template expanding", 1, 4);
+	float i = 0;
 	for (auto &t : mTempl)
 	{
+		Game::SetLoadPhase(i / mTempl.size());
+
 		auto objtags = Tag(t->go->GetId());
 		auto ngo = t->Generate();
 		auto oldgo = mObjects[t->go->GetId()];
@@ -282,27 +303,37 @@ void DB::ReloadDirectory(const std::string & mDir)
 				mTags[s].push_back(n->GetId());
 			}
 		}
+		i++;
 	}
 
 	LOG(info) "expanded to " << mObjects.size() << " objects, then fill requirements";
 
+	Game::SetLoadPhase(0, "Requirements checking", 2, 4);
+	i = 0;
 	for (auto &o : mObjects)
 	{
+		Game::SetLoadPhase(i / mObjects.size());
 		std::get<0>(o.second)->Requirements();
+		i++;
 	}
 
 	LOG(info) "done, then afterload";
 
+	Game::SetLoadPhase(0, "Objects afterload", 3, 4);
+	i = 0;
 	for (auto &o : mObjects)
 	{
+		Game::SetLoadPhase(i / mObjects.size());
 		std::get<0>(o.second)->Afterload();
+		i++;
 	}
 
-	TextureManager::Get().Compile();
-
+	Game::SetLoadPhase(0, "Recipe expanding", 4, 4);
 	std::list<PRecipe> old_recipes = std::move(mRecipe); //final recipe filling
+	i = 0;
 	for (const auto &r : old_recipes)
 	{
+		Game::SetLoadPhase(i / old_recipes.size());
 		auto exp = r->Expand();
 		if (!exp.empty())
 		{
@@ -313,6 +344,7 @@ void DB::ReloadDirectory(const std::string & mDir)
 		{
 			AddRecipe(r);
 		}
+		i++;
 	}
 
 	LOG(info) "expanded to " << mRecipe.size() << " recipes";

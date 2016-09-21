@@ -105,7 +105,7 @@ void SpriteBatch::AddCube(const glm::vec3 & _min, const glm::vec3 & _max, const 
 	cur++;
 }
 
-void SpriteBatch::SetCam(PCamera camera)
+void SpriteBatch::SetCam(Camera * camera)
 {
 	current_camera = camera;
 }

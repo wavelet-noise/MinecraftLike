@@ -2,6 +2,7 @@
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <Core\World.h>
+#include "WS.h"
 
 WindowRooms::WindowRooms()
 {
@@ -18,7 +19,7 @@ void WindowRooms::Draw(glm::vec2 wsize, float gt)
 		selected->name = buf;
 		if (ImGui::Button("Remove"))
 		{
-			w->rooms.remove(selected);
+			WS::Get().w->rooms.remove(selected);
 			selected = nullptr;
 		}
 	}

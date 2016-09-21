@@ -38,13 +38,13 @@ public:
 
 	void AddCube(const glm::vec3 & min, const glm::vec3 & max, const glm::vec2 & uv_min, const glm::vec2 & uv_max, PTexture tex, const glm::vec4 & col = glm::vec4(1, 1, 1, 1));
 
-	void SetCam(PCamera camera);
+	void SetCam(Camera * camera);
 
 	void Render();
 
 	PShader curent_shader;
 	PTexture curent_texture;
-	PCamera current_camera;
+	Camera * current_camera = nullptr;
 
 	GLuint m_vbo[2];
     GLuint m_vao = 0;

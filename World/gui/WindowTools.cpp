@@ -95,11 +95,11 @@ void WindowTools::Draw(glm::vec2 wsize, float gt)
 		{
 			if (ImGui::Button("Refill activity"))
 			{
-				auto w = Game::GetWorld();
+				/*auto w = Game::GetWorld();
 				for(const auto &c : w->controlled)
 				{
 					c->GetAgent<ActivityConsumer>()->Tire(-100);
-				}
+				}*/
 			}
 
 			ImGui::TreePop();

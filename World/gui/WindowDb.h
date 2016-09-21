@@ -8,8 +8,6 @@ class WindowDb : public WindowBase
 {
 public:
 
-	World * w;
-
 	// Унаследовано через WindowBase
 	void Draw(glm::vec2 mainwin_size, float gt) override;
 

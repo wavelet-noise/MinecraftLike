@@ -118,11 +118,12 @@ void Recipe::DrawGui(float gt)
 		ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
 		if (ImGui::IsItemHovered())
 		{
-			ImGui::SetTooltip("craft this recipe");
+			//TODO: redone
+			/*ImGui::SetTooltip("craft this recipe");
 			if (ImGui::IsMouseClicked(0))
 			{
 				Game::GetWorld()->QueueRecipeOrder({ static_cast<PRecipe>(shared_from_this()), 1, false });
-			}
+			}*/
 		}
 	}
 

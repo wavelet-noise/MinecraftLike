@@ -3,6 +3,7 @@
 #include <Core\Chest.h>
 #include <Render\TextureManager.h>
 #include <DragNDrop.h>
+#include "WS.h"
 
 WindowCraftQueue::WindowCraftQueue()
 {
@@ -17,7 +18,7 @@ void WindowCraftQueue::Draw(glm::vec2 mainwin_size, float gt)
 	{
 		ImGui::Begin("WindowCraftQueue", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
 		{
-			auto &c = w->GetRecipeOrders();
+			auto &c = WS::Get().w->GetRecipeOrders();
 			if (c.empty())
 			{
 				ImGui::Text("No craft orders");
@@ -35,7 +36,7 @@ void WindowCraftQueue::Draw(glm::vec2 mainwin_size, float gt)
 		}
 
 		{
-			auto &c = w->GetDelayedRecipeOrders();
+			auto &c = WS::Get().w->GetDelayedRecipeOrders();
 			if (!c.empty())
 			{
 				ImGui::Text("Delayed:");

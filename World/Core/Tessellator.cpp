@@ -61,7 +61,7 @@ void Tessellator::SayChanged(const SPos &pos)
 	}, pos);
 }
 
-void Tessellator::SayCamera(std::shared_ptr<Camera> c)
+void Tessellator::SayCamera(Camera * c)
 {
 	cam = c;
 }

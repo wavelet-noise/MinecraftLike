@@ -27,7 +27,7 @@ public:
 
 	// Сообщить сектору, что он изменился.
 	void SayChanged(const SPos &pos);
-	void SayCamera(std::shared_ptr<Camera> c);
+	void SayCamera(Camera * c);
 	void SetSlise(int s);
 	int GetSlise();
 
@@ -46,7 +46,7 @@ private:
 	std::unordered_map<SPos, std::shared_ptr<SectorTessellator>> mSectors;
 
 	class RenderSector &mRender;
-	std::shared_ptr<Camera> cam;
+	Camera * cam = nullptr;
 	int slise = 0;
 
 private:

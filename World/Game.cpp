@@ -36,76 +36,22 @@
 #include "gui/WindowDb.h"
 #include "gui/WindowTools.h"
 
-Game::Game()
+GamePhase_Game::GamePhase_Game()
 {
-	Window::WindowSystemInitialize();
-
-	mWindow = std::make_unique<Window>(glm::uvec2(1024, 768));
-	mCamera = std::make_shared<Camera>();
-	mWindow->SetCurrentContext();
-
-	mSun = std::make_shared<Camera>();
-	mSun->SetShadow();
-
-	Render::Initialize();
-	mRender = std::make_unique<Render>();
 	mRenderSector = std::make_unique<RenderSector>();
-
-	ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
-
-	Initialized = true;
-
-	//GL_CALL(glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y)); 
-
 	mWorld = std::make_unique<World>();
-	World * ww = mWorld.get();
-	WindowInventory::Get().w = ww;
-	WindowCraftQueue::Get().w = ww;
-	WindowDb::Get().w = ww;
-	WindowRooms::Get().w = ww;
-	WS::Get().w = ww;
+
+	mTessellator = std::make_unique<Tessellator>(*mRenderSector);
+	mTessellator->SayCamera(Game::GetCamera());
+	mWorld->SetTessellator(mTessellator.get());
+	mTessellator->Run();
+	WS::Get().w = mWorld.get();
 
 	generateShadowFBO();
-}
-
-Game::~Game()
-{
-	mWorld.reset();
-	mRenderSector.reset();
-	mRender.reset();
-	mWindow.reset();
-	Window::WindowSystemFinally();
-}
-
-
-int Game::Run()
-{
-	if (!Initialized)
-	{
-		system("pause");
-		return -1;
-	}
-
-	mCamera->Resize(mWindow->GetSize());
-	mCamera->SetPos({ 0, 0, 20 });
-	mCamera->LookAt({ 32, 32, 0 });
-	mWindow->SetResizeCallback([&](int x, int y) {
-		if (y < 1)
-			y = 1;
-		if (x < 1)
-			x = 1;
-		mCamera->Resize({ x, y });
-		mSun->Resize({ x, y });
-	});
-
-	TextureManager::Get().LoadDirectory("data\\textures\\");
-	TextureManager::Get().Compile();
 
 	DB::Get().ReloadDirectory("data\\json\\");
 
-	sb = std::make_unique<SpriteBatch>();
-
-	boost::thread gen_thread([]() {
+	gen_thread = boost::thread([&]() {
 		while (true)
 		{
 			WorldWorker::Get(*mWorld).Process();
@@ -113,91 +59,11 @@ int Game::Run()
 		}
 	});
 
-	mTessellator = std::make_unique<Tessellator>(*mRenderSector);
-	mTessellator->SayCamera(mCamera);
-	mWorld->SetTessellator(mTessellator.get());
-	mTessellator->Run();
-
 	mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
-
-	auto currTime = static_cast<float>(glfwGetTime());
-	while (!mWindow->WindowShouldClose())
-	{
-		fps.Update();
-
-		auto lastTime = currTime;
-		currTime = static_cast<float>(glfwGetTime());
-
-		Update(currTime - lastTime);
-
-		currTime = static_cast<float>(glfwGetTime());
-		Draw(currTime - lastTime);
-
-		mWindow->Update();
-		//std::this_thread::sleep_for(std::chrono::milliseconds(1)); ?!
-	}
-
-	mTessellator->Interrupt();
-	mTessellator.release();
-
-	gen_thread.interrupt();
-
-	LOG(trace) << "generate joining";
-	gen_thread.join();
-
-	LOG(trace) << "quit";
-
-	return 0;
+	initialized = true;
 }
 
-
-void Game::Update(float dt)
-{
-	SPos secPos = { 0,0,0 };
-	mSectorLoader->SetPos(mCamera->GetPos() / float(SECTOR_SIZE));
-
-	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
-	{
-		auto del = glm::vec3(ImGui::GetMouseDragDelta(1).y / mWindow->GetSize().y, ImGui::GetMouseDragDelta(1).x / mWindow->GetSize().x, 0);
-		del = mCamera->GetDirection() * del * 4.f;
-		del.z = 0;
-		mCamera->SetPos(mCamera->GetPos() - del);
-	}
-
-	for (const auto &e : EventBus::Get().ListenChannel<EventSectorReady>())
-	{
-		const auto &esec = std::static_pointer_cast<EventSectorReady>(e);
-		if (esec->sec->GetPos() == SPos(0, 0, 0))
-		{
-			auto c = DB::Get().Create("caracter");
-			c->GetAgent<Chest>()->Push(DB::Get().Create("nutrition"), 100);
-			c->GetAgent<Chest>()->Push(DB::Get().Create("nail_material_iron"), 200);
-			c->GetAgent<Chest>()->Push(DB::Get().Create("stick"), 50);
-			c->GetAgent<Chest>()->Push(DB::Get().Create("bar_material_iron"), 5);
-
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, c));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-		}
-	}
-
-	mWorld->Update(static_cast<float>(dt));
-	OrderBus::Get().Update(dt);
-	EventBus::Get().Update();
-}
-
-void Game::generateShadowFBO()
+void GamePhase_Game::generateShadowFBO()
 {
 	depthTextureId = std::make_shared<Texture>();
 	depthTextureId->DepthTexture({ 1024, 1024 });
@@ -220,18 +86,32 @@ void Game::generateShadowFBO()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Game::Draw(float dt)
+GamePhase_Game::~GamePhase_Game()
+{
+	gen_thread.interrupt();
+	gen_thread.detach();
+
+	LOG(trace) << "quit";
+
+	mTessellator->Interrupt();
+	mTessellator.release();
+
+	mWorld.reset();
+	mRenderSector.reset();
+}
+
+void GamePhase_Game::Draw(float dt)
 {
 	float drawtime = glfwGetTime();
 	//mCamera->SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
 	//mCamera->SetRot(mWorld->GetPlayer()->GetRot());
-	mCamera->Update();
+	Game::GetCamera()->Update();
 
 	static float phi = 0;
 	//phi += dt / 20.f;
-	mSun->SetPos(mCamera->GetPos() + glm::vec3{ glm::sin(phi) + glm::cos(phi), 0, -glm::sin(phi) + glm::cos(phi) });
-	mSun->LookAt(mCamera->GetPos());
-	mSun->Update();
+	Game::GetSun()->SetPos(Game::GetCamera()->GetPos() + glm::vec3{ glm::sin(phi) + glm::cos(phi), 0, -glm::sin(phi) + glm::cos(phi) });
+	Game::GetSun()->LookAt(Game::GetCamera()->GetPos());
+	Game::GetSun()->Update();
 
 	static bool wire = true;
 
@@ -247,29 +127,29 @@ void Game::Draw(float dt)
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	glCullFace(GL_FRONT);
-	mRenderSector->ShadowDraw(*mSun, Resources::Get().GetShader("shaders/shadow.glsl"));
+	mRenderSector->ShadowDraw(*Game::GetSun(), Resources::Get().GetShader("shaders/shadow.glsl"));
 	skip = 0;
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0, mWindow->GetFbSize().x, mWindow->GetFbSize().y);
+	glViewport(0, 0, Game::GetWindow()->GetFbSize().x, Game::GetWindow()->GetFbSize().y);
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	glCullFace(GL_BACK);
 	auto col = glm::mix(glm::vec4(117.0f / 255.0f, 187.0f / 255.0f, 253.0f / 255.0f, 1.0f), glm::vec4(0, 0.1, 0.2, 1), (glm::sin(phi) - glm::cos(phi) + 1) / 2.f);
 	glClearColor(col.x, col.y, col.z, col.w);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	depthTextureId->Set(TEXTURE_SLOT_2);
-	mRenderSector->Draw(*mCamera, *mSun);
+	mRenderSector->Draw(*Game::GetCamera(), *Game::GetSun());
 
-	mRender->Draw(*mCamera);
+	Game::GetRender()->Draw(*Game::GetCamera());
 
-	ParticleSystem::Get().Draw(*mCamera);
+	ParticleSystem::Get().Draw(*Game::GetCamera());
 	ParticleSystem::Get().Update(dt);
 
-	auto ray = mCamera->GetRay(ImGui::GetMousePos());
+	auto ray = Game::GetCamera()->GetRay(ImGui::GetMousePos());
 	std::tuple<glm::ivec3, glm::vec3> selection_pos; // pos, normal
 
-	static auto select_model = mRender->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
-	static auto square_model = mRender->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
+	static auto select_model = Game::GetRender()->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
+	static auto square_model = Game::GetRender()->AddModel("data/models/selection.obj", "selection_y", "shaders/basic.glsl");
 
 	int j = 0;
 	auto ord = OrderBus::Get().orders.begin();
@@ -283,7 +163,7 @@ void Game::Draw(float dt)
 			glm::vec2 uv1 = { tex4.x, tex4.y };
 			glm::vec2 uv2 = { tex4.z, tex4.w };
 
-			sb->AddCube(od->pos + glm::vec3(0, 0, 1.05), od->pos + glm::vec3(1, 1, 1.05), uv1, uv2, std::get<0>(tex_tuple));
+			Game::GetSpriteBatch()->AddCube(od->pos + glm::vec3(0, 0, 1.05), od->pos + glm::vec3(1, 1, 1.05), uv1, uv2, std::get<0>(tex_tuple));
 		}
 	}
 
@@ -298,7 +178,7 @@ void Game::Draw(float dt)
 				glm::vec2 uv1 = { tex4.x, tex4.y };
 				glm::vec2 uv2 = { tex4.z, tex4.w };
 
-				sb->AddCube(glm::vec3(j) + glm::vec3(0, 0, 1.05), glm::vec3(j) + glm::vec3(1, 1, 1.05), uv1, uv2, std::get<0>(tex_tuple), { 1,0,0,1 });
+				Game::GetSpriteBatch()->AddCube(glm::vec3(j) + glm::vec3(0, 0, 1.05), glm::vec3(j) + glm::vec3(1, 1, 1.05), uv1, uv2, std::get<0>(tex_tuple), { 1,0,0,1 });
 			}
 		}
 	}
@@ -317,12 +197,12 @@ void Game::Draw(float dt)
 		return !!mWorld->GetBlock(pos).get();
 	});
 
-	mRender->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
+	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
 	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
 	{
 		static glm::vec3 min, max;
 		static int minmaxstate = 0;
-		if (WindowTools::Get().selected != SelectedOrder::MARK_AS_ROOM && WindowTools::Get().selected !=  SelectedOrder::DIG_CIRCLE &&
+		if (WindowTools::Get().selected != SelectedOrder::MARK_AS_ROOM && WindowTools::Get().selected != SelectedOrder::DIG_CIRCLE &&
 			WindowTools::Get().selected != SelectedOrder::DIG_SQUARE)
 		{
 			min = max = glm::vec3{ std::numeric_limits<float>().max() };
@@ -376,9 +256,9 @@ void Game::Draw(float dt)
 
 							if (WindowTools::Get().selected == SelectedOrder::MARK_AS_ROOM)
 							{
-								r->cells.push_back({i,j,k});
+								r->cells.push_back({ i,j,k });
 								WindowRooms::Get().selected = r;
-								if(*(--mWorld->rooms.end()) != r)
+								if (*(--mWorld->rooms.end()) != r)
 									mWorld->rooms.push_back(r);
 							}
 						}
@@ -404,7 +284,7 @@ void Game::Draw(float dt)
 								glm::vec2 uv1 = { tex4.x, tex4.y };
 								glm::vec2 uv2 = { tex4.z, tex4.w };
 
-								sb->AddCube(glm::vec3(i, j, k + 1.05), glm::vec3(i + 1, j + 1, k + 1.05), uv1, uv2, std::get<0>(tex_tuple), glm::vec4(0, 1, 0, 1));
+								Game::GetSpriteBatch()->AddCube(glm::vec3(i, j, k + 1.05), glm::vec3(i + 1, j + 1, k + 1.05), uv1, uv2, std::get<0>(tex_tuple), glm::vec4(0, 1, 0, 1));
 							}
 						}
 			}
@@ -419,14 +299,14 @@ void Game::Draw(float dt)
 		}
 	}
 
-	sb->SetCam(mCamera);
-	sb->Render();
+	Game::GetSpriteBatch()->SetCam(Game::GetCamera());
+	Game::GetSpriteBatch()->Render();
 
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
 		if (auto b = mWorld->GetBlock(static_cast<WBPos>(std::get<0>(selection_pos))))
 		{
-			ImGui::SetNextWindowPos({ mWindow->GetSize().x / 2.f - 70, 0 });
+			ImGui::SetNextWindowPos({ Game::GetWindow()->GetSize().x / 2.f - 70, 0 });
 			ImGui::SetNextWindowSize({ 140,50 });
 			ImGui::Begin("Selected");
 			b->DrawGui(dt);
@@ -436,7 +316,7 @@ void Game::Draw(float dt)
 
 	}
 
-	WS::Get().Draw(mWindow->GetSize(), dt);
+	WS::Get().Draw(Game::GetWindow()->GetSize(), dt);
 
 	ImGui::Begin("Colony", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 	int i = 0;
@@ -473,13 +353,268 @@ void Game::Draw(float dt)
 
 	ImGui::Render();
 
-	WindowPerfomance::Get().DtUpdate(dt, fps.GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
+	WindowPerfomance::Get().DtUpdate(dt, Game::GetFps()->GetCount(), mRenderSector->ApproxDc(), mWorld->GetActiveCount());
 }
 
-World * Game::GetWorld()
+void GamePhase_Game::Update(float dt)
 {
-	return mWorld.get();
+	SPos secPos = { 0,0,0 };
+	mSectorLoader->SetPos(Game::GetCamera()->GetPos() / float(SECTOR_SIZE));
+
+	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
+	{
+		auto del = glm::vec3(ImGui::GetMouseDragDelta(1).y / Game::GetWindow()->GetSize().y, ImGui::GetMouseDragDelta(1).x / Game::GetWindow()->GetSize().x, 0);
+		del = Game::GetCamera()->GetDirection() * del * 4.f;
+		del.z = 0;
+		Game::GetCamera()->SetPos(Game::GetCamera()->GetPos() - del);
+	}
+
+	for (const auto &e : EventBus::Get().ListenChannel<EventSectorReady>())
+	{
+		const auto &esec = std::static_pointer_cast<EventSectorReady>(e);
+		if (esec->sec->GetPos() == SPos(0, 0, 0))
+		{
+			auto c = DB::Get().Create("caracter");
+			c->GetAgent<Chest>()->Push(DB::Get().Create("nutrition"), 100);
+			c->GetAgent<Chest>()->Push(DB::Get().Create("nail_material_iron"), 200);
+			c->GetAgent<Chest>()->Push(DB::Get().Create("stick"), 50);
+			c->GetAgent<Chest>()->Push(DB::Get().Create("bar_material_iron"), 5);
+
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, c));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+		}
+	}
+
+	mWorld->Update(static_cast<float>(dt));
+	OrderBus::Get().Update(dt);
+	EventBus::Get().Update();
 }
 
-std::unique_ptr<World> Game::mWorld;
+bool GamePhase_Game::IsInitialized()
+{
+	return initialized;
+}
+
+GamePhase_MainMenu::GamePhase_MainMenu()
+{
+}
+
+GamePhase_MainMenu::~GamePhase_MainMenu()
+{
+}
+
+void GamePhase_MainMenu::Draw(float gt)
+{
+	glClearColor(0,0,0,0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	static std::unique_ptr<GamePhase> game;
+
+	ImGui_ImplGlfwGL3_NewFrame();
+	{
+		ImGui::Begin("test");
+		if(ImGui::Button("asdasd"))
+		{
+			static boost::thread game_load([&]()
+			{
+				game = std::make_unique<GamePhase_Game>();
+			});
+		}
+
+		if (game && game->IsInitialized())
+		{
+			TextureManager::Get().Compile();
+			Game::SetGamePhase(std::move(game));
+		}
+
+		Game::DrawLoading();
+		ImGui::End();
+	}
+	ImGui::Render();
+}
+
+void GamePhase_MainMenu::Update(float gt)
+{
+}
+
+Game::Game()
+{
+	Window::WindowSystemInitialize();
+
+	mWindow = std::make_unique<Window>(glm::uvec2(1024, 768));
+	mWindow->SetCurrentContext();
+
+	Render::Initialize();
+	mRender = std::make_unique<Render>();
+
+	ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
+
+	Initialized = true;
+
+	//GL_CALL(glViewport(0, 0, REGISTRY_GRAPHIC.GetWindow().GetSize().x, REGISTRY_GRAPHIC.GetWindow().GetSize().y)); 
+}
+
+Game::~Game()
+{
+	mRender.reset();
+	mWindow.reset();
+	Window::WindowSystemFinally();
+}
+
+
+void Game::GameRun()
+{
+	auto currTime = static_cast<float>(glfwGetTime());
+	while (!mWindow->WindowShouldClose())
+	{
+		fps.Update();
+
+		auto lastTime = currTime;
+		currTime = static_cast<float>(glfwGetTime());
+
+		if (game_phase)
+		{
+			game_phase->Update(currTime - lastTime);
+
+			currTime = static_cast<float>(glfwGetTime());
+			game_phase->Draw(currTime - lastTime);
+		}
+
+		mWindow->Update();
+		//std::this_thread::sleep_for(std::chrono::milliseconds(1)); ?!
+	}
+}
+
+int Game::Run()
+{
+	if (!Initialized)
+	{
+		system("pause");
+		return -1;
+	}
+
+	mCamera = std::make_shared<Camera>();
+	mSun = std::make_shared<Camera>();
+	mSun->SetShadow();
+
+	mCamera->Resize(mWindow->GetSize());
+	mCamera->SetPos({ 0, 0, 20 });
+	mCamera->LookAt({ 32, 32, 0 });
+	mWindow->SetResizeCallback([&](int x, int y) {
+		if (y < 1)
+			y = 1;
+		if (x < 1)
+			x = 1;
+		mCamera->Resize({ x, y });
+		mSun->Resize({ x, y });
+	});
+
+	TextureManager::Get().LoadDirectory("data\\textures\\");
+	//TextureManager::Get().Compile();
+
+	sb = std::make_unique<SpriteBatch>();
+
+	game_phase = std::make_unique<GamePhase_MainMenu>();
+	GameRun();
+
+	return 0;
+}
+
+Window* Game::GetWindow()
+{
+	return mWindow.get();
+}
+
+Render* Game::GetRender()
+{
+	return mRender.get();
+}
+
+SpriteBatch* Game::GetSpriteBatch()
+{
+	return sb.get();
+}
+
+FpsCounter* Game::GetFps()
+{
+	return &fps;
+}
+
+Camera* Game::GetCamera()
+{
+	return mCamera.get();
+}
+
+Camera* Game::GetSun()
+{
+	return mSun.get();
+}
+
+void Game::SetGamePhase(std::unique_ptr<GamePhase>&& gp)
+{
+	game_phase = std::move(gp);
+}
+
+void Game::SetLoadPhase(float per, std::string des, int ph, int max_ph)
+{
+	percent = per;
+	descr = des;
+	phase = ph;
+	max_phase = max_ph;
+}
+
+void Game::SetLoadPhase(float per, std::string des, int ph)
+{
+	percent = per;
+	descr = des;
+	phase = ph;
+}
+
+void Game::SetLoadPhase(float per, std::string des)
+{
+	percent = per;
+	descr = des;
+}
+
+void Game::SetLoadPhase(float per)
+{
+	percent = per;
+}
+
+void Game::DrawLoading()
+{
+	if (!descr.empty())
+	{
+		if (max_phase != 0)
+		{
+			ImGui::Text("stage %d from %d", phase, max_phase);
+		}
+		ImGui::ProgressBar(percent);
+		ImGui::Text("%s", descr.c_str());
+	}
+}
+
+std::unique_ptr<Window> Game::mWindow;
+std::unique_ptr<Render> Game::mRender;
+std::unique_ptr<SpriteBatch> Game::sb;
+std::shared_ptr<Camera> Game::mCamera;
+std::shared_ptr<Camera> Game::mSun;
+FpsCounter Game::fps;
+std::unique_ptr<GamePhase> Game::game_phase;
+float Game::percent;
+std::string Game::descr;
+int Game::phase;
+int Game::max_phase;
 
