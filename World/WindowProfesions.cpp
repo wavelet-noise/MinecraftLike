@@ -22,17 +22,17 @@ void WindowProfessions::Draw(glm::vec2 mainwin_size, float gt)
 
 	if (mOpen)
 	{
-		ImGui::SetNextWindowSize({200.f + columns.size() * 25, 400.f});
+		ImGui::SetNextWindowSize({ 200.f + columns.size() * 25, 400.f });
 		ImGui::Begin("Professions", &mOpen);
 
 		ImGui::Columns(2 + columns.size(), "mycolumns");
 		ImGui::SetColumnOffset(-1, 0);
 		ImGui::Text(" ");
 		ImGui::NextColumn();
-		
+
 		for (int i = 0; i < columns.size(); i++)
 		{
-			ImGui::SetColumnOffset(-1, 200 + i*25);
+			ImGui::SetColumnOffset(-1, 200 + i * 25);
 			ImGui::TextVertical(columns[i]->Name().c_str());
 			{
 				//reverse = (comparison == pathCompare) ? !reverse : false;
@@ -48,37 +48,38 @@ void WindowProfessions::Draw(glm::vec2 mainwin_size, float gt)
 
 		auto &w = WS::Get().w;
 		int i = 0, j = 0;
-		for (const auto &c : w->controlled)
-		{
-			ImGui::Text(c->GetAgent<Named>()->name.c_str());
-			ImGui::NextColumn();
-
-			auto &vec = c->GetAgent<ProfessionPerformer>()->prof;
-			std::vector<PProfession> new_pp;
-
-			for(const auto &col : columns)
+		if (!w->controlled.empty())
+			for (const auto &c : w->controlled)
 			{
-				auto finded = std::find_if(vec.begin(), vec.end(), [&](const PProfession &pp)->bool {return pp->IsEquals(*col); });
-				if (finded != vec.end())
-				{
-					if(ImGui::Selectable((boost::format(" ##%1%_%2%") % i % j).str().c_str(), true))
-					{
-						vec.erase(finded);
-					}
-				}
-				else
-				{
-					if(ImGui::Selectable((boost::format(" ##%1%_%2%") % i % j).str().c_str(), false))
-					{
-						vec.push_back(col->Clone());
-					}
-				}
+				ImGui::Text(c->GetAgent<Named>()->name.c_str());
 				ImGui::NextColumn();
-				j++;
+
+				auto &vec = c->GetAgent<ProfessionPerformer>()->prof;
+				std::vector<PProfession> new_pp;
+
+				for (const auto &col : columns)
+				{
+					auto finded = std::find_if(vec.begin(), vec.end(), [&](const PProfession &pp)->bool {return pp->IsEquals(*col); });
+					if (finded != vec.end())
+					{
+						if (ImGui::Selectable((boost::format(" ##%1%_%2%") % i % j).str().c_str(), true))
+						{
+							vec.erase(finded);
+						}
+					}
+					else
+					{
+						if (ImGui::Selectable((boost::format(" ##%1%_%2%") % i % j).str().c_str(), false))
+						{
+							vec.push_back(col->Clone());
+						}
+					}
+					ImGui::NextColumn();
+					j++;
+				}
+				i++;
+				ImGui::NextColumn();
 			}
-			i++;
-			ImGui::NextColumn();
-		}
 
 		ImGui::End();
 	}

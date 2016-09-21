@@ -14,6 +14,10 @@
 #include "network\NetworkManager.h"
 #include <render\spritebatch.h>
 #include <boost/thread/thread.hpp>
+#include <boost/filesystem/path.hpp>
+
+class WorldWorker;
+class DB;
 
 class GamePhase
 {
@@ -39,7 +43,7 @@ private:
 	boost::thread gen_thread;
 	std::unique_ptr<SectorLoader> mSectorLoader;
 
-	std::unique_ptr<World> mWorld;
+	std::shared_ptr<World> mWorld;
 	std::unique_ptr<RenderSector> mRenderSector;
 	std::unique_ptr<Tessellator> mTessellator;
 
@@ -57,6 +61,18 @@ public:
 	void Update(float gt) override;
 };
 
+class GamePhase_LoadMenu : public GamePhase
+{
+public:
+	GamePhase_LoadMenu();
+	~GamePhase_LoadMenu();
+	void Draw(float gt) override;
+	void Update(float gt) override;
+
+	std::vector<std::string> saves;
+	std::vector<const char *> savec_c;
+};
+
 class Game
 {
 public:
@@ -71,6 +87,12 @@ public:
 	static FpsCounter * GetFps();
 	static Camera * GetCamera();
 	static Camera * GetSun();
+	static WorldWorker * GetWorker();
+	static void SetWorker(std::unique_ptr<WorldWorker> &&ww);
+
+	static DB * Base();
+	static void SetBase(std::unique_ptr<DB> &&db);
+
 	static void SetGamePhase(std::unique_ptr<GamePhase> &&gp);
 	static void SetLoadPhase(float percent, std::string descr, int phase, int max_phase);
 	static void SetLoadPhase(float percent, std::string descr, int phase);
@@ -97,6 +119,9 @@ private:
 
 	static std::shared_ptr<Camera> mCamera;
 	static std::shared_ptr<Camera> mSun;
+
+	static std::unique_ptr<WorldWorker> world_worker;
+	static std::unique_ptr<DB> db;
 
 	static std::unique_ptr<SpriteBatch> sb;
 };

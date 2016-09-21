@@ -6,18 +6,6 @@
 #include "Core\Sector.h"
 #include <gui\WindowPerfomance.h>
 #include "WorldGenMountains.h"
-#include <boost/asio/streambuf.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <fstream>
-#include <boost/iostreams/stream.hpp>
-
-WorldWorker &WorldWorker::Get(World &w)
-{
-  static WorldWorker object;
-  object.w = &w;
-  return object;
-}
 
 struct membuf : std::streambuf
 {
@@ -36,7 +24,7 @@ WorldWorker::WorldWorker()
 
   memset(&zip_archive, 0, sizeof(zip_archive));
 
-  status = mz_zip_reader_init_file(&zip_archive, "Save\\worldsave.world", 0);
+  status = mz_zip_reader_init_file(&zip_archive, Settings::Get().save_file.c_str(), 0);
 
   if (!status)
   {
@@ -88,7 +76,7 @@ WorldWorker::WorldWorker()
 
 WorldWorker::~WorldWorker()
 {
-	remove("Save\\worldsave.world");
+	remove(Settings::Get().save_file.c_str());
 
 	for(const auto &s : mReady)
 	{
@@ -102,7 +90,7 @@ WorldWorker::~WorldWorker()
 		{
 			s.second->BinSave(os);
 
-			mz_zip_add_mem_to_archive_file_in_place("Save\\worldsave.world", a_name.c_str(), str.str().c_str(), str.str().size(), nullptr, 0, 0);
+			mz_zip_add_mem_to_archive_file_in_place(Settings::Get().save_file.c_str(), a_name.c_str(), str.str().c_str(), str.str().size(), nullptr, 0, 0);
 		}
 	}
 }
@@ -151,12 +139,12 @@ void WorldWorker::Process()
   WindowPerfomance::Get().GeneratorDt(end - start);
 }
 
-inline void WorldWorker::WorldPass()
+void WorldWorker::WorldPass() const
 {
 	mGenerator->WorldPass(*w);
 }
 
-inline std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
+std::shared_ptr<Sector> WorldWorker::Generate(const SPos & spos)
 {
   std::shared_ptr<Sector> psec = std::make_shared<Sector>(spos);
   Sector &sector = *psec;

@@ -46,6 +46,9 @@ static std::vector<glm::vec3> bushpos;
 
 void WorldGenMountains::WorldPass(World &w)
 {
+	if (treepos.empty())
+		return;
+
 	auto log = DB::Get().Create(StringIntern("log"));
 	auto leaves = DB::Get().Create(StringIntern("leaves"));
 	auto berry_bush = DB::Get().Create(StringIntern("berry_bush"));

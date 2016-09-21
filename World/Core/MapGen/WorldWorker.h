@@ -14,15 +14,14 @@ class Sector;
 class WorldWorker : public boost::noncopyable
 {
 public:
-	static WorldWorker &Get(World &w);
 	WorldWorker();
 	~WorldWorker();
 
-	World *w;
+	std::shared_ptr<World> w;
 
 	std::shared_ptr<Sector> GetSector(const SPos &v);
 	void Process();
-	void WorldPass();
+	void WorldPass() const;
 
 private:
 	std::shared_ptr<Sector> Generate(const SPos &spos);

@@ -35,6 +35,9 @@
 #include <Core/orders/OrderPlace.h>
 #include "gui/WindowDb.h"
 #include "gui/WindowTools.h"
+#include <boost/filesystem/convenience.hpp>
+
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -51,10 +54,13 @@ GamePhase_Game::GamePhase_Game()
 
 	DB::Get().ReloadDirectory("data\\json\\");
 
+	Game::SetWorker(std::make_unique<WorldWorker>());
+	Game::GetWorker()->w = mWorld;
+
 	gen_thread = boost::thread([&]() {
 		while (true)
 		{
-			WorldWorker::Get(*mWorld).Process();
+			Game::GetWorker()->Process();
 			boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
 		}
 	});
@@ -89,7 +95,7 @@ void GamePhase_Game::generateShadowFBO()
 GamePhase_Game::~GamePhase_Game()
 {
 	gen_thread.interrupt();
-	gen_thread.detach();
+	gen_thread.join();
 
 	LOG(trace) << "quit";
 
@@ -417,20 +423,31 @@ GamePhase_MainMenu::~GamePhase_MainMenu()
 
 void GamePhase_MainMenu::Draw(float gt)
 {
-	glClearColor(0,0,0,0);
+	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	static std::unique_ptr<GamePhase> game;
 
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
-		ImGui::Begin("test");
-		if(ImGui::Button("asdasd"))
+		ImGui::SetNextWindowSize({ Game::GetWindow()->GetSize().x / 2.f, Game::GetWindow()->GetSize().y / 2.f });
+		ImGui::SetNextWindowPosCenter();
+		ImGui::Begin("Main menu", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+		if (ImGui::Button("Quick start"))
 		{
+			auto date_time = boost::posix_time::microsec_clock::universal_time();
+			std::stringstream sstream;
+			sstream << date_time;
+			Settings::Get().save_file = "Save\\" + sstream.str();
+
 			static boost::thread game_load([&]()
 			{
 				game = std::make_unique<GamePhase_Game>();
 			});
+		}
+		if (ImGui::Button("Load game"))
+		{
+			Game::SetGamePhase(std::make_unique<GamePhase_LoadMenu>());
 		}
 
 		if (game && game->IsInitialized())
@@ -446,6 +463,73 @@ void GamePhase_MainMenu::Draw(float gt)
 }
 
 void GamePhase_MainMenu::Update(float gt)
+{
+}
+
+GamePhase_LoadMenu::GamePhase_LoadMenu()
+{
+	boost::filesystem::path targetDir("Save");
+	boost::filesystem::recursive_directory_iterator iter(targetDir);
+
+	for (const boost::filesystem::path &file : iter) {
+		if (is_regular_file(file) && extension(file) == ".world")
+		{
+			saves.push_back(file.string());
+		}
+	}
+
+	savec_c = std::vector<const char *>(saves.size());
+	for (size_t i = 0; i < saves.size(); ++i)
+	{
+		savec_c[i] = saves[i].data();
+	}
+}
+
+GamePhase_LoadMenu::~GamePhase_LoadMenu()
+{
+}
+
+void GamePhase_LoadMenu::Draw(float gt)
+{
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	static std::unique_ptr<GamePhase> game;
+
+	ImGui_ImplGlfwGL3_NewFrame();
+	{
+		ImGui::SetNextWindowSize({ Game::GetWindow()->GetSize().x / 2.f, Game::GetWindow()->GetSize().y / 2.f });
+		ImGui::SetNextWindowPosCenter();
+		ImGui::Begin("Load game", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+		static int current;
+		if(ImGui::ListBox("Saves", &current, savec_c.data(), saves.size(), 10))
+		{
+			Settings::Get().save_file = savec_c[current];
+
+			static boost::thread game_load([&]()
+			{
+				game = std::make_unique<GamePhase_Game>();
+			});
+		}
+
+		if (ImGui::Button("Back"))
+		{
+			Game::SetGamePhase(std::make_unique<GamePhase_MainMenu>());
+		}		
+
+		if (game && game->IsInitialized())
+		{
+			TextureManager::Get().Compile();
+			Game::SetGamePhase(std::move(game));
+		}
+		
+		Game::DrawLoading();
+		ImGui::End();
+	}	
+	ImGui::Render();
+}
+
+void GamePhase_LoadMenu::Update(float gt)
 {
 }
 
@@ -562,6 +646,26 @@ Camera* Game::GetSun()
 	return mSun.get();
 }
 
+WorldWorker* Game::GetWorker()
+{
+	return world_worker.get();
+}
+
+void Game::SetWorker(std::unique_ptr<WorldWorker> &&ww)
+{
+	world_worker = std::move(ww);
+}
+
+DB* Game::Base()
+{
+	return db.get();
+}
+
+void Game::SetBase(std::unique_ptr<DB> &&__db)
+{
+	db = std::move(__db);
+}
+
 void Game::SetGamePhase(std::unique_ptr<GamePhase>&& gp)
 {
 	game_phase = std::move(gp);
@@ -613,6 +717,7 @@ std::shared_ptr<Camera> Game::mCamera;
 std::shared_ptr<Camera> Game::mSun;
 FpsCounter Game::fps;
 std::unique_ptr<GamePhase> Game::game_phase;
+std::unique_ptr<WorldWorker> Game::world_worker;
 float Game::percent;
 std::string Game::descr;
 int Game::phase;

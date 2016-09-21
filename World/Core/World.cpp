@@ -14,6 +14,7 @@
 #include <Core\EventBus.h>
 #include <memory>
 #include <Core\PositionAgent.h>
+#include <Game.h>
 
 World::World()
 {
@@ -56,7 +57,7 @@ std::shared_ptr<Sector> World::GetSector(const SPos &position)
 	auto it = mSectors.find(position);
 	if (it == mSectors.end())
 	{
-		if (auto psec = WorldWorker::Get(*this).GetSector(position))
+		if (auto psec = Game::GetWorker()->GetSector(position))
 		{
 			mSectors[position] = psec;
 			psec->Draw(mTesselator);
