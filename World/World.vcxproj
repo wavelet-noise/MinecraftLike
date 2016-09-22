@@ -89,6 +89,7 @@
     <ClCompile Include="gui\WindowBase.h" />
     <ClCompile Include="gui\WindowCraftQueue.cpp" />
     <ClCompile Include="gui\WindowDb.cpp" />
+    <ClCompile Include="gui\WindowEsc.cpp" />
     <ClCompile Include="gui\WindowEventlog.cpp" />
     <ClCompile Include="gui\WindowInventory.cpp" />
     <ClCompile Include="gui\WindowPerfomance.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
     <ClInclude Include="gui\WindowCraftQueue.h" />
     <ClInclude Include="gui\WindowDb.h" />
+    <ClInclude Include="gui\WindowEsc.h" />
     <ClInclude Include="gui\WindowEventlog.h" />
     <ClInclude Include="gui\WindowInventory.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />

@@ -34,6 +34,12 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <Game.h>
 
+DB &DB::Get()
+{
+	static DB obj;
+	return obj;
+}
+
 void DB::Registry(const StringIntern &name, PGameObject block, bool isStatic, bool isActive)
 {
 	mObjects[name] = std::make_tuple(block, isStatic, isActive);

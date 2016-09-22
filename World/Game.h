@@ -17,7 +17,6 @@
 #include <boost/filesystem/path.hpp>
 
 class WorldWorker;
-class DB;
 
 class GamePhase
 {
@@ -90,9 +89,6 @@ public:
 	static WorldWorker * GetWorker();
 	static void SetWorker(std::unique_ptr<WorldWorker> &&ww);
 
-	static DB * Base();
-	static void SetBase(std::unique_ptr<DB> &&db);
-
 	static void SetGamePhase(std::unique_ptr<GamePhase> &&gp);
 	static void SetLoadPhase(float percent, std::string descr, int phase, int max_phase);
 	static void SetLoadPhase(float percent, std::string descr, int phase);
@@ -121,7 +117,6 @@ private:
 	static std::shared_ptr<Camera> mSun;
 
 	static std::unique_ptr<WorldWorker> world_worker;
-	static std::unique_ptr<DB> db;
 
 	static std::unique_ptr<SpriteBatch> sb;
 };

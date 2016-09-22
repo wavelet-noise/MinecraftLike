@@ -9,6 +9,7 @@
 #include "WindowRecipe.h"
 #include "WindowRooms.h"
 #include <WindowProfesions.h>
+#include "WindowEsc.h"
 
 void WS::Draw(glm::vec2 wsize, float gt)
 {
@@ -22,6 +23,7 @@ void WS::Draw(glm::vec2 wsize, float gt)
 	WindowCraftQueue &wcq = WindowCraftQueue::Get();
 	WindowRooms &wro = WindowRooms::Get();
 	WindowProfessions &wpr = WindowProfessions::Get();
+	WindowEsc &wesc = WindowEsc::Get();
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_F3))
 	{
@@ -52,4 +54,5 @@ void WS::Draw(glm::vec2 wsize, float gt)
 	wcq.Draw(wsize, gt);
 	wro.Draw(wsize, gt);
 	wpr.Draw(wsize, gt);
+	wesc.Draw(wsize, gt);
 }

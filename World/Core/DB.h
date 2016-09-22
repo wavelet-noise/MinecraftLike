@@ -11,6 +11,8 @@
 class DB
 {
 public:
+	static DB &Get();
+
 	void Registry(const StringIntern &name, PGameObject block, bool isStatic = true, bool isActive = false);
 	void RegistryTesselator(const StringIntern &name, PGameObjectTessellator tess);
 	void ReloadDirectory(const std::string &mDir);

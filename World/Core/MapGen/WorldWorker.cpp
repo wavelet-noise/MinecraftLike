@@ -76,9 +76,13 @@ WorldWorker::WorldWorker()
 
 WorldWorker::~WorldWorker()
 {
+}
+
+void WorldWorker::SaveAll()
+{
 	remove(Settings::Get().save_file.c_str());
 
-	for(const auto &s : mReady)
+	for (const auto &s : mReady)
 	{
 		auto a_name = (boost::format("%1%_%2%_%3%.sec") % s.first.x % s.first.y % s.first.z).str();
 

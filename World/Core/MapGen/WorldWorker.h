@@ -17,6 +17,8 @@ public:
 	WorldWorker();
 	~WorldWorker();
 
+	void SaveAll();
+
 	std::shared_ptr<World> w;
 
 	std::shared_ptr<Sector> GetSector(const SPos &v);

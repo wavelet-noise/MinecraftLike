@@ -37,5 +37,5 @@ public:
 	}
 
 protected:
-	bool mOpen = true;
+	bool mOpen = false;
 };

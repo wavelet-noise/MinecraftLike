@@ -107,6 +107,7 @@
     <ClCompile Include="tools\wset.h" />
     <ClCompile Include="WindowProfesions.cpp" />
     <ClCompile Include="Window\Window.cpp" />
+    <ClCompile Include="gui\WindowEsc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="VerticalText.h" />
     <ClInclude Include="WindowProfesions.h" />
     <ClInclude Include="Window\Window.h" />
+    <ClInclude Include="gui\WindowEsc.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BuildVersion.bat" />

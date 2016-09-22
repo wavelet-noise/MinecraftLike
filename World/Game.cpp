@@ -38,6 +38,7 @@
 #include <boost/filesystem/convenience.hpp>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include "gui/WindowEsc.h"
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -367,6 +368,9 @@ void GamePhase_Game::Update(float dt)
 	SPos secPos = { 0,0,0 };
 	mSectorLoader->SetPos(Game::GetCamera()->GetPos() / float(SECTOR_SIZE));
 
+	if (ImGui::IsKeyPressed(GLFW_KEY_ESCAPE))
+		WindowEsc::Get().Toggle();
+
 	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
 	{
 		auto del = glm::vec3(ImGui::GetMouseDragDelta(1).y / Game::GetWindow()->GetSize().y, ImGui::GetMouseDragDelta(1).x / Game::GetWindow()->GetSize().x, 0);
@@ -438,7 +442,12 @@ void GamePhase_MainMenu::Draw(float gt)
 			auto date_time = boost::posix_time::microsec_clock::universal_time();
 			std::stringstream sstream;
 			sstream << date_time;
-			Settings::Get().save_file = "Save\\" + sstream.str();
+			std::string fname = sstream.str();
+			std::replace(fname.begin(), fname.end(), '-', '_');
+			std::replace(fname.begin(), fname.end(), '.', '_');
+			std::replace(fname.begin(), fname.end(), ':', '_');
+			std::replace(fname.begin(), fname.end(), ' ', '_');
+			Settings::Get().save_file = "Save\\" + fname + ".world";
 
 			static boost::thread game_load([&]()
 			{
@@ -654,16 +663,6 @@ WorldWorker* Game::GetWorker()
 void Game::SetWorker(std::unique_ptr<WorldWorker> &&ww)
 {
 	world_worker = std::move(ww);
-}
-
-DB* Game::Base()
-{
-	return db.get();
-}
-
-void Game::SetBase(std::unique_ptr<DB> &&__db)
-{
-	db = std::move(__db);
 }
 
 void Game::SetGamePhase(std::unique_ptr<GamePhase>&& gp)
