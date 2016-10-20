@@ -1,6 +1,6 @@
 ﻿#include "OrderPlace.h"
 #include <core/World.h>
-#include <glm/gtx/string_cast.inl>
+#include <glm/gtx/string_cast.hpp>
 #include <core/PositionAgent.h>
 
 OrderPlace::OrderPlace(WBPos v, PGameObject i) : pos(v), item(i)

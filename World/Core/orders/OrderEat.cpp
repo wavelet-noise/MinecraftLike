@@ -1,7 +1,7 @@
 ﻿#include "OrderEat.h"
 #include "../PositionAgent.h"
 #include "../ChestSlot.h"
-#include <glm/gtx/string_cast.inl>
+#include <glm/gtx/string_cast.hpp>
 #include <core/World.h>
 #include <core/Chest.h>
 
