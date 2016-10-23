@@ -108,6 +108,7 @@
     <ClCompile Include="WindowProfesions.cpp" />
     <ClCompile Include="Window\Window.cpp" />
     <ClCompile Include="gui\WindowEsc.cpp" />
+    <ClCompile Include="WindowOverlay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
@@ -236,6 +237,8 @@
     <ClInclude Include="WindowProfesions.h" />
     <ClInclude Include="Window\Window.h" />
     <ClInclude Include="gui\WindowEsc.h" />
+    <ClInclude Include="imgui\imgui_user.h" />
+    <ClInclude Include="WindowOverlay.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BuildVersion.bat" />

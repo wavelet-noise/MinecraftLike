@@ -207,12 +207,12 @@
     },
     {  
         "type":"Block",
-        "id":"storage",
+        "id":"stockpile",
 		"agents":[  
             {  
                 "type":"Chest",
-                "size":20,
-                "columns":5
+                "size":1,
+                "columns":1
             }
         ],
         "tesselator":[  
@@ -220,19 +220,23 @@
                 "type":"SplitBlockTessellator",
                 "generator":{  
                     "separate":[
-						"storage",
-						"storage",
-						"storage",
-						"storage",
-						"storage",
-						"storage"
+						"stockpile",
+						"stockpile",
+						"stockpile",
+						"stockpile",
+						"stockpile_updown",
+						"stockpile_updown"
 					]
                 },
                 "transparent":false
             }
         ],
         "dynamic":true,
-        "placeable":true
+        "placeable":true,
+		"recipe":{
+			"input":[["tag_plank", 12], ["tag_nail", 12]],
+			"output":[["stockpile", 1]]
+		}
     },{  
         "type":"Block",
         "id":"grass_high",

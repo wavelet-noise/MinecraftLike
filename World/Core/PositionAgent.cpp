@@ -265,11 +265,19 @@ void Controlable::Update(const GameObjectParams & params)
 				auto &storages = params.world->GetStorages();
 				if (!storages.empty())
 				{
-					auto tpos = storages.begin()->first;
-					if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
+				    auto finded = std::find_if(storages.begin(), storages.end(), [&](const std::pair<glm::vec3, PGameObject> & stor) -> bool
+				    {
+						return stor.second->GetAgent<Chest>()->CanPush(i.obj, i.count);
+					});
+
+					if (finded != storages.end())
 					{
-						nearest_order = std::make_shared<OrderDrop>(storages.begin()->first, i.obj, i.count);
-						nearest = tpos;
+						auto tpos = finded->first;
+						if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
+						{
+							nearest_order = std::make_shared<OrderDrop>(finded->first, i.obj, i.count);
+							nearest = tpos;
+						}
 					}
 				}
 			}

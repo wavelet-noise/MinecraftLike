@@ -31,8 +31,8 @@ void OrderDrop::Perform(const GameObjectParams & params, PGameObject performer, 
 			{
 				if (auto ch = b->GetAgent<Chest>())
 				{
-					ch->Push(item, count);
-					placed = true;
+					if(ch->Push(item, count))
+						placed = true;
 				}
 			}
 

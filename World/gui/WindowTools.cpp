@@ -17,7 +17,9 @@ void WindowTools::Draw(glm::vec2 wsize, float gt)
 
 	if (mOpen)
 	{
-		ImGui::Begin("Tools", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::SetNextWindowSize({200.f, Window::GetSize().y - 100.f});
+		ImGui::SetNextWindowPos({ Window::GetSize().x - 200.f, 0.f });
+		ImGui::Begin("Tools", &mOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 
 		if (ImGui::Button("Global crear order"))
 		{
@@ -108,4 +110,18 @@ void WindowTools::Draw(glm::vec2 wsize, float gt)
 
 		ImGui::End();
 	}
+}
+
+std::string WindowTools::SelectedOrderName(SelectedOrder so)
+{
+	switch(so)
+	{
+	case SelectedOrder::NONE:           return "None";
+	case SelectedOrder::DIG_SQUARE:		return "Dig Square";
+	case SelectedOrder::DIG_CIRCLE:		return "Dig Circle";
+	case SelectedOrder::COLLECT_SQUARE:	return "Collect Items";
+	case SelectedOrder::PLACE_BLOCK:	return "Place Block";
+	case SelectedOrder::CRAFT_ONE:		return "Queue Craft";
+	case SelectedOrder::MARK_AS_ROOM:	return "Create New Room";
+	};
 }

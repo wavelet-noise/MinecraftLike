@@ -91,7 +91,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 1 / 10.f;
+		return 1 / 20.f;
 	}
 
 	void OnCreate(const GameObjectParams & params) override;

@@ -27,8 +27,8 @@ public:
 
   void Update();
 
-  const glm::uvec2 GetSize() const;
-  const glm::uvec2 GetFbSize() const;
+  static const glm::uvec2 GetSize();
+  static const glm::uvec2 GetFbSize();
 
   // Установить имя окна.
   void SetTitle(const std::string &title);

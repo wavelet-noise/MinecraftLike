@@ -33,14 +33,20 @@ const SPos & Sector::GetPos() const
 void Sector::SetBlock(const SBPos &pos, PGameObject block)
 {
 	SectorBase<PGameObject>::SetBlock(pos, block);
-	//bool active = block->IsActive();
 
-	//if (active)
-	//{
-	//	auto finded = std::find_if(mActive.begin(), mActive.end(), [&](const ActiveStruct &as)->bool {return std::get<SBPos>(as) == pos; });
-	//	if (finded == mActive.end())
-	//		mActive.push_back(std::make_tuple(block, pos));
-	//}
+	bool active = block && block->IsActive();
+	auto finded = std::find_if(mActive.begin(), mActive.end(), [&](const ActiveStruct &as)->bool {return std::get<SBPos>(as) == pos; });
+
+	if (active)
+	{
+		if (finded == mActive.end())
+			mActive.push_back(std::make_tuple(block, pos));
+	}
+	else
+	{
+		if (finded != mActive.end())
+			mActive.erase(finded);
+	}
 
 	if (mTessellator)
 	{
@@ -101,10 +107,10 @@ void Sector::Update(World *world, float dt)
 	std::remove_if(mActive.begin(), mActive.end(), [&](const ActiveStruct &go)->bool {return std::get<0>(go).expired(); });
 
 	GameObjectParams gop{ world, this, {}, dt };
-	for (size_t i = 0; i < mUniqueBlocks.size(); ++i)
+	for (auto & act : mActive)
 	{
-		gop.pos = cs::SBtoWB(cs::ItoSB(mUniquePoses[i]), mPos);
-		if (mUniqueBlocks[i]) mUniqueBlocks[i]->Update(gop);
+		gop.pos = cs::SBtoWB(std::get<1>(act), mPos);
+		std::get<0>(act).lock()->Update(gop);
 	}
 
 
@@ -183,6 +189,11 @@ void Sector::BinSave(std::ostream& val) const
 	{
 		BINSAVE(mUniqueBlocks[i]->GetId());
 	}
+	BINSAVE(mActive.size());
+	for(const auto & ac : mActive)
+	{
+		BINSAVE(std::get<1>(ac));
+	}
 }
 
 void Sector::BinLoad(std::istream& val)
@@ -198,6 +209,16 @@ void Sector::BinLoad(std::istream& val)
 		StringIntern id;
 		BINLOAD(id);
 		mUniqueBlocks.push_back(DB::Get().Create(id));
+	}
+
+	size_t act_size;
+	BINLOAD(act_size);
+	mActive.resize(act_size);
+	for (int i = 1; i < act_size; ++i)
+	{
+		SBPos act_pos;
+		BINLOAD(act_pos);
+		mActive.push_back(std::make_tuple(mUniqueBlocks[mBlocks[cs::SBtoI(cs::WBtoSB(act_pos))]], act_pos));
 	}
 
 	SayChanged();

@@ -32,4 +32,6 @@ public:
 	}
 
 	SelectedOrder selected;
+
+	static std::string SelectedOrderName(SelectedOrder so);
 };

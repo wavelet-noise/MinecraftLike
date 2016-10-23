@@ -10,6 +10,7 @@
 #include "WindowRooms.h"
 #include <WindowProfesions.h>
 #include "WindowEsc.h"
+#include <WindowOverlay.h>
 
 void WS::Draw(glm::vec2 wsize, float gt)
 {
@@ -24,6 +25,7 @@ void WS::Draw(glm::vec2 wsize, float gt)
 	WindowRooms &wro = WindowRooms::Get();
 	WindowProfessions &wpr = WindowProfessions::Get();
 	WindowEsc &wesc = WindowEsc::Get();
+	WindowOverlay &wow = WindowOverlay::Get();
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_F3))
 	{
@@ -45,6 +47,11 @@ void WS::Draw(glm::vec2 wsize, float gt)
 		Settings::Get().debug = !Settings::Get().debug;
 	}
 
+	if(ImGui::IsKeyPressed(GLFW_KEY_D))
+	{
+		wdb.Toggle();
+	}
+
 	wp.Draw(wsize, gt);
 	wdb.Draw(wsize, gt);
 	winv.Draw(wsize, gt);
@@ -55,4 +62,5 @@ void WS::Draw(glm::vec2 wsize, float gt)
 	wro.Draw(wsize, gt);
 	wpr.Draw(wsize, gt);
 	wesc.Draw(wsize, gt);
+	wow.Draw(wsize, gt);
 }

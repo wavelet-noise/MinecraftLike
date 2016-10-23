@@ -12,10 +12,7 @@ void WindowPerfomance::Draw(glm::vec2 mainwin_size, float gt)
 	if (mOpen)
 	{
 		ImGui::Begin("Perfomance monitor", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
-		ImGui::TextVertical("Gather");
-		ImGui::TextVertical("Gather");
-		ImGui::TextVertical("Gather");
-		ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
+		//ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
 		if (ImGui::TreeNode("mem"))
 		{
 			ImGui::LabelText("total", "%s", mems.c_str());
@@ -23,7 +20,7 @@ void WindowPerfomance::Draw(glm::vec2 mainwin_size, float gt)
 			ImGui::TreePop();
 		}
 
-		ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
+		//ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
 		if (ImGui::TreeNode("deltas"))
 		{
 			ImGui::LabelText("render dt", "%g ms", dt * 1000);
@@ -34,7 +31,7 @@ void WindowPerfomance::Draw(glm::vec2 mainwin_size, float gt)
 			ImGui::TreePop();
 		}
 
-		ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
+		//ImGui::SetNextTreeNodeOpened(true, ImGuiSetCond_FirstUseEver);
 		if (ImGui::TreeNode("render fps"))
 		{
 			ImGui::PlotLines(

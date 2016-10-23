@@ -89,6 +89,68 @@ bool Chest::Push(PGameObject go, int count, int pos)
 	return true;
 }
 
+bool Chest::CanPush(PGameObject go, int count, int pos) const
+{
+	if (!go)
+		return false;
+
+	if (pos == -1)
+	{
+		for (auto &i : slots)
+		{
+			if (!i.obj)
+			{
+				if (max_volume != -1)
+				{
+					if (volume + count > max_volume)
+						return false;
+
+					//volume += count;
+				}
+				//i.obj = go;
+				//i.count = count;
+				return true;
+			}
+			else if (*i.obj == *go)
+			{
+				if (max_volume != -1)
+				{
+					if (volume + count > max_volume)
+						return false;
+
+					//volume += count;
+				}
+				//i.count += count;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	if (pos >= size)
+		return false;
+
+	if (max_volume != -1)
+	{
+		if (volume + count > max_volume)
+			return false;
+
+		//volume += count;
+	}
+
+	if (slots[pos].obj && *slots[pos].obj == *go)
+	{
+		//slots[pos].count += count;
+	}
+	else
+	{
+		//slots[pos].obj = go;
+		//slots[pos].count = count;
+	}
+
+	return true;
+}
+
 const ChestSlot Chest::GetFirst() const
 {
 	for (auto &cs : slots)

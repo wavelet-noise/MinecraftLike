@@ -99,11 +99,11 @@ void Recipe::DrawGui(float gt)
 		auto draw_list = ImGui::GetWindowDrawList();
 
 		if (inp.count >= 100)
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(22, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(inp.count).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(22, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(inp.count).c_str());
 		else if (inp.count >= 10)
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(16, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(inp.count).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(16, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(inp.count).c_str());
 		else
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(inp.count).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(inp.count).c_str());
 	}
 
 	{
@@ -134,11 +134,11 @@ void Recipe::DrawGui(float gt)
 		auto draw_list = ImGui::GetWindowDrawList();
 
 		if (out.count >= 100)
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(22, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(out.count).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(22, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(out.count).c_str());
 		else if (out.count >= 10)
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(16, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(out.count).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(16, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(out.count).c_str());
 		else
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(out.count).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(out.count).c_str());
 	}
 }
 
@@ -249,7 +249,7 @@ void DeepRecipe::DrawGui(float gt)
 
 		if (first_show)
 		{
-			ImGui::SetNextTreeNodeOpened(true);
+			//ImGui::SetNextTreeNodeOpened(true);
 			first_show = false;
 		}
 		if (ImGui::TreeNode(""))

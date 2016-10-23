@@ -15,8 +15,10 @@
 #include <memory>
 #include <Core\PositionAgent.h>
 #include <Game.h>
+#include "Farmland.h"
+#include "orders/OrderPlace.h"
 
-std::string Room::TypeName(RoomType& rt)
+std::string Room::TypeName(RoomType rt)
 {
 	switch (rt)
 	{
@@ -24,6 +26,44 @@ std::string Room::TypeName(RoomType& rt)
 	case RoomType::PERSONAL_ROOM: return "Personal Room";
 	case RoomType::FARMLAND: return "Farmland";
 	}
+}
+
+void Room::BinLoad(std::istream& val)
+{
+	BINLOAD(cells, name, min, max);
+	int tt;
+	BINLOAD(tt);
+	type = static_cast<RoomType>(tt);
+}
+void Room::BinSave(std::ostream& val) const
+{
+	BINSAVE(cells, name, min, max);
+	BINSAVE(static_cast<int>(type));
+}
+
+void Room::Update(float dt)
+{
+	static float last = 0;
+
+	switch(type)
+	{
+	case RoomType::FARMLAND:
+		if(last >= 1)
+		{
+			last -= 1;
+
+			for(const auto & p : cells)
+			{
+				if(!Game::GetWorker()->w->GetBlock(p - WBPos(0,0,-1))->HasAgent<Farmland>())
+				{
+					OrderBus::Get().IssueOrder(std::make_shared<OrderPlace>(p - WBPos(0, 0, -1), DB::Get().Create("dirt_cultivated")));
+				}
+			}
+		}
+		break;
+	}
+
+	last += dt;
 }
 
 World::World()
@@ -57,6 +97,11 @@ void World::Update(float dt)
 		ro_delay = 0;
 		recipe_orders.insert(recipe_orders.begin(), delayed_recipe_orders.begin(), delayed_recipe_orders.end());
 		delayed_recipe_orders.clear();
+	}
+
+	for(const auto & r : rooms)
+	{
+		r->Update(dt);
 	}
 }
 
@@ -176,7 +221,7 @@ PGameObject World::SetBlock(const WBPos &wbpos, PGameObject block, bool no_repla
 {
 	auto spos = cs::WBtoS(wbpos);
 	std::shared_ptr<Sector> sec;
-	static StringIntern storage("storage");
+	static StringIntern storage("stockpile");
 
 	if (auto l = GetBlock(wbpos, sec))
 	{
@@ -358,4 +403,25 @@ void World::SetSlise(int s)
 		se.second->SetSlise(s);
 	}
 
+}
+
+void World::BinLoadRooms(std::istream & val)
+{
+	size_t r_count;
+	BINLOAD(r_count);
+	for(int i = 0; i < r_count; i++)
+	{
+		PRoom r = std::make_shared<Room>();
+		r->BinLoad(val);
+		rooms.push_back(r);
+	}
+}
+
+void World::BinSaveRooms(std::ostream& val) const
+{
+	BINSAVE(rooms.size());
+	for(const auto & r : rooms)
+	{
+		r->BinSave(val);
+	}
 }

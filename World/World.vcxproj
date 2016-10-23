@@ -132,6 +132,7 @@
     <ClCompile Include="tools\ray.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
     <ClCompile Include="tools\wset.h" />
+    <ClCompile Include="WindowOverlay.cpp" />
     <ClCompile Include="WindowProfesions.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
@@ -214,6 +215,7 @@
     <ClInclude Include="gui\WindowRooms.h" />
     <ClInclude Include="gui\WindowTools.h" />
     <ClInclude Include="gui\WS.h" />
+    <ClInclude Include="imgui\imgui_user.h" />
     <ClInclude Include="Medic.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="Profession.h" />
@@ -260,6 +262,7 @@
     <ClInclude Include="tools\ray.h" />
     <ClInclude Include="tools\StringIntern.h" />
     <ClInclude Include="VerticalText.h" />
+    <ClInclude Include="WindowOverlay.h" />
     <ClInclude Include="WindowProfesions.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>

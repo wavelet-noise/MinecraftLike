@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #include <vector>
 #include "ChestSlot.h"
+#include <tools/CoordSystem.h>
+#include <list>
 
 class Chest : public Agent
 {
@@ -16,6 +18,7 @@ public:
   virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
   virtual void Update(const GameObjectParams & params) override;
   bool Push(PGameObject go, int count = 1, int pos = -1);
+  bool CanPush(PGameObject go, int count = 1, int pos = -1) const;
   const ChestSlot GetFirst() const;
   const ChestSlot GetFirst(int & pos) const;
   ChestSlot PopFirst();
@@ -27,7 +30,6 @@ public:
   void PushSelected(ChestSlot cs);
   void Select(int slot);
   int GetSelected();
-
 
   // client
   // рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
