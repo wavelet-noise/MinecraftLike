@@ -39,6 +39,7 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include "gui/WindowEsc.h"
+#include <boost/exception/diagnostic_information.hpp>
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -82,13 +83,26 @@ void GamePhase_Game::generateShadowFBO()
 
 	fboId = -1;
 
-	glGenFramebuffers(1, &fboId);
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+	try 
+	{
+		glGenFramebuffers(1, &fboId);
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId);
 
-	glDrawBuffer(GL_NONE);
-	glReadBuffer(GL_NONE);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
 
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureId->GetId(), 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureId->GetId(), 0);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+	catch (std::exception& e)
+	{
+		if (fboId)
+		{
+			glDeleteFramebuffers(1, &fboId);
+			LOG(error) << "Shadow fbo exception: " << boost::diagnostic_information(e);
+		}
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
