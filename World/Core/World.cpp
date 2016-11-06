@@ -16,6 +16,16 @@
 #include <Core\PositionAgent.h>
 #include <Game.h>
 
+std::string Room::TypeName(RoomType& rt)
+{
+	switch (rt)
+	{
+	case RoomType::UNSETTED: return "Unsetted";
+	case RoomType::PERSONAL_ROOM: return "Personal Room";
+	case RoomType::FARMLAND: return "Farmland";
+	}
+}
+
 World::World()
 {
 }

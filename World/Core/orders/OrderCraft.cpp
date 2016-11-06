@@ -1,6 +1,6 @@
 ﻿#include "OrderCraft.h"
 #include <core/World.h>
-#include <glm/gtx/string_cast.inl>
+#include <glm/gtx/string_cast.hpp>
 #include <core/PositionAgent.h>
 #include <core/chest.h>
 

@@ -10,18 +10,33 @@ WindowRooms::WindowRooms()
 
 void WindowRooms::Draw(glm::vec2 wsize, float gt)
 {
-	ImGui::Begin("Room managment", &mOpen);
-	if (selected)
+	if (mOpen)
 	{
-		char buf[100] = { 0 };
-		strcpy_s(buf, &selected->name[0]);
-		ImGui::InputText("Name", buf, 100);
-		selected->name = buf;
-		if (ImGui::Button("Remove"))
+		ImGui::SetNextWindowSize()
+		ImGui::Begin("Room managment", &mOpen);
+		for(const auto & c : WS::Get().w->rooms)
 		{
-			WS::Get().w->rooms.remove(selected);
-			selected = nullptr;
+			if (ImGui::Selectable(c->name.c_str(), selected == c, ImGuiSelectableFlags_AllowDoubleClick))
+			{
+				if (ImGui::IsMouseDoubleClicked(0))
+					Settings::Get().LookAt((c->min + c->max) / 2.f);
+				selected = c;
+			}
 		}
+
+		if (selected)
+		{
+			ImGui::Separator();
+			char buf[100] = { 0 };
+			strcpy_s(buf, &selected->name[0]);
+			ImGui::InputText("Name", buf, 100);
+			selected->name = buf;
+			if (ImGui::Button("Remove"))
+			{
+				WS::Get().w->rooms.remove(selected);
+				selected = nullptr;
+			}
+		}
+		ImGui::End();
 	}
-	ImGui::End();
 }

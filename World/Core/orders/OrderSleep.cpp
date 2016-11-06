@@ -1,6 +1,6 @@
 ﻿#include "OrderSleep.h"
 #include "../PositionAgent.h"
-#include <glm/gtx/string_cast.inl>
+#include <glm/gtx/string_cast.hpp>
 
 std::string OrderSleep::to_string() const
 {

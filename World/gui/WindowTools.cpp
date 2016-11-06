@@ -9,6 +9,7 @@
 
 WindowTools::WindowTools()
 {
+	Show();
 }
 
 void WindowTools::Draw(glm::vec2 wsize, float gt)

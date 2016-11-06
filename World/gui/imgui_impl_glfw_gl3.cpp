@@ -10,6 +10,7 @@
 // GL3W/GLFW
 #include <GL\glew.h>
 #include <GLFW/glfw3.h>
+#include <chrono>
 #ifdef _WIN32
 #undef APIENTRY
 #define GLFW_EXPOSE_NATIVE_WIN32

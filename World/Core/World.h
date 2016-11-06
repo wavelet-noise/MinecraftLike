@@ -21,7 +21,8 @@ class Tessellator;
 enum class RoomType
 {
 	UNSETTED,
-	PERSONAL_ROOM
+	PERSONAL_ROOM,
+	FARMLAND
 };
 
 using PRoom = std::shared_ptr<struct Room>;
@@ -30,6 +31,8 @@ struct Room
 {
 	std::vector<glm::ivec3> cells;
 	std::string name = "no name";
+	glm::vec3 min;
+	glm::vec3 max;
 
 	RoomType type = RoomType::UNSETTED;
 
@@ -42,6 +45,8 @@ struct Room
 		ar & name;
 		ar & type;
 	}
+
+	std::string TypeName(RoomType & rt);
 };
 
 class World : public std::enable_shared_from_this<World>

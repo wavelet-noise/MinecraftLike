@@ -1,6 +1,6 @@
 ﻿#include "OrderDrop.h"
 #include <core/World.h>
-#include <glm/gtx/string_cast.inl>
+#include <glm/gtx/string_cast.hpp>
 #include "../ChestSlot.h"
 #include "../PositionAgent.h"
 #include <core/chest.h>

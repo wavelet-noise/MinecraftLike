@@ -1,7 +1,7 @@
 #include "Core/Chest.h"
 #include "OrderDig.h"
 #include <boost/format/format_fwd.hpp>
-#include <glm/gtx/string_cast.inl>
+#include <glm/gtx/string_cast.hpp>
 #include "Core/PositionAgent.h"
 #include "core/Ore.h"
 #include <core/World.h>

@@ -113,9 +113,6 @@ private:
 	static std::unique_ptr<Window> mWindow;
 	static std::unique_ptr<Render> mRender;
 
-	static std::shared_ptr<Camera> mCamera;
-	static std::shared_ptr<Camera> mSun;
-
 	static std::unique_ptr<WorldWorker> world_worker;
 
 	static std::unique_ptr<SpriteBatch> sb;

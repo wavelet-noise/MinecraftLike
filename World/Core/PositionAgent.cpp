@@ -458,7 +458,7 @@ void Creature::OnCreate(const GameObjectParams & params)
 
 void Creature::OnDestroy(const GameObjectParams& params)
 {
-	EventBus::Get().Publish<EventCreatureDeath>(1);
+	EventBus::Get().Publish<EventCreatureDeath>(mParent->shared_from_this());
 }
 
 void Creature::AddPersinal(POrder o)

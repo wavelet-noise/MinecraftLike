@@ -22,7 +22,7 @@ void WindowEventlog::Draw(glm::vec2 mainwin_size, float gt)
 		{
 			if(s)
 			{
-				s->DrawGui(gt);
+				ImGui::Text(s->to_string().c_str());
 			}
 		}
 		ImGui::End();

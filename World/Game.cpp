@@ -52,8 +52,6 @@ GamePhase_Game::GamePhase_Game()
 	mTessellator->Run();
 	WS::Get().w = mWorld.get();
 
-	generateShadowFBO();
-
 	DB::Get().ReloadDirectory("data\\json\\");
 
 	Game::SetWorker(std::make_unique<WorldWorker>());
@@ -68,6 +66,7 @@ GamePhase_Game::GamePhase_Game()
 	});
 
 	mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
+
 	initialized = true;
 }
 
@@ -262,6 +261,8 @@ void GamePhase_Game::Draw(float dt)
 				glm::ivec3 s2 = { glm::max(min.x, max.x), glm::max(min.y, max.y), glm::max(min.z, max.z) };
 
 				auto r = std::make_shared<Room>();
+				r->min = s1;
+				r->max = s2;
 
 				for (auto i = s1.x; i <= s2.x; i++)
 					for (auto j = s1.y; j <= s2.y; j++)
@@ -475,6 +476,7 @@ void GamePhase_MainMenu::Draw(float gt)
 
 		if (game && game->IsInitialized())
 		{
+			static_cast<GamePhase_Game*>(game.get())->generateShadowFBO();
 			TextureManager::Get().Compile();
 			Game::SetGamePhase(std::move(game));
 		}
@@ -542,6 +544,7 @@ void GamePhase_LoadMenu::Draw(float gt)
 
 		if (game && game->IsInitialized())
 		{
+			static_cast<GamePhase_Game*>(game.get())->generateShadowFBO();
 			TextureManager::Get().Compile();
 			Game::SetGamePhase(std::move(game));
 		}
@@ -612,20 +615,16 @@ int Game::Run()
 		return -1;
 	}
 
-	mCamera = std::make_shared<Camera>();
-	mSun = std::make_shared<Camera>();
-	mSun->SetShadow();
+	GetSun()->SetShadow();
 
-	mCamera->Resize(mWindow->GetSize());
-	mCamera->SetPos({ 0, 0, 20 });
-	mCamera->LookAt({ 32, 32, 0 });
+	GetCamera()->Resize(mWindow->GetSize());
 	mWindow->SetResizeCallback([&](int x, int y) {
 		if (y < 1)
 			y = 1;
 		if (x < 1)
 			x = 1;
-		mCamera->Resize({ x, y });
-		mSun->Resize({ x, y });
+		GetCamera()->Resize({ x, y });
+		GetSun()->Resize({ x, y });
 	});
 
 	TextureManager::Get().LoadDirectory("data\\textures\\");
@@ -661,12 +660,12 @@ FpsCounter* Game::GetFps()
 
 Camera* Game::GetCamera()
 {
-	return mCamera.get();
+	return Settings::Get().GetCamera();
 }
 
 Camera* Game::GetSun()
 {
-	return mSun.get();
+	return Settings::Get().GetSun();
 }
 
 WorldWorker* Game::GetWorker()
@@ -726,8 +725,6 @@ void Game::DrawLoading()
 std::unique_ptr<Window> Game::mWindow;
 std::unique_ptr<Render> Game::mRender;
 std::unique_ptr<SpriteBatch> Game::sb;
-std::shared_ptr<Camera> Game::mCamera;
-std::shared_ptr<Camera> Game::mSun;
 FpsCounter Game::fps;
 std::unique_ptr<GamePhase> Game::game_phase;
 std::unique_ptr<WorldWorker> Game::world_worker;

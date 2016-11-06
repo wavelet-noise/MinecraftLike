@@ -1,6 +1,6 @@
 ﻿#include "OrderWander.h"
 #include "../PositionAgent.h"
-#include <glm/gtx/string_cast.inl>
+#include <glm/gtx/string_cast.hpp>
 
 std::string OrderWander::to_string() const
 {
