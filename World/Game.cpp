@@ -79,13 +79,28 @@ void GamePhase_Game::generateShadowFBO()
 	if (fboId)
 		glDeleteFramebuffers(1, &fboId);
 
-	glGenFramebuffers(1, &fboId);
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+	fboId = -1;
 
-	glDrawBuffer(GL_NONE);
-	glReadBuffer(GL_NONE);
+	try 
+	{
+		glGenFramebuffers(1, &fboId);
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId);
 
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureId->GetId(), 0);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureId->GetId(), 0);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+	catch (std::exception& e)
+	{
+		if (fboId)
+		{
+			glDeleteFramebuffers(1, &fboId);
+			LOG(error) << "Shadow fbo exception: " << boost::diagnostic_information(e);
+		}
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
