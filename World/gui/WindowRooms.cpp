@@ -39,6 +39,7 @@ void WindowRooms::Draw(glm::vec2 wsize, float gt)
 			{
 				WS::Get().w->rooms.remove(selected);
 				selected = nullptr;
+				goto unselect;
 			}
 
 			static std::vector<std::string> room_types_s = [&]() -> auto
@@ -55,6 +56,7 @@ void WindowRooms::Draw(glm::vec2 wsize, float gt)
 
 			ImGui::Combo("", reinterpret_cast<int*>(&selected->type), room_types_s, static_cast<int>(RoomType::ROOMTYPECOUNT));
 		}
+	unselect:;
 		ImGui::End();
 	}
 }

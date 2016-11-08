@@ -54,9 +54,10 @@ void Room::Update(float dt)
 
 			for(const auto & p : cells)
 			{
-				if(!Game::GetWorker()->w->GetBlock(p - WBPos(0,0,-1))->HasAgent<Farmland>())
+				auto b = Game::GetWorker()->w->GetBlock(p + WBPos(0, 0, -1));
+				if(b && !b->HasAgent<Farmland>())
 				{
-					OrderBus::Get().IssueOrder(std::make_shared<OrderPlace>(p - WBPos(0, 0, -1), DB::Get().Create("dirt_cultivated")));
+					OrderBus::Get().IssueOrder(std::make_shared<OrderPlace>(p + WBPos(0, 0, -1), DB::Get().Create("dirt_cultivated")));
 				}
 			}
 		}
