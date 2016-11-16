@@ -31,6 +31,7 @@ public:
 	void Take();
 	virtual void Done();
 	virtual void Drop();
+	void Cancel();
 
 	bool IsTaken() const
 	{
@@ -42,6 +43,11 @@ public:
 		return mDone;
 	}
 
+	bool IsCanceled() const
+	{
+		return mCanceled;
+	}
+
 private:
 	static size_t Nextid()
 	{
@@ -51,6 +57,7 @@ private:
 
 	bool mTaken = false;
 	bool mDone = false;
+	bool mCanceled = false;
 };
 
 template<typename T>

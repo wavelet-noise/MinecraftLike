@@ -212,8 +212,12 @@
             {  
                 "type":"Chest",
                 "size":1,
-                "columns":1
-            }
+                "columns":1,
+				"volume":99
+            },
+			{
+				"type":"ColonyStorage"
+			}
         ],
         "tesselator":[  
             {  

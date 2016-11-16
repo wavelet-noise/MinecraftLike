@@ -3,6 +3,7 @@
 #include "gui/WindowTools.h"
 #include "gui/WindowDb.h"
 #include "WindowProfesions.h"
+#include "gui/WindowStorages.h"
 
 
 WindowOverlay::WindowOverlay()
@@ -27,6 +28,10 @@ void WindowOverlay::Draw(glm::vec2 mainwin_size, float gt)
 	ImGui::SameLine();
 	if (ImGui::Button("Professions"))
 		WindowProfessions::Get().Toggle();
+
+	ImGui::SameLine();
+	if (ImGui::Button("Storages"))
+		WindowStorages::Get().Toggle();
 
 
 	ImGui::End();

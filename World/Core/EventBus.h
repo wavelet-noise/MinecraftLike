@@ -77,6 +77,28 @@ struct EventOrderDone : public NumberedEvent<EventOrderDone>
 	}
 };
 
+struct EventOrderCancel : public NumberedEvent<EventOrderCancel>
+{
+	EventOrderCancel(POrder p) : ord(p) {}
+	POrder ord;
+
+	std::string to_string() const override
+	{
+		return (boost::format("EventOrderCancel: ord = %1%") % ord->to_string()).str();
+	}
+};
+
+struct EventOrderDrop : public NumberedEvent<EventOrderDrop>
+{
+	EventOrderDrop(POrder p) : ord(p) {}
+	POrder ord;
+
+	std::string to_string() const override
+	{
+		return (boost::format("EventOrderDrop: ord = %1%") % ord->to_string()).str();
+	}
+};
+
 struct EventSectorReady : public NumberedEvent<EventOrderStart>
 {
 	EventSectorReady(std::shared_ptr<Sector> p) : sec(p) {}

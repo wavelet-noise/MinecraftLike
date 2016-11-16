@@ -24,6 +24,13 @@ inline std::shared_ptr<T> MakeGameObject(Args&&... args)
 	return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
+class GOHelper
+{
+public:
+	static void Save(std::ostream& val, PGameObject go);
+	static PGameObject Load(std::istream& val);
+};
+
 class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:

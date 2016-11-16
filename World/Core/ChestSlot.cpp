@@ -1,7 +1,7 @@
-#include "ChestSlot.h"
-#include <Render\TextureManager.h>
-#include <imgui.h>
-#include <Core\GameObject.h>
+#include "Core/ChestSlot.h"
+#include <render/TextureManager.h>
+#include <gui/WindowBase.h>
+#include <Core/GameObject.h>
 
 void ChestSlot::DrawGui(bool selected)
 {

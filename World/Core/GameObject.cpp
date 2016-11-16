@@ -9,6 +9,32 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/serialization/vector.hpp>
 #include <Serealize.h>
+#include <Core/DB.h>
+
+void GOHelper::Save(std::ostream& val, PGameObject go)
+{
+	if (go)
+		BINSAVE(StringIntern("NULL"));
+	else
+	{
+		BINSAVE(go->GetId());
+		go->BinSave(val);
+	}
+
+}
+
+PGameObject GOHelper::Load(std::istream& val)
+{
+	StringIntern si;
+	BINLOAD(si);
+	if (si == StringIntern("NULL"))
+		return nullptr;
+
+	auto go = DB::Get().Create(si);
+	go->BinLoad(val);
+
+	return go;
+}
 
 GameObject::GameObject(const StringIntern &__id) :id(__id)
 {
@@ -108,12 +134,18 @@ StringIntern GameObject::GetId()
 
 void GameObject::BinSave(std::ostream& val) const
 {
-	BINSAVE(id);
+	for(const auto & a : mAgents)
+	{
+		//a.second->BinSave(val);
+	}
 }
 
 void GameObject::BinLoad(std::istream& val)
 {
-	BINLOAD(id);
+	for (const auto & a : mAgents)
+	{
+		//a.second->BinSave(val);
+	}
 }
 
 //void GameObject::save(boost::archive::binary_oarchive& ar, const unsigned v) const

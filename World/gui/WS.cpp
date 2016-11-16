@@ -11,6 +11,7 @@
 #include <WindowProfesions.h>
 #include "WindowEsc.h"
 #include <WindowOverlay.h>
+#include "WindowStorages.h"
 
 void WS::Draw(glm::vec2 wsize, float gt)
 {
@@ -26,6 +27,7 @@ void WS::Draw(glm::vec2 wsize, float gt)
 	WindowProfessions &wpr = WindowProfessions::Get();
 	WindowEsc &wesc = WindowEsc::Get();
 	WindowOverlay &wow = WindowOverlay::Get();
+	WindowStorages &stor = WindowStorages::Get();
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_F3))
 	{
@@ -63,4 +65,5 @@ void WS::Draw(glm::vec2 wsize, float gt)
 	wpr.Draw(wsize, gt);
 	wesc.Draw(wsize, gt);
 	wow.Draw(wsize, gt);
+	stor.Draw(wsize, gt);
 }

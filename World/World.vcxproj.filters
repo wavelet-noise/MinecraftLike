@@ -109,6 +109,8 @@
     <ClCompile Include="Window\Window.cpp" />
     <ClCompile Include="gui\WindowEsc.cpp" />
     <ClCompile Include="WindowOverlay.cpp" />
+    <ClCompile Include="gui\WindowStorages.cpp" />
+    <ClCompile Include="Core\agents\ChestBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
@@ -239,6 +241,8 @@
     <ClInclude Include="gui\WindowEsc.h" />
     <ClInclude Include="imgui\imgui_user.h" />
     <ClInclude Include="WindowOverlay.h" />
+    <ClInclude Include="gui\WindowStorages.h" />
+    <ClInclude Include="Core\agents\ChestBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BuildVersion.bat" />

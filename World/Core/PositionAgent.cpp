@@ -20,6 +20,8 @@
 #include <Core/orders/OrderDrop.h>
 #include <gui/WindowDb.h>
 #include "LiquidPipe.h"
+#include <gui/WindowStorages.h>
+#include "agents/ChestBlock.h"
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -262,20 +264,20 @@ void Controlable::Update(const GameObjectParams & params)
 			auto &i = ch->GetFirst();
 			if (i.obj)
 			{
-				auto &storages = params.world->GetStorages();
+				auto& storages = Storages::Get().List();
 				if (!storages.empty())
 				{
-				    auto finded = std::find_if(storages.begin(), storages.end(), [&](const std::pair<glm::vec3, PGameObject> & stor) -> bool
+				    auto finded = std::find_if(storages.begin(), storages.end(), [&](const std::tuple<glm::vec3, PGameObject> & stor) -> bool
 				    {
-						return stor.second->GetAgent<Chest>()->CanPush(i.obj, i.count);
+						return std::get<1>(stor)->GetAgent<Chest>()->CanPush(i.obj, i.count);
 					});
 
 					if (finded != storages.end())
 					{
-						auto tpos = finded->first;
+						auto tpos = std::get<0>(*finded);
 						if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
 						{
-							nearest_order = std::make_shared<OrderDrop>(finded->first, i.obj, i.count);
+							nearest_order = std::make_shared<OrderDrop>(std::get<0>(*finded), i.obj, i.count);
 							nearest = tpos;
 						}
 					}

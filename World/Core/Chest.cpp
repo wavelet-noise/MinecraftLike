@@ -19,6 +19,7 @@ void Chest::JsonLoad(const rapidjson::Value &val)
 PAgent Chest::Clone(GameObject * parent, const std::string &name)
 {
 	auto t = MakeAgent<Chest>(*this);
+	t->slots.resize(size);
 	t->mParent = parent;
 	return t;
 }
@@ -228,11 +229,6 @@ ChestSlot Chest::PopFirst(int &pos)
 	return{};
 }
 
-ChestSlot Chest::PopSelected()
-{
-	return PopSlot(mSelected);
-}
-
 ChestSlot Chest::PopByPredicate(std::function<bool(const ChestSlot&)> pred)
 {
 	for (auto &cs : slots)
@@ -267,24 +263,8 @@ ChestSlot Chest::GetByPredicate(std::function<bool(const ChestSlot&)> pred)
 	return{};
 }
 
-void Chest::PushSelected(ChestSlot cs)
-{
-	Push(cs.obj, cs.count, mSelected);
-}
-
-void Chest::Select(int slot)
-{
-	mSelected = slot;
-}
-
-int Chest::GetSelected()
-{
-	return mSelected;
-}
-
 void Chest::DrawGui(float gt)
 {
-	ImGui::Text("Storage");
 	int jj = 666;
 	int ii = 0;
 	auto p = ImGui::GetWindowPos();
@@ -295,7 +275,7 @@ void Chest::DrawGui(float gt)
 		else
 			jj = 0;
 
-		a.DrawGui(ii == mSelected);
+		a.DrawGui();
 
 		auto &dnd = DragNDrop::Get();
 		if (ImGui::IsItemHovered())

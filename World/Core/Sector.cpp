@@ -164,7 +164,7 @@ void Sector::Draw(class Tessellator *tess)
 		blocks.reserve(mCountBlocks);
 		for (size_t i = 0; i < mBlocks.size(); ++i)
 		{
-			if (mBlocks[i])
+			if (mBlocks[i] && GetBlock(i))
 			{
 				blocks.emplace_back(i, GetBlock(i)->GetId());
 			}
@@ -187,7 +187,7 @@ void Sector::BinSave(std::ostream& val) const
 	BINSAVE(mUniqueBlocks.size());
 	for (int i = 1; i < mUniqueBlocks.size(); ++i)
 	{
-		BINSAVE(mUniqueBlocks[i]->GetId());
+		GOHelper::Save(val, mUniqueBlocks[i]);
 	}
 	BINSAVE(mActive.size());
 	for(const auto & ac : mActive)
@@ -206,9 +206,7 @@ void Sector::BinLoad(std::istream& val)
 	mUniqueBlocks.push_back(nullptr);
 	for (int i = 1; i < size; ++i)
 	{
-		StringIntern id;
-		BINLOAD(id);
-		mUniqueBlocks.push_back(DB::Get().Create(id));
+		mUniqueBlocks.push_back(GOHelper::Load(val));
 	}
 
 	size_t act_size;

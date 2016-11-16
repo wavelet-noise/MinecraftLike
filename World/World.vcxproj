@@ -30,6 +30,7 @@
     <ClCompile Include="AutoVersion.cpp" />
     <ClCompile Include="Cooker.cpp" />
     <ClCompile Include="Core\Agent.cpp" />
+    <ClCompile Include="Core\agents\ChestBlock.cpp" />
     <ClCompile Include="Core\Chest.cpp" />
     <ClCompile Include="Core\ChestSlot.cpp" />
     <ClCompile Include="Core\CraftingTable.cpp" />
@@ -95,6 +96,7 @@
     <ClCompile Include="gui\WindowPerfomance.cpp" />
     <ClCompile Include="gui\WindowRecipe.cpp" />
     <ClCompile Include="gui\WindowRooms.cpp" />
+    <ClCompile Include="gui\WindowStorages.cpp" />
     <ClCompile Include="gui\WindowTools.cpp" />
     <ClCompile Include="gui\WS.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -140,6 +142,7 @@
     <ClInclude Include="AutoVersion.h" />
     <ClInclude Include="Cooker.h" />
     <ClInclude Include="Core\Agent.h" />
+    <ClInclude Include="Core\agents\ChestBlock.h" />
     <ClInclude Include="Core\CalorieConsumer.h" />
     <ClInclude Include="core\Chest.h" />
     <ClInclude Include="core\ChestSlot.h" />
@@ -213,6 +216,7 @@
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="gui\WindowRecipe.h" />
     <ClInclude Include="gui\WindowRooms.h" />
+    <ClInclude Include="gui\WindowStorages.h" />
     <ClInclude Include="gui\WindowTools.h" />
     <ClInclude Include="gui\WS.h" />
     <ClInclude Include="imgui\imgui_user.h" />

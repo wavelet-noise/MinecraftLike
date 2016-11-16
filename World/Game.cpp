@@ -40,6 +40,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include "gui/WindowEsc.h"
 #include "imgui/imgui_user.h"
+#include <boost/exception/diagnostic_information.hpp>
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -216,7 +217,7 @@ void GamePhase_Game::Draw(float dt)
 		return !!mWorld->GetBlock(pos).get();
 	});
 
-	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
+	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos)+1000)));
 	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
 	{
 		static glm::vec3 min, max;
@@ -322,6 +323,83 @@ void GamePhase_Game::Draw(float dt)
 
 	Game::GetSpriteBatch()->SetCam(Game::GetCamera());
 	Game::GetSpriteBatch()->Render();
+
+	float sel_x = std::get<0>(selection_pos).x;
+	float sel_y = std::get<0>(selection_pos).y;
+	float sel_z = std::get<0>(selection_pos).z;
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf((const GLfloat*)&Game::GetCamera()->GetProject());
+	glMatrixMode(GL_MODELVIEW);
+	glm::mat4 MV = Game::GetCamera()->GetView();
+	glLoadMatrixf((const GLfloat*)&MV[0][0]);
+	glUseProgram(0);
+	glBegin(GL_LINES);
+	glColor3f(1, 0, 0);
+	glVertex3f(sel_x - 32, sel_y, sel_z);
+	glVertex3f(sel_x + 32, sel_y, sel_z);
+	glVertex3f(sel_x - 32, sel_y + 1, sel_z);
+	glVertex3f(sel_x + 32, sel_y + 1, sel_z);
+	for (int i = -32; i < 32; i++)
+	{
+		glVertex3f(sel_x + i, sel_y, sel_z);
+		glVertex3f(sel_x + i, sel_y + 1, sel_z);
+	}
+
+	glColor3f(0, 1, 0);
+	glVertex3f(sel_x, sel_y - 32, sel_z);
+	glVertex3f(sel_x, sel_y + 32, sel_z);
+	glVertex3f(sel_x + 1, sel_y - 32, sel_z);
+	glVertex3f(sel_x + 1, sel_y + 32, sel_z);
+	for (int i = -32; i < 32; i++)
+	{
+		glVertex3f(sel_x, sel_y + i, sel_z);
+		glVertex3f(sel_x + 1, sel_y + i, sel_z);
+	}
+
+	glColor3f(0, 0, 1);
+	glVertex3f(sel_x, sel_y + 1, sel_z - 32);
+	glVertex3f(sel_x, sel_y + 1, sel_z + 32);
+	glVertex3f(sel_x + 1, sel_y + 1, sel_z - 32);
+	glVertex3f(sel_x + 1, sel_y + 1, sel_z + 32);
+	for (int i = -32; i < 32; i++)
+	{
+		glVertex3f(sel_x, sel_y + 1, sel_z + i);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + i);
+	}
+
+	glColor3f(1, 1, 1);
+	glVertex3f(sel_x, sel_y, sel_z);
+	glVertex3f(sel_x + 1, sel_y, sel_z);
+
+	glVertex3f(sel_x, sel_y, sel_z);
+	glVertex3f(sel_x, sel_y + 1, sel_z);
+
+	glVertex3f(sel_x, sel_y, sel_z);
+	glVertex3f(sel_x, sel_y, sel_z + 1);
+
+	glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+	glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+
+	glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+	glVertex3f(sel_x + 1, sel_y, sel_z + 1);
+
+	glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+	glVertex3f(sel_x + 1, sel_y + 1, sel_z);
+
+	glVertex3f(sel_x + 1, sel_y, sel_z + 1);
+	glVertex3f(sel_x + 1, sel_y, sel_z);
+
+	glVertex3f(sel_x + 1, sel_y, sel_z);
+	glVertex3f(sel_x + 1, sel_y + 1, sel_z);
+
+	glVertex3f(sel_x, sel_y, sel_z + 1);
+	glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+
+	glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+	glVertex3f(sel_x, sel_y + 1, sel_z);
+
+	glEnd();
 
 	ImGui_ImplGlfwGL3_NewFrame();
 	{

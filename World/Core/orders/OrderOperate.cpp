@@ -9,7 +9,7 @@ OrderOperate::OrderOperate(WBPos v, POperatable i) : pos(v), mechanism(i)
 
 std::string OrderOperate::to_string() const
 {
-	return (boost::format("OrderOperate: pos = %1% id = %2%") % glm::to_string(pos) % mechanism->Parent()->GetId()).str();
+	return (boost::format("OrderOperate: pos = %1% id = %2%") % glm::to_string(pos) % mechanism->Parent()->GetId()).str() + Order::to_string();
 }
 
 void OrderOperate::Done()
