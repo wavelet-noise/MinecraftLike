@@ -83,8 +83,9 @@ public:
 	std::shared_ptr<Sector> GetSector(const SPos &position);
 
 	PGameObject GetBlock(const WBPos &position);
-
 	PGameObject GetBlock(const WBPos & wbpos, std::shared_ptr<Sector> &contains);
+
+	bool World::IsAir(const WBPos &wbpos);
 
 	bool IsWalkable(const WBPos & wbpos);
 

@@ -439,6 +439,8 @@ public:
 	{
 		return 5.0f;
 	}
+
+	StringIntern machine;
 };
 
 REGISTER_AGENT(Workshop)
@@ -544,21 +546,3 @@ private:
 };
 
 REGISTER_AGENT(SteamGenerator)
-
-class BasicWorkbench : public Agent
-{
-public:
-	AGENT(BasicWorkbench);
-
-	// Унаследовано через Agent
-	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
-
-	void DrawGui(float gt) override;
-
-	float GetFreq() const override
-	{
-		return std::numeric_limits<float>::max();
-	}
-};
-
-REGISTER_AGENT(BasicWorkbench)

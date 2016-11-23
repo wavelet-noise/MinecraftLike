@@ -17,7 +17,9 @@ void Storages::AddStorage(glm::vec3 pos, PGameObject go)
 
 void Storages::RemoveStorage(PGameObject go)
 {
-	//storages.remove(go);
+	storages.remove_if([&go](const std::tuple<glm::vec3, PGameObject> & d) -> bool {
+		return std::get<1>(d) == go;
+	});
 }
 
 WindowStorages::WindowStorages()

@@ -24,9 +24,15 @@ void OrderPlace::Perform(const GameObjectParams & params, PGameObject performer,
 
 		if (c->path.empty())
 		{
-			params.world->SetBlock(pos, item);
-
-			Done();
+			if (params.world->IsAir(pos))
+			{
+				params.world->SetBlock(pos, item);
+				Done();
+			}
+			else
+			{
+				Cancel("destination already contains block");
+			}
 		}
 	}
 }

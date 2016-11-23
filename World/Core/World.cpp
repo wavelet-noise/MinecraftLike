@@ -206,6 +206,13 @@ PGameObject World::GetBlock(const WBPos &wbpos, std::shared_ptr<Sector> &contain
 	return nullptr;
 }
 
+bool World::IsAir(const WBPos &wbpos)
+{
+	PSector sec;
+	PGameObject go = GetBlock(wbpos, sec);
+	return !go && sec;
+}
+
 
 static float sdt = 0;
 static World *sworld = nullptr;

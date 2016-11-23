@@ -12,6 +12,7 @@
 #include "SectorBase.h"
 
 class Creature;
+using PSector = std::shared_ptr<Sector>;
 
 class Sector : public SectorBase<PGameObject>
 {

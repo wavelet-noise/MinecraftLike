@@ -1,5 +1,6 @@
 #include "WindowEventlog.h"
 #include <Core\EventBus.h>
+#include <Game.h>
 
 WindowEventlog::WindowEventlog()
 {
@@ -16,8 +17,9 @@ void WindowEventlog::Draw(glm::vec2 mainwin_size, float gt)
 			evlog.push_back(e);
 		}
 
-		ImGui::SetNextWindowSize({500,400});
-		ImGui::Begin("Eventlog", &mOpen);
+		ImGui::SetNextWindowPos({ 0,0 });
+		ImGui::SetNextWindowSize({Game::GetWindow()->GetSize().x / 2.f ,Game::GetWindow()->GetSize().y / 1.f});
+		ImGui::Begin("Eventlog", &mOpen, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 		for (const auto &s : evlog)
 		{
 			if(s)

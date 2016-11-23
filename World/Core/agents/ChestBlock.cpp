@@ -14,3 +14,8 @@ void ColonyStorage::OnCreate(const GameObjectParams& params)
 {
 	Storages::Get().AddStorage(params.pos, mParent->shared_from_this());
 }
+
+void ColonyStorage::OnDestroy(const GameObjectParams& params)
+{
+	Storages::Get().RemoveStorage(mParent->shared_from_this());
+}

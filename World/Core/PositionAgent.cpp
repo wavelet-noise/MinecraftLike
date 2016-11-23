@@ -1031,6 +1031,7 @@ void Workshop::DrawGui(float gt)
 
 void Workshop::JsonLoad(const rapidjson::Value& val)
 {
+	JSONLOAD(NVP(machine));
 }
 
 //-------------------------------------------------------------------
@@ -1157,35 +1158,4 @@ void SteamGenerator::DrawGui(float gt)
 void SteamGenerator::JsonLoad(const rapidjson::Value& val)
 {
 	JSONLOAD(NVP(efficiency));
-}
-
-PAgent BasicWorkbench::Clone(GameObject * parent, const std::string & name)
-{
-	auto t = MakeAgent<BasicWorkbench>(*this);
-	t->mParent = parent;
-	return t;
-}
-
-void BasicWorkbench::DrawGui(float gt)
-{
-	const auto &list = DB::Get().Taglist("tag_basic_tool");
-
-	std::vector<ChestSlot> chest;
-	chest.reserve(list.size());
-
-	for (const auto &l : list)
-	{
-		auto picked = DB::Get().Pick(l);
-		chest.push_back({ picked, 1 });
-	}
-
-	int jj = 0;
-	ImGui::BeginChild(ImGui::GetID((void*)0), { 300,200 }, true);
-	for (auto &c : chest)
-	{
-		c.DrawGui(); 
-		if (jj < 10) ImGui::SameLine(); else jj = 0;
-		jj++;
-	}
-	ImGui::EndChild();
 }

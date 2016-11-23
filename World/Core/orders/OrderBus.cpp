@@ -10,7 +10,7 @@
 
 std::string Order::to_string() const
 {
-	return (boost::format("(%1%%2%%3%)") % (mTaken ? "T" : "_") % (mDone ? "D" : "_") % (mCanceled ? "C" : "_")).str();
+	return (boost::format(" (%1%%2%%3%)%4%") % (mTaken ? "T" : "_") % (mDone ? "D" : "_") % (mCanceled ? "C" : "_") % (reason.empty() ? "" : " [" + reason + "]")).str();
 }
 
 void OrderBus::IssueDelayedOrder(POrder ord)
@@ -99,11 +99,12 @@ void Order::Drop()
 	mTaken = false;
 }
 
-void Order::Cancel()
+void Order::Cancel(std::string __reason)
 {
 	EventBus::Get().Publish<EventOrderCancel>(shared_from_this());
 	mDone = true;
 	mCanceled = true;
+	reason = __reason;
 }
 
 float Order::Tiring() const

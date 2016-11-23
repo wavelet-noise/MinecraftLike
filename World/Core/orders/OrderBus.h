@@ -31,7 +31,7 @@ public:
 	void Take();
 	virtual void Done();
 	virtual void Drop();
-	void Cancel();
+	void Cancel(std::string __reason = "");
 
 	bool IsTaken() const
 	{
@@ -58,6 +58,7 @@ private:
 	bool mTaken = false;
 	bool mDone = false;
 	bool mCanceled = false;
+	std::string reason;
 };
 
 template<typename T>
