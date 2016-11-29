@@ -6,6 +6,16 @@
 #include "gui/WindowStorages.h"
 
 
+void Currency::AddCurrency(int count)
+{
+	currency += count;
+}
+
+int Currency::GetCurrency()
+{
+	return currency;
+}
+
 WindowOverlay::WindowOverlay()
 {
 }
@@ -32,6 +42,9 @@ void WindowOverlay::Draw(glm::vec2 mainwin_size, float gt)
 	ImGui::SameLine();
 	if (ImGui::Button("Storages"))
 		WindowStorages::Get().Toggle();
+
+	ImGui::SameLine(ImGui::GetWindowWidth() - 80);
+	ImGui::TextColored(Color::LightGreen.Tof32Color(), "%d cur", Currency::Get().GetCurrency());
 
 
 	ImGui::End();

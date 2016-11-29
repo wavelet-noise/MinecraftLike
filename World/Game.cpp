@@ -41,6 +41,7 @@
 #include "gui/WindowEsc.h"
 #include "imgui/imgui_user.h"
 #include <boost/exception/diagnostic_information.hpp>
+#include "WindowOverlay.h"
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -66,6 +67,8 @@ GamePhase_Game::GamePhase_Game()
 	});
 
 	mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
+
+	Currency::Get().AddCurrency(10000);
 
 	initialized = true;
 }

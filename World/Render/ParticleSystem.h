@@ -17,7 +17,7 @@ struct ParticleExtender
 class ParticleSystem
 {
 public:
-	void Add(const glm::vec3 &pos, StringIntern tex, float lifetime = 1.f, float size = 1.f, const Color &color = Color::white);
+	void Add(const glm::vec3 &pos, StringIntern tex, float lifetime = 1.f, float size = 1.f, const Color &color = Color::White);
 	~ParticleSystem();
 	ParticleSystem();
 

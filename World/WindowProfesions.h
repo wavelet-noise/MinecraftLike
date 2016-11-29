@@ -5,7 +5,7 @@
 #include "Core/World.h"
 #include "Core/PositionAgent.h"
 
-class Room;
+struct Room;
 class World;
 
 class WindowProfessions : public WindowBase

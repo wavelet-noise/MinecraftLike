@@ -5,6 +5,22 @@
 struct Room;
 class World;
 
+class Currency
+{
+public:
+	void AddCurrency(int count);
+	int GetCurrency();
+
+	static Currency &Get()
+	{
+		static Currency w;
+		return w;
+	}
+
+private:
+	int currency = 0;
+};
+
 class WindowOverlay : public WindowBase
 {
 public:

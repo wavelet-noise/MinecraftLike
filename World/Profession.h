@@ -26,6 +26,8 @@ public:
 	virtual std::string Name() = 0;
 	virtual std::string Description() = 0;
 	virtual bool CanPeformOrder(POrder p) = 0;
+	virtual float GetCost() = 0;
+	virtual void SetCost(float) = 0;
 
 	virtual PProfession Clone() = 0;
 
@@ -45,18 +47,21 @@ struct NumberedProfession : Profession
 		return Idfor<T>();
 	}
 
-	std::string Name() override;
-	std::string Description() override;
+	float GetCost() override;
+	void SetCost(float) override;
+
+private:
+	float cost = 0;
 };
 
 template <typename T>
-std::string NumberedProfession<T>::Name()
+float NumberedProfession<T>::GetCost()
 {
-	return T::Name();
+	return cost;
 }
 
 template <typename T>
-std::string NumberedProfession<T>::Description()
+void NumberedProfession<T>::SetCost(float c)
 {
-	return T::Description();
+	cost = c;
 }

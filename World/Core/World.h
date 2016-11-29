@@ -128,6 +128,7 @@ public:
 	std::list<std::shared_ptr<Room>> rooms;
 	std::list<PGameObject> controlled;
 
+
 private:
 	std::unordered_map<SPos, std::shared_ptr<Sector>> mSectors;
 	std::list<std::pair<glm::vec3, PGameObject>> storages;

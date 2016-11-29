@@ -60,11 +60,11 @@ namespace std
 	template <>
 	struct hash<glm::vec3>
 	{
-		std::size_t operator()(glm::vec3 const& v) const
+		size_t operator()(glm::vec3 const& v) const
 		{
-			std::size_t h1 = std::hash<int32_t>()(v.x);
-			std::size_t h2 = std::hash<int32_t>()(v.y);
-			std::size_t h3 = std::hash<int32_t>()(v.z);
+			size_t h1 = hash<int32_t>()(v.x);
+			size_t h2 = hash<int32_t>()(v.y);
+			size_t h3 = hash<int32_t>()(v.z);
 			return ((h1 ^ (h2 << 1)) >> 1) ^ (h3 << 1);
 		}
 	};
