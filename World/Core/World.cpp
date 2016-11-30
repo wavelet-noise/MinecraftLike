@@ -104,6 +104,25 @@ void World::Update(float dt)
 	{
 		r->Update(dt);
 	}
+
+	auto old_c = std::chrono::system_clock::to_time_t(game_time);
+	struct tm old_tm;
+	localtime_s(&old_tm, &old_c);
+
+	game_time += std::chrono::milliseconds(static_cast<int>(60000000 * dt));
+
+	auto new_c = std::chrono::system_clock::to_time_t(game_time);
+	struct tm new_tm;
+	localtime_s(&new_tm, &new_c);
+
+	if (new_tm.tm_mon - old_tm.tm_mon > 0)
+		EventBus::Get().Publish<EventNewMonth>(game_time);
+
+	if (new_tm.tm_yday - old_tm.tm_yday > 0)
+		EventBus::Get().Publish<EventNewDay>(game_time);
+
+	if (new_tm.tm_year - old_tm.tm_year > 0)
+		EventBus::Get().Publish<EventNewYear>(game_time);
 }
 
 
@@ -432,4 +451,23 @@ void World::BinSaveRooms(std::ostream& val) const
 	{
 		r->BinSave(val);
 	}
+}
+
+IngameDate World::GetTime()
+{
+	return game_time;
+}
+
+void World::SetTime(IngameDate g)
+{
+	game_time = g;
+}
+
+void World::SetTime(std::string s)
+{
+	std::tm tm = {};
+	std::stringstream ss(s);
+	ss >> std::get_time(&tm, "%b %d %Y %H:%M:%S");
+	auto tp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
+	SetTime(tp);
 }

@@ -55,7 +55,6 @@
     <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="Core\Xyz.cpp" />
     <ClCompile Include="DragNDrop.cpp" />
-    <ClCompile Include="EveryProf.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gatherer.cpp" />
@@ -105,12 +104,15 @@
     <ClCompile Include="tools\ray.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
     <ClCompile Include="tools\wset.h" />
-    <ClCompile Include="WindowProfesions.cpp" />
     <ClCompile Include="Window\Window.cpp" />
     <ClCompile Include="gui\WindowEsc.cpp" />
-    <ClCompile Include="WindowOverlay.cpp" />
     <ClCompile Include="gui\WindowStorages.cpp" />
     <ClCompile Include="Core\agents\ChestBlock.cpp" />
+    <ClCompile Include="Localize.cpp" />
+    <ClCompile Include="gui\WindowFinance.cpp" />
+    <ClCompile Include="gui\WindowOverlay.cpp" />
+    <ClCompile Include="gui\WindowProfesions.cpp" />
+    <ClCompile Include="Core\IngameTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
@@ -176,7 +178,6 @@
     <ClInclude Include="Core\World.h" />
     <ClInclude Include="Core\Xyz.h" />
     <ClInclude Include="DragNDrop.h" />
-    <ClInclude Include="EveryProf.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gatherer.h" />
@@ -236,13 +237,16 @@
     <ClInclude Include="tools\ray.h" />
     <ClInclude Include="tools\StringIntern.h" />
     <ClInclude Include="VerticalText.h" />
-    <ClInclude Include="WindowProfesions.h" />
     <ClInclude Include="Window\Window.h" />
     <ClInclude Include="gui\WindowEsc.h" />
     <ClInclude Include="imgui\imgui_user.h" />
-    <ClInclude Include="WindowOverlay.h" />
     <ClInclude Include="gui\WindowStorages.h" />
     <ClInclude Include="Core\agents\ChestBlock.h" />
+    <ClInclude Include="Localize.h" />
+    <ClInclude Include="gui\WindowFinance.h" />
+    <ClInclude Include="gui\WindowOverlay.h" />
+    <ClInclude Include="gui\WindowProfesions.h" />
+    <ClInclude Include="Core\IngameTime.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BuildVersion.bat" />

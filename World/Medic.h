@@ -8,5 +8,7 @@ public:
 	std::string Description();
 	void Perform(const GameObjectParams& params, PGameObject performer) override;
 	PProfession Clone() override;
+	float GetBaseCost() const;
 };
 
+REGISTER_PROFESSION(Medic)

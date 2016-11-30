@@ -21,5 +21,10 @@ void Medic::Perform(const GameObjectParams& params, PGameObject performer)
 
 PProfession Medic::Clone()
 {
-	return std::make_shared<Medic>();
+	return std::make_shared<Medic>(*this);
+}
+
+float Medic::GetBaseCost() const
+{
+	return 10;
 }

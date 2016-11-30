@@ -46,7 +46,13 @@
 			"type":"Talker"
 		},
 		{
-			"type":"ProfessionPerformer"
+			"type":"ProfessionPerformer",
+			"data":[
+				{"name":"Cooker", "level":1, "active":false},
+				{"name":"Miner", "level":1, "active":false},
+				{"name":"Medic", "level":1, "active":false},
+				{"name":"Gatherer", "level":1, "active":false}
+			]
 		}
 	],
 	"dynamic":true

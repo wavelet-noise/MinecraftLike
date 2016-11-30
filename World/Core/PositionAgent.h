@@ -9,7 +9,9 @@
 #include <deque>
 #include <boost\format.hpp>
 #include <Profession.h>
-#include <EveryProf.h>
+#include <Cooker.h>
+#include <Miner.h>
+#include <Medic.h>
 
 using PPositionAgent = std::unique_ptr<class PositionAgent>;
 
@@ -389,7 +391,19 @@ public:
 
 	bool CanPeformOrder(POrder o);
 
-	std::vector<PProfession> prof = {std::make_shared<EveryProf>()};
+	void JsonLoad(const rapidjson::Value &val) override;
+	float GetSalary();
+	std::vector<PProfession> prof;
+
+private:
+	struct ProfLoadHelper
+	{
+		StringIntern name;
+		int level;
+		bool active;
+
+		void JsonLoad(const rapidjson::Value &val);
+	};
 };
 
 REGISTER_AGENT(ProfessionPerformer)

@@ -9,7 +9,9 @@ class Currency
 {
 public:
 	void AddCurrency(int count);
-	int GetCurrency();
+	int GetCurrency() const;
+	static int GetSaldo();
+	void Update(float dt);
 
 	static Currency &Get()
 	{

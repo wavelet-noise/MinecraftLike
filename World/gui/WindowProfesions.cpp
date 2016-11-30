@@ -3,7 +3,6 @@
 #include "Gatherer.h"
 #include "Cooker.h"
 #include "Medic.h"
-#include "EveryProf.h"
 #include "Miner.h"
 
 WindowProfessions::WindowProfessions()
@@ -16,7 +15,6 @@ void WindowProfessions::Draw(glm::vec2 mainwin_size, float gt)
 		std::make_shared<Gatherer>(),
 		std::make_shared<Cooker>(),
 		std::make_shared<Medic>(),
-		std::make_shared<EveryProf>(),
 		std::make_shared<Miner>(),
 	};
 
@@ -48,13 +46,13 @@ void WindowProfessions::Draw(glm::vec2 mainwin_size, float gt)
 
 		auto &w = WS::Get().w;
 		int i = 0, j = 0;
-		if (!w->controlled.empty())
-			for (const auto &c : w->controlled)
+		if (!w->creatures.empty())
+			for (const auto &c : w->creatures)
 			{
-				ImGui::Text(c->GetAgent<Named>()->name.c_str());
+				ImGui::Text(c.second->GetAgent<Named>()->name.c_str());
 				ImGui::NextColumn();
 
-				auto &vec = c->GetAgent<ProfessionPerformer>()->prof;
+				auto &vec = c.second->GetAgent<ProfessionPerformer>()->prof;
 				std::vector<PProfession> new_pp;
 
 				for (const auto &col : columns)
@@ -62,18 +60,16 @@ void WindowProfessions::Draw(glm::vec2 mainwin_size, float gt)
 					auto finded = std::find_if(vec.begin(), vec.end(), [&](const PProfession &pp)->bool {return pp->IsEquals(*col); });
 					if (finded != vec.end())
 					{
-						if (ImGui::Selectable((boost::format(" ##%1%_%2%") % i % j).str().c_str(), true))
+						if (ImGui::Selectable((boost::format("%3%##%1%_%2%") % i % j % static_cast<int>((*finded)->GetLevel())).str().c_str(), (*finded)->GetActive()))
 						{
-							vec.erase(finded);
+							(*finded)->SetActive(!(*finded)->GetActive());
 						}
 					}
 					else
 					{
-						if (ImGui::Selectable((boost::format(" ##%1%_%2%") % i % j).str().c_str(), false))
-						{
-							vec.push_back(col->Clone());
-						}
+						ImGui::Selectable((boost::format("E##%1%_%2%") % i % j).str().c_str(), false);
 					}
+
 					ImGui::NextColumn();
 					j++;
 				}

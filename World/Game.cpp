@@ -41,7 +41,8 @@
 #include "gui/WindowEsc.h"
 #include "imgui/imgui_user.h"
 #include <boost/exception/diagnostic_information.hpp>
-#include "WindowOverlay.h"
+#include "gui/WindowOverlay.h"
+#include "Localize.h"
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -69,6 +70,7 @@ GamePhase_Game::GamePhase_Game()
 	mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
 
 	Currency::Get().AddCurrency(10000);
+	mWorld->SetTime("Jun 1 2100 12:00:00");
 
 	initialized = true;
 }
@@ -322,87 +324,87 @@ void GamePhase_Game::Draw(float dt)
 				opened_w[std::get<0>(selection_pos)] = b;
 			}
 		}
+
+		float sel_x = std::get<0>(selection_pos).x;
+		float sel_y = std::get<0>(selection_pos).y;
+		float sel_z = std::get<0>(selection_pos).z;
+
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixf((const GLfloat*)&Game::GetCamera()->GetProject());
+		glMatrixMode(GL_MODELVIEW);
+		glm::mat4 MV = Game::GetCamera()->GetView();
+		glLoadMatrixf((const GLfloat*)&MV[0][0]);
+		glUseProgram(0);
+		glBegin(GL_LINES);
+		glColor3f(1, 0, 0);
+		glVertex3f(sel_x - 32, sel_y, sel_z);
+		glVertex3f(sel_x + 32, sel_y, sel_z);
+		glVertex3f(sel_x - 32, sel_y + 1, sel_z);
+		glVertex3f(sel_x + 32, sel_y + 1, sel_z);
+		for (int i = -32; i < 32; i++)
+		{
+			glVertex3f(sel_x + i, sel_y, sel_z);
+			glVertex3f(sel_x + i, sel_y + 1, sel_z);
+		}
+
+		glColor3f(0, 1, 0);
+		glVertex3f(sel_x + 1, sel_y - 32, sel_z);
+		glVertex3f(sel_x + 1, sel_y + 32, sel_z);
+		glVertex3f(sel_x + 1, sel_y - 32, sel_z + 1);
+		glVertex3f(sel_x + 1, sel_y + 32, sel_z + 1);
+		for (int i = -32; i < 32; i++)
+		{
+			glVertex3f(sel_x + 1, sel_y + i, sel_z);
+			glVertex3f(sel_x + 1, sel_y + i, sel_z + 1);
+		}
+
+		glColor3f(0, 0, 1);
+		glVertex3f(sel_x, sel_y + 1, sel_z - 32);
+		glVertex3f(sel_x, sel_y + 1, sel_z + 32);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z - 32);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + 32);
+		for (int i = -32; i < 32; i++)
+		{
+			glVertex3f(sel_x, sel_y + 1, sel_z + i);
+			glVertex3f(sel_x + 1, sel_y + 1, sel_z + i);
+		}
+
+		glColor3f(1, 1, 1);
+		glVertex3f(sel_x, sel_y, sel_z);
+		glVertex3f(sel_x + 1, sel_y, sel_z);
+
+		glVertex3f(sel_x, sel_y, sel_z);
+		glVertex3f(sel_x, sel_y + 1, sel_z);
+
+		glVertex3f(sel_x, sel_y, sel_z);
+		glVertex3f(sel_x, sel_y, sel_z + 1);
+
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+		glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+		glVertex3f(sel_x + 1, sel_y, sel_z + 1);
+
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z);
+
+		glVertex3f(sel_x + 1, sel_y, sel_z + 1);
+		glVertex3f(sel_x + 1, sel_y, sel_z);
+
+		glVertex3f(sel_x + 1, sel_y, sel_z);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z);
+
+		glVertex3f(sel_x, sel_y, sel_z + 1);
+		glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+
+		glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+		glVertex3f(sel_x, sel_y + 1, sel_z);
+
+		glEnd();
 	}
 
 	Game::GetSpriteBatch()->SetCam(Game::GetCamera());
 	Game::GetSpriteBatch()->Render();
-
-	float sel_x = std::get<0>(selection_pos).x;
-	float sel_y = std::get<0>(selection_pos).y;
-	float sel_z = std::get<0>(selection_pos).z;
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf((const GLfloat*)&Game::GetCamera()->GetProject());
-	glMatrixMode(GL_MODELVIEW);
-	glm::mat4 MV = Game::GetCamera()->GetView();
-	glLoadMatrixf((const GLfloat*)&MV[0][0]);
-	glUseProgram(0);
-	glBegin(GL_LINES);
-	glColor3f(1, 0, 0);
-	glVertex3f(sel_x - 32, sel_y, sel_z);
-	glVertex3f(sel_x + 32, sel_y, sel_z);
-	glVertex3f(sel_x - 32, sel_y + 1, sel_z);
-	glVertex3f(sel_x + 32, sel_y + 1, sel_z);
-	for (int i = -32; i < 32; i++)
-	{
-		glVertex3f(sel_x + i, sel_y, sel_z);
-		glVertex3f(sel_x + i, sel_y + 1, sel_z);
-	}
-
-	glColor3f(0, 1, 0);
-	glVertex3f(sel_x, sel_y - 32, sel_z);
-	glVertex3f(sel_x, sel_y + 32, sel_z);
-	glVertex3f(sel_x + 1, sel_y - 32, sel_z);
-	glVertex3f(sel_x + 1, sel_y + 32, sel_z);
-	for (int i = -32; i < 32; i++)
-	{
-		glVertex3f(sel_x, sel_y + i, sel_z);
-		glVertex3f(sel_x + 1, sel_y + i, sel_z);
-	}
-
-	glColor3f(0, 0, 1);
-	glVertex3f(sel_x, sel_y + 1, sel_z - 32);
-	glVertex3f(sel_x, sel_y + 1, sel_z + 32);
-	glVertex3f(sel_x + 1, sel_y + 1, sel_z - 32);
-	glVertex3f(sel_x + 1, sel_y + 1, sel_z + 32);
-	for (int i = -32; i < 32; i++)
-	{
-		glVertex3f(sel_x, sel_y + 1, sel_z + i);
-		glVertex3f(sel_x + 1, sel_y + 1, sel_z + i);
-	}
-
-	glColor3f(1, 1, 1);
-	glVertex3f(sel_x, sel_y, sel_z);
-	glVertex3f(sel_x + 1, sel_y, sel_z);
-
-	glVertex3f(sel_x, sel_y, sel_z);
-	glVertex3f(sel_x, sel_y + 1, sel_z);
-
-	glVertex3f(sel_x, sel_y, sel_z);
-	glVertex3f(sel_x, sel_y, sel_z + 1);
-
-	glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
-	glVertex3f(sel_x, sel_y + 1, sel_z + 1);
-
-	glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
-	glVertex3f(sel_x + 1, sel_y, sel_z + 1);
-
-	glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
-	glVertex3f(sel_x + 1, sel_y + 1, sel_z);
-
-	glVertex3f(sel_x + 1, sel_y, sel_z + 1);
-	glVertex3f(sel_x + 1, sel_y, sel_z);
-
-	glVertex3f(sel_x + 1, sel_y, sel_z);
-	glVertex3f(sel_x + 1, sel_y + 1, sel_z);
-
-	glVertex3f(sel_x, sel_y, sel_z + 1);
-	glVertex3f(sel_x, sel_y + 1, sel_z + 1);
-
-	glVertex3f(sel_x, sel_y + 1, sel_z + 1);
-	glVertex3f(sel_x, sel_y + 1, sel_z);
-
-	glEnd();
 
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
@@ -492,24 +494,25 @@ void GamePhase_Game::Update(float dt)
 			c->GetAgent<Chest>()->Push(DB::Get().Create("stick"), 50);
 			c->GetAgent<Chest>()->Push(DB::Get().Create("bar_material_iron"), 5);
 
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, c));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->Spawn({ 0, 0, 0 }, c);
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
 		}
 	}
 
 	mWorld->Update(static_cast<float>(dt));
+	Currency::Get().Update(dt);
 	OrderBus::Get().Update(dt);
 	EventBus::Get().Update();
 }
@@ -658,6 +661,8 @@ Game::Game()
 
 	ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
 	ImGui::SetupImGuiStyle(true, 0.8f);
+
+	Localize::instance().Init();
 
 	Initialized = true;
 

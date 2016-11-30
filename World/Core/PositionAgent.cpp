@@ -933,6 +933,15 @@ PAgent ProfessionPerformer::Clone(GameObject* parent, const std::string& name)
 {
 	auto t = MakeAgent<ProfessionPerformer>(*this);
 	t->mParent = parent;
+
+	auto pp = t->prof;
+	t->prof.clear();
+
+	for(const auto & p : pp)
+	{
+		t->prof.push_back(p->Clone());
+	}
+
 	return t;
 }
 
@@ -960,11 +969,43 @@ bool ProfessionPerformer::CanPeformOrder(POrder o)
 {
 	for (const auto &p : prof)
 	{
-		if (p->CanPeformOrder(o))
+		if (p->CanPeformOrder(o) && p->GetActive())
 			return true;
 	}
 
 	return false;
+}
+
+void ProfessionPerformer::JsonLoad(const rapidjson::Value& val)
+{
+	std::vector<ProfLoadHelper> prof;
+	JSONLOAD(sge::make_nvp("data", prof));
+
+	for(const auto &p : prof)
+	{
+		auto t = ProfessionFactory::Get().Create(p.name);
+		t->SetLevel(static_cast<ProfessionLevel>(p.level));
+		t->SetActive(p.active);
+
+		this->prof.push_back(t);
+	}
+}
+
+float ProfessionPerformer::GetSalary()
+{
+	float sal = 0;
+	for (const auto & p : prof)
+	{
+		if (p->GetActive())
+			sal += p->GetCost();
+	}
+
+	return sal;
+}
+
+void ProfessionPerformer::ProfLoadHelper::JsonLoad(const rapidjson::Value& val)
+{
+	JSONLOAD(NVP(name), NVP(level), NVP(active));
 }
 
 PAgent ChainDestruction::Clone(GameObject* parent, const std::string& name)
