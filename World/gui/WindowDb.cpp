@@ -77,6 +77,7 @@ void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 
 			ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
 
+
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetTooltip("%s\n%s", id.get().c_str(), std::get<0>(pgo)->GetDescription().c_str());

@@ -6,6 +6,7 @@ struct OrderDrop : NumberedOrder<OrderDrop>
 {
 	OrderDrop(WBPos v, PGameObject i, int c);
 	std::string to_string() const override;
+
 	WBPos pos;
 	PGameObject item;
 	int count;

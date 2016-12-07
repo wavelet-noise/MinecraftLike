@@ -52,10 +52,12 @@
     <ClCompile Include="Core\ModelTessellator.cpp" />
     <ClCompile Include="Core\Operatable.cpp" />
     <ClCompile Include="Core\orders\OrderBus.cpp" />
+    <ClCompile Include="Core\orders\OrderCombined.cpp" />
     <ClCompile Include="Core\orders\OrderCraft.cpp" />
     <ClCompile Include="Core\orders\OrderDig.cpp" />
     <ClCompile Include="Core\orders\OrderDrop.cpp" />
     <ClCompile Include="Core\orders\OrderEat.cpp" />
+    <ClCompile Include="Core\orders\OrderFindAndPick.cpp" />
     <ClCompile Include="Core\orders\OrderGet.cpp" />
     <ClCompile Include="Core\orders\OrderOperate.cpp" />
     <ClCompile Include="Core\orders\OrderPlace.cpp" />
@@ -169,10 +171,12 @@
     <ClInclude Include="Core\ModelTessellator.h" />
     <ClInclude Include="Core\Operatable.h" />
     <ClInclude Include="Core\orders\OrderBus.h" />
+    <ClInclude Include="Core\orders\OrderCombined.h" />
     <ClInclude Include="Core\orders\OrderCraft.h" />
     <ClInclude Include="Core\orders\OrderDig.h" />
     <ClInclude Include="Core\orders\OrderDrop.h" />
     <ClInclude Include="Core\orders\OrderEat.h" />
+    <ClInclude Include="Core\orders\OrderFindAndPick.h" />
     <ClInclude Include="Core\orders\OrderGet.h" />
     <ClInclude Include="Core\orders\OrderOperate.h" />
     <ClInclude Include="Core\orders\OrderPlace.h" />

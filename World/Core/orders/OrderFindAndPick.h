@@ -2,14 +2,15 @@
 #include "../GameObject.h"
 #include "OrderBus.h"
 
-struct OrderPlace : NumberedOrder<OrderPlace>
+struct OrderPick : NumberedOrder<OrderPick>
 {
-	OrderPlace(WBPos v, StringIntern i);
-	std::string to_string() const override;
-	WBPos pos;
-	StringIntern item;
+	OrderPick(WBPos v, PGameObject i, int c);
 
-	float Tiring() const override;
+	std::string to_string() const override;
+
+	glm::vec3 pos;
+	PGameObject item;
+	int count;
 
 	glm::vec3 GetPos() const override;
 

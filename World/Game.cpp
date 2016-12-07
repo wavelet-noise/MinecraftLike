@@ -43,6 +43,8 @@
 #include <boost/exception/diagnostic_information.hpp>
 #include "gui/WindowOverlay.h"
 #include "Localize.h"
+#include "Core/orders/OrderCombined.h"
+#include "Core/orders/OrderFindAndPick.h"
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -87,7 +89,7 @@ void GamePhase_Game::generateShadowFBO()
 
 	fboId = -1;
 
-	try 
+	try
 	{
 		glGenFramebuffers(1, &fboId);
 		glBindFramebuffer(GL_FRAMEBUFFER, fboId);
@@ -222,7 +224,7 @@ void GamePhase_Game::Draw(float dt)
 		return !!mWorld->GetBlock(pos).get();
 	});
 
-	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos)+1000)));
+	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos) + 1000)));
 	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
 	{
 		static glm::vec3 min, max;
@@ -250,7 +252,37 @@ void GamePhase_Game::Draw(float dt)
 				}
 				break;
 			case SelectedOrder::PLACE_BLOCK:
-				OrderBus::Get().IssueOrder(std::make_shared<OrderPlace>(std::get<0>(selection_pos), DB::Get().Create(WindowDb::Get().GetSelectedId())));
+
+				auto & stor = params.world->GetStorages();
+				PGameObject go;
+				WBPos pos;
+				for (const auto & s : stor)
+				{
+					auto cs = s.second->GetAgent<Chest>()->GetByPredicate([&](const ChestSlot & chest_slot)->bool
+					{
+						return chest_slot.obj->GetId() == item;
+					});
+
+					if (cs.obj)
+					{
+						go = cs.obj;
+						pos = s.first;
+						break;
+					}
+				}
+
+				if (go)
+					performer->GetAgent<Creature>()->AddPersinal(std::make_shared<OrderPick>(pos, go, 1));
+				else
+					Drop();
+
+				auto or_get = std::make_shared<OrderPick>(pos, go, 1);
+				auto or_pl = std::make_shared<OrderPlace>(std::get<0>(selection_pos), WindowDb::Get().GetSelectedId());
+				auto or_comb = std::make_shared<OrderCombined>();
+				or_comb->PushOrder(or_get);
+				or_comb->PushOrder(or_pl);
+
+				OrderBus::Get().IssueOrder(or_comb);
 				break;
 			}
 		}
@@ -417,6 +449,19 @@ void GamePhase_Game::Draw(float dt)
 			ImGui::Text("%s", b->GetDescription().c_str());
 			ImGui::End();
 		}
+
+		ImGui::Begin("Colony", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+		int i = 0;
+		for (auto &c : mWorld->creatures)
+		{
+			if (ImGui::TreeNode((std::string("creature_") + std::to_string(i)).c_str()))
+			{
+				c.second->DrawGui(dt);
+				ImGui::TreePop();
+			}
+			i++;
+		}
+		ImGui::End();
 
 	}
 

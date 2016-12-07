@@ -411,7 +411,7 @@ void Creature::Update(const GameObjectParams & params)
 			}
 		}
 
-	if (order) //TODO: move to order methods
+	if (order)
 	{
 		order->Perform(params, mParent->shared_from_this());
 

@@ -2,14 +2,36 @@
 #include <core/World.h>
 #include <glm/gtx/string_cast.hpp>
 #include <core/PositionAgent.h>
+#include <Core/Chest.h>
+#include "OrderFindAndPick.h"
 
-OrderPlace::OrderPlace(WBPos v, PGameObject i) : pos(v), item(i)
+OrderPlace::OrderPlace(WBPos v, StringIntern i) : pos(v), item(i)
 {
 }
 
 std::string OrderPlace::to_string() const
 {
 	return (boost::format("OrderPlace: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str() + Order::to_string();
+}
+
+float OrderPlace::Tiring() const
+{
+	return 0.05f;
+}
+
+glm::vec3 OrderPlace::GetPos() const
+{
+	return pos;
+}
+
+bool OrderPlace::IsEquals(const Order& rhs)
+{
+	if (rhs.GetId() != GetId())
+		return false;
+
+	const auto &o = static_cast<const OrderPlace &>(rhs);
+
+	return o.pos == pos && item == item;
 }
 
 void OrderPlace::Perform(const GameObjectParams & params, PGameObject performer, float work)
@@ -26,8 +48,33 @@ void OrderPlace::Perform(const GameObjectParams & params, PGameObject performer,
 		{
 			if (params.world->IsAir(pos))
 			{
-				params.world->SetBlock(pos, item);
-				Done();
+				auto chest = performer->GetAgent<Chest>();
+				if (chest)
+				{
+					auto has = chest->PopByPredicate([&]( const ChestSlot & cs) -> bool
+					{
+						return cs.obj->GetId() == item;
+					});
+
+					if (has.obj)
+					{
+						params.world->SetBlock(pos, has.obj);
+
+						has.count--;
+						if (has.count > 0)
+							chest->Push(has.obj->Clone(), has.count);
+
+						Done();
+					}
+					else
+					{
+						Drop();
+					}
+				}
+				else
+				{
+					Drop();
+				}
 			}
 			else
 			{

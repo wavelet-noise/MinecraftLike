@@ -2,18 +2,18 @@
 #include "../GameObject.h"
 #include "OrderBus.h"
 
-struct OrderPlace : NumberedOrder<OrderPlace>
+struct OrderCombined : NumberedOrder<OrderCombined>
 {
-	OrderPlace(WBPos v, StringIntern i);
-	std::string to_string() const override;
-	WBPos pos;
-	StringIntern item;
+	OrderCombined();
 
-	float Tiring() const override;
+	std::string to_string() const override;
+
+	std::vector<POrder> orders;
 
 	glm::vec3 GetPos() const override;
 
 	bool IsEquals(const Order& rhs) override;
+	void PushOrder(POrder po);
 
 	void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) override;
 };
