@@ -1,7 +1,7 @@
-#include "ChestSlot.h"
-#include <Render\TextureManager.h>
-#include <imgui.h>
-#include <Core\GameObject.h>
+#include "Core/ChestSlot.h"
+#include <render/TextureManager.h>
+#include <gui/WindowBase.h>
+#include <Core/GameObject.h>
 
 void ChestSlot::DrawGui(bool selected)
 {
@@ -29,11 +29,11 @@ void ChestSlot::DrawGui(bool selected)
 		auto draw_list = ImGui::GetWindowDrawList();
 
 		if (count >= 100)
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(22, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(int(count)).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(22, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(int(count)).c_str());
 		else if (count >= 10)
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(16, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(int(count)).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(16, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(int(count)).c_str());
 		else
-			draw_list->AddText(ImGui::GetItemBoxMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(int(count)).c_str());
+			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(int(count)).c_str());
 
 		if (ImGui::IsItemHovered())
 		{

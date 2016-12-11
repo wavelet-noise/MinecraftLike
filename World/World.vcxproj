@@ -30,6 +30,7 @@
     <ClCompile Include="AutoVersion.cpp" />
     <ClCompile Include="Cooker.cpp" />
     <ClCompile Include="Core\Agent.cpp" />
+    <ClCompile Include="Core\agents\ChestBlock.cpp" />
     <ClCompile Include="Core\Chest.cpp" />
     <ClCompile Include="Core\ChestSlot.cpp" />
     <ClCompile Include="Core\CraftingTable.cpp" />
@@ -40,6 +41,7 @@
     <ClCompile Include="Core\Foliage.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Heatable.cpp" />
+    <ClCompile Include="Core\IngameTime.cpp" />
     <ClCompile Include="Core\LiquidPipe.cpp" />
     <ClCompile Include="Core\MapGen\GenStrategy.cpp" />
     <ClCompile Include="Core\MapGen\WorldGenFlat.cpp" />
@@ -81,7 +83,6 @@
     <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="Core\Xyz.cpp" />
     <ClCompile Include="DragNDrop.cpp" />
-    <ClCompile Include="EveryProf.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gatherer.cpp" />
@@ -91,14 +92,17 @@
     <ClCompile Include="gui\WindowDb.cpp" />
     <ClCompile Include="gui\WindowEsc.cpp" />
     <ClCompile Include="gui\WindowEventlog.cpp" />
+    <ClCompile Include="gui\WindowFinance.cpp" />
     <ClCompile Include="gui\WindowInventory.cpp" />
     <ClCompile Include="gui\WindowPerfomance.cpp" />
     <ClCompile Include="gui\WindowRecipe.cpp" />
     <ClCompile Include="gui\WindowRooms.cpp" />
+    <ClCompile Include="gui\WindowStorages.cpp" />
     <ClCompile Include="gui\WindowTools.cpp" />
     <ClCompile Include="gui\WS.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="Localize.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Medic.cpp" />
@@ -132,13 +136,15 @@
     <ClCompile Include="tools\ray.cpp" />
     <ClCompile Include="tools\StringIntern.cpp" />
     <ClCompile Include="tools\wset.h" />
-    <ClCompile Include="WindowProfesions.cpp" />
+    <ClCompile Include="gui\WindowOverlay.cpp" />
+    <ClCompile Include="gui\WindowProfesions.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
     <ClInclude Include="Cooker.h" />
     <ClInclude Include="Core\Agent.h" />
+    <ClInclude Include="Core\agents\ChestBlock.h" />
     <ClInclude Include="Core\CalorieConsumer.h" />
     <ClInclude Include="core\Chest.h" />
     <ClInclude Include="core\ChestSlot.h" />
@@ -151,6 +157,7 @@
     <ClInclude Include="core\Foliage.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="core\Heatable.h" />
+    <ClInclude Include="Core\IngameTime.h" />
     <ClInclude Include="Core\LiquidController.h" />
     <ClInclude Include="Core\LiquidPipe.h" />
     <ClInclude Include="Core\MapGen\GenStrategy.h" />
@@ -199,7 +206,6 @@
     <ClInclude Include="Core\World.h" />
     <ClInclude Include="Core\Xyz.h" />
     <ClInclude Include="DragNDrop.h" />
-    <ClInclude Include="EveryProf.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gatherer.h" />
@@ -208,12 +214,16 @@
     <ClInclude Include="gui\WindowDb.h" />
     <ClInclude Include="gui\WindowEsc.h" />
     <ClInclude Include="gui\WindowEventlog.h" />
+    <ClInclude Include="gui\WindowFinance.h" />
     <ClInclude Include="gui\WindowInventory.h" />
     <ClInclude Include="gui\WindowPerfomance.h" />
     <ClInclude Include="gui\WindowRecipe.h" />
     <ClInclude Include="gui\WindowRooms.h" />
+    <ClInclude Include="gui\WindowStorages.h" />
     <ClInclude Include="gui\WindowTools.h" />
     <ClInclude Include="gui\WS.h" />
+    <ClInclude Include="imgui\imgui_user.h" />
+    <ClInclude Include="Localize.h" />
     <ClInclude Include="Medic.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="Profession.h" />
@@ -260,7 +270,8 @@
     <ClInclude Include="tools\ray.h" />
     <ClInclude Include="tools\StringIntern.h" />
     <ClInclude Include="VerticalText.h" />
-    <ClInclude Include="WindowProfesions.h" />
+    <ClInclude Include="gui\WindowOverlay.h" />
+    <ClInclude Include="gui\WindowProfesions.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>

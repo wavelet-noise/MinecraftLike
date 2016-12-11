@@ -27,8 +27,8 @@ public:
 	void JsonLoad(const rapidjson::Value &val) override;
 
 	// Унаследовано через Agent
-	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
-	virtual void DrawGui(float gt) override;
+	PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	void DrawGui(float gt) override;
 
 	ChestSlot DigSome();
 	bool Expire() const;

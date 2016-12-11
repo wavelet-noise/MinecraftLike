@@ -105,12 +105,12 @@ void Window::Update()
 	glfwPollEvents();
 }
 
-const glm::uvec2 Window::GetSize() const
+const glm::uvec2 Window::GetSize()
 {
 	return mSize;
 }
 
-const glm::uvec2 Window::GetFbSize() const
+const glm::uvec2 Window::GetFbSize()
 {
 	return fbsize;
 }

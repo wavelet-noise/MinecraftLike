@@ -172,11 +172,11 @@ void Render::Draw(Camera &camera)
     }
     auto &model = *i;
 
-    const auto &aabb = model.GetAABB();
-    if (!camera.BoxWithinFrustum(model.GetModel() * std::get<0>(aabb), model.GetModel() * std::get<1>(aabb)))
-    {
-      continue;
-    }
+    //const auto &aabb = model.GetAABB();
+    //if (!camera.BoxWithinFrustum(model.GetModel() * std::get<0>(aabb), model.GetModel() * std::get<1>(aabb)))
+   // {
+    //  continue;
+    //}
 
     model.GetTexture()->Set(TEXTURE_SLOT_0);
 

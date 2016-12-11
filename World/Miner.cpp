@@ -25,5 +25,10 @@ void Miner::Perform(const GameObjectParams& params, PGameObject performer)
 
 PProfession Miner::Clone()
 {
-	return std::make_shared<Miner>();
+	return std::make_shared<Miner>(*this);
+}
+
+float Miner::GetBaseCost() const
+{
+	return 10;
 }

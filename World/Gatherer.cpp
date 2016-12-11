@@ -21,5 +21,10 @@ void Gatherer::Perform(const GameObjectParams& params, PGameObject performer)
 
 PProfession Gatherer::Clone()
 {
-	return std::make_shared<Gatherer>();
+	return std::make_shared<Gatherer>(*this);
+}
+
+float Gatherer::GetBaseCost() const
+{
+	return 10;
 }

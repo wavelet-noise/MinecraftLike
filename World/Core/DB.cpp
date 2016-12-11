@@ -21,6 +21,7 @@
 #include "Chest.h"
 #include "Heatable.h"
 #include "Xyz.h"
+#include "agents/ChestBlock.h"
 
 //possibly must be moved into <templates> file
 //deserialize autoreg

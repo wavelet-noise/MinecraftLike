@@ -8,13 +8,14 @@
 #include "tools\CoordSystem.h"
 #include <mutex>
 #include "GenStrategy.h"
+#include <memory>
 
 class Sector;
 
 class WorldWorker : public boost::noncopyable
 {
 public:
-	WorldWorker();
+	WorldWorker(std::shared_ptr<World> w);
 	~WorldWorker();
 
 	void SaveAll();

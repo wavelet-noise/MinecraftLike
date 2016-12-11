@@ -39,7 +39,10 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include "gui/WindowEsc.h"
+#include "imgui/imgui_user.h"
 #include <boost/exception/diagnostic_information.hpp>
+#include "gui/WindowOverlay.h"
+#include "Localize.h"
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -54,8 +57,7 @@ GamePhase_Game::GamePhase_Game()
 
 	DB::Get().ReloadDirectory("data\\json\\");
 
-	Game::SetWorker(std::make_unique<WorldWorker>());
-	Game::GetWorker()->w = mWorld;
+	Game::SetWorker(std::make_unique<WorldWorker>(mWorld));
 
 	gen_thread = boost::thread([&]() {
 		while (true)
@@ -66,6 +68,9 @@ GamePhase_Game::GamePhase_Game()
 	});
 
 	mSectorLoader = std::make_unique<SectorLoader>(*mWorld, SPos{}, 5);
+
+	Currency::Get().AddCurrency(10000);
+	mWorld->SetTime("Jun 1 2100 12:00:00");
 
 	initialized = true;
 }
@@ -217,7 +222,7 @@ void GamePhase_Game::Draw(float dt)
 		return !!mWorld->GetBlock(pos).get();
 	});
 
-	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos))));
+	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos)+1000)));
 	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
 	{
 		static glm::vec3 min, max;
@@ -312,13 +317,90 @@ void GamePhase_Game::Draw(float dt)
 			}
 		}
 
-		if (ImGui::IsMouseDown(1)) {
+		if (WindowTools::Get().selected == SelectedOrder::NONE && ImGui::IsMouseDown(0)) {
 			if (auto b = mWorld->GetBlock(std::get<0>(selection_pos)))
 			{
 				b->Interact(InteractParams{ mWorld.get(), std::get<0>(selection_pos), dt });
 				opened_w[std::get<0>(selection_pos)] = b;
 			}
 		}
+
+		float sel_x = std::get<0>(selection_pos).x;
+		float sel_y = std::get<0>(selection_pos).y;
+		float sel_z = std::get<0>(selection_pos).z;
+
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixf((const GLfloat*)&Game::GetCamera()->GetProject());
+		glMatrixMode(GL_MODELVIEW);
+		glm::mat4 MV = Game::GetCamera()->GetView();
+		glLoadMatrixf((const GLfloat*)&MV[0][0]);
+		glUseProgram(0);
+		glBegin(GL_LINES);
+		glColor3f(1, 0, 0);
+		glVertex3f(sel_x - 32, sel_y, sel_z);
+		glVertex3f(sel_x + 32, sel_y, sel_z);
+		glVertex3f(sel_x - 32, sel_y + 1, sel_z);
+		glVertex3f(sel_x + 32, sel_y + 1, sel_z);
+		for (int i = -32; i < 32; i++)
+		{
+			glVertex3f(sel_x + i, sel_y, sel_z);
+			glVertex3f(sel_x + i, sel_y + 1, sel_z);
+		}
+
+		glColor3f(0, 1, 0);
+		glVertex3f(sel_x + 1, sel_y - 32, sel_z);
+		glVertex3f(sel_x + 1, sel_y + 32, sel_z);
+		glVertex3f(sel_x + 1, sel_y - 32, sel_z + 1);
+		glVertex3f(sel_x + 1, sel_y + 32, sel_z + 1);
+		for (int i = -32; i < 32; i++)
+		{
+			glVertex3f(sel_x + 1, sel_y + i, sel_z);
+			glVertex3f(sel_x + 1, sel_y + i, sel_z + 1);
+		}
+
+		glColor3f(0, 0, 1);
+		glVertex3f(sel_x, sel_y + 1, sel_z - 32);
+		glVertex3f(sel_x, sel_y + 1, sel_z + 32);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z - 32);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + 32);
+		for (int i = -32; i < 32; i++)
+		{
+			glVertex3f(sel_x, sel_y + 1, sel_z + i);
+			glVertex3f(sel_x + 1, sel_y + 1, sel_z + i);
+		}
+
+		glColor3f(1, 1, 1);
+		glVertex3f(sel_x, sel_y, sel_z);
+		glVertex3f(sel_x + 1, sel_y, sel_z);
+
+		glVertex3f(sel_x, sel_y, sel_z);
+		glVertex3f(sel_x, sel_y + 1, sel_z);
+
+		glVertex3f(sel_x, sel_y, sel_z);
+		glVertex3f(sel_x, sel_y, sel_z + 1);
+
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+		glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+		glVertex3f(sel_x + 1, sel_y, sel_z + 1);
+
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z + 1);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z);
+
+		glVertex3f(sel_x + 1, sel_y, sel_z + 1);
+		glVertex3f(sel_x + 1, sel_y, sel_z);
+
+		glVertex3f(sel_x + 1, sel_y, sel_z);
+		glVertex3f(sel_x + 1, sel_y + 1, sel_z);
+
+		glVertex3f(sel_x, sel_y, sel_z + 1);
+		glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+
+		glVertex3f(sel_x, sel_y + 1, sel_z + 1);
+		glVertex3f(sel_x, sel_y + 1, sel_z);
+
+		glEnd();
 	}
 
 	Game::GetSpriteBatch()->SetCam(Game::GetCamera());
@@ -340,18 +422,18 @@ void GamePhase_Game::Draw(float dt)
 
 	WS::Get().Draw(Game::GetWindow()->GetSize(), dt);
 
-	ImGui::Begin("Colony", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-	int i = 0;
-	for (auto &c : mWorld->controlled)
-	{
-		if (ImGui::TreeNode((std::string("creature_") + std::to_string(i)).c_str()))
-		{
-			c->DrawGui(dt);
-			ImGui::TreePop();
-		}
-		i++;
-	}
-	ImGui::End();
+	//ImGui::Begin("Colony", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+	//int i = 0;
+	//for (auto &c : mWorld->controlled)
+	//{
+	//	if (ImGui::TreeNode((std::string("creature_") + std::to_string(i)).c_str()))
+	//	{
+	//		c->DrawGui(dt);
+	//		ImGui::TreePop();
+	//	}
+	//	i++;
+	//}
+	//ImGui::End();
 
 	for (auto &w : opened_w)
 	{
@@ -363,7 +445,16 @@ void GamePhase_Game::Draw(float dt)
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_ESCAPE))
 	{
-		opened_w.clear();
+		if (WindowEsc::Get().GetVisibility())
+			WindowEsc::Get().Toggle();
+		else
+			if (WindowTools::Get().selected != SelectedOrder::NONE)
+				WindowTools::Get().selected = SelectedOrder::NONE;
+			else
+				if (!opened_w.empty())
+					opened_w.clear();
+				else
+					WindowEsc::Get().Toggle();
 	}
 
 	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
@@ -383,8 +474,6 @@ void GamePhase_Game::Update(float dt)
 	SPos secPos = { 0,0,0 };
 	mSectorLoader->SetPos(Game::GetCamera()->GetPos() / float(SECTOR_SIZE));
 
-	if (ImGui::IsKeyPressed(GLFW_KEY_ESCAPE))
-		WindowEsc::Get().Toggle();
 
 	if (!ImGui::IsAnyItemHovered() && ImGui::IsMouseDragging(1))
 	{
@@ -405,24 +494,25 @@ void GamePhase_Game::Update(float dt)
 			c->GetAgent<Chest>()->Push(DB::Get().Create("stick"), 50);
 			c->GetAgent<Chest>()->Push(DB::Get().Create("bar_material_iron"), 5);
 
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, c));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
-			mWorld->controlled.push_back(mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter")));
+			mWorld->Spawn({ 0, 0, 0 }, c);
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
 		}
 	}
 
 	mWorld->Update(static_cast<float>(dt));
+	Currency::Get().Update(dt);
 	OrderBus::Get().Update(dt);
 	EventBus::Get().Update();
 }
@@ -527,7 +617,7 @@ void GamePhase_LoadMenu::Draw(float gt)
 		ImGui::SetNextWindowPosCenter();
 		ImGui::Begin("Load game", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 		static int current;
-		if(ImGui::ListBox("Saves", &current, savec_c.data(), saves.size(), 10))
+		if (ImGui::ListBox("Saves", &current, savec_c.data(), saves.size(), 10))
 		{
 			Settings::Get().save_file = savec_c[current];
 
@@ -540,7 +630,7 @@ void GamePhase_LoadMenu::Draw(float gt)
 		if (ImGui::Button("Back"))
 		{
 			Game::SetGamePhase(std::make_unique<GamePhase_MainMenu>());
-		}		
+		}
 
 		if (game && game->IsInitialized())
 		{
@@ -548,10 +638,10 @@ void GamePhase_LoadMenu::Draw(float gt)
 			TextureManager::Get().Compile();
 			Game::SetGamePhase(std::move(game));
 		}
-		
+
 		Game::DrawLoading();
 		ImGui::End();
-	}	
+	}
 	ImGui::Render();
 }
 
@@ -570,6 +660,9 @@ Game::Game()
 	mRender = std::make_unique<Render>();
 
 	ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
+	ImGui::SetupImGuiStyle(true, 0.8f);
+
+	Localize::instance().Init();
 
 	Initialized = true;
 

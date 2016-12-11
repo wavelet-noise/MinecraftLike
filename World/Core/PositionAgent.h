@@ -9,7 +9,9 @@
 #include <deque>
 #include <boost\format.hpp>
 #include <Profession.h>
-#include <EveryProf.h>
+#include <Cooker.h>
+#include <Miner.h>
+#include <Medic.h>
 
 using PPositionAgent = std::unique_ptr<class PositionAgent>;
 
@@ -91,7 +93,7 @@ public:
 
 	float GetFreq() const override
 	{
-		return 1 / 10.f;
+		return 1 / 20.f;
 	}
 
 	void OnCreate(const GameObjectParams & params) override;
@@ -389,7 +391,19 @@ public:
 
 	bool CanPeformOrder(POrder o);
 
-	std::vector<PProfession> prof = {std::make_shared<EveryProf>()};
+	void JsonLoad(const rapidjson::Value &val) override;
+	float GetSalary();
+	std::vector<PProfession> prof;
+
+private:
+	struct ProfLoadHelper
+	{
+		StringIntern name;
+		int level;
+		bool active;
+
+		void JsonLoad(const rapidjson::Value &val);
+	};
 };
 
 REGISTER_AGENT(ProfessionPerformer)
@@ -439,6 +453,8 @@ public:
 	{
 		return 5.0f;
 	}
+
+	StringIntern machine;
 };
 
 REGISTER_AGENT(Workshop)
@@ -544,21 +560,3 @@ private:
 };
 
 REGISTER_AGENT(SteamGenerator)
-
-class BasicWorkbench : public Agent
-{
-public:
-	AGENT(BasicWorkbench);
-
-	// Унаследовано через Agent
-	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
-
-	void DrawGui(float gt) override;
-
-	float GetFreq() const override
-	{
-		return std::numeric_limits<float>::max();
-	}
-};
-
-REGISTER_AGENT(BasicWorkbench)

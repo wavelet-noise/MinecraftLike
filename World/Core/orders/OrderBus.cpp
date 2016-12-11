@@ -8,6 +8,11 @@
 #include <core\ChestSlot.h>
 #include <core\Chest.h>
 
+std::string Order::to_string() const
+{
+	return (boost::format(" (%1%%2%%3%)%4%") % (mTaken ? "T" : "_") % (mDone ? "D" : "_") % (mCanceled ? "C" : "_") % (reason.empty() ? "" : " [" + reason + "]")).str();
+}
+
 void OrderBus::IssueDelayedOrder(POrder ord)
 {
 	if (delayed_orders.size() >= 10000)
@@ -76,11 +81,6 @@ void OrderBus::Update(float dt)
 	}
 }
 
-std::string Order::to_string() const
-{
-	return (boost::format("Order: id = %1%") % GetId()).str();
-}
-
 void Order::Take()
 {
 	EventBus::Get().Publish<EventOrderStart>(shared_from_this());
@@ -95,7 +95,16 @@ void Order::Done()
 
 void Order::Drop()
 {
+	EventBus::Get().Publish<EventOrderDrop>(shared_from_this());
 	mTaken = false;
+}
+
+void Order::Cancel(std::string __reason)
+{
+	EventBus::Get().Publish<EventOrderCancel>(shared_from_this());
+	mDone = true;
+	mCanceled = true;
+	reason = __reason;
 }
 
 float Order::Tiring() const

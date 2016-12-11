@@ -12,7 +12,7 @@ OrderDig::OrderDig(glm::vec3 v) : pos(v)
 
 std::string OrderDig::to_string() const
 {
-	return (boost::format("OrderDig: pos = %1%") % glm::to_string(pos)).str();
+	return (boost::format("OrderDig: pos = %1%") % glm::to_string(pos)).str() + Order::to_string();
 }
 
 void OrderDig::Perform(const GameObjectParams & params, PGameObject performer, float work)

@@ -11,7 +11,7 @@ OrderDrop::OrderDrop(WBPos v, PGameObject i, int c) : pos(v), item(i), count(c)
 
 std::string OrderDrop::to_string() const
 {
-	return (boost::format("OrderDrop: pos = %1% id = %2% count = %3%") % glm::to_string(pos) % item->GetId() % count).str();
+	return (boost::format("OrderDrop: pos = %1% id = %2% count = %3%") % glm::to_string(pos) % item->GetId() % count).str() + Order::to_string();
 }
 
 void OrderDrop::Perform(const GameObjectParams & params, PGameObject performer, float work)
@@ -31,8 +31,8 @@ void OrderDrop::Perform(const GameObjectParams & params, PGameObject performer, 
 			{
 				if (auto ch = b->GetAgent<Chest>())
 				{
-					ch->Push(item, count);
-					placed = true;
+					if(ch->Push(item, count))
+						placed = true;
 				}
 			}
 
@@ -46,9 +46,16 @@ void OrderDrop::Perform(const GameObjectParams & params, PGameObject performer, 
 				t_item.count -= count;
 				if (t_item.count >= 1)
 					ch->Push(t_item.obj, t_item.count);
+
+				Done();
+			}
+			else
+			{
+				Cancel();
 			}
 
-			Done();
+
+			
 		}
 	}
 }

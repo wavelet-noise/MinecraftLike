@@ -7,6 +7,7 @@
 #include <core/Sector.h>
 #include <core/GameObject.h>
 #include <Core/orders/OrderBus.h>
+#include "IngameTime.h"
 //#include <glm/gtx/string_cast.hpp>
 
 using PEvent = std::shared_ptr<class Event>;
@@ -77,6 +78,28 @@ struct EventOrderDone : public NumberedEvent<EventOrderDone>
 	}
 };
 
+struct EventOrderCancel : public NumberedEvent<EventOrderCancel>
+{
+	EventOrderCancel(POrder p) : ord(p) {}
+	POrder ord;
+
+	std::string to_string() const override
+	{
+		return (boost::format("EventOrderCancel: ord = %1%") % ord->to_string()).str();
+	}
+};
+
+struct EventOrderDrop : public NumberedEvent<EventOrderDrop>
+{
+	EventOrderDrop(POrder p) : ord(p) {}
+	POrder ord;
+
+	std::string to_string() const override
+	{
+		return (boost::format("EventOrderDrop: ord = %1%") % ord->to_string()).str();
+	}
+};
+
 struct EventSectorReady : public NumberedEvent<EventOrderStart>
 {
 	EventSectorReady(std::shared_ptr<Sector> p) : sec(p) {}
@@ -119,6 +142,42 @@ struct EventItemPlace : public NumberedEvent<EventItemPlace>
 	std::string to_string() const override
 	{
 		return (boost::format("EventCreatureSpawn: obj = %1%") % obj->GetId()).str();
+	}
+};
+
+struct EventNewDay : public NumberedEvent<EventNewDay>
+{
+	EventNewDay(IngameDate date) : it(date) {}
+
+	IngameDate it;
+
+	std::string to_string() const override
+	{
+		return (boost::format("EventNewDay: %1%") % IngameDateToString(it)).str();
+	}
+};
+
+struct EventNewMonth : public NumberedEvent<EventNewMonth>
+{
+	EventNewMonth(IngameDate date) : it(date) {}
+
+	IngameDate it;
+
+	std::string to_string() const override
+	{
+		return (boost::format("EventNewMonth: %1%") % IngameDateToString(it)).str();
+	}
+};
+
+struct EventNewYear : public NumberedEvent<EventNewYear>
+{
+	EventNewYear(IngameDate date) : it(date) {}
+
+	IngameDate it;
+
+	std::string to_string() const override
+	{
+		return (boost::format("EventNewYear: %1%") % IngameDateToString(it)).str();
 	}
 };
 

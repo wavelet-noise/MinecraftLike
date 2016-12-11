@@ -9,7 +9,7 @@ OrderPlace::OrderPlace(WBPos v, PGameObject i) : pos(v), item(i)
 
 std::string OrderPlace::to_string() const
 {
-	return (boost::format("OrderPlace: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
+	return (boost::format("OrderPlace: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str() + Order::to_string();
 }
 
 void OrderPlace::Perform(const GameObjectParams & params, PGameObject performer, float work)
@@ -24,9 +24,15 @@ void OrderPlace::Perform(const GameObjectParams & params, PGameObject performer,
 
 		if (c->path.empty())
 		{
-			params.world->SetBlock(pos, item);
-
-			Done();
+			if (params.world->IsAir(pos))
+			{
+				params.world->SetBlock(pos, item);
+				Done();
+			}
+			else
+			{
+				Cancel("destination already contains block");
+			}
 		}
 	}
 }

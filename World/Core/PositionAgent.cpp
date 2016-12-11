@@ -20,6 +20,8 @@
 #include <Core/orders/OrderDrop.h>
 #include <gui/WindowDb.h>
 #include "LiquidPipe.h"
+#include <gui/WindowStorages.h>
+#include "agents/ChestBlock.h"
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -58,11 +60,11 @@ namespace std
 	template <>
 	struct hash<glm::vec3>
 	{
-		std::size_t operator()(glm::vec3 const& v) const
+		size_t operator()(glm::vec3 const& v) const
 		{
-			std::size_t h1 = std::hash<int32_t>()(v.x);
-			std::size_t h2 = std::hash<int32_t>()(v.y);
-			std::size_t h3 = std::hash<int32_t>()(v.z);
+			size_t h1 = hash<int32_t>()(v.x);
+			size_t h2 = hash<int32_t>()(v.y);
+			size_t h3 = hash<int32_t>()(v.z);
 			return ((h1 ^ (h2 << 1)) >> 1) ^ (h3 << 1);
 		}
 	};
@@ -262,14 +264,22 @@ void Controlable::Update(const GameObjectParams & params)
 			auto &i = ch->GetFirst();
 			if (i.obj)
 			{
-				auto &storages = params.world->GetStorages();
+				auto& storages = Storages::Get().List();
 				if (!storages.empty())
 				{
-					auto tpos = storages.begin()->first;
-					if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
+				    auto finded = std::find_if(storages.begin(), storages.end(), [&](const std::tuple<glm::vec3, PGameObject> & stor) -> bool
+				    {
+						return std::get<1>(stor)->GetAgent<Chest>()->CanPush(i.obj, i.count);
+					});
+
+					if (finded != storages.end())
 					{
-						nearest_order = std::make_shared<OrderDrop>(storages.begin()->first, i.obj, i.count);
-						nearest = tpos;
+						auto tpos = std::get<0>(*finded);
+						if (!storages.empty() && (glm::distance(p->Get(), tpos) < glm::distance(p->Get(), nearest)))
+						{
+							nearest_order = std::make_shared<OrderDrop>(std::get<0>(*finded), i.obj, i.count);
+							nearest = tpos;
+						}
 					}
 				}
 			}
@@ -923,6 +933,15 @@ PAgent ProfessionPerformer::Clone(GameObject* parent, const std::string& name)
 {
 	auto t = MakeAgent<ProfessionPerformer>(*this);
 	t->mParent = parent;
+
+	auto pp = t->prof;
+	t->prof.clear();
+
+	for(const auto & p : pp)
+	{
+		t->prof.push_back(p->Clone());
+	}
+
 	return t;
 }
 
@@ -950,11 +969,43 @@ bool ProfessionPerformer::CanPeformOrder(POrder o)
 {
 	for (const auto &p : prof)
 	{
-		if (p->CanPeformOrder(o))
+		if (p->CanPeformOrder(o) && p->GetActive())
 			return true;
 	}
 
 	return false;
+}
+
+void ProfessionPerformer::JsonLoad(const rapidjson::Value& val)
+{
+	std::vector<ProfLoadHelper> prof;
+	JSONLOAD(sge::make_nvp("data", prof));
+
+	for(const auto &p : prof)
+	{
+		auto t = ProfessionFactory::Get().Create(p.name);
+		t->SetLevel(static_cast<ProfessionLevel>(p.level));
+		t->SetActive(p.active);
+
+		this->prof.push_back(t);
+	}
+}
+
+float ProfessionPerformer::GetSalary()
+{
+	float sal = 0;
+	for (const auto & p : prof)
+	{
+		if (p->GetActive())
+			sal += p->GetCost();
+	}
+
+	return sal;
+}
+
+void ProfessionPerformer::ProfLoadHelper::JsonLoad(const rapidjson::Value& val)
+{
+	JSONLOAD(NVP(name), NVP(level), NVP(active));
 }
 
 PAgent ChainDestruction::Clone(GameObject* parent, const std::string& name)
@@ -1021,6 +1072,7 @@ void Workshop::DrawGui(float gt)
 
 void Workshop::JsonLoad(const rapidjson::Value& val)
 {
+	JSONLOAD(NVP(machine));
 }
 
 //-------------------------------------------------------------------
@@ -1147,35 +1199,4 @@ void SteamGenerator::DrawGui(float gt)
 void SteamGenerator::JsonLoad(const rapidjson::Value& val)
 {
 	JSONLOAD(NVP(efficiency));
-}
-
-PAgent BasicWorkbench::Clone(GameObject * parent, const std::string & name)
-{
-	auto t = MakeAgent<BasicWorkbench>(*this);
-	t->mParent = parent;
-	return t;
-}
-
-void BasicWorkbench::DrawGui(float gt)
-{
-	const auto &list = DB::Get().Taglist("tag_basic_tool");
-
-	std::vector<ChestSlot> chest;
-	chest.reserve(list.size());
-
-	for (const auto &l : list)
-	{
-		auto picked = DB::Get().Pick(l);
-		chest.push_back({ picked, 1 });
-	}
-
-	int jj = 0;
-	ImGui::BeginChild(ImGui::GetID((void*)0), { 300,200 }, true);
-	for (auto &c : chest)
-	{
-		c.DrawGui(); 
-		if (jj < 10) ImGui::SameLine(); else jj = 0;
-		jj++;
-	}
-	ImGui::EndChild();
 }

@@ -44,3 +44,5 @@ AMlib/AMlib.vcxproj
 AMlib/AMlib.vcxproj.filters
 *.i-*
 *.vspx
+/_1
+/microprofile/

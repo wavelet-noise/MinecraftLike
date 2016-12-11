@@ -62,7 +62,7 @@ protected:
     bool findedUnique = false;
     size_t empty;
     size_t unique;
-    for (size_t i = 0; i < mUniqueBlocks.size(); ++i)
+    for (size_t i = 1; i < mUniqueBlocks.size(); ++i)
     {
       if (mUniqueBlocks[i])
       {

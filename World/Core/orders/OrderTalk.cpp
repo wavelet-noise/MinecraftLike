@@ -4,7 +4,7 @@
 
 std::string OrderTalk::to_string() const
 {
-	return (boost::format("OrderTalk: creature = %1% duration = %2%") % person->GetAgent<Creature>()->uid % duration).str();
+	return (boost::format("OrderTalk: creature = %1% duration = %2%") % 0 % duration).str() + Order::to_string();
 }
 
 glm::vec3 OrderTalk::GetPos() const

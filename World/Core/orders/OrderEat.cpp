@@ -11,7 +11,7 @@ OrderEat::OrderEat(WBPos v, PGameObject i) : pos(v), item(i)
 
 std::string OrderEat::to_string() const
 {
-	return (boost::format("OrderEat: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str();
+	return (boost::format("OrderEat: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str() + Order::to_string();
 }
 
 void OrderEat::Perform(const GameObjectParams & params, PGameObject performer, float work)

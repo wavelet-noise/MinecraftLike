@@ -24,7 +24,7 @@ public:
   Bitmap(const std::string &fileName);
 
   // Создать битмапу заданного размера и цвета.
-  Bitmap(const glm::uvec2 &size, const Color &color = Color::black);
+  Bitmap(const glm::uvec2 &size, const Color &color = Color::Black);
 
   // Создать битмапу заданного размера и массива данных.
   Bitmap(const glm::uvec2 &size, const unsigned char *data);
