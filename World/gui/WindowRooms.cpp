@@ -5,7 +5,6 @@
 #include "WS.h"
 #include <vector>
 #include <Window/Window.h>
-#include <imgui_user.h>
 
 WindowRooms::WindowRooms()
 {
@@ -15,7 +14,7 @@ void WindowRooms::Draw(glm::vec2 wsize, float gt)
 {
 	if (mOpen)
 	{
-		ImGui::SetNextWindowSize(static_cast<glm::vec2>(Window::GetSize())/4.f);
+		//ImGui::SetNextWindowSize(static_cast<glm::vec2>(Window::GetSize())/4.f);
 		ImGui::Begin("Room managment", &mOpen);
 		for(const auto & c : WS::Get().w->rooms)
 		{
@@ -54,7 +53,7 @@ void WindowRooms::Draw(glm::vec2 wsize, float gt)
 				return a;
 			}();
 
-			ImGui::Combo("", reinterpret_cast<int*>(&selected->type), room_types_s, static_cast<int>(RoomType::ROOMTYPECOUNT));
+			//ImGui::Combo("", reinterpret_cast<int*>(&selected->type), room_types_s, static_cast<int>(RoomType::ROOMTYPECOUNT));
 		}
 	unselect:;
 		ImGui::End();

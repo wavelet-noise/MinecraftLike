@@ -63,7 +63,7 @@ public:
 
 	float duration = 0;
 
-	void DrawGui(float gt);
+	bool DrawGui(float gt);
 
 	std::list<std::shared_ptr<Recipe>> Expand();
 
@@ -118,5 +118,5 @@ public:
 	float need_count = 1;
 	bool first_show = true;
 
-	void DrawGui(float gt);
+	bool DrawGui(float gt);
 };

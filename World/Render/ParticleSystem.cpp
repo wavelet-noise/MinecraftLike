@@ -9,7 +9,7 @@ void ParticleSystem::Add(const glm::vec3 & pos, StringIntern tex, float liftime,
 		return;
 
 	vertex[mCount].pos = glm::vec4(pos, size);
-	vertex[mCount].col = color.Tou8Color();
+	vertex[mCount].col = color;
 	auto &atl = TextureManager::Get().GetTexture(tex);
 	auto &uv4 = std::get<1>(atl);
 	uvs[mCount * 4 + 0] = glm::vec2(uv4.x, uv4.w);

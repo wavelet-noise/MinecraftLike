@@ -7,10 +7,10 @@ WindowRecipe::WindowRecipe()
 
 void WindowRecipe::Draw(glm::vec2 mainwin_size, float gt)
 {
-	ImGui::SetNextWindowSize({ 500, 500 });
-
 	if (mOpen)
 	{
+		ImGui::SetNextWindowSize({ 500, 500 });
+
 		ImGui::Begin("Recipe & Usage", &mOpen);
 		switch (current)
 		{

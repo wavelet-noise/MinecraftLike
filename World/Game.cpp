@@ -18,6 +18,8 @@
 #include "tools/wset.h"
 
 #include "gui/imgui_impl_glfw_gl3.h"
+#include "imgui.h"
+#include "imgui\imgui_internal.h"
 #include "gui/WS.h"
 #include <gui/WindowInventory.h>
 #include <gui/WindowCraftQueue.h>
@@ -39,10 +41,13 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include "gui/WindowEsc.h"
-#include "imgui/imgui_user.h"
+//#include "imgui/imgui_user.h"
 #include <boost/exception/diagnostic_information.hpp>
 #include "gui/WindowOverlay.h"
 #include "Localize.h"
+
+//
+#include "GamePhase_LoadMenu.h"
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -87,7 +92,7 @@ void GamePhase_Game::generateShadowFBO()
 
 	fboId = -1;
 
-	try 
+	try
 	{
 		glGenFramebuffers(1, &fboId);
 		glBindFramebuffer(GL_FRAMEBUFFER, fboId);
@@ -127,12 +132,12 @@ GamePhase_Game::~GamePhase_Game()
 
 void GamePhase_Game::Draw(float dt)
 {
-	float drawtime = glfwGetTime();
+	float drawtime = static_cast<float>(glfwGetTime());
 	//mCamera->SetPos(mWorld->GetPlayer()->GetPosition() + glm::vec3{ 0.0f, 0.0f, 1.7f });
 	//mCamera->SetRot(mWorld->GetPlayer()->GetRot());
 	Game::GetCamera()->Update();
 
-	static float phi = 0;
+	static float phi = 0.f;
 	//phi += dt / 20.f;
 	Game::GetSun()->SetPos(Game::GetCamera()->GetPos() + glm::vec3{ glm::sin(phi) + glm::cos(phi), 0, -glm::sin(phi) + glm::cos(phi) });
 	Game::GetSun()->LookAt(Game::GetCamera()->GetPos());
@@ -222,7 +227,7 @@ void GamePhase_Game::Draw(float dt)
 		return !!mWorld->GetBlock(pos).get();
 	});
 
-	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos)+1000)));
+	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos) + 1000)));
 	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
 	{
 		static glm::vec3 min, max;
@@ -320,7 +325,6 @@ void GamePhase_Game::Draw(float dt)
 		if (WindowTools::Get().selected == SelectedOrder::NONE && ImGui::IsMouseDown(0)) {
 			if (auto b = mWorld->GetBlock(std::get<0>(selection_pos)))
 			{
-				b->Interact(InteractParams{ mWorld.get(), std::get<0>(selection_pos), dt });
 				opened_w[std::get<0>(selection_pos)] = b;
 			}
 		}
@@ -412,6 +416,7 @@ void GamePhase_Game::Draw(float dt)
 		{
 			ImGui::SetNextWindowPos({ Game::GetWindow()->GetSize().x / 2.f - 70, 0 });
 			ImGui::SetNextWindowSize({ 140,50 });
+
 			ImGui::Begin("Selected");
 			b->DrawGui(dt);
 			ImGui::Text("%s", b->GetDescription().c_str());
@@ -437,10 +442,53 @@ void GamePhase_Game::Draw(float dt)
 
 	for (auto &w : opened_w)
 	{
-		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings);
-
+		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(),
+			nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings);
 		std::get<1>(w)->DrawGui(dt);
+
+		glm::vec2 pos_win = ImGui::GetWindowPos();
+		glm::vec2 size = ImGui::GetWindowSize();
+		auto pos_block = Game::GetCamera()->Project(static_cast<glm::vec3>(std::get<0>(w)) + glm::vec3(0.5f,0.5f,1));
+
+		glm::vec2 poses[] = { { pos_win.x + size.x + 3, pos_win.y + size.y / 2.f }, // right
+			{ pos_win.x - 3, pos_win.y + size.y / 2.f }, // left
+			{ pos_win.x + size.x / 2.f, pos_win.y + size.y + 3 }, // bottom
+			{ pos_win.x + size.x / 2.f, pos_win.y - 3 } }; // top 
+
+		float min = glm::distance(poses[0], pos_block);
+		int di = 0;
+		for (size_t i = 1; i < 4; i++)
+		{
+			float d = glm::distance(poses[i], pos_block);
+			if (d < min)
+			{
+				min = d;
+				di = i;
+			}
+		}
+
+		Color c = mWorld->GetSlise() == std::get<0>(w).z ? Color::White : Color::Gray;
+
+		auto& dd = ImGui::GetCurrentContext()->OverlayDrawList;
+		dd.AddLine(poses[di], pos_block, c);
+		switch (di)
+		{
+		case 0:
+			dd.AddLine({pos_win.x + size.x + 3, pos_win.y}, { pos_win.x + size.x + 3, pos_win.y + size.y }, c);
+			break;
+		case 1:
+			dd.AddLine({ pos_win.x - 3, pos_win.y }, { pos_win.x - 3, pos_win.y + size.y }, c);
+			break;
+		case 2:
+			dd.AddLine({ pos_win.x, pos_win.y + size.y + 3 }, { pos_win.x + size.x, pos_win.y + size.y + 3 }, c);
+			break;
+		case 3:
+			dd.AddLine({ pos_win.x, pos_win.y - 3 }, { pos_win.x + size.x, pos_win.y - 3 }, c);
+			break;
+		}
+
 		ImGui::End();
+
 	}
 
 	if (ImGui::IsKeyPressed(GLFW_KEY_ESCAPE))
@@ -541,6 +589,7 @@ void GamePhase_MainMenu::Draw(float gt)
 	{
 		ImGui::SetNextWindowSize({ Game::GetWindow()->GetSize().x / 2.f, Game::GetWindow()->GetSize().y / 2.f });
 		ImGui::SetNextWindowPosCenter();
+
 		ImGui::Begin("Main menu", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 		if (ImGui::Button("Quick start"))
 		{
@@ -581,74 +630,6 @@ void GamePhase_MainMenu::Update(float gt)
 {
 }
 
-GamePhase_LoadMenu::GamePhase_LoadMenu()
-{
-	boost::filesystem::path targetDir("Save");
-	boost::filesystem::recursive_directory_iterator iter(targetDir);
-
-	for (const boost::filesystem::path &file : iter) {
-		if (is_regular_file(file) && extension(file) == ".world")
-		{
-			saves.push_back(file.string());
-		}
-	}
-
-	savec_c = std::vector<const char *>(saves.size());
-	for (size_t i = 0; i < saves.size(); ++i)
-	{
-		savec_c[i] = saves[i].data();
-	}
-}
-
-GamePhase_LoadMenu::~GamePhase_LoadMenu()
-{
-}
-
-void GamePhase_LoadMenu::Draw(float gt)
-{
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	static std::unique_ptr<GamePhase> game;
-
-	ImGui_ImplGlfwGL3_NewFrame();
-	{
-		ImGui::SetNextWindowSize({ Game::GetWindow()->GetSize().x / 2.f, Game::GetWindow()->GetSize().y / 2.f });
-		ImGui::SetNextWindowPosCenter();
-		ImGui::Begin("Load game", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
-		static int current;
-		if (ImGui::ListBox("Saves", &current, savec_c.data(), saves.size(), 10))
-		{
-			Settings::Get().save_file = savec_c[current];
-
-			static boost::thread game_load([&]()
-			{
-				game = std::make_unique<GamePhase_Game>();
-			});
-		}
-
-		if (ImGui::Button("Back"))
-		{
-			Game::SetGamePhase(std::make_unique<GamePhase_MainMenu>());
-		}
-
-		if (game && game->IsInitialized())
-		{
-			static_cast<GamePhase_Game*>(game.get())->generateShadowFBO();
-			TextureManager::Get().Compile();
-			Game::SetGamePhase(std::move(game));
-		}
-
-		Game::DrawLoading();
-		ImGui::End();
-	}
-	ImGui::Render();
-}
-
-void GamePhase_LoadMenu::Update(float gt)
-{
-}
-
 Game::Game()
 {
 	Window::WindowSystemInitialize();
@@ -660,7 +641,7 @@ Game::Game()
 	mRender = std::make_unique<Render>();
 
 	ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
-	ImGui::SetupImGuiStyle(true, 0.8f);
+	//	ImGui::SetupImGuiStyle(true, 0.8f);
 
 	Localize::instance().Init();
 

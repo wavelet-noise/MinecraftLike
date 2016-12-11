@@ -7,22 +7,48 @@
 #define Color_h__
 
 #include <glm/glm.hpp>
+#include "imgui/imgui.h"
 
 struct Color
 {
 public:
-  Color();
+	Color();
 
-  Color(const glm::u8vec4 &color);
+	Color(const glm::u8vec4 &color);
 
-  Color(glm::u8 r, glm::u8 g, glm::u8 b, glm::u8 a);
-  Color(float r, float g, float b, float a);
+	Color(glm::u8 r, glm::u8 g, glm::u8 b, glm::u8 a);
+	Color(float r, float g, float b, float a);
 
-  glm::vec4 Tof32Color() const;
-  glm::u8vec4 Tou8Color() const;
+	operator glm::vec4() const
+	{
+		return glm::vec4(static_cast<glm::f32>(raw.r) / 255.0f,
+			static_cast<glm::f32>(raw.g) / 255.0f,
+			static_cast<glm::f32>(raw.b) / 255.0f,
+			static_cast<glm::f32>(raw.a) / 255.0f
+		);
+	}
+
+	operator ImVec4() const
+	{
+		return glm::vec4(static_cast<glm::f32>(raw.r) / 255.0f,
+			static_cast<glm::f32>(raw.g) / 255.0f,
+			static_cast<glm::f32>(raw.b) / 255.0f,
+			static_cast<glm::f32>(raw.a) / 255.0f
+		);
+	}
+
+	operator glm::u8vec4() const
+	{
+		return raw;
+	}
+
+	operator unsigned int() const
+	{
+		return (raw.r << 24) + (raw.g << 16) + (raw.b << 8) + raw.a;
+	}
 
 public:
-  glm::u8vec4 raw;
+	glm::u8vec4 raw;
 
 public:
 	static const Color AliceBlue;

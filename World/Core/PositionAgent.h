@@ -26,7 +26,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	virtual void DrawGui(float gt) override;
+	virtual bool DrawGui(float gt) override;
 
 	inline void Set(const WPos &pos) noexcept
 	{
@@ -87,7 +87,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void Requirements() override;
 
@@ -126,7 +126,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 };
 
 REGISTER_AGENT(WalkingPossibility)
@@ -141,7 +141,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 };
 
 REGISTER_AGENT(CrawlingPossibility)
@@ -156,7 +156,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	float GetFreq() const override
 	{
@@ -178,7 +178,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	float GetFreq() const override
 	{
@@ -210,7 +210,7 @@ public:
 
 	void Afterload(GameObject * parent) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void Think(const boost::format & s);
 
@@ -233,7 +233,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	float morale = 100;
 };
@@ -252,7 +252,7 @@ public:
 
 	virtual void OnCreate(const GameObjectParams & params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	std::string name;
 	char gender = 'f';
@@ -326,7 +326,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void Tire(float t);
 	bool IsTired() const;
@@ -360,7 +360,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	float GetFreq() const override
 	{
@@ -382,7 +382,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	float GetFreq() const override
 	{
@@ -418,7 +418,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void OnDestroy(const GameObjectParams &params) override;
 
@@ -445,7 +445,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -469,7 +469,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -501,7 +501,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -523,7 +523,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -545,7 +545,7 @@ public:
 
 	void Update(const GameObjectParams &params) override;
 
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	void JsonLoad(const rapidjson::Value &val) override;
 

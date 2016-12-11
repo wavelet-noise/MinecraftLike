@@ -3,7 +3,7 @@
 #include <gui/WindowBase.h>
 #include <Core/GameObject.h>
 
-void ChestSlot::DrawGui(bool selected)
+bool ChestSlot::DrawGui(bool selected)
 {
 	if (!obj)
 	{
@@ -40,4 +40,6 @@ void ChestSlot::DrawGui(bool selected)
 			ImGui::SetTooltip("%s x%g\n%s", obj->GetId().get().c_str(), count, obj->GetDescription().c_str());
 		}
 	}
+
+	return true;
 }

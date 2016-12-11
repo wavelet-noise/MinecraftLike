@@ -272,3 +272,20 @@ bool Camera::BoxWithinFrustum(const glm::vec3 &min, const glm::vec3 &max) const 
   }
   return true;
 }
+
+glm::ray Camera::Unproject(const glm::vec2 pos) const
+{
+	glm::uvec4 v = { 0.f, 0.f, mSize.x, mSize.y };
+	glm::vec3 near = glm::unProject(glm::vec3(pos.x, mSize.x - pos.y, 0.f), GetView(), GetProject(), v);
+	glm::vec3 far = glm::unProject(glm::vec3(pos.x, mSize.y - pos.y, 1.f), GetView(), GetProject(), v);
+	glm::ray ray(near, far - near);
+	return ray;
+}
+
+glm::vec2 Camera::Project(const glm::vec3 &pos) const
+{
+	glm::uvec4 vi = { 0.f, 0.f, mSize.x, mSize.y };
+	glm::vec3 v = glm::project(pos, GetView(), GetProject(), vi);
+	//v /= v.z;
+	return glm::vec2(v.x, mSize.y - v.y);
+}

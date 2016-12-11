@@ -61,12 +61,13 @@ void Furnance::Update(const GameObjectParams & params)
 
 }
 
-void Furnance::DrawGui(float gt)
+bool Furnance::DrawGui(float gt)
 {
 	ImGui::Text("Furnance");
 	ImGui::LabelText("Temp", "%g C", T);
 	ImGui::LabelText("Fuel efficiensy", "%g Mj/kg", heat);
 	ImGui::ProgressBar(remain_heat / heat);
+	return true;
 }
 
 void Furnance::Interact(const InteractParams & params)

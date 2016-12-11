@@ -28,7 +28,7 @@ public:
 
 	// Унаследовано через Agent
 	PAgent Clone(GameObject * parent, const std::string & name = "") override;
-	void DrawGui(float gt) override;
+	bool DrawGui(float gt) override;
 
 	ChestSlot DigSome();
 	bool Expire() const;

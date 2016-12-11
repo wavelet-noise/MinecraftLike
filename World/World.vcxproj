@@ -85,6 +85,7 @@
     <ClCompile Include="DragNDrop.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GamePhase_LoadMenu.cpp" />
     <ClCompile Include="Gatherer.cpp" />
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="gui\WindowBase.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="DragNDrop.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GamePhase_LoadMenu.h" />
     <ClInclude Include="Gatherer.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
     <ClInclude Include="gui\WindowCraftQueue.h" />

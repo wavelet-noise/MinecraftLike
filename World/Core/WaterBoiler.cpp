@@ -39,6 +39,13 @@ void WaterBoiler::Update(const GameObjectParams & params)
 	}
 }
 
-void WaterBoiler::DrawGui(float gt)
+bool WaterBoiler::DrawGui(float gt)
 {
+	if (Settings::Get().IsDebug())
+	{
+		ImGui::Text("WaterBoiler");
+		return true;
+	}
+
+	return false;
 }

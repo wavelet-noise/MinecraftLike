@@ -9,5 +9,5 @@ public:
   std::shared_ptr<GameObject> obj;
   float count;
 
-  void DrawGui(bool selected = false);
+  bool DrawGui(bool selected = false);
 };

@@ -263,7 +263,7 @@ ChestSlot Chest::GetByPredicate(std::function<bool(const ChestSlot&)> pred)
 	return{};
 }
 
-void Chest::DrawGui(float gt)
+bool Chest::DrawGui(float gt)
 {
 	int jj = 666;
 	int ii = 0;
@@ -289,6 +289,8 @@ void Chest::DrawGui(float gt)
 	}
 	if (max_volume != -1)
 		ImGui::Text("Volume %d of %d", volume, max_volume);
+
+	return true;
 }
 
 PAgent InputChest::Clone(GameObject * parent, const std::string & name)
