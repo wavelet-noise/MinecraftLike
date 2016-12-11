@@ -12,7 +12,7 @@ void WindowRooms::Draw(glm::vec2 wsize, float gt)
 {
 	if (mOpen)
 	{
-		ImGui::SetNextWindowSize()
+		//ImGui::SetNextWindowSize()
 		ImGui::Begin("Room managment", &mOpen);
 		for(const auto & c : WS::Get().w->rooms)
 		{
