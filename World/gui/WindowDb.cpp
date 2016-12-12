@@ -13,12 +13,12 @@
 
 void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 {
-	ImGui::SetNextWindowSize(ImVec2(500, mainwin_size.y - 20), ImGuiSetCond_Always);
-	ImGui::SetNextWindowPos(ImVec2(mainwin_size.x - 500, 0), ImGuiSetCond_Always);
-
 	int jj = 666;
 	if (mOpen)
 	{
+		ImGui::SetNextWindowSize(ImVec2(500, mainwin_size.y - 20), ImGuiSetCond_Always);
+		ImGui::SetNextWindowPos(ImVec2(mainwin_size.x - 500, 0), ImGuiSetCond_Always);
+
 		ImGui::Begin("Database", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
 		ImGui::InputText("Filter", flt, 100);
 		ImGui::Checkbox("Only craftable", &only_craftable);

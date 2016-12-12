@@ -12,14 +12,14 @@ WindowFinance::WindowFinance()
 
 void WindowFinance::Draw(glm::vec2 mainwin_size, float gt)
 {
-	ImGui::SetNextWindowSize(ImVec2(500, 400));
-	ImGui::SetNextWindowPosCenter();
-
 	if (mOpen)
 	{
+		ImGui::SetNextWindowSize(ImVec2(500, 400));
+		ImGui::SetNextWindowPosCenter();
+
 		ImGui::Begin("WindowFinance", &mOpen, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 		
-		ImGui::TextColored(Color::LightGreen.Tof32Color(), "%d cur", Currency::Get().GetCurrency());
+		ImGui::TextColored(Color::LightGreen, "%d cur", Currency::Get().GetCurrency());
 		ImGui::Separator();
 
 		int crea_all = 0;
@@ -37,7 +37,7 @@ void WindowFinance::Draw(glm::vec2 mainwin_size, float gt)
 				{
 					ImGui::Text(c.second->GetAgent<Named>()->name.c_str());
 					ImGui::SameLine();
-					ImGui::TextColored(Color::LightGreen.Tof32Color(), "-%d cur", sal);
+					ImGui::TextColored(Color::LightGreen, "-%d cur", sal);
 				}
 			}
 			ImGui::TreePop();
@@ -48,7 +48,7 @@ void WindowFinance::Draw(glm::vec2 mainwin_size, float gt)
 		{
 			ImGui::Text("Constant financing");
 			ImGui::SameLine();
-			ImGui::TextColored(Color::LightGreen.Tof32Color(), "%d cur", found_all);
+			ImGui::TextColored(Color::LightGreen, "%d cur", found_all);
 
 			ImGui::TreePop();
 		}
@@ -56,7 +56,7 @@ void WindowFinance::Draw(glm::vec2 mainwin_size, float gt)
 		ImGui::Separator();
 		ImGui::Text("Total");
 		ImGui::SameLine();
-		ImGui::TextColored(Color::LightGreen.Tof32Color(), "%d cur", Currency::Get().GetSaldo());
+		ImGui::TextColored(Color::LightGreen, "%d cur", Currency::Get().GetSaldo());
 
 		ImGui::End();
 	}

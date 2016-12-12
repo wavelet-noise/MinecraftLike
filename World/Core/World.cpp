@@ -436,7 +436,7 @@ void World::BinLoadRooms(std::istream & val)
 {
 	size_t r_count;
 	BINLOAD(r_count);
-	for(int i = 0; i < r_count; i++)
+	for(size_t i = 0; i < r_count; i++)
 	{
 		PRoom r = std::make_shared<Room>();
 		r->BinLoad(val);

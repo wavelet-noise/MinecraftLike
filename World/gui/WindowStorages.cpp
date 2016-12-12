@@ -28,11 +28,11 @@ WindowStorages::WindowStorages()
 
 void WindowStorages::Draw(glm::vec2 mainwin_size, float gt)
 {
-	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
-	ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
-
 	if (mOpen)
 	{
+		ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
+
 		ImGui::Begin("Storages", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
 		{
 			const auto &all = Storages::Get().List();

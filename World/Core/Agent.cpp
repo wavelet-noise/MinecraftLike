@@ -13,8 +13,9 @@ void Agent::Afterload(GameObject * parent)
 {
 }
 
-void Agent::DrawGui(float gt)
+bool Agent::DrawGui(float gt)
 {
+	return false;
 }
 
 void Agent::Interact(const InteractParams & params)

@@ -19,6 +19,7 @@ void WindowTools::Draw(glm::vec2 wsize, float gt)
 	{
 		ImGui::SetNextWindowSize({200.f, Window::GetSize().y - 100.f});
 		ImGui::SetNextWindowPos({ Window::GetSize().x - 200.f, 0.f });
+
 		ImGui::Begin("Tools", &mOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 
 		if (ImGui::Button("Global crear order"))

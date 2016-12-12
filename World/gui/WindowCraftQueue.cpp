@@ -11,11 +11,11 @@ WindowCraftQueue::WindowCraftQueue()
 
 void WindowCraftQueue::Draw(glm::vec2 mainwin_size, float gt)
 {
-	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
-	ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
-
 	if (mOpen)
 	{
+		ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
+
 		ImGui::Begin("WindowCraftQueue", &mOpen, ImGuiWindowFlags_AlwaysAutoResize);
 		{
 			auto &c = WS::Get().w->GetRecipeOrders();

@@ -11,6 +11,7 @@
 #include <list>
 #include "SectorBase.h"
 
+class Sector;
 class Creature;
 using PSector = std::shared_ptr<Sector>;
 

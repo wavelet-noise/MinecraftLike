@@ -6,7 +6,7 @@ namespace glm {
     return ray(x.mOrigin, normalize(x.mDir));
   }
 
-  inline ray::ray(glm::vec3 p, glm::vec3 d) : mOrigin(p), mDir(d) {
+  ray::ray(glm::vec3 p, glm::vec3 d) : mOrigin(p), mDir(d) {
     mDir = normalize(mDir);
     inv = glm::vec3(1 / mDir.x, 1 / mDir.y, 1 / mDir.z);
     sign[0] = inv.x < 0;
@@ -14,7 +14,7 @@ namespace glm {
     sign[2] = inv.z < 0;
   }
 
-  inline ray::ray(const glm::ray & r) : mOrigin(r.mOrigin), mDir(r.mDir) {
+  ray::ray(const glm::ray & r) : mOrigin(r.mOrigin), mDir(r.mDir) {
     mDir = normalize(mDir);
     inv = glm::vec3(1 / mDir.x, 1 / mDir.y, 1 / mDir.z);
     sign[0] = inv.x < 0;

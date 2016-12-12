@@ -31,12 +31,11 @@ PAgent Ore::Clone(GameObject * parent, const std::string &name)
 	return t;
 }
 
-void Ore::DrawGui(float gt)
+bool Ore::DrawGui(float gt)
 {
-	if (Settings::Get().IsDebug())
-	{
-		ImGui::Text((boost::format("%1% strikes left") % size).str().c_str());
-	}
+	ImGui::Text((boost::format("%1% strikes left") % size).str().c_str());
+
+	return true;
 }
 
 ChestSlot Ore::DigSome()

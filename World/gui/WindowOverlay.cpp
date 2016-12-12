@@ -48,6 +48,7 @@ void WindowOverlay::Draw(glm::vec2 mainwin_size, float gt)
 {
 	ImGui::SetNextWindowSize({0.f + Window::GetSize().x, 100.f});
 	ImGui::SetNextWindowPos({0.f, Window::GetSize().y - 100.f});
+
 	ImGui::Begin("Overlay", &mOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 
 	if (WindowTools::Get().selected == SelectedOrder::NONE)

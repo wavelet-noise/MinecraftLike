@@ -56,20 +56,16 @@ void GameObject::Update(GameObjectParams &params)
 	}
 }
 
-void GameObject::DrawGui(float gt)
+bool GameObject::DrawGui(float gt)
 {
+	bool has_gui = false;
 	for (auto &agent : mAgents)
 	{
-		agent.second->DrawGui(gt);
+		if (agent.second->DrawGui(gt))
+			has_gui = true;
 	}
-}
 
-void GameObject::Interact(InteractParams & params)
-{
-	for (auto &agent : mAgents)
-	{
-		agent.second->Interact(params);
-	}
+	return has_gui;
 }
 
 void GameObject::Requirements()

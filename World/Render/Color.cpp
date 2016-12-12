@@ -27,20 +27,6 @@ Color::Color(float r, float g, float b, float a)
 {
 }
 
-glm::vec4 Color::Tof32Color() const
-{
-  return glm::vec4(static_cast<glm::f32>(raw.r) / 255.0f, 
-                   static_cast<glm::f32>(raw.g) / 255.0f, 
-                   static_cast<glm::f32>(raw.b) / 255.0f, 
-                   static_cast<glm::f32>(raw.a) / 255.0f
-                   );
-}
-
-glm::u8vec4 Color::Tou8Color() const
-{
-	return raw;
-}
-
 const Color Color::AliceBlue            (240 / 255.f, 248 / 255.f, 255 / 255.f, 1.f);
 const Color Color::AntiqueWhite         (250 / 255.f, 235 / 255.f, 215 / 255.f, 1.f);
 const Color Color::Aqua                 (0.f, 255 / 255.f, 255 / 255.f, 1.f);

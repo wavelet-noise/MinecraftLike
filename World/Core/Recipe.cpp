@@ -85,7 +85,7 @@ void DrawSome(const StringIntern &s, float gt, ImColor c = {0,0,0,0})
 	}
 }
 
-void Recipe::DrawGui(float gt)
+bool Recipe::DrawGui(float gt)
 {
 	bool first = true;
 	for (const auto &inp : input)
@@ -140,6 +140,8 @@ void Recipe::DrawGui(float gt)
 		else
 			draw_list->AddText(ImGui::GetItemRectMax() - ImVec2(10, 13), ImGui::GetColorU32(ImGuiCol_Text), std::to_string(out.count).c_str());
 	}
+
+	return true;
 }
 
 // разворачивает все строки tag_* в соответствующий массив id
@@ -234,7 +236,7 @@ bool Recipe::CraftIn(Chest & c, int count)
 	return true;
 }
 
-void DeepRecipe::DrawGui(float gt)
+bool DeepRecipe::DrawGui(float gt)
 {
 	ImColor col = { 0,0,0,0 };
 	if (incomplete)
@@ -267,4 +269,6 @@ void DeepRecipe::DrawGui(float gt)
 			ImGui::TreePop();
 		}
 	}
+
+	return true;
 }

@@ -113,6 +113,7 @@
     <ClCompile Include="gui\WindowOverlay.cpp" />
     <ClCompile Include="gui\WindowProfesions.cpp" />
     <ClCompile Include="Core\IngameTime.cpp" />
+    <ClCompile Include="GamePhase_LoadMenu.cpp" />
     <ClCompile Include="Core\orders\OrderFindAndPick.cpp" />
     <ClCompile Include="Core\orders\OrderCombined.cpp" />
   </ItemGroup>
@@ -251,6 +252,7 @@
     <ClInclude Include="Core\IngameTime.h" />
     <ClInclude Include="Core\orders\OrderFindAndPick.h" />
     <ClInclude Include="Core\orders\OrderCombined.h" />
+    <ClInclude Include="GamePhase_LoadMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BuildVersion.bat" />

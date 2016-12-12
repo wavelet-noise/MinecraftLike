@@ -40,12 +40,15 @@ void PositionAgent::Update(const GameObjectParams &params)
 
 }
 
-void PositionAgent::DrawGui(float gt)
+bool PositionAgent::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
 		ImGui::Text("Position: %s", glm::to_string(mPos).c_str());
+		return true;
 	}
+
+	return false;
 }
 
 PAgent Controlable::Clone(GameObject * parent, const std::string & name)
@@ -429,7 +432,7 @@ void Creature::Update(const GameObjectParams & params)
 	}
 }
 
-void Creature::DrawGui(float gt)
+bool Creature::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -451,6 +454,7 @@ void Creature::DrawGui(float gt)
 			ImGui::TreePop();
 		}
 	}
+	return true;
 }
 
 void Creature::Requirements()
@@ -493,9 +497,10 @@ void WalkingPossibility::Update(const GameObjectParams & params)
 {
 }
 
-void WalkingPossibility::DrawGui(float gt)
+bool WalkingPossibility::DrawGui(float gt)
 {
 	ImGui::Text("Can walk");
+	return true;
 }
 
 PAgent CrawlingPossibility::Clone(GameObject * parent, const std::string & name)
@@ -509,9 +514,10 @@ void CrawlingPossibility::Update(const GameObjectParams & params)
 {
 }
 
-void CrawlingPossibility::DrawGui(float gt)
+bool CrawlingPossibility::DrawGui(float gt)
 {
 	ImGui::Text("Can crawl");
+	return true;
 }
 
 PAgent WaterConsumer::Clone(GameObject * parent, const std::string & name)
@@ -526,7 +532,7 @@ void WaterConsumer::Update(const GameObjectParams & params)
 	water -= params.dt / 10.f;
 }
 
-void WaterConsumer::DrawGui(float gt)
+bool WaterConsumer::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -552,6 +558,7 @@ void WaterConsumer::DrawGui(float gt)
 	{
 		ImGui::TextColored({ 0,1,0,1 }, "Full");
 	}
+	return true;
 }
 
 PAgent CalorieConsumer::Clone(GameObject * parent, const std::string & name)
@@ -587,7 +594,7 @@ void CalorieConsumer::Update(const GameObjectParams & params)
 		}
 }
 
-void CalorieConsumer::DrawGui(float gt)
+bool CalorieConsumer::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -616,6 +623,7 @@ void CalorieConsumer::DrawGui(float gt)
 	{
 		ImGui::TextColored({ 0,1,0,1 }, "Full");
 	}
+	return true;
 }
 
 PAgent Morale::Clone(GameObject * parent, const std::string & name)
@@ -629,7 +637,7 @@ void Morale::Update(const GameObjectParams & params)
 {
 }
 
-void Morale::DrawGui(float gt)
+bool Morale::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -657,6 +665,7 @@ void Morale::DrawGui(float gt)
 		ImGui::TextColored({ 1,0,0,1 }, "Seriously fatigued");
 		mParent->GetAgent<Anatomic>()->Think("Life is pointless :(");
 	}
+	return true;
 }
 
 Anatomic::Anatomic()
@@ -679,7 +688,7 @@ void Anatomic::Afterload(GameObject * parent)
 {
 }
 
-void Anatomic::DrawGui(float gt)
+bool Anatomic::DrawGui(float gt)
 {
 	if (ImGui::TreeNode("Mind"))
 	{
@@ -690,6 +699,7 @@ void Anatomic::DrawGui(float gt)
 		}
 		ImGui::TreePop();
 	}
+	return true;
 }
 
 void Anatomic::Think(const boost::format &s)
@@ -762,9 +772,10 @@ void Named::OnCreate(const GameObjectParams & params)
 	}
 }
 
-void Named::DrawGui(float gt)
+bool Named::DrawGui(float gt)
 {
 	ImGui::Text("Name: %s", name.c_str());
+	return true;
 }
 
 PAgent DeathDrop::Clone(GameObject * parent, const std::string & name)
@@ -842,7 +853,7 @@ void ActivityConsumer::Update(const GameObjectParams & params)
 	}
 }
 
-void ActivityConsumer::DrawGui(float gt)
+bool ActivityConsumer::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -870,6 +881,7 @@ void ActivityConsumer::DrawGui(float gt)
 		ImGui::TextColored({ 1,0,0,1 }, "Seriously tired");
 		mParent->GetAgent<Anatomic>()->Think("I'm so tired :(");
 	}
+	return true;
 }
 
 void ActivityConsumer::Tire(float t)
@@ -917,7 +929,7 @@ void Talker::Update(const GameObjectParams & params)
 	}
 }
 
-void Talker::DrawGui(float gt)
+bool Talker::DrawGui(float gt)
 {
 	if (ImGui::TreeNode("Relationships"))
 	{
@@ -927,6 +939,7 @@ void Talker::DrawGui(float gt)
 		}
 		ImGui::TreePop();
 	}
+	return true;
 }
 
 PAgent ProfessionPerformer::Clone(GameObject* parent, const std::string& name)
@@ -953,7 +966,7 @@ void ProfessionPerformer::Update(const GameObjectParams& params)
 	}
 }
 
-void ProfessionPerformer::DrawGui(float gt)
+bool ProfessionPerformer::DrawGui(float gt)
 {
 	if (ImGui::TreeNode("Professions"))
 	{
@@ -963,6 +976,7 @@ void ProfessionPerformer::DrawGui(float gt)
 		}
 		ImGui::TreePop();
 	}
+	return true;
 }
 
 bool ProfessionPerformer::CanPeformOrder(POrder o)
@@ -1019,8 +1033,9 @@ void ChainDestruction::Update(const GameObjectParams& params)
 {
 }
 
-void ChainDestruction::DrawGui(float gt)
+bool ChainDestruction::DrawGui(float gt)
 {
+	return true;
 }
 
 void ChainDestruction::OnDestroy(const GameObjectParams& params)
@@ -1061,13 +1076,15 @@ void Workshop::Update(const GameObjectParams& params)
 {
 }
 
-void Workshop::DrawGui(float gt)
+bool Workshop::DrawGui(float gt)
 {
 	auto rec = DB::Get().GetMachineRecipe(mParent->GetId());
 	for(const auto &a : rec)
 	{
 		a->DrawGui(gt);
 	}
+
+	return true;
 }
 
 void Workshop::JsonLoad(const rapidjson::Value& val)
@@ -1088,14 +1105,13 @@ void EnergyProducer::Update(const GameObjectParams& params)
 {
 }
 
-void EnergyProducer::DrawGui(float gt)
+bool EnergyProducer::DrawGui(float gt)
 {
-	if (Settings::Get().IsDebug())
-	{
-		ImGui::Text("EnergyProducer");
-		ImGui::Text("producing %fv %fa", voltage, amperage);
-		ImGui::Text("buffer %f / %f", buffer, buffer_size);
-	}
+	ImGui::Text("EnergyProducer");
+	ImGui::Text("producing %fv %fa", voltage, amperage);
+	ImGui::Text("buffer %f / %f", buffer, buffer_size);
+
+	return true;
 }
 
 void EnergyProducer::JsonLoad(const rapidjson::Value& val)
@@ -1124,12 +1140,15 @@ void EnergyConsumer::Update(const GameObjectParams& params)
 {
 }
 
-void EnergyConsumer::DrawGui(float gt)
+bool EnergyConsumer::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
 		ImGui::Text("EnergyConsumer");
+		return true;
 	}
+
+	return false;
 }
 
 void EnergyConsumer::JsonLoad(const rapidjson::Value& val)
@@ -1149,12 +1168,15 @@ void EnergyWire::Update(const GameObjectParams& params)
 {
 }
 
-void EnergyWire::DrawGui(float gt)
+bool EnergyWire::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
 		ImGui::Text("EnergyWire");
+		return true;
 	}
+
+	return false;
 }
 
 void EnergyWire::JsonLoad(const rapidjson::Value& val)
@@ -1187,13 +1209,16 @@ void SteamGenerator::Update(const GameObjectParams& params)
 	}
 }
 
-void SteamGenerator::DrawGui(float gt)
+bool SteamGenerator::DrawGui(float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
 		ImGui::Text("SteamGenerator");
 		ImGui::Text("efficiency %f%", efficiency * 100);
+		return true;
 	}
+
+	return false;
 }
 
 void SteamGenerator::JsonLoad(const rapidjson::Value& val)

@@ -32,7 +32,7 @@ public:
 		return 5.0f;
 	}
 
-	virtual void DrawGui(float gt) override;
+	virtual bool DrawGui(float gt) override;
 
 	void EndOperate();
 

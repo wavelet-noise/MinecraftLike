@@ -70,6 +70,10 @@ public:
 
   bool BoxWithinFrustum(const glm::vec3 & min, const glm::vec3 & max) const;
 
+  glm::ray Unproject(const glm::vec2 pos) const;
+
+  glm::vec2 Project(const glm::vec3 & pos) const;
+
   void SetPerspective();
   void SetOrtho();
   void RebuildProjection();

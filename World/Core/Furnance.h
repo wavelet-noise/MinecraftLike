@@ -14,7 +14,7 @@ public:
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	virtual void Update(const GameObjectParams & params) override;
-	virtual void DrawGui(float gt) override;
+	virtual bool DrawGui(float gt) override;
 	virtual void Interact(const InteractParams &params) override;
 
 	float GetFreq() const override
