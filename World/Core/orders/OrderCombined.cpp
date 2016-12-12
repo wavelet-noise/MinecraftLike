@@ -91,6 +91,8 @@ void OrderCombined::Perform(const GameObjectParams & params, PGameObject perform
 		}
 	}
 
+	TODO ADD TEMPLATES AND SPAWNPOINT
+
 	bool done = true;
 	for (const auto & or : orders)
 	{
