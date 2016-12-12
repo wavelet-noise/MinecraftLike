@@ -32,47 +32,39 @@ void OrderTalk::Perform(const GameObjectParams & params, PGameObject performer, 
 		return;
 	}
 
-	if (c->path.empty())
-		c->wishpos = person->GetAgent<PositionAgent>()->Get();
-	else
+
+	duration -= params.dt;
+
+	if (duration <= 0)
 	{
-		c->make_step(params);
-
-		if (c->path.empty())
+		if (auto c = person->GetAgent<Creature>())
 		{
-			duration -= params.dt;
-
-			if (duration <= 0)
+			auto i = t->relationships.find(c->uid);
+			if (i == t->relationships.end())
 			{
-				if (auto c = person->GetAgent<Creature>())
+				Relationships rr;
+				if (auto n = person->GetAgent<Named>())
 				{
-					auto i = t->relationships.find(c->uid);
-					if (i == t->relationships.end())
-					{
-						Relationships rr;
-						if (auto n = person->GetAgent<Named>())
-						{
-							rr.with = n->name;
-						}
-
-						t->relationships.insert({ c->uid, rr });
-					}
+					rr.with = n->name;
 				}
 
-				if (auto a = performer->GetAgent<Anatomic>())
-				{
-					std::string name = person->GetId();
-					if (auto n = person->GetAgent<Named>())
-						name = n->name;
-
-					if (person == performer)
-						a->Think(boost::format("Just talking with myself :|"));
-					else
-						a->Think(boost::format("Just talking with %1% :)") % name);
-				}
-
-				Done();
+				t->relationships.insert({ c->uid, rr });
 			}
 		}
+
+		if (auto a = performer->GetAgent<Anatomic>())
+		{
+			std::string name = person->GetId();
+			if (auto n = person->GetAgent<Named>())
+				name = n->name;
+
+			if (person == performer)
+				a->Think(boost::format("Just talking with myself :|"));
+			else
+				a->Think(boost::format("Just talking with %1% :)") % name);
+		}
+
+		Done();
 	}
+
 }

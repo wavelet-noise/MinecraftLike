@@ -44,7 +44,7 @@ public:
 
 	operator unsigned int() const
 	{
-		return (raw.r << 24) + (raw.g << 16) + (raw.b << 8) + raw.a;
+		return (raw.a << 24) + (raw.r << 16) + (raw.g << 8) + raw.b;
 	}
 
 public:

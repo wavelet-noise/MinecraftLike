@@ -6,10 +6,10 @@
 
 std::string OrderCraft::to_string() const
 {
-	return (boost::format("OrderCraft: pos = %1% count = %2% resilt[0] = %3%") % 
-		glm::to_string(pos) % 
-		count % 
-		(item ? item->output[0].id : StringIntern("ERROR"))).str() + 
+	return (boost::format("OrderCraft: pos = %1% count = %2% resilt[0] = %3%") %
+		glm::to_string(pos) %
+		count %
+		(item ? item->output[0].id : StringIntern("ERROR"))).str() +
 		Order::to_string();
 }
 
@@ -18,32 +18,22 @@ void OrderCraft::Perform(const GameObjectParams & params, PGameObject performer,
 
 	auto c = performer->GetAgent<Creature>();
 
-	if (c->path.empty())
-		c->wishpos = pos;
-	else
+	if (auto b = params.world->GetBlock(pos))
 	{
-		c->make_step(params);
-
-		if (c->path.empty())
+		if (auto c = b->GetAgent<Chest>())
 		{
-			if (auto b = params.world->GetBlock(pos))
+			duration_passed += work;
+			if (item->duration > duration_passed)
+				return;
+
+			if (!item->CraftIn(*c))
 			{
-				if (auto c = b->GetAgent<Chest>())
-				{
-					duration_passed += work;
-					if (item->duration > duration_passed)
-						return;
-
-					if (!item->CraftIn(*c))
-					{
-						params.world->QueueRecipeOrder(item);
-						params.world->DelayRecipeOrder(item);
-					}
-				}
+				params.world->QueueRecipeOrder(item);
+				params.world->DelayRecipeOrder(item);
 			}
-
-			Done();
 		}
 	}
+
+	Done();
 
 }

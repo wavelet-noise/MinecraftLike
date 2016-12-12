@@ -17,20 +17,10 @@ void OrderGet::Perform(const GameObjectParams & params, PGameObject performer, f
 {
 	auto c = performer->GetAgent<Creature>();
 
-	if (c->path.empty())
-		c->wishpos = pos;
-	else
-	{
-		c->make_step(params);
+	params.world->Replace(pos, item);
 
-		if (c->path.empty())
-		{
-			params.world->Replace(pos, item);
+	auto p = performer->GetAgent<Chest>();
+	p->Push(item);
 
-			auto p = performer->GetAgent<Chest>();
-			p->Push(item);
-
-			Done();
-		}
-	}
+	Done();
 }

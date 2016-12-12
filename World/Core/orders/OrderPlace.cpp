@@ -11,7 +11,7 @@ OrderPlace::OrderPlace(WBPos v, StringIntern i) : pos(v), item(i)
 
 std::string OrderPlace::to_string() const
 {
-	return (boost::format("OrderPlace: pos = %1% id = %2%") % glm::to_string(pos) % item->GetId()).str() + Order::to_string();
+	return (boost::format("OrderPlace: pos = %1% id = %2%") % glm::to_string(pos) % item).str() + Order::to_string();
 }
 
 float OrderPlace::Tiring() const
@@ -38,48 +38,38 @@ void OrderPlace::Perform(const GameObjectParams & params, PGameObject performer,
 {
 	auto c = performer->GetAgent<Creature>();
 
-	if (c->path.empty())
-		c->wishpos = pos;
-	else
+	if (params.world->IsAir(pos))
 	{
-		c->make_step(params);
-
-		if (c->path.empty())
+		auto chest = performer->GetAgent<Chest>();
+		if (chest)
 		{
-			if (params.world->IsAir(pos))
+			auto has = chest->PopByPredicate([&](const ChestSlot & cs) -> bool
 			{
-				auto chest = performer->GetAgent<Chest>();
-				if (chest)
-				{
-					auto has = chest->PopByPredicate([&]( const ChestSlot & cs) -> bool
-					{
-						return cs.obj->GetId() == item;
-					});
+				return cs.obj->GetId() == item;
+			});
 
-					if (has.obj)
-					{
-						params.world->SetBlock(pos, has.obj);
+			if (has.obj)
+			{
+				params.world->SetBlock(pos, has.obj);
 
-						has.count--;
-						if (has.count > 0)
-							chest->Push(has.obj->Clone(), has.count);
+				has.count--;
+				if (has.count > 0)
+					chest->Push(has.obj->Clone(), has.count);
 
-						Done();
-					}
-					else
-					{
-						Drop();
-					}
-				}
-				else
-				{
-					Drop();
-				}
+				Done();
 			}
 			else
 			{
-				Cancel("destination already contains block");
+				Drop();
 			}
 		}
+		else
+		{
+			Drop();
+		}
+	}
+	else
+	{
+		Cancel("destination already contains block");
 	}
 }

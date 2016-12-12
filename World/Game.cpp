@@ -257,31 +257,7 @@ void GamePhase_Game::Draw(float dt)
 				}
 				break;
 			case SelectedOrder::PLACE_BLOCK:
-
-				auto & stor = params.world->GetStorages();
-				PGameObject go;
-				WBPos pos;
-				for (const auto & s : stor)
-				{
-					auto cs = s.second->GetAgent<Chest>()->GetByPredicate([&](const ChestSlot & chest_slot)->bool
-					{
-						return chest_slot.obj->GetId() == item;
-					});
-
-					if (cs.obj)
-					{
-						go = cs.obj;
-						pos = s.first;
-						break;
-					}
-				}
-
-				if (go)
-					performer->GetAgent<Creature>()->AddPersinal(std::make_shared<OrderPick>(pos, go, 1));
-				else
-					Drop();
-
-				auto or_get = std::make_shared<OrderPick>(pos, go, 1);
+				auto or_get = std::make_shared<OrderFind>(WindowDb::Get().GetSelectedId(), 1);
 				auto or_pl = std::make_shared<OrderPlace>(std::get<0>(selection_pos), WindowDb::Get().GetSelectedId());
 				auto or_comb = std::make_shared<OrderCombined>();
 				or_comb->PushOrder(or_get);
@@ -686,7 +662,7 @@ Game::Game()
 	mRender = std::make_unique<Render>();
 
 	ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
-	//	ImGui::SetupImGuiStyle(true, 0.8f);
+	ImGui::SetupImGuiStyle(true, 0.8f);
 
 	Localize::instance().Init();
 

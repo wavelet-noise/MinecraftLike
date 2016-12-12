@@ -7,6 +7,7 @@
 #include <core\World.h>
 #include <core\ChestSlot.h>
 #include <core\Chest.h>
+#include "OrderTools.h"
 
 std::string Order::to_string() const
 {
@@ -81,6 +82,65 @@ void OrderBus::Update(float dt)
 	}
 }
 
+void Order::Rebuild(const GameObjectParams & params, PGameObject performer)
+{
+	path = ordertools::Astar(glm::trunc(performer->GetAgent<PositionAgent>()->Get()), GetPos(), params.world);
+	if (path.empty())
+		SetState(State::Dropped);
+	else
+		state = State::Builded;
+}
+
+void Order::Approach(const GameObjectParams& params, PGameObject performer)
+{
+	if(path.empty())
+	{
+		state = State::Performing;
+		return;
+	}
+	auto p = performer->GetAgent<PositionAgent>();
+	auto newpos = path.back();
+	p->Set(newpos);
+	path.pop_back();
+}
+
+void Order::Update(const GameObjectParams& params, PGameObject performer, float work)
+{
+	switch(state)
+	{
+	case State::Initial:
+		Rebuild(params, performer);
+		break;
+
+	case State::Builded:
+		Approach(params, performer);
+		break;
+
+	case State::Performing:
+		Perform(params, performer, work);
+		break;
+
+	case State::Done:
+	case State::Dropped:
+		return;
+
+	default:
+		LOG(error) << to_string() << ": unknown order state (" << static_cast<int>(state) << ")";
+		Cancel("unknown order state");
+		break;
+	}
+}
+
+void Order::SetState(State __state)
+{
+	state = __state;
+}
+
+Order::State Order::GetState() const
+{
+	return state;
+}
+
 void Order::Take()
 {
 	EventBus::Get().Publish<EventOrderStart>(shared_from_this());
@@ -91,12 +151,14 @@ void Order::Done()
 {
 	EventBus::Get().Publish<EventOrderDone>(shared_from_this());
 	mDone = true;
+	SetState(State::Done);
 }
 
 void Order::Drop()
 {
 	EventBus::Get().Publish<EventOrderDrop>(shared_from_this());
 	mTaken = false;
+	SetState(State::Dropped);
 }
 
 void Order::Cancel(std::string __reason)
@@ -105,6 +167,27 @@ void Order::Cancel(std::string __reason)
 	mDone = true;
 	mCanceled = true;
 	reason = __reason;
+}
+
+bool Order::IsTaken() const
+{
+	return mTaken;
+}
+
+bool Order::IsDone() const
+{
+	return mDone;
+}
+
+bool Order::IsCanceled() const
+{
+	return mCanceled;
+}
+
+size_t Order::Nextid()
+{
+	static size_t next_id(0);
+	return next_id++;
 }
 
 float Order::Tiring() const

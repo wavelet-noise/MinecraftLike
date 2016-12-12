@@ -11,26 +11,17 @@ void OrderSleep::Perform(const GameObjectParams & params, PGameObject performer,
 {
 	auto c = performer->GetAgent<Creature>();
 
-	if (c->path.empty())
-		c->wishpos = pos;
-	else
+	if (auto tire = performer->GetAgent<ActivityConsumer>())
 	{
-		c->make_step(params);
-
-		if (c->path.empty())
+		tire->Tire(-.2f);
+		if (tire->IsRested())
 		{
-			if (auto tire = performer->GetAgent<ActivityConsumer>())
-			{
-				tire->Tire(-.2f);
-				if (tire->IsRested())
-				{
-					if (auto anat = performer->GetAgent<Anatomic>())
-						anat->Think("Rested :)");
-					Done();
-				}
-			}
-			else
-				Done();
+			if (auto anat = performer->GetAgent<Anatomic>())
+				anat->Think("Rested :)");
+			Done();
 		}
 	}
+	else
+		Done();
+
 }

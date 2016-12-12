@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AutoVersion.cpp" />
+    <ClCompile Include="Builder.cpp" />
     <ClCompile Include="Cooker.cpp" />
     <ClCompile Include="Core\Agent.cpp" />
     <ClCompile Include="Core\agents\ChestBlock.cpp" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
+    <ClInclude Include="Builder.h" />
     <ClInclude Include="Cooker.h" />
     <ClInclude Include="Core\Agent.h" />
     <ClInclude Include="Core\agents\ChestBlock.h" />
@@ -183,6 +185,7 @@
     <ClInclude Include="Core\orders\OrderPlace.h" />
     <ClInclude Include="Core\orders\OrderSleep.h" />
     <ClInclude Include="Core\orders\OrderTalk.h" />
+    <ClInclude Include="Core\orders\OrderTools.h" />
     <ClInclude Include="Core\orders\OrderWalk.h" />
     <ClInclude Include="Core\orders\OrderWander.h" />
     <ClInclude Include="Core\Ore.h" />

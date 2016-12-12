@@ -19,34 +19,24 @@ void OrderDig::Perform(const GameObjectParams & params, PGameObject performer, f
 {
 	auto c = performer->GetAgent<Creature>();
 
-	if (c->path.empty())
-		c->wishpos = pos;
-	else
+	auto remove = true;
+	if (auto orb = params.world->GetBlock(pos))
 	{
-		c->make_step(params);
-
-		if (c->path.empty())
+		if (auto ore = orb->GetAgent<Ore>())
 		{
-			auto remove = true;
-			if (auto orb = params.world->GetBlock(pos))
-			{
-				if (auto ore = orb->GetAgent<Ore>())
-				{
-					remove = false;
-					auto ch = performer->GetAgent<Chest>();
-					auto cs = ore->DigSome();
-					ch->Push(cs.obj, cs.count);
+			remove = false;
+			auto ch = performer->GetAgent<Chest>();
+			auto cs = ore->DigSome();
+			ch->Push(cs.obj, cs.count);
 
-					if (ore->Expire())
-						remove = true;
-				}
-			}
-
-			if (remove)
-			{
-				params.world->SetBlock(pos, nullptr);
-				Done();
-			}
+			if (ore->Expire())
+				remove = true;
 		}
+	}
+
+	if (remove)
+	{
+		params.world->SetBlock(pos, nullptr);
+		Done();
 	}
 }

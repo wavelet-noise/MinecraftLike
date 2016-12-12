@@ -83,8 +83,6 @@ public:
 
 	void look_around(const GameObjectParams & params);
 
-	void make_step(const GameObjectParams & params);
-
 	void Update(const GameObjectParams &params) override;
 
 	bool DrawGui(float gt) override;
@@ -105,8 +103,6 @@ public:
 
 	std::deque<POrder> personal;
 
-	std::list<glm::vec3> path;
-	glm::vec3 wishpos;
 	float step_step = 0;
 	glm::vec3 newpos;
 

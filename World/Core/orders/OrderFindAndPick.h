@@ -2,19 +2,20 @@
 #include "../GameObject.h"
 #include "OrderBus.h"
 
-struct OrderPick : NumberedOrder<OrderPick>
+struct OrderFind : NumberedOrder<OrderFind>
 {
-	OrderPick(WBPos v, PGameObject i, int c);
+	OrderFind(StringIntern __id, int c);
 
 	std::string to_string() const override;
 
-	glm::vec3 pos;
-	PGameObject item;
+	StringIntern id;
 	int count;
+	WBPos pos;
 
 	glm::vec3 GetPos() const override;
 
 	bool IsEquals(const Order& rhs) override;
 
+	virtual void Rebuild(const GameObjectParams & params, PGameObject performer);
 	void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) override;
 };

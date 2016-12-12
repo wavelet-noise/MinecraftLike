@@ -1,7 +1,7 @@
 #pragma once
 #include "Profession.h"
 
-class Miner : public NumberedProfession<Miner>
+class Builder : public NumberedProfession<Builder>
 {
 public:
 	bool CanPeformOrder(POrder p) override;
@@ -12,4 +12,4 @@ public:
 	float GetBaseCost() const override;
 };
 
-REGISTER_PROFESSION(Miner)
+REGISTER_PROFESSION(Builder)

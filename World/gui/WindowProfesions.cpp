@@ -4,6 +4,7 @@
 #include "Cooker.h"
 #include "Medic.h"
 #include "Miner.h"
+#include <Builder.h>
 
 WindowProfessions::WindowProfessions()
 {
@@ -16,6 +17,7 @@ void WindowProfessions::Draw(glm::vec2 mainwin_size, float gt)
 		std::make_shared<Cooker>(),
 		std::make_shared<Medic>(),
 		std::make_shared<Miner>(),
+		std::make_shared<Builder>()
 	};
 
 	if (mOpen)

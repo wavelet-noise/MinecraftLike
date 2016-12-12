@@ -20,45 +20,53 @@ public:
 		return result;
 	}
 
+	enum class State
+	{
+		Initial,
+		Builded,
+		Performing,
+		Done,
+		Dropped
+	};
+
 	virtual size_t GetId() const = 0;
 
 	virtual bool IsEquals(const Order &rhs) = 0;
+
 	virtual glm::vec3 GetPos() const = 0;
 	virtual std::string to_string() const;
+
 	virtual float Tiring() const;
-	virtual void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) = 0;
+	virtual void Update(const GameObjectParams & params, PGameObject performer, float work = 0);
+
+	virtual void SetState(State __state);
+	virtual State GetState() const;
 
 	void Take();
 	virtual void Done();
 	virtual void Drop();
 	void Cancel(std::string __reason = "");
 
-	bool IsTaken() const
-	{
-		return mTaken;
-	}
+	bool IsTaken() const;
+	bool IsDone() const;
+	bool IsCanceled() const;
 
-	bool IsDone() const
-	{
-		return mDone;
-	}
-
-	bool IsCanceled() const
-	{
-		return mCanceled;
-	}
+	virtual void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) = 0;
+	virtual void Rebuild(const GameObjectParams & params, PGameObject performer);
+	virtual void Approach(const GameObjectParams & params, PGameObject performer);
 
 private:
-	static size_t Nextid()
-	{
-		static size_t next_id(0);
-		return next_id++;
-	}
+	static size_t Nextid();
 
 	bool mTaken = false;
 	bool mDone = false;
 	bool mCanceled = false;
 	std::string reason;
+
+	std::list<glm::vec3> path;
+
+protected:
+	State state = State::Initial;
 };
 
 template<typename T>
@@ -82,7 +90,7 @@ public:
 
 	void Update(float dt);
 
-	static OrderBus &Get()
+	static OrderBus& Get()
 	{
 		static OrderBus instance;
 		return instance;

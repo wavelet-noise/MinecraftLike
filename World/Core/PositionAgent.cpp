@@ -22,6 +22,7 @@
 #include "LiquidPipe.h"
 #include <gui/WindowStorages.h>
 #include "agents/ChestBlock.h"
+#include "orders/OrderCombined.h"
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -270,8 +271,8 @@ void Controlable::Update(const GameObjectParams & params)
 				auto& storages = Storages::Get().List();
 				if (!storages.empty())
 				{
-				    auto finded = std::find_if(storages.begin(), storages.end(), [&](const std::tuple<glm::vec3, PGameObject> & stor) -> bool
-				    {
+					auto finded = std::find_if(storages.begin(), storages.end(), [&](const std::tuple<glm::vec3, PGameObject> & stor) -> bool
+					{
 						return std::get<1>(stor)->GetAgent<Chest>()->CanPush(i.obj, i.count);
 					});
 
@@ -342,20 +343,6 @@ PAgent Creature::Clone(GameObject * parent, const std::string & name)
 
 void Creature::DiscardCurrentOrder()
 {
-	if (order->IsDone())
-	{
-		order = nullptr;
-		path.clear();
-		wishpos = {};
-	}
-	else
-	{
-		OrderBus::Get().IssueDelayedOrder(order);
-		order->Drop();
-		order = nullptr;
-		path.clear();
-		wishpos = {};
-	}
 }
 
 void Creature::look_around(const GameObjectParams & params)
@@ -377,29 +364,6 @@ void Creature::look_around(const GameObjectParams & params)
 	}
 }
 
-void Creature::make_step(const GameObjectParams & params)
-{
-	auto p = mParent->GetAgent<PositionAgent>();
-	newpos = path.back();
-	p->Set(newpos);
-	path.pop_back();
-	//p->Set(glm::mix(p->Get(), newpos, step_step * 2));
-
-	//if (!path.empty())
-	//{
-	//	step_step += params.dt;
-
-	//	if (step_step >= 0.5)
-	//	{
-	//		p->Set(newpos);
-	//		newpos = path.back();
-	//		look_around(params);
-	//		path.pop_back();
-	//		step_step = 0;
-	//	}
-	//}
-}
-
 void Creature::Update(const GameObjectParams & params)
 {
 	auto p = mParent->GetAgent<PositionAgent>();
@@ -410,24 +374,25 @@ void Creature::Update(const GameObjectParams & params)
 			tire->Tire(order->Tiring());
 			if (tire->IsTired())
 			{
-				DiscardCurrentOrder();
+				OrderBus::Get().IssueDelayedOrder(order);
+				order->SetState(Order::State::Initial);
+				order = nullptr;
 			}
 		}
 
 	if (order)
 	{
-		order->Perform(params, mParent->shared_from_this());
+		order->Update(params, mParent->shared_from_this());
 
-		if (order)
+		if (order->GetState() == Order::State::Done || order->IsCanceled())
 		{
-			if (path.empty())
-			{
-				path = Astar(glm::trunc(p->Get()), wishpos, params.world);
-				if (path.empty() || order->IsDone())
-				{
-					DiscardCurrentOrder();
-				}
-			}
+			order = nullptr;
+		}
+		else if (order->GetState() == Order::State::Dropped)
+		{
+			OrderBus::Get().IssueDelayedOrder(order);
+			order->SetState(Order::State::Initial);
+			order = nullptr;
 		}
 	}
 }
@@ -816,7 +781,7 @@ void Wander::Update(const GameObjectParams & params)
 		auto npos = glm::ivec3(p->Get().x + rand() % 3 - 1, p->Get().y + rand() % 3 - 1, p->Get().z);
 		if (params.world->IsWalkable(npos))
 		{
-			c->AddPersinal(std::make_shared<OrderWander>(npos));
+			//c->AddPersinal(std::make_shared<OrderWander>(npos));
 		}
 	}
 }
@@ -950,7 +915,7 @@ PAgent ProfessionPerformer::Clone(GameObject* parent, const std::string& name)
 	auto pp = t->prof;
 	t->prof.clear();
 
-	for(const auto & p : pp)
+	for (const auto & p : pp)
 	{
 		t->prof.push_back(p->Clone());
 	}
@@ -981,13 +946,35 @@ bool ProfessionPerformer::DrawGui(float gt)
 
 bool ProfessionPerformer::CanPeformOrder(POrder o)
 {
-	for (const auto &p : prof)
+	std::list<POrder> ords;
+	if (o->GetId() == Order::Idfor<OrderCombined>())
 	{
-		if (p->CanPeformOrder(o) && p->GetActive())
-			return true;
+		for(auto & oc : std::static_pointer_cast<OrderCombined>(o)->orders)
+		{
+			ords.push_back(oc);
+		}
+	}
+	else
+		ords.push_back(o);
+
+	bool all_ok = true;
+	for (auto & or : ords)
+	{
+		bool ok = false;
+		for (const auto &p : prof)
+		{
+			if (p->CanPeformOrder(or) && p->GetActive())
+				ok = true;
+		}
+
+		if (!ok)
+		{
+			all_ok = false;
+			break;
+		}
 	}
 
-	return false;
+	return all_ok;
 }
 
 void ProfessionPerformer::JsonLoad(const rapidjson::Value& val)
@@ -995,7 +982,7 @@ void ProfessionPerformer::JsonLoad(const rapidjson::Value& val)
 	std::vector<ProfLoadHelper> prof;
 	JSONLOAD(sge::make_nvp("data", prof));
 
-	for(const auto &p : prof)
+	for (const auto &p : prof)
 	{
 		auto t = ProfessionFactory::Get().Create(p.name);
 		t->SetLevel(static_cast<ProfessionLevel>(p.level));
@@ -1045,16 +1032,16 @@ void ChainDestruction::OnDestroy(const GameObjectParams& params)
 
 	destroyed = true;
 
-	std::vector<glm::vec3> neib = {{ 0,  0, -1 }, {  0, 0, 1 },
-	                               { 1,  0,  0 }, { -1, 0, 0 },
-	                               { 0, -1,  0 }, {  0, 1, 0 }};
+	std::vector<glm::vec3> neib = { { 0,  0, -1 }, {  0, 0, 1 },
+								   { 1,  0,  0 }, { -1, 0, 0 },
+								   { 0, -1,  0 }, {  0, 1, 0 } };
 
-	for(const auto &n : neib)
+	for (const auto &n : neib)
 	{
 		if (auto ne = params.world->GetBlock(params.pos + n))
 		{
 			auto dest_it = std::find(destroys.begin(), destroys.end(), ne->GetId());
-			if(dest_it != destroys.end())
+			if (dest_it != destroys.end())
 				params.world->SetBlock(params.pos + n, nullptr);
 		}
 	}
@@ -1079,7 +1066,7 @@ void Workshop::Update(const GameObjectParams& params)
 bool Workshop::DrawGui(float gt)
 {
 	auto rec = DB::Get().GetMachineRecipe(mParent->GetId());
-	for(const auto &a : rec)
+	for (const auto &a : rec)
 	{
 		a->DrawGui(gt);
 	}
@@ -1194,14 +1181,14 @@ PAgent SteamGenerator::Clone(GameObject* parent, const std::string& name)
 
 void SteamGenerator::Update(const GameObjectParams& params)
 {
-	if(auto lp = mParent->GetAgent<LiquidPipe>())
+	if (auto lp = mParent->GetAgent<LiquidPipe>())
 	{
-		if(lp->GetLiquidID() == StringIntern("material_steam"))
+		if (lp->GetLiquidID() == StringIntern("material_steam"))
 		{
 			auto count = lp->GetLiquidCount();
 			lp->SetLiquidCount(0);
 
-			if(auto ep = mParent->GetAgent<EnergyProducer>())
+			if (auto ep = mParent->GetAgent<EnergyProducer>())
 			{
 				ep->ProduceEnergy(count * efficiency);
 			}

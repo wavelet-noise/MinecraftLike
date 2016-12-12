@@ -15,5 +15,11 @@ struct OrderCombined : NumberedOrder<OrderCombined>
 	bool IsEquals(const Order& rhs) override;
 	void PushOrder(POrder po);
 
+	void SetState(State __state) override;
+	State GetState() const override;
+
+	void Rebuild(const GameObjectParams & params, PGameObject performer) override;
+	void Approach(const GameObjectParams & params, PGameObject performer) override;
+
 	void Perform(const GameObjectParams & params, PGameObject performer, float work = 0) override;
 };

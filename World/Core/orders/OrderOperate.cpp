@@ -21,19 +21,8 @@ void OrderOperate::Done()
 void OrderOperate::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
+	if (!mechanism->HasWork())
+		Done();
 
-	if (c->path.empty())
-		c->wishpos = pos;
-	else
-	{
-		c->make_step(params);
-
-		if (c->path.empty())
-		{
-			if (!mechanism->HasWork())
-				Done();
-
-			mechanism->DoWork();
-		}
-	}
+	mechanism->DoWork();
 }

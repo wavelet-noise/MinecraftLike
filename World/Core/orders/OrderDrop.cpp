@@ -18,44 +18,31 @@ void OrderDrop::Perform(const GameObjectParams & params, PGameObject performer, 
 {
 	auto c = performer->GetAgent<Creature>();
 
-	if (c->path.empty())
-		c->wishpos = pos;
+	bool placed = false;
+	if (auto b = params.world->GetBlock(pos))
+	{
+		if (auto ch = b->GetAgent<Chest>())
+		{
+			if (ch->Push(item, count))
+				placed = true;
+		}
+	}
+
+	if (placed)
+	{
+		auto ch = performer->GetAgent<Chest>();
+		auto t_item = ch->PopByPredicate([&](const ChestSlot &cs)->bool {
+			return cs.obj == this->item;
+		});
+
+		t_item.count -= count;
+		if (t_item.count >= 1)
+			ch->Push(t_item.obj, t_item.count);
+
+		Done();
+	}
 	else
 	{
-		c->make_step(params);
-
-		if (c->path.empty())
-		{
-			bool placed = false;
-			if (auto b = params.world->GetBlock(pos))
-			{
-				if (auto ch = b->GetAgent<Chest>())
-				{
-					if(ch->Push(item, count))
-						placed = true;
-				}
-			}
-
-			if (placed)
-			{
-				auto ch = performer->GetAgent<Chest>();
-				auto t_item = ch->PopByPredicate([&](const ChestSlot &cs)->bool {
-					return cs.obj == this->item;
-				});
-
-				t_item.count -= count;
-				if (t_item.count >= 1)
-					ch->Push(t_item.obj, t_item.count);
-
-				Done();
-			}
-			else
-			{
-				Cancel();
-			}
-
-
-			
-		}
+		Cancel();
 	}
 }

@@ -10,7 +10,7 @@ OrderCombined::OrderCombined()
 
 std::string OrderCombined::to_string() const
 {
-	return (boost::format("OrderCombined: ")).str();
+	return (boost::format("OrderCombined: count %1%") % orders.size()).str();
 }
 
 glm::vec3 OrderCombined::GetPos() const
@@ -48,25 +48,53 @@ void OrderCombined::PushOrder(POrder po)
 	orders.push_back(po);
 }
 
+void OrderCombined::SetState(State __state)
+{
+	for (auto & or : orders)
+	{
+		or ->SetState(__state);
+	}
+}
+
+Order::State OrderCombined::GetState() const
+{
+	for (const auto & or : orders)
+	{
+		if (!or ->IsDone())
+			return or ->GetState();
+	}
+}
+
+void OrderCombined::Rebuild(const GameObjectParams& params, PGameObject performer)
+{
+	state = State::Builded;
+}
+
+void OrderCombined::Approach(const GameObjectParams& params, PGameObject performer)
+{
+	state = State::Performing;
+}
+
 void OrderCombined::Perform(const GameObjectParams & params, PGameObject performer, float work)
 {
 	auto c = performer->GetAgent<Creature>();
 
 	for (const auto & or : orders)
 	{
-		if (!or->IsDone())
-		{
-			or->Perform(params, performer, work);
-		}
-
 		if (or ->IsCanceled())
 			Cancel();
+
+		if (!or->IsDone())
+		{
+			or->Update(params, performer, work);
+			break;
+		}
 	}
 
 	bool done = true;
 	for (const auto & or : orders)
 	{
-		if (!or ->IsDone())
+		if (!or->IsDone())
 			done = false;
 	}
 
