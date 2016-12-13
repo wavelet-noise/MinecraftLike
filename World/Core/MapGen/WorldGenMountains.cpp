@@ -85,6 +85,7 @@ void WorldGenMountains::WorldPass(World &w)
 
 	treepos.clear();
 	bushpos.clear();
+	EventBus::Get().Publish<EventMapReady>();
 }
 
 void WorldGenMountains::Generate(Sector & s)

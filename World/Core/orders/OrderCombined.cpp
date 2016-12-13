@@ -54,6 +54,8 @@ void OrderCombined::SetState(State __state)
 	{
 		or ->SetState(__state);
 	}
+
+	state = __state;
 }
 
 Order::State OrderCombined::GetState() const
@@ -63,6 +65,8 @@ Order::State OrderCombined::GetState() const
 		if (!or ->IsDone())
 			return or ->GetState();
 	}
+
+	return state;
 }
 
 void OrderCombined::Rebuild(const GameObjectParams& params, PGameObject performer)
@@ -90,8 +94,6 @@ void OrderCombined::Perform(const GameObjectParams & params, PGameObject perform
 			break;
 		}
 	}
-
-	TODO ADD TEMPLATES AND SPAWNPOINT
 
 	bool done = true;
 	for (const auto & or : orders)

@@ -107,7 +107,17 @@ struct EventSectorReady : public NumberedEvent<EventOrderStart>
 
 	std::string to_string() const override
 	{
-		return (boost::format("EventSectorReady: sec = ")).str();
+		return (boost::format("EventSectorReady: sec = {%1%,%2%,%3%}") % sec->GetPos().x % sec->GetPos().y % sec->GetPos().z).str();
+	}
+};
+
+struct EventMapReady : public NumberedEvent<EventMapReady>
+{
+	EventMapReady() {}
+
+	std::string to_string() const override
+	{
+		return (boost::format("EventMapReady:")).str();
 	}
 };
 

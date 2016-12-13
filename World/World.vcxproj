@@ -109,6 +109,7 @@
     <ClCompile Include="Localize.cpp" />
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapTemplate.cpp" />
     <ClCompile Include="Medic.cpp" />
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="miniz.c" />
@@ -233,6 +234,7 @@
     <ClInclude Include="gui\WS.h" />
     <ClInclude Include="imgui\imgui_user.h" />
     <ClInclude Include="Localize.h" />
+    <ClInclude Include="MapTemplate.h" />
     <ClInclude Include="Medic.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="Profession.h" />

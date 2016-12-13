@@ -358,6 +358,7 @@ void DB::ReloadDirectory(const std::string & mDir)
 		b->mAgents[m.first] = m.second();
 	}
 	mObjects[StringIntern("allagents")] = std::make_tuple(b, false, false);
+	mObjects[StringIntern("air")] = std::make_tuple(nullptr, false, false);
 }
 
 const std::vector<StringIntern> &DB::Taglist(const StringIntern & name) const

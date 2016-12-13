@@ -117,6 +117,7 @@
     <ClCompile Include="Core\orders\OrderCombined.cpp" />
     <ClCompile Include="GamePhase_LoadMenu.cpp" />
     <ClCompile Include="Builder.cpp" />
+    <ClCompile Include="MapTemplate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
@@ -256,6 +257,7 @@
     <ClInclude Include="GamePhase_LoadMenu.h" />
     <ClInclude Include="Core\orders\OrderTools.h" />
     <ClInclude Include="Builder.h" />
+    <ClInclude Include="MapTemplate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BuildVersion.bat" />

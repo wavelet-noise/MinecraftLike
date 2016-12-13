@@ -56,6 +56,9 @@ void WindowDb::Draw(glm::vec2 mainwin_size, float gt)
 					cont = false;
 			}
 
+			if (!std::get<0>(pgo))
+				continue;
+
 			if (flt)
 			{
 				auto fstring = std::get<0>(pgo)->GetDescription();

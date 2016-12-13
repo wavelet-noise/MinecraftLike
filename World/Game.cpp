@@ -50,6 +50,7 @@
 
 //
 #include "GamePhase_LoadMenu.h"
+#include "MapTemplate.h"
 
 GamePhase_Game::GamePhase_Game()
 {
@@ -63,6 +64,7 @@ GamePhase_Game::GamePhase_Game()
 	WS::Get().w = mWorld.get();
 
 	DB::Get().ReloadDirectory("data\\json\\");
+	MapTemplates::Get().ReloadDirectory("data\\patterns\\other");
 
 	Game::SetWorker(std::make_unique<WorldWorker>(mWorld));
 
@@ -552,32 +554,32 @@ void GamePhase_Game::Update(float dt)
 		Game::GetCamera()->SetPos(Game::GetCamera()->GetPos() - del);
 	}
 
-	for (const auto &e : EventBus::Get().ListenChannel<EventSectorReady>())
+	auto map_ready = EventBus::Get().ListenChannel<EventMapReady>();
+	if(!map_ready.empty())
 	{
-		const auto &esec = std::static_pointer_cast<EventSectorReady>(e);
-		if (esec->sec->GetPos() == SPos(0, 0, 0))
-		{
-			auto c = DB::Get().Create("caracter");
-			c->GetAgent<Chest>()->Push(DB::Get().Create("nutrition"), 100);
-			c->GetAgent<Chest>()->Push(DB::Get().Create("nail_material_iron"), 200);
-			c->GetAgent<Chest>()->Push(DB::Get().Create("stick"), 50);
-			c->GetAgent<Chest>()->Push(DB::Get().Create("bar_material_iron"), 5);
+		MapTemplates::Get().templates[StringIntern("spawn_prepare")]->ForceApplyToWorld(mWorld.get(), { -2,-2, 0 });
 
-			mWorld->Spawn({ 0, 0, 0 }, c);
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-			mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
-		}
+		auto c = DB::Get().Create("caracter");
+		c->GetAgent<Chest>()->Push(DB::Get().Create("nutrition"), 100);
+		c->GetAgent<Chest>()->Push(DB::Get().Create("nail_material_iron"), 200);
+		c->GetAgent<Chest>()->Push(DB::Get().Create("stick"), 50);
+		c->GetAgent<Chest>()->Push(DB::Get().Create("stockpile"), 5);
+		c->GetAgent<Chest>()->Push(DB::Get().Create("water_boiler_iron"), 2);
+
+		mWorld->Spawn({ 0, 0, 0 }, c);
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
+		mWorld->Spawn({ 0, 0, 0 }, DB::Get().Create("caracter"));
 	}
 
 	mWorld->Update(static_cast<float>(dt));
