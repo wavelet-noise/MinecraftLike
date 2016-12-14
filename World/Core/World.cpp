@@ -1,7 +1,3 @@
-
-
-
-
 #include "World.h"
 #include <tuple>
 #include <utility>
@@ -10,12 +6,12 @@
 #include "MapGen\WorldWorker.h"
 #include "..\Render\Render.h"
 #include "Tessellator.h"
-#include <Core\Chest.h>
+#include <Core\agents\Chest.h>
 #include <Core\EventBus.h>
 #include <memory>
-#include <Core\PositionAgent.h>
+#include <Core\agents\PositionAgent.h>
 #include <Game.h>
-#include "Farmland.h"
+#include <Core/agents/Farmland.h>
 #include "orders/OrderPlace.h"
 
 std::string Room::TypeName(RoomType rt)

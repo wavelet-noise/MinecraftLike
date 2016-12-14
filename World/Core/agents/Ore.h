@@ -1,4 +1,4 @@
-#include "Agent.h"
+#include <Core/agents/Agent.h>
 #include <vector>
 
 class ChestSlot;

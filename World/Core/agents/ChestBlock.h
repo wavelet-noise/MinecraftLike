@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Agent.h>
+#include <Core/agents/Agent.h>
 
 class GameObject;
 

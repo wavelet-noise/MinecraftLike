@@ -1,10 +1,10 @@
 #include "Furnance.h"
 #include <imgui.h>
 #include <glm\gtx\string_cast.hpp>
-#include <Core\Chest.h>
-#include <Core\Fuel.h>
+#include <Core\agents\Chest.h>
+#include <Core\agents\Fuel.h>
 #include <core\World.h>
-#include <Core\Heatable.h>
+#include <Core\agents\Heatable.h>
 
 void Furnance::JsonLoad(const rapidjson::Value &val)
 {

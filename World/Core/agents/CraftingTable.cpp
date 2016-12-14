@@ -1,7 +1,7 @@
 #include "CraftingTable.h"
 #include <imgui.h>
 #include <glm\gtx\string_cast.hpp>
-#include <Core\Chest.h>
+#include <Core\agents\Chest.h>
 #include <core\World.h>
 
 void CraftingTable::JsonLoad(const rapidjson::Value &val)

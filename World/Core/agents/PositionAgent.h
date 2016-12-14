@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Agent.h"
+#include <Core/agents/Agent.h>
 #include "..\tools\CoordSystem.h"
 #include <Core\orders\OrderBus.h>
 #include <unordered_map>
@@ -437,7 +437,7 @@ public:
 	AGENT(Workshop);
 
 	// Унаследовано через Agent
-	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	PAgent Clone(GameObject * parent, const std::string & name = "") override;
 
 	void Update(const GameObjectParams &params) override;
 

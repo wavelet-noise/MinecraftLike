@@ -1,24 +1,19 @@
-#include "Agent.h"
+#pragma once
+#include <Core/agents/Agent.h>
 
-class WaterBoiler : public Agent
+class Tool : public Agent
 {
 public:
-	AGENT(WaterBoiler)
+	AGENT(Tool)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	virtual void Update(const GameObjectParams & params) override;
-	virtual bool DrawGui(float gt) override;
-
-	float GetFreq() const override
-	{
-		return 1 / 10.f;
-	}
 
 private:
-	float steam;
+	StringIntern tool;
 };
 
-REGISTER_AGENT(WaterBoiler)
+REGISTER_AGENT(Tool)

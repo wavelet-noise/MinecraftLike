@@ -565,6 +565,9 @@
         ],
         "dynamic":true,
         "placeable":true,
-		"active":true
+		"active":true,
+		"recipe":{
+			
+		}
 	}
 ]

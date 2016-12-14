@@ -2,7 +2,7 @@
 #include <Core\World.h>
 #include "WS.h"
 #include "WindowOverlay.h"
-#include <Core/PositionAgent.h>
+#include <Core/agents/PositionAgent.h>
 #include <Game.h>
 #include <Core/MapGen/WorldWorker.h>
 

@@ -1,5 +1,5 @@
-#include "Agent.h"
-#include "GameObject.h"
+#include <Core/agents/Agent.h>
+#include "../GameObject.h"
 
 void Agent::Update(const GameObjectParams & params)
 {

@@ -3,7 +3,7 @@
 #include "gui/WindowBase.h"
 #include "gui/WS.h"
 #include "Core/World.h"
-#include "Core/PositionAgent.h"
+#include <Core/agents/PositionAgent.h>
 
 struct Room;
 class World;

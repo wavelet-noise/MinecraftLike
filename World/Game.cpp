@@ -26,13 +26,13 @@
 #include <gui/WindowPerfomance.h>
 #include <Render/Resources.h>
 #include <tools/ray.h>
-#include <core/Chest.h>
+#include <core/agents/Chest.h>
 #include <Render/ParticleSystem.h>
 #include <core/EventBus.h>
 #include <core/orders/OrderBus.h>
 #include "gui/WindowRooms.h"
 
-#include "Core/Ore.h"
+#include "Core/agents/Ore.h"
 #include <core/orders/OrderDig.h>
 #include <Core/orders/OrderPlace.h>
 #include "gui/WindowDb.h"

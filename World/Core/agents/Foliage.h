@@ -1,22 +1,16 @@
-#include "Agent.h"
+#pragma once
+#include <Core/agents/Agent.h>
 
-class Fuel : public Agent
+class Foliage : public Agent
 {
 public:
-	AGENT(Fuel)
+	AGENT(Foliage)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	virtual void Update(const GameObjectParams & params) override;
-	inline float getHeat()
-	{
-		return mHeat;
-	}
-
-private:
-	float mHeat;
 };
 
-REGISTER_AGENT(Fuel)
+REGISTER_AGENT(Foliage)

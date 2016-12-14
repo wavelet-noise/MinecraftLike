@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../GameObject.h"
 #include "OrderBus.h"
-#include <Core/Operatable.h>
+#include <Core/agents/Operatable.h>
 
 struct OrderOperate : NumberedOrder<OrderOperate>
 {

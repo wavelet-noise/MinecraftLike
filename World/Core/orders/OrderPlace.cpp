@@ -1,8 +1,8 @@
 ﻿#include "OrderPlace.h"
 #include <core/World.h>
 #include <glm/gtx/string_cast.hpp>
-#include <core/PositionAgent.h>
-#include <Core/Chest.h>
+#include <Core/agents/PositionAgent.h>
+#include <Core/agents/Chest.h>
 #include "OrderFindAndPick.h"
 
 OrderPlace::OrderPlace(WBPos v, StringIntern i) : pos(v), item(i)

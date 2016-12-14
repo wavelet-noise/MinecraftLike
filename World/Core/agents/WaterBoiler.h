@@ -1,13 +1,9 @@
-#pragma once
-#include "Agent.h"
-#include "GameObject.h"
-#include <vector>
-#include "ChestSlot.h"
+#include <Core/agents/Agent.h>
 
-class Furnance : public Agent
+class WaterBoiler : public Agent
 {
 public:
-	AGENT(Furnance)
+	AGENT(WaterBoiler)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -15,7 +11,6 @@ public:
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	virtual void Update(const GameObjectParams & params) override;
 	virtual bool DrawGui(float gt) override;
-	virtual void Interact(const InteractParams &params) override;
 
 	float GetFreq() const override
 	{
@@ -23,8 +18,7 @@ public:
 	}
 
 private:
-	float T;
-	float remain_heat, heat;
+	float steam;
 };
 
-REGISTER_AGENT(Furnance)
+REGISTER_AGENT(WaterBoiler)

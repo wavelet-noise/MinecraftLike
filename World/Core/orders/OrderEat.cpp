@@ -1,9 +1,9 @@
 ﻿#include "OrderEat.h"
-#include "../PositionAgent.h"
+#include <Core/agents/PositionAgent.h>
 #include "../ChestSlot.h"
 #include <glm/gtx/string_cast.hpp>
 #include <core/World.h>
-#include <core/Chest.h>
+#include <core/agents/Chest.h>
 
 OrderEat::OrderEat(WBPos v, PGameObject i) : pos(v), item(i)
 {

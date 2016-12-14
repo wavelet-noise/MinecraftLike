@@ -1,8 +1,8 @@
 ﻿#include "OrderGet.h"
-#include "../PositionAgent.h"
+#include <Core/agents/PositionAgent.h>
 #include <glm/gtx/string_cast.hpp>
 #include <core\world.h>
-#include <core/chest.h>
+#include <Core/agents/Chest.h>
 
 OrderGet::OrderGet(glm::vec3 v, PGameObject i) : pos(v), item(i)
 {

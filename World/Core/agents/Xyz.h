@@ -1,5 +1,5 @@
 #pragma once
-#include "Agent.h"
+#include <Core/agents/Agent.h>
 
 class Xyz : public Agent
 {

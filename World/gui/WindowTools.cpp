@@ -4,7 +4,7 @@
 #include "WindowRooms.h"
 #include <Core/orders/OrderBus.h>
 #include <Game.h>
-#include <Core/PositionAgent.h>
+#include <Core/agents/PositionAgent.h>
 
 
 WindowTools::WindowTools()

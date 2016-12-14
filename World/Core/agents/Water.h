@@ -1,7 +1,8 @@
 #pragma once
-#include "Agent.h"
-#include "GameObject.h"
-#include <vector>
+#include <Core/agents/Agent.h>
+#include "../GameObject.h"
+
+struct GameObjectParams;
 
 class Water : public Agent
 {

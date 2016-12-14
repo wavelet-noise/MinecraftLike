@@ -1,6 +1,6 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
-#include "Agent.h"
+#include <Core/agents/Agent.h>
 
 class Material : public Agent
 {

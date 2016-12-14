@@ -5,7 +5,7 @@
 #include <Render\TextureManager.h>
 #include "WindowInventory.h"
 #include <Core\World.h>
-#include <Core\Chest.h>
+#include <Core\agents\Chest.h>
 #include <GLFW\glfw3.h>
 #include <gui\WindowRecipe.h>
 #include "WindowTools.h"

@@ -1,6 +1,6 @@
 #ifndef Heatable_H
 #define Heatable_H
-#include "Agent.h"
+#include <Core/agents/Agent.h>
 
 class Heatable : public Agent
 {

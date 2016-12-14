@@ -1,8 +1,8 @@
 ﻿#include "OrderCraft.h"
 #include <core/World.h>
 #include <glm/gtx/string_cast.hpp>
-#include <core/PositionAgent.h>
-#include <core/chest.h>
+#include <Core/agents/PositionAgent.h>
+#include <Core/agents/Chest.h>
 
 std::string OrderCraft::to_string() const
 {

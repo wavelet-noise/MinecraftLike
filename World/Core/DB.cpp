@@ -13,14 +13,14 @@
 //possibly must be moved into <agents> file
 //deserialize autoreg
 #include "BlockTessellator.h"
-#include "PositionAgent.h"
-#include "PhysicAgent.h"
+#include "agents\PositionAgent.h"
+#include "agents\PhysicAgent.h"
 #include "Material.h"
-#include "Furnance.h"
-#include "Fuel.h"
-#include "Chest.h"
-#include "Heatable.h"
-#include "Xyz.h"
+#include "agents\Furnance.h"
+#include "agents\Fuel.h"
+#include "agents\Chest.h"
+#include "agents\Heatable.h"
+#include "agents\Xyz.h"
 #include "agents/ChestBlock.h"
 
 //possibly must be moved into <templates> file
@@ -545,6 +545,4 @@ void DB::AddRecipe(PRecipe r)
 	{
 		mRecipeCache[a.id].push_back(r);
 	}
-
-	mRecipeMachineTag[r->machine].push_back(r);
 }

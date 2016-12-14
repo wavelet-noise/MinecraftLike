@@ -5,7 +5,7 @@
 #include "PhysicAgent.h"
 #include "PositionAgent.h"
 #include <glm/gtc/matrix_transform.hpp>
-#include "World.h"
+#include "../World.h"
 #include "../tools/CoordSystem.h"
 
 

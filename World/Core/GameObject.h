@@ -4,7 +4,7 @@
 #include <memory>
 #include <type_traits>
 #include "GameObjectParams.h"
-#include "Agent.h"
+#include <Core/agents/Agent.h>
 #include "..\tools\StringIntern.h"
 #include <memory>
 

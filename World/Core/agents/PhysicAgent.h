@@ -1,14 +1,10 @@
-
-
-
-
 #pragma once
 #ifndef PhysicAgent_h__
 #define PhysicAgent_h__
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include "GameObject.h"
+#include "../GameObject.h"
 #include "../tools/CoordSystem.h"
 
 

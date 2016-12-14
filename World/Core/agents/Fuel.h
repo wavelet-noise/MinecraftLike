@@ -1,19 +1,22 @@
-#pragma once
-#include "Agent.h"
+#include <Core/agents/Agent.h>
 
-class Tool : public Agent
+class Fuel : public Agent
 {
 public:
-	AGENT(Tool)
+	AGENT(Fuel)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	virtual void Update(const GameObjectParams & params) override;
+	inline float getHeat()
+	{
+		return mHeat;
+	}
 
 private:
-	StringIntern tool;
+	float mHeat;
 };
 
-REGISTER_AGENT(Tool)
+REGISTER_AGENT(Fuel)

@@ -2,8 +2,8 @@
 #include <core/World.h>
 #include <glm/gtx/string_cast.hpp>
 #include "../ChestSlot.h"
-#include "../PositionAgent.h"
-#include <core/chest.h>
+#include <Core/agents/PositionAgent.h>
+#include <core/agents/chest.h>
 
 OrderDrop::OrderDrop(WBPos v, PGameObject i, int c) : pos(v), item(i), count(c)
 {

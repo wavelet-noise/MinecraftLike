@@ -1,9 +1,9 @@
 #include "WaterBoiler.h"
 #include <Serealize.h>
 #include <Core\GameObject.h>
-#include <Core\Heatable.h>
+#include <Core\agents\Heatable.h>
 #include <imgui.h>
-#include <Core\LiquidPipe.h>
+#include <Core\agents\LiquidPipe.h>
 #include <Core\DB.h>
 
 void WaterBoiler::JsonLoad(const rapidjson::Value &val)

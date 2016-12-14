@@ -1,9 +1,9 @@
-#include "Core/Chest.h"
+#include "Core/agents/Chest.h"
 #include "OrderDig.h"
 #include <boost/format/format_fwd.hpp>
 #include <glm/gtx/string_cast.hpp>
-#include "Core/PositionAgent.h"
-#include "core/Ore.h"
+#include "Core/agents/PositionAgent.h"
+#include "core/agents/Ore.h"
 #include <core/World.h>
 
 OrderDig::OrderDig(glm::vec3 v) : pos(v)

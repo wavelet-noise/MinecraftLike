@@ -21,7 +21,8 @@ void WindowRecipe::Draw(glm::vec2 mainwin_size, float gt)
 			if (!t.empty())
 				for (const auto &r : t)
 				{
-					r->DrawGui(gt);
+					bool b;
+					r->DrawGui(gt, b);
 				}
 		}
 		break;
@@ -33,7 +34,8 @@ void WindowRecipe::Draw(glm::vec2 mainwin_size, float gt)
 			if (!t.empty())
 				for (const auto &r : t)
 				{
-					r->DrawGui(gt);
+					bool b;
+					r->DrawGui(gt, b);
 				}
 		}
 		break;

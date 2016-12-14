@@ -1,13 +1,13 @@
 #include "PositionAgent.h"
 #include <Core/orders/OrderBus.h>
 #include <Core\GameObject.h>
-#include <core\PhysicAgent.h>
+#include <core\agents/PhysicAgent.h>
 #include <core\EventBus.h>
 #include <core\World.h>
 #include <imgui.h>
 #include <glm\gtx\string_cast.hpp>
 #include <fstream>
-#include <core\Chest.h>
+#include <Core\agents\Chest.h>
 #include <queue>
 #include <unordered_set>
 #include <Render\ParticleSystem.h>
@@ -21,8 +21,10 @@
 #include <gui/WindowDb.h>
 #include "LiquidPipe.h"
 #include <gui/WindowStorages.h>
-#include "agents/ChestBlock.h"
-#include "orders/OrderCombined.h"
+#include <Core/agents/ChestBlock.h>
+#include <Core/orders/OrderCombined.h>
+#include <gui/WindowRecipe.h>
+#include <Render/TextureManager.h>
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -1066,9 +1068,60 @@ void Workshop::Update(const GameObjectParams& params)
 bool Workshop::DrawGui(float gt)
 {
 	auto rec = DB::Get().GetMachineRecipe(mParent->GetId());
+	static PRecipe r_pop;
 	for (const auto &a : rec)
 	{
-		a->DrawGui(gt);
+		bool pressed = false;
+		a->DrawGui(gt, pressed);
+		if(pressed)
+		{
+			r_pop = a;
+			ImGui::OpenPopup("Select exact materials");
+		}
+
+		ImGui::Separator();
+	}		
+
+	bool open = true;
+	if (ImGui::BeginPopupModal("Select exact materials", &open))
+	{
+		int i = 0;
+		for(const auto & r : r_pop->input)
+		{
+			auto ofs = r.id.get().find("tag_");
+			if(ofs != std::string::npos)
+			{
+				ImGui::BeginGroup();
+				ImGui::Text(r.id.get().substr(4).c_str());
+				ImGui::BeginChild(ImGui::GetID(reinterpret_cast<void *>(i)), ImVec2(ImGui::GetWindowWidth() * 0.95f, 100.0f), true);
+				
+				auto taglist = DB::Get().Taglist(r.id);
+				int jj = 0;
+				for(const auto & t : taglist)
+				{
+					auto atl = TextureManager::Get().GetTexture(t);
+					auto &tex = std::get<0>(atl);
+					auto &atluv = std::get<1>(atl);
+
+					auto uv = glm::vec2(atluv.x, atluv.y);
+					auto uv2 = glm::vec2(atluv.z, atluv.w);
+
+					if (jj < 9)
+						ImGui::SameLine(), jj++;
+					else
+						jj = 0;
+
+					ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
+				}
+
+				ImGui::EndChild();
+				ImGui::EndGroup();
+			}
+			i++;
+		}
+		if (ImGui::Button("Close"))
+			ImGui::CloseCurrentPopup();
+		ImGui::EndPopup();
 	}
 
 	return true;

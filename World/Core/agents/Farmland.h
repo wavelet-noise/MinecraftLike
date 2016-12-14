@@ -1,9 +1,11 @@
-#include "Agent.h"
+#ifndef MATERIAL_H
+#define MATERIAL_H
+#include <Core/agents/Agent.h>
 
-class Plant : public Agent
+class Farmland : public Agent
 {
 public:
-	AGENT(Plant)
+	AGENT(Farmland)
 
 	void JsonLoad(const rapidjson::Value &val) override;
 
@@ -11,13 +13,11 @@ public:
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	virtual void Update(const GameObjectParams & params) override;
 
-	StringIntern GetNext()
-	{
-		return next;
-	}
-
 private:
-	StringIntern next;
+	bool hydrated = false;
+	float tick = 0;
 };
 
-REGISTER_AGENT(Plant)
+REGISTER_AGENT(Farmland)
+
+#endif // MATERIAL_H

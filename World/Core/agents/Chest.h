@@ -1,8 +1,8 @@
 #pragma once
-#include "Agent.h"
-#include "GameObject.h"
+#include <Core/agents/Agent.h>
+#include "../GameObject.h"
 #include <vector>
-#include "ChestSlot.h"
+#include "../ChestSlot.h"
 #include <tools/CoordSystem.h>
 #include <list>
 

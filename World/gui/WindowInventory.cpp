@@ -1,6 +1,6 @@
 #include "WindowInventory.h"
 #include <Core\World.h>
-#include <Core\Chest.h>
+#include <Core\agents\Chest.h>
 #include <Render\TextureManager.h>
 #include <DragNDrop.h>
 

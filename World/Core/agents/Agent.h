@@ -2,11 +2,11 @@
 #ifndef Agent_h__
 #define Agent_h__
 
-#include "TemplateFactory.h"
+#include "../TemplateFactory.h"
 #include <boost\noncopyable.hpp>
 #include "..\tools\StringIntern.h"
 #include <rapidjson\document.h>
-#include "GameObjectParams.h"
+#include "../GameObjectParams.h"
 #include <memory>
 #include <type_traits>
 

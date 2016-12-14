@@ -1,5 +1,5 @@
 #include "Sector.h"
-#include <core\PositionAgent.h>
+#include <core\agents\PositionAgent.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <stdint.h>

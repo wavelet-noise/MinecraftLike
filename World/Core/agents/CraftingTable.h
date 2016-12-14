@@ -1,6 +1,6 @@
 #pragma once
-#include "Agent.h"
-#include "GameObject.h"
+#include <Core/agents/Agent.h>
+#include "../GameObject.h"
 #include <vector>
 
 class CraftingTable : public Agent
@@ -11,10 +11,10 @@ public:
 	void JsonLoad(const rapidjson::Value &val) override;
 
 	// Унаследовано через Agent
-	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
-	virtual void Update(const GameObjectParams & params) override;
-	virtual bool DrawGui(float gt) override;
-	virtual void Interact(const InteractParams &params) override;
+	PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	void Update(const GameObjectParams & params) override;
+	bool DrawGui(float gt) override;
+	void Interact(const InteractParams &params) override;
 
 private:
 
@@ -30,9 +30,9 @@ public:
 	void JsonLoad(const rapidjson::Value &val) override;
 
 	// Унаследовано через Agent
-	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
-	virtual void Update(const GameObjectParams & params) override;
-	virtual bool DrawGui(float gt) override;
+	PAgent Clone(GameObject * parent, const std::string & name = "") override;
+	void Update(const GameObjectParams & params) override;
+	bool DrawGui(float gt) override;
 
 	float base_speed = 1;
 

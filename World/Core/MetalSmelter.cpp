@@ -1,8 +1,8 @@
 #include "MetalSmelter.h"
 #include <Serealize.h>
 #include <Core\GameObject.h>
-#include <Core\Heatable.h>
-#include <Core\Chest.h>
+#include "agents/Heatable.h"
+#include "agents/Chest.h"
 
 void MetalSmelter::JsonLoad(const rapidjson::Value &val)
 {

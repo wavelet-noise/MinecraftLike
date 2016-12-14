@@ -1,4 +1,4 @@
-#include "Agent.h"
+#include <Core/agents/Agent.h>
 
 class MetalSmelter : public Agent
 {

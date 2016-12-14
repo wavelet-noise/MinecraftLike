@@ -1,6 +1,6 @@
 #pragma once
-#include "Agent.h"
-#include "orders\OrderBus.h"
+#include <Core/agents/Agent.h>
+#include "../orders\OrderBus.h"
 #include <deque>
 
 using POperatable = std::shared_ptr<class Operatable>;

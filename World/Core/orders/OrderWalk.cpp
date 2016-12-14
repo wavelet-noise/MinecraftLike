@@ -1,5 +1,5 @@
 ﻿#include "OrderWalk.h"
-#include "../PositionAgent.h"
+#include "../agents/PositionAgent.h"
 #include <glm/gtx/string_cast.hpp>
 
 std::string OrderWalk::to_string() const

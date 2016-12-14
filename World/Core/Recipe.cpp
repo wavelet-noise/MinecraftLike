@@ -6,7 +6,7 @@
 #include <render\TextureManager.h>
 #include <Game.h>
 #include <gui\WindowRecipe.h>
-#include <Core\Chest.h>
+#include <Core\agents\Chest.h>
 
 void RecipeIn::JsonLoad(const rapidjson::Value & val)
 {
@@ -85,9 +85,10 @@ void DrawSome(const StringIntern &s, float gt, ImColor c = {0,0,0,0})
 	}
 }
 
-bool Recipe::DrawGui(float gt)
+bool Recipe::DrawGui(float gt, bool & pressed)
 {
 	bool first = true;
+	pressed = false;
 	for (const auto &inp : input)
 	{
 		if (first)
@@ -107,7 +108,7 @@ bool Recipe::DrawGui(float gt)
 	}
 
 	{
-		auto &atl = TextureManager::Get().GetTexture("arrow_right");
+		auto atl = TextureManager::Get().GetTexture("arrow_right");
 		auto &tex = std::get<0>(atl);
 		auto &atluv = std::get<1>(atl);
 
@@ -118,12 +119,9 @@ bool Recipe::DrawGui(float gt)
 		ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
 		if (ImGui::IsItemHovered())
 		{
-			//TODO: redone
-			/*ImGui::SetTooltip("craft this recipe");
+			ImGui::SetTooltip("craft this recipe");
 			if (ImGui::IsMouseClicked(0))
-			{
-				Game::GetWorld()->QueueRecipeOrder({ static_cast<PRecipe>(shared_from_this()), 1, false });
-			}*/
+				pressed = true;
 		}
 	}
 

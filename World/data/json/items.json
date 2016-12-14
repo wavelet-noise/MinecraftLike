@@ -171,7 +171,21 @@
 		}
 },{
 	"type":"Item",
-    "id":"hard_bed",
+    "id":"cloth",
+    "agents":[
+		{
+			"type":"Fuel",
+			"heat":0.5
+		}
+    ],
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_cloth"]
+	},
+	"tags":["tag_cloth"]
+},{
+	"type":"Item",
+    "id":"hard_wooden_bed",
     "agents":[
 		{
 			"type":"Fuel",

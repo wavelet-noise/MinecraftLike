@@ -1,8 +1,8 @@
 ﻿#include "OrderCombined.h"
-#include "../PositionAgent.h"
+#include <Core/agents/PositionAgent.h>
 #include <glm/gtx/string_cast.hpp>
 #include <core/World.h>
-#include <Core/Chest.h>
+#include <Core/agents/Chest.h>
 
 OrderCombined::OrderCombined()
 {

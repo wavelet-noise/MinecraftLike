@@ -3,7 +3,7 @@
 #include <Render\Render.h>
 #include <glm\gtx\transform.hpp>
 #include <Core\World.h>
-#include <Core\Foliage.h>
+#include <Core\agents\Foliage.h>
 #include <Render\ParticleSystem.h>
 
 void Tool::JsonLoad(const rapidjson::Value &val)

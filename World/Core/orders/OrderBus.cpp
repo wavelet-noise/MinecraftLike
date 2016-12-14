@@ -1,12 +1,12 @@
 #include "OrderBus.h"
 #include <Core\EventBus.h>
 #include <glm\gtx\string_cast.hpp>
-#include <Core\PositionAgent.h>
+#include <Core\agents\PositionAgent.h>
 #include <core\GameObjectParams.h>
-#include <core\Ore.h>
+#include <core\agents\Ore.h>
 #include <core\World.h>
 #include <core\ChestSlot.h>
-#include <core\Chest.h>
+#include <Core\agents\Chest.h>
 #include "OrderTools.h"
 
 std::string Order::to_string() const

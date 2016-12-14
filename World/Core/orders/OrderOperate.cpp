@@ -1,7 +1,7 @@
 ﻿#include "OrderOperate.h"
 #include <core/World.h>
 #include <glm/gtx/string_cast.hpp>
-#include <core/PositionAgent.h>
+#include <Core/agents/PositionAgent.h>
 
 OrderOperate::OrderOperate(WBPos v, POperatable i) : pos(v), mechanism(i)
 {

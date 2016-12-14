@@ -1,8 +1,8 @@
 ﻿#include "OrderFindAndPick.h"
-#include "../PositionAgent.h"
+#include <Core/agents/PositionAgent.h>
 #include <glm/gtx/string_cast.hpp>
 #include <core/World.h>
-#include <Core/Chest.h>
+#include <Core/agents/Chest.h>
 
 OrderFind::OrderFind(StringIntern i, int c) : id(i), count(c)
 {

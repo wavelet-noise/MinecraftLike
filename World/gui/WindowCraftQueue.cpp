@@ -1,6 +1,6 @@
 #include "WindowCraftQueue.h"
 #include <Core\World.h>
-#include <Core\Chest.h>
+#include <Core\agents\Chest.h>
 #include <Render\TextureManager.h>
 #include <DragNDrop.h>
 #include "WS.h"
@@ -26,7 +26,8 @@ void WindowCraftQueue::Draw(glm::vec2 mainwin_size, float gt)
 
 			for (const auto &i : c)
 			{
-				i.recipe->DrawGui(gt);
+				bool b;
+				i.recipe->DrawGui(gt,b);
 				ImGui::SameLine();
 				if (i.infinite)
 					ImGui::Text("x inf");
@@ -44,7 +45,8 @@ void WindowCraftQueue::Draw(glm::vec2 mainwin_size, float gt)
 
 			for (const auto &i : c)
 			{
-				i.recipe->DrawGui(gt);
+				bool b;
+				i.recipe->DrawGui(gt,b);
 				ImGui::SameLine();
 				if (i.infinite)
 					ImGui::Text("x inf");
