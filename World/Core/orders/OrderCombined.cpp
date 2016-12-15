@@ -10,7 +10,16 @@ OrderCombined::OrderCombined()
 
 std::string OrderCombined::to_string() const
 {
-	return (boost::format("OrderCombined: count %1%") % orders.size()).str();
+	std::stringstream ss;
+	ss << "OrderCombined: count " << orders.size() << std::endl;
+	ss << "{" << std::endl;
+	for(const auto & o : orders)
+	{
+		ss << o->to_string() << std::endl;
+	}
+	ss << "}";
+
+	return ss.str();
 }
 
 glm::vec3 OrderCombined::GetPos() const

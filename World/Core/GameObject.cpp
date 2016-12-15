@@ -56,12 +56,12 @@ void GameObject::Update(GameObjectParams &params)
 	}
 }
 
-bool GameObject::DrawGui(float gt)
+bool GameObject::DrawGui(const GameObjectParams& params, float gt)
 {
 	bool has_gui = false;
 	for (auto &agent : mAgents)
 	{
-		if (agent.second->DrawGui(gt))
+		if (agent.second->DrawGui(params, gt))
 			has_gui = true;
 	}
 

@@ -263,7 +263,7 @@ ChestSlot Chest::GetByPredicate(std::function<bool(const ChestSlot&)> pred)
 	return{};
 }
 
-bool Chest::DrawGui(float gt)
+bool Chest::DrawGui(const GameObjectParams& params, float gt)
 {
 	int jj = 666;
 	int ii = 0;

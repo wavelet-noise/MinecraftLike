@@ -21,7 +21,7 @@ void CraftingTable::Update(const GameObjectParams & params)
 
 }
 
-bool CraftingTable::DrawGui(float gt)
+bool CraftingTable::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("CraftingTable");
 	return true;
@@ -83,7 +83,7 @@ void Pulverizer::Update(const GameObjectParams & params)
 	}
 }
 
-bool Pulverizer::DrawGui(float gt)
+bool Pulverizer::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("CraftingTable");
 	return true;
@@ -105,7 +105,7 @@ PAgent PulverizeTo::Clone(GameObject * parent, const std::string & name)
 	return t;
 }
 
-bool PulverizeTo::DrawGui(float gt)
+bool PulverizeTo::DrawGui(const GameObjectParams& params, float gt)
 {
 	return false;
 }

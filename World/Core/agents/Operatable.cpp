@@ -19,7 +19,7 @@ void Operatable::Update(const GameObjectParams & params)
 		OrderBus::Get().IssueOrder(std::make_shared<OrderOperate>(params.pos, shared_from_this()));
 }
 
-bool Operatable::DrawGui(float gt)
+bool Operatable::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("%g", mCollectedWork);
 	ImGui::Button("WorkSome");

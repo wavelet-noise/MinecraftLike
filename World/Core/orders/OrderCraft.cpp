@@ -18,21 +18,12 @@ void OrderCraft::Perform(const GameObjectParams & params, PGameObject performer,
 
 	auto c = performer->GetAgent<Creature>();
 
-	if (auto b = params.world->GetBlock(pos))
-	{
-		if (auto c = b->GetAgent<Chest>())
-		{
-			duration_passed += work;
-			if (item->duration > duration_passed)
-				return;
+	duration_passed += work;
+	if (item->duration > duration_passed)
+		return;
 
-			if (!item->CraftIn(*c))
-			{
-				params.world->QueueRecipeOrder(item);
-				params.world->DelayRecipeOrder(item);
-			}
-		}
-	}
+	if (!item->CraftIn(*performer->GetAgent<Chest>(), count, tag_map))
+		Drop();
 
 	Done();
 

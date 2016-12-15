@@ -61,7 +61,7 @@ void Furnance::Update(const GameObjectParams & params)
 
 }
 
-bool Furnance::DrawGui(float gt)
+bool Furnance::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("Furnance");
 	ImGui::LabelText("Temp", "%g C", T);

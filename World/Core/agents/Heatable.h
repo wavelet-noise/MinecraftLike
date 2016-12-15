@@ -18,7 +18,7 @@ public:
 		return T;
 	}
 
-	bool DrawGui(float gt) override;
+	bool DrawGui(const GameObjectParams& params, float gt) override;
 
 private:
 	float T;

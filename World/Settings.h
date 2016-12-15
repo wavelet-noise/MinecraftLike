@@ -21,6 +21,7 @@ public:
 
 	bool debug = true;
 	bool dig_ores = false;
+	bool pause = false;
 	std::string save_file = "Save\\error.world";
 
 	Camera * GetCamera();

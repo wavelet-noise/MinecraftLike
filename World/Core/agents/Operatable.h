@@ -32,7 +32,7 @@ public:
 		return 5.0f;
 	}
 
-	virtual bool DrawGui(float gt) override;
+	virtual bool DrawGui(const GameObjectParams& params, float gt) override;
 
 	void EndOperate();
 

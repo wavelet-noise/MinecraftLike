@@ -31,7 +31,7 @@ PAgent Ore::Clone(GameObject * parent, const std::string &name)
 	return t;
 }
 
-bool Ore::DrawGui(float gt)
+bool Ore::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text((boost::format("%1% strikes left") % size).str().c_str());
 

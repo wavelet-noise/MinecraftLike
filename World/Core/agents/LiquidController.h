@@ -15,7 +15,7 @@ public:
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	virtual void Update(const GameObjectParams & params) override;
-	virtual bool DrawGui(float gt) override;
+	virtual bool DrawGui(const GameObjectParams& params, float gt) override;
 
 	inline bool IsLocked() 
 	{

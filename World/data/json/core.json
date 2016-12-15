@@ -544,7 +544,8 @@
         "id":"caprenter_workshop",
         "agents":[  
             {  
-                "type":"Workshop"
+                "type":"Workshop",
+				"performer":"Carpenter"
             }
         ],
         "tesselator":[  

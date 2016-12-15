@@ -39,7 +39,7 @@ void WaterBoiler::Update(const GameObjectParams & params)
 	}
 }
 
-bool WaterBoiler::DrawGui(float gt)
+bool WaterBoiler::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{

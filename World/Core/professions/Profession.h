@@ -62,7 +62,7 @@ public:
 private:
 	static size_t Nextid()
 	{
-		static size_t next_id(0);
+		static size_t next_id(1);
 		return next_id++;
 	}
 

@@ -28,8 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AutoVersion.cpp" />
-    <ClCompile Include="Builder.cpp" />
-    <ClCompile Include="Cooker.cpp" />
     <ClCompile Include="Core\agents\Agent.cpp" />
     <ClCompile Include="Core\agents\ChestBlock.cpp" />
     <ClCompile Include="Core\agents\Chest.cpp" />
@@ -68,6 +66,14 @@
     <ClCompile Include="Core\orders\OrderWander.cpp" />
     <ClCompile Include="Core\agents\Ore.cpp" />
     <ClCompile Include="Core\agents\Plant.cpp" />
+    <ClCompile Include="Core\professions\Builder.cpp" />
+    <ClCompile Include="Core\professions\Carpenter.cpp" />
+    <ClCompile Include="Core\professions\Cooker.cpp" />
+    <ClCompile Include="Core\professions\Gatherer.cpp" />
+    <ClCompile Include="Core\professions\Mason.cpp" />
+    <ClCompile Include="Core\professions\Medic.cpp" />
+    <ClCompile Include="Core\professions\Miner.cpp" />
+    <ClCompile Include="Core\professions\Profession.cpp" />
     <ClCompile Include="Core\Recipe.cpp" />
     <ClCompile Include="Core\SectorTessellator.cpp" />
     <ClCompile Include="Core\SplitBlockTessellator.cpp" />
@@ -89,7 +95,6 @@
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GamePhase_LoadMenu.cpp" />
-    <ClCompile Include="Gatherer.cpp" />
     <ClCompile Include="gui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="gui\WindowBase.h" />
     <ClCompile Include="gui\WindowCraftQueue.cpp" />
@@ -110,11 +115,8 @@
     <ClCompile Include="lodepng\lodepng.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapTemplate.cpp" />
-    <ClCompile Include="Medic.cpp" />
-    <ClCompile Include="Miner.cpp" />
     <ClCompile Include="miniz.c" />
     <ClCompile Include="PerlinNoise.cpp" />
-    <ClCompile Include="Profession.cpp" />
     <ClCompile Include="Render\Atlas.cpp" />
     <ClCompile Include="Render\Bitmap.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
@@ -147,8 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoVersion.h" />
-    <ClInclude Include="Builder.h" />
-    <ClInclude Include="Cooker.h" />
     <ClInclude Include="Core\agents\Agent.h" />
     <ClInclude Include="Core\agents\ChestBlock.h" />
     <ClInclude Include="Core\agents\Chest.h" />
@@ -190,6 +190,14 @@
     <ClInclude Include="Core\orders\OrderWander.h" />
     <ClInclude Include="Core\agents\Ore.h" />
     <ClInclude Include="Core\agents\Plant.h" />
+    <ClInclude Include="Core\professions\Builder.h" />
+    <ClInclude Include="Core\professions\Carpenter.h" />
+    <ClInclude Include="Core\professions\Cooker.h" />
+    <ClInclude Include="Core\professions\Gatherer.h" />
+    <ClInclude Include="Core\professions\Mason.h" />
+    <ClInclude Include="Core\professions\Medic.h" />
+    <ClInclude Include="Core\professions\Miner.h" />
+    <ClInclude Include="Core\professions\Profession.h" />
     <ClInclude Include="Core\Recipe.h" />
     <ClInclude Include="Core\SectorBase.h" />
     <ClInclude Include="Core\SectorTessellator.h" />
@@ -217,7 +225,6 @@
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePhase_LoadMenu.h" />
-    <ClInclude Include="Gatherer.h" />
     <ClInclude Include="gui\imgui_impl_glfw_gl3.h" />
     <ClInclude Include="gui\WindowCraftQueue.h" />
     <ClInclude Include="gui\WindowDb.h" />
@@ -234,9 +241,6 @@
     <ClInclude Include="imgui\imgui_user.h" />
     <ClInclude Include="Localize.h" />
     <ClInclude Include="MapTemplate.h" />
-    <ClInclude Include="Medic.h" />
-    <ClInclude Include="Miner.h" />
-    <ClInclude Include="Profession.h" />
     <ClInclude Include="Render\IRenderMeshStrategy.h" />
     <ClInclude Include="render\ParticleSystem.h" />
     <ClInclude Include="Render\RenderSector.h" />

@@ -1,10 +1,13 @@
 #include "WindowProfesions.h"
 #include "VerticalText.h"
-#include "Gatherer.h"
-#include "Cooker.h"
-#include "Medic.h"
-#include "Miner.h"
-#include <Builder.h>
+#include <Core/professions/Gatherer.h>
+#include <Core/professions/Cooker.h>
+#include <Core/professions/Medic.h>
+#include <Core/professions/Miner.h>
+#include <Core/professions/Builder.h>
+#include <Core/professions/Gatherer.h>
+#include <Core/professions/Mason.h>
+#include <Core/professions/Carpenter.h>
 
 WindowProfessions::WindowProfessions()
 {
@@ -17,7 +20,9 @@ void WindowProfessions::Draw(glm::vec2 mainwin_size, float gt)
 		std::make_shared<Cooker>(),
 		std::make_shared<Medic>(),
 		std::make_shared<Miner>(),
-		std::make_shared<Builder>()
+		std::make_shared<Builder>(),
+		std::make_shared<Mason>(),
+		std::make_shared<Carpenter>()
 	};
 
 	if (mOpen)

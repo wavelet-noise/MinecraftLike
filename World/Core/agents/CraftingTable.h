@@ -13,7 +13,7 @@ public:
 	// Унаследовано через Agent
 	PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	void Update(const GameObjectParams & params) override;
-	bool DrawGui(float gt) override;
+	bool DrawGui(const GameObjectParams& params, float gt) override;
 	void Interact(const InteractParams &params) override;
 
 private:
@@ -32,7 +32,7 @@ public:
 	// Унаследовано через Agent
 	PAgent Clone(GameObject * parent, const std::string & name = "") override;
 	void Update(const GameObjectParams & params) override;
-	bool DrawGui(float gt) override;
+	bool DrawGui(const GameObjectParams& params, float gt) override;
 
 	float base_speed = 1;
 
@@ -65,7 +65,7 @@ public:
 
 	// Унаследовано через Agent
 	virtual PAgent Clone(GameObject * parent, const std::string & name = "") override;
-	virtual bool DrawGui(float gt) override;
+	virtual bool DrawGui(const GameObjectParams& params, float gt) override;
 
 	std::vector<PulverizePart> output;
 };

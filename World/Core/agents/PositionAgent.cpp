@@ -25,6 +25,7 @@
 #include <Core/orders/OrderCombined.h>
 #include <gui/WindowRecipe.h>
 #include <Render/TextureManager.h>
+#include <Core/orders/OrderFindAndPick.h>
 
 PAgent PositionAgent::Clone(GameObject *parent, const std::string &name)
 {
@@ -43,7 +44,7 @@ void PositionAgent::Update(const GameObjectParams &params)
 
 }
 
-bool PositionAgent::DrawGui(float gt)
+bool PositionAgent::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -399,7 +400,7 @@ void Creature::Update(const GameObjectParams & params)
 	}
 }
 
-bool Creature::DrawGui(float gt)
+bool Creature::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -464,7 +465,7 @@ void WalkingPossibility::Update(const GameObjectParams & params)
 {
 }
 
-bool WalkingPossibility::DrawGui(float gt)
+bool WalkingPossibility::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("Can walk");
 	return true;
@@ -481,7 +482,7 @@ void CrawlingPossibility::Update(const GameObjectParams & params)
 {
 }
 
-bool CrawlingPossibility::DrawGui(float gt)
+bool CrawlingPossibility::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("Can crawl");
 	return true;
@@ -499,7 +500,7 @@ void WaterConsumer::Update(const GameObjectParams & params)
 	water -= params.dt / 10.f;
 }
 
-bool WaterConsumer::DrawGui(float gt)
+bool WaterConsumer::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -561,7 +562,7 @@ void CalorieConsumer::Update(const GameObjectParams & params)
 		}
 }
 
-bool CalorieConsumer::DrawGui(float gt)
+bool CalorieConsumer::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -604,7 +605,7 @@ void Morale::Update(const GameObjectParams & params)
 {
 }
 
-bool Morale::DrawGui(float gt)
+bool Morale::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -655,7 +656,7 @@ void Anatomic::Afterload(GameObject * parent)
 {
 }
 
-bool Anatomic::DrawGui(float gt)
+bool Anatomic::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (ImGui::TreeNode("Mind"))
 	{
@@ -739,7 +740,7 @@ void Named::OnCreate(const GameObjectParams & params)
 	}
 }
 
-bool Named::DrawGui(float gt)
+bool Named::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("Name: %s", name.c_str());
 	return true;
@@ -820,7 +821,7 @@ void ActivityConsumer::Update(const GameObjectParams & params)
 	}
 }
 
-bool ActivityConsumer::DrawGui(float gt)
+bool ActivityConsumer::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -896,7 +897,7 @@ void Talker::Update(const GameObjectParams & params)
 	}
 }
 
-bool Talker::DrawGui(float gt)
+bool Talker::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (ImGui::TreeNode("Relationships"))
 	{
@@ -933,7 +934,7 @@ void ProfessionPerformer::Update(const GameObjectParams& params)
 	}
 }
 
-bool ProfessionPerformer::DrawGui(float gt)
+bool ProfessionPerformer::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (ImGui::TreeNode("Professions"))
 	{
@@ -951,9 +952,17 @@ bool ProfessionPerformer::CanPeformOrder(POrder o)
 	std::list<POrder> ords;
 	if (o->GetId() == Order::Idfor<OrderCombined>())
 	{
-		for(auto & oc : std::static_pointer_cast<OrderCombined>(o)->orders)
+		auto com = std::static_pointer_cast<OrderCombined>(o);
+		if (com->need_to_perform == 0)
 		{
-			ords.push_back(oc);
+			for (auto & oc : com->orders)
+			{
+				ords.push_back(oc);
+			}
+		}
+		else
+		{
+			ords.push_back(o);
 		}
 	}
 	else
@@ -965,7 +974,7 @@ bool ProfessionPerformer::CanPeformOrder(POrder o)
 		bool ok = false;
 		for (const auto &p : prof)
 		{
-			if (p->CanPeformOrder(or) && p->GetActive())
+			if (p->CanPeformOrder(or ) && p->GetActive())
 				ok = true;
 		}
 
@@ -1022,7 +1031,7 @@ void ChainDestruction::Update(const GameObjectParams& params)
 {
 }
 
-bool ChainDestruction::DrawGui(float gt)
+bool ChainDestruction::DrawGui(const GameObjectParams& params, float gt)
 {
 	return true;
 }
@@ -1065,7 +1074,17 @@ void Workshop::Update(const GameObjectParams& params)
 {
 }
 
-bool Workshop::DrawGui(float gt)
+struct CompleteCraft
+{
+	CompleteCraft(const RecipeIn * i) : input(i) {}
+	const RecipeIn * input;
+	StringIntern selected;
+};
+
+std::vector<CompleteCraft> to_complete;
+std::vector<const RecipeIn *> already_completed;
+
+bool Workshop::DrawGui(const GameObjectParams& params, float gt)
 {
 	auto rec = DB::Get().GetMachineRecipe(mParent->GetId());
 	static PRecipe r_pop;
@@ -1073,53 +1092,108 @@ bool Workshop::DrawGui(float gt)
 	{
 		bool pressed = false;
 		a->DrawGui(gt, pressed);
-		if(pressed)
+		if (pressed)
 		{
 			r_pop = a;
 			ImGui::OpenPopup("Select exact materials");
+			to_complete.clear();
+			already_completed.clear();
+			for (const auto & r : r_pop->input)
+			{
+				auto ofs = r.id.get().find("tag_");
+				if (ofs != std::string::npos)
+					to_complete.emplace_back(&r);
+				else
+					already_completed.push_back(&r);
+			}
 		}
 
 		ImGui::Separator();
-	}		
+	}
 
 	bool open = true;
 	if (ImGui::BeginPopupModal("Select exact materials", &open))
 	{
-		int i = 0;
-		for(const auto & r : r_pop->input)
+		Settings::Get().pause = true;
+		std::list<ChestSlot*> all_items;
+		const auto &all = Storages::Get().List();
+		int inrow = 0;
+		for (const auto &s : all)
 		{
-			auto ofs = r.id.get().find("tag_");
-			if(ofs != std::string::npos)
+			auto ch = std::get<1>(s)->GetAgent<Chest>();
+			for (auto & i : ch->slots)
 			{
-				ImGui::BeginGroup();
-				ImGui::Text(r.id.get().substr(4).c_str());
-				ImGui::BeginChild(ImGui::GetID(reinterpret_cast<void *>(i)), ImVec2(ImGui::GetWindowWidth() * 0.95f, 100.0f), true);
-				
-				auto taglist = DB::Get().Taglist(r.id);
-				int jj = 0;
-				for(const auto & t : taglist)
+				if (i.obj)
+					all_items.push_back(&i);
+			}
+		}
+
+		int i = 0;
+		int completed = 0;
+		for (auto & r : to_complete)
+		{
+			ImGui::BeginGroup();
+			ImGui::Text(r.input->id.get().substr(4).c_str());
+			ImGui::BeginChild(ImGui::GetID(reinterpret_cast<void *>(i)), ImVec2(ImGui::GetWindowWidth() * 0.95f, 100.0f), true);
+
+			auto taglist = DB::Get().Taglist(r.input->id);
+			int jj = 0;
+			for (const auto & t : taglist)
+			{
+				auto res = std::find_if(all_items.begin(), all_items.end(), [&](const ChestSlot * s)->bool {
+					return s->obj->GetId() == t;
+				});
+
+				if (res != all_items.end())
 				{
-					auto atl = TextureManager::Get().GetTexture(t);
-					auto &tex = std::get<0>(atl);
-					auto &atluv = std::get<1>(atl);
-
-					auto uv = glm::vec2(atluv.x, atluv.y);
-					auto uv2 = glm::vec2(atluv.z, atluv.w);
-
 					if (jj < 9)
 						ImGui::SameLine(), jj++;
 					else
 						jj = 0;
 
-					ImGui::ImageButton(reinterpret_cast<ImTextureID>(tex->GetId()), { 32,32 }, uv2, uv);
+					(*res)->DrawGui(t == r.selected);
+					if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0))
+						r.selected = t;
 				}
 
-				ImGui::EndChild();
-				ImGui::EndGroup();
+				if (!r.selected.get().empty() && t == r.selected)
+					completed++;
 			}
+
+			ImGui::EndChild();
+			ImGui::EndGroup();
 			i++;
 		}
-		if (ImGui::Button("Close"))
+
+		if (ImGui::Button("Done"))
+			if (completed == to_complete.size())
+			{
+				auto comb = std::make_shared<OrderCombined>();
+
+				std::map<StringIntern, StringIntern> tag_map;
+				for (const auto & c : to_complete)
+				{
+					auto ord = std::make_shared<OrderFind>(c.selected, c.input->count);
+					comb->PushOrder(ord);
+					tag_map[c.input->id] = c.selected;
+				}
+				for (const auto & c : already_completed)
+				{
+					auto ord = std::make_shared<OrderFind>(c->id, c->count);
+					comb->PushOrder(ord);
+				}
+				auto cord = std::make_shared<OrderCraft>(params.pos, r_pop, 1);
+				cord->tag_map = tag_map;
+
+				comb->PushOrder(cord);
+
+				if (!performer.get().empty())
+					comb->need_to_perform = ProfessionFactory::Get().Create(performer)->GetId();
+
+				OrderBus::Get().IssueOrder(comb);
+			}
+
+		if (ImGui::Button("Cancel"))
 			ImGui::CloseCurrentPopup();
 		ImGui::EndPopup();
 	}
@@ -1129,7 +1203,7 @@ bool Workshop::DrawGui(float gt)
 
 void Workshop::JsonLoad(const rapidjson::Value& val)
 {
-	JSONLOAD(NVP(machine));
+	JSONLOAD(NVP(machine), NVP(performer));
 }
 
 //-------------------------------------------------------------------
@@ -1145,7 +1219,7 @@ void EnergyProducer::Update(const GameObjectParams& params)
 {
 }
 
-bool EnergyProducer::DrawGui(float gt)
+bool EnergyProducer::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("EnergyProducer");
 	ImGui::Text("producing %fv %fa", voltage, amperage);
@@ -1180,7 +1254,7 @@ void EnergyConsumer::Update(const GameObjectParams& params)
 {
 }
 
-bool EnergyConsumer::DrawGui(float gt)
+bool EnergyConsumer::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -1208,7 +1282,7 @@ void EnergyWire::Update(const GameObjectParams& params)
 {
 }
 
-bool EnergyWire::DrawGui(float gt)
+bool EnergyWire::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{
@@ -1249,7 +1323,7 @@ void SteamGenerator::Update(const GameObjectParams& params)
 	}
 }
 
-bool SteamGenerator::DrawGui(float gt)
+bool SteamGenerator::DrawGui(const GameObjectParams& params, float gt)
 {
 	if (Settings::Get().IsDebug())
 	{

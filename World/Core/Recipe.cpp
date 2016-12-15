@@ -187,7 +187,7 @@ void Recipe::JsonLoad(const rapidjson::Value & val)
 	JSONLOAD(NVP(input), NVP(output), NVP(tools), NVP(machine), NVP(duration), NVP(materials));
 }
 
-bool Recipe::CraftIn(Chest & c, int count)
+bool Recipe::CraftIn(Chest & c, int count, std::map<StringIntern, StringIntern> tag_map)
 {
 	auto backup = c.slots;
 
@@ -195,7 +195,10 @@ bool Recipe::CraftIn(Chest & c, int count)
 	for (const auto &i : input)
 	{
 		auto check = c.GetByPredicate([&](const ChestSlot &cs)->bool {
-			return cs.obj->GetId() == i.id;
+			if (i.id.get().find("tag_") == std::string::npos)
+				return cs.obj->GetId() == i.id;
+			else
+				return cs.obj->GetId() == tag_map[i.id];
 		});
 		if (check.obj == nullptr || check.count < i.count)
 		{
@@ -210,7 +213,10 @@ bool Recipe::CraftIn(Chest & c, int count)
 	for (const auto &i : input)
 	{
 		auto remove = c.PopByPredicate([&](const ChestSlot &cs)->bool {
-			return cs.obj->GetId() == i.id;
+			if (i.id.get().find("tag_") == std::string::npos)
+				return cs.obj->GetId() == i.id;
+			else
+				return cs.obj->GetId() == tag_map[i.id];
 		});
 
 		remove.count -= i.count;

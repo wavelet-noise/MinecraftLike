@@ -232,7 +232,7 @@ void GamePhase_Game::Draw(float dt)
 	});
 
 	Game::GetRender()->SetModelMatrix(select_model, glm::translate(glm::mat4(1), glm::vec3(std::get<0>(selection_pos) + 1000)));
-	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()))
+	if (!ImGui::IsPosHoveringAnyWindow(ImGui::GetMousePos()) && !Settings::Get().pause)
 	{
 		static glm::vec3 min, max;
 		static int minmaxstate = 0;
@@ -422,13 +422,14 @@ void GamePhase_Game::Draw(float dt)
 
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
-		if (auto b = mWorld->GetBlock(static_cast<WBPos>(std::get<0>(selection_pos))))
+		auto b = mWorld->GetBlock(static_cast<WBPos>(std::get<0>(selection_pos)));
+		if (b && !Settings::Get().pause)
 		{
 			ImGui::SetNextWindowPos({ Game::GetWindow()->GetSize().x / 2.f - 70, 0 });
 			ImGui::SetNextWindowSize({ 140,50 });
 
 			ImGui::Begin("Selected");
-			b->DrawGui(dt);
+			b->DrawGui({}, dt);
 			ImGui::Text("%s", b->GetDescription().c_str());
 			ImGui::End();
 		}
@@ -439,7 +440,7 @@ void GamePhase_Game::Draw(float dt)
 		{
 			if (ImGui::TreeNode((std::string("creature_") + std::to_string(i)).c_str()))
 			{
-				c.second->DrawGui(dt);
+				c.second->DrawGui({}, dt);
 				ImGui::TreePop();
 			}
 			i++;
@@ -467,7 +468,11 @@ void GamePhase_Game::Draw(float dt)
 	{
 		ImGui::Begin((boost::format("Block UI (%1%, %2%, %3%)") % std::get<0>(w).x % std::get<0>(w).y % std::get<0>(w).z).str().c_str(),
 			nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings);
-		std::get<1>(w)->DrawGui(dt);
+
+		GameObjectParams gop;
+		gop.world = mWorld.get();
+		gop.pos = std::get<0>(w);
+		std::get<1>(w)->DrawGui(gop, dt);
 
 		glm::vec2 pos_win = ImGui::GetWindowPos();
 		glm::vec2 size = ImGui::GetWindowSize();
@@ -542,6 +547,9 @@ void GamePhase_Game::Draw(float dt)
 
 void GamePhase_Game::Update(float dt)
 {
+	if (Settings::Get().pause)
+		return;
+
 	SPos secPos = { 0,0,0 };
 	mSectorLoader->SetPos(Game::GetCamera()->GetPos() / float(SECTOR_SIZE));
 
@@ -696,6 +704,8 @@ void Game::GameRun()
 			game_phase->Update(currTime - lastTime);
 
 			currTime = static_cast<float>(glfwGetTime());
+
+			Settings::Get().pause = false;
 			game_phase->Draw(currTime - lastTime);
 		}
 

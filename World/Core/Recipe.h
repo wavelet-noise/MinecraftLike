@@ -4,6 +4,7 @@
 #include <tools\StringIntern.h>
 #include <rapidjson\document.h>
 #include <list>
+#include <map>
 
 class RecipeIn
 {
@@ -69,7 +70,7 @@ public:
 
 	virtual void JsonLoad(const rapidjson::Value &val);
 
-	bool CraftIn(Chest &c, int count = 1);
+	bool CraftIn(Chest &c, int count = 1, std::map<StringIntern, StringIntern> tag_map = {});
 
 	bool operator == (const Recipe &other) const
 	{

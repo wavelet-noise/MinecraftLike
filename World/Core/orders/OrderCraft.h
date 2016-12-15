@@ -14,6 +14,7 @@ struct OrderCraft : NumberedOrder<OrderCraft>
 	PRecipe item;
 	int count = 1;
 	float duration_passed = 0;
+	std::map<StringIntern, StringIntern> tag_map;
 
 	float Tiring() const override
 	{

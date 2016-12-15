@@ -40,7 +40,7 @@ void WindowStorages::Draw(glm::vec2 mainwin_size, float gt)
 			for(const auto &s : all)
 			{
 				auto ch = std::get<1>(s)->GetAgent<Chest>();
-				ch->DrawGui(gt);
+				ch->DrawGui({}, gt);
 				inrow += ch->columns;
 				if (inrow < 10)
 					ImGui::SameLine();

@@ -48,11 +48,13 @@
 		{
 			"type":"ProfessionPerformer",
 			"data":[
-				{"name":"Cooker", "level":1, "active":false},
-				{"name":"Miner", "level":2, "active":false},
-				{"name":"Medic", "level":1, "active":false},
-				{"name":"Gatherer", "level":1, "active":false},
-				{"name":"Builder", "level":2, "active":false}
+				{"name":"Cooker", "level":1, "active":true},
+				{"name":"Miner", "level":1, "active":true},
+				{"name":"Medic", "level":1, "active":true},
+				{"name":"Gatherer", "level":1, "active":true},
+				{"name":"Builder", "level":1, "active":true},
+				{"name":"Mason", "level":1, "active":true},
+				{"name":"Carpenter", "level":1, "active":true}
 			]
 		}
 	],

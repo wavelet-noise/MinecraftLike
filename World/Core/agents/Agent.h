@@ -73,7 +73,7 @@ public:
 
 	// client
 	// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
-	virtual bool DrawGui(float gt);
+	virtual bool DrawGui(const GameObjectParams &params, float gt);
 
 	// client/server syncronize
 	virtual void Interact(const InteractParams &params);

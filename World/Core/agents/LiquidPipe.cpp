@@ -54,7 +54,7 @@ void LiquidPipe::Update(const GameObjectParams & params)
 	liq.count /= total / (pipes.size() + 1);
 }
 
-bool LiquidPipe::DrawGui(float gt)
+bool LiquidPipe::DrawGui(const GameObjectParams& params, float gt)
 {
 	ImGui::Text("LiquidPipe");
 	ImGui::Checkbox("Locked", &mLocked);
