@@ -88,8 +88,9 @@
 	"tags":["tag_stick"],
 	"recipe":{
 			"input":[["plank_%material%", 1]],
-			"output":[["stick_%material%", 5]],
-			"materials":["tag_material_wood"]
+			"output":[["stick_%material%", 3]],
+			"materials":["tag_material_wood"],
+			"machine":"none"
 		}
 },{
 	"type":"Item",
@@ -138,7 +139,7 @@
     ]
 },{
 	"type":"Item",
-    "id":"lumber",
+    "id":"log",
     "agents":[
 		{
 			"type":"Fuel",
@@ -149,7 +150,7 @@
 		"type":"TemplateItemMaterial",
 		"materials":["tag_material_wood"]
 	},
-	"tags":["tag_lumber"]
+	"tags":["tag_log"]
 },{
 	"type":"Item",
     "id":"plank",
@@ -165,9 +166,10 @@
 	},
 	"tags":["tag_plank"],
 	"recipe":{
-			"input":[["lumber_%material%", 1]],
-			"output":[["plank_%material%", 4]],
-			"materials":["tag_material_wood"]
+			"input":[["log_%material%", 1]],
+			"output":[["plank_%material%", 2]],
+			"materials":["tag_material_wood"],
+			"machine":"none"
 		}
 },{
 	"type":"Item",

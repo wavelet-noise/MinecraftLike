@@ -9,6 +9,25 @@
 #include <Core\agents\Chest.h>
 #include "OrderTools.h"
 
+std::string Order::StateToString(State s)
+{
+	switch(s)
+	{
+	case State::Dropped:
+		return "Dropped";
+	case State::Builded:
+		return "Builded";
+	case State::Done:
+		return "Done";
+	case State::Initial:
+		return "Initial";
+	case State::Performing:
+		return "Performing";
+	default:
+		return "ERROR";
+	}
+}
+
 std::string Order::to_string() const
 {
 	return (boost::format(" (%1%%2%%3%)%4%") % (mTaken ? "T" : "_") % (mDone ? "D" : "_") % (mCanceled ? "C" : "_") % (reason.empty() ? "" : " [" + reason + "]")).str();
@@ -133,6 +152,7 @@ void Order::Update(const GameObjectParams& params, PGameObject performer, float 
 
 void Order::SetState(State __state)
 {
+	LOG(trace) << to_string() << " New state: " << StateToString(__state);
 	state = __state;
 }
 

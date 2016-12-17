@@ -5,42 +5,5 @@
 				"input":[["grass", 1]],
 				"output":[["flax_0", 1]]
 			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
-				"input":[["lumber", 1]],
-				"output":[["stick", 20]]
-			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
-				"input":[["tag_plank", 4], ["tag_stick", 6], ["tag_cloth", 4], ["tag_nail", 8]],
-				"output":[["hard_wooden_bed", 1]],
-				"machine":"caprenter_workshop"
-			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
-				"input":[["tag_stick", 6], ["tag_nail", 8]],
-				"output":[["hard_wooden_bed", 1]],
-				"machine":"caprenter_workshop"
-			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
-				"input":[["tag_plank", 4], ["tag_nail", 8]],
-				"output":[["wooden_door", 1]]
-			}
-},
-{
-	"type":"Recipe",
-	"recipe":{
-				"input":[["hard_bed", 1], ["tag_cloth", 4]],
-				"output":[["wooden_bed", 1]]
-			}
 }
 ]

@@ -49,7 +49,7 @@ void WorldGenMountains::WorldPass(World &w)
 	if (treepos.empty())
 		return;
 
-	auto log = DB::Get().Create(StringIntern("log"));
+	auto log = DB::Get().Create(StringIntern("log_block"));
 	auto leaves = DB::Get().Create(StringIntern("leaves"));
 	auto berry_bush = DB::Get().Create(StringIntern("berry_bush"));
 
@@ -107,7 +107,6 @@ void WorldGenMountains::Generate(Sector & s)
 	auto bf5 = DB::Get().Create(StringIntern("grass_high_small_blue"));
 	auto bf6 = DB::Get().Create(StringIntern("grass_high_small_red"));
 	auto bfb = DB::Get().Create(StringIntern("grass_high_small_bad"));
-	auto bt = DB::Get().Create(StringIntern("tree"));
 
 	auto ore_dot = DB::Get().Taglist("ore_dots");
 	std::vector<PGameObject> ore_dots;

@@ -29,6 +29,8 @@ public:
 		Dropped
 	};
 
+	static std::string StateToString(State s);
+
 	virtual size_t GetId() const = 0;
 
 	virtual bool IsEquals(const Order &rhs) = 0;

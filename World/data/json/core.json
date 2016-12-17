@@ -96,11 +96,16 @@
     },
     {  
         "type":"Block",
-        "id":"log",
+        "id":"log_block",
         "agents":[  
 			{
 				"type":"ChainDestruction",
-				"destroys":["leaves", "log"]
+				"destroys":["leaves", "log_block"]
+			},
+			{
+				"type":"Ore",
+				"contains":[["log_material_birch", 1, 0.5]],
+				"size":50
 			}
         ],
         "tesselator":[  
@@ -457,118 +462,5 @@
         ],
         "dynamic":true,
         "placeable":true
-    },
-    {  
-        "type":"Block",
-        "id":"f",
-        "agents":[  
-        ],
-        "tesselator":[  
-            {  
-                "type":"SplitBlockTessellator",
-                "generator":{  
-                    "separate":[
-						"f",
-						"r",
-						"b",
-						"l",
-						"t",
-						"b"
-					]
-                },
-                "transparent":false
-            }
-        ],
-        "dynamic":false,
-        "placeable":true
-    },
-    {  
-        "type":"Block",
-        "id":"work_dummy",
-        "agents":[  
-            {  
-                "type":"Operatable"
-            }
-        ],
-        "tesselator":[  
-            {  
-                "type":"SplitBlockTessellator",
-                "generator":{  
-                    "separate":[
-						"work_dummy",
-						"work_dummy",
-						"work_dummy",
-						"work_dummy",
-						"work_dummy",
-						"work_dummy"
-					]
-                },
-                "transparent":false
-            }
-        ],
-        "dynamic":true,
-        "placeable":true,
-		"active":true
-    },{  
-        "type":"Block",
-        "id":"basic_workbench",
-        "agents":[  
-            {  
-                "type":"Operatable"
-            },
-			{	
-				"type":"BasicWorkbench"
-			}
-        ],
-        "tesselator":[  
-            {  
-                "type":"SplitBlockTessellator",
-                "generator":{  
-                    "separate":[
-						"basic_workbench",
-						"basic_workbench",
-						"basic_workbench",
-						"basic_workbench",
-						"basic_workbench",
-						"basic_workbench"
-					]
-                },
-                "transparent":false
-            }
-        ],
-        "dynamic":true,
-        "placeable":true
-    },
-	{
-		"type":"Block",
-        "id":"caprenter_workshop",
-        "agents":[  
-            {  
-                "type":"Workshop",
-				"performer":"Carpenter"
-            }
-        ],
-        "tesselator":[  
-            {  
-                "type":"SplitBlockTessellator",
-                "generator":{  
-                    "separate":[
-						"caprenter_workshop",
-						"caprenter_workshop",
-						"caprenter_workshop",
-						"caprenter_workshop",
-						"caprenter_workshop",
-						"caprenter_workshop"
-					]
-                },
-                "transparent":false
-            }
-        ],
-        "dynamic":true,
-        "placeable":true,
-		"active":true,
-		"recipe":{
-			
-		}
-	}
+    }
 ]

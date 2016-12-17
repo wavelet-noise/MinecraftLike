@@ -36,7 +36,7 @@ private:
 
   std::mutex mMutex;
 private:
-  void AddElements();
+  void SyncElements();
 };
 
 

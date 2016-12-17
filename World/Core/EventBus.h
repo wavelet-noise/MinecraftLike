@@ -113,7 +113,10 @@ struct EventSectorReady : public NumberedEvent<EventOrderStart>
 
 struct EventMapReady : public NumberedEvent<EventMapReady>
 {
-	EventMapReady() {}
+	EventMapReady()
+	{
+		
+	}
 
 	std::string to_string() const override
 	{

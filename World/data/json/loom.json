@@ -1,0 +1,39 @@
+[
+	{
+		"type":"Block",
+        "id":"loom_workshop",
+        "agents":[  
+            {  
+                "type":"Workshop",
+				"performer":"Carpenter"
+            }
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":true,
+        "placeable":true,
+		"active":true
+	},
+	{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_plank", 6], ["tag_nail", 8], ["tag_wheel", 8], ["tag_stick", 30]],
+					"output":[["loom_workshop", 1]],
+					"machine":"none"
+				}
+	}
+]

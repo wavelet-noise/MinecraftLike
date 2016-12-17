@@ -122,7 +122,7 @@ public:
 	// @param vertexSize количество элементов в буфере вершин.
 	// @param index указатель на начало буфера индексов.
 	// @param indexSize количество элементов в буфере индексов.
-	inline void Compile(const std::vector<int> &locations)
+	void Compile(const std::vector<int> &locations)
 	{
 		mStrategy->SetAttribute(GetAttribute(), locations);
 		mStrategy->Send(reinterpret_cast<float *>(mVertex.data()), mVertex.size(),
@@ -130,7 +130,7 @@ public:
 	}
 
 	// Нарисовать сетку.
-	inline void Draw()
+	void Draw()
 	{
 		mStrategy->Draw();
 	}

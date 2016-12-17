@@ -24,12 +24,13 @@ void RenderSector::Push(const Model &model, const SPos &pos)
 
 void RenderSector::Remove(const SPos &pos)
 {
-
+	std::lock_guard<std::mutex> lock(mMutex);
+	mRemoveList.emplace_back(pos);
 }
 
 void RenderSector::Draw(Camera &camera, Camera &light)
 {
-	AddElements();
+	SyncElements();
 
 	for (auto &i : mModels)
 	{
@@ -88,7 +89,7 @@ int RenderSector::ApproxDc()
 	return mDc;
 }
 
-void RenderSector::AddElements()
+void RenderSector::SyncElements()
 {
 	decltype(mPushList) tmpList;
 	{
@@ -105,5 +106,16 @@ void RenderSector::AddElements()
 		model.GetMesh()->Release();
 
 		mModels[std::get<1>(i)] = std::move(model);
+	}
+
+	decltype(mRemoveList) tmpRemList;
+	{
+		std::lock_guard<std::mutex> lock(mMutex);
+		tmpRemList.swap(mRemoveList);
+	}
+
+	for (auto &i : tmpRemList)
+	{
+		mModels.erase(i);
 	}
 }

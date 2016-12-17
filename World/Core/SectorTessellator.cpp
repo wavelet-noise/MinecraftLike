@@ -63,6 +63,10 @@ bool SectorTessellator::Update(Tessellator *tesselator, RenderSector &render, in
 		mModel.GetMesh()->BuildAABB(&VertexVTN::vertex);
 		render.Push(mModel, mPos);
 	}
+	else
+	{
+		render.Remove(mPos);
+	}
 
 	mChanged = false;
 	return true;

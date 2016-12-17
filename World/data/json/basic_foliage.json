@@ -60,35 +60,5 @@
 		"nutrition":20
 	}
     ]
-},
-{
-		"type":"Block",
-		"id":"tree",
-		"agents":[
-			{
-				"type":"Ore",
-				"contains":[["lumber", 1, 0.1]],
-				"size":100
-			}
-		],
-		"tesselator":[  
-            {  
-                "type":"ModelTessellator",
-				"sides":[  
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"tree"
-				],
-				"model":"data/models/test.obj",
-                "transparent":true
-            }
-        ],
-		"placeable":true,
-		"dynamic":true,
-		"walkable":true
 }
 ]

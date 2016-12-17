@@ -1,0 +1,81 @@
+[
+	{
+		"type":"Block",
+        "id":"caprenter_workshop",
+        "agents":[  
+            {  
+                "type":"Workshop",
+				"performer":"Carpenter"
+            }
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":true,
+        "placeable":true,
+		"active":true
+	},
+	{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_plank", 6], ["tag_nail", 8], ["tag_log, 4"]],
+					"output":[["caprenter_workshop", 1]],
+					"machine":"none"
+				}
+	},
+	{
+		"type":"Recipe",
+		"recipe":{
+				"input":[["plank_%material%", 1]],
+				"output":[["stick_%material%", 5]],
+				"materials":["tag_material_wood"],
+				"machine":"caprenter_workshop"
+			}
+	},
+	{
+		"type":"Recipe",
+		"recipe":{
+				"input":[["log_%material%", 1]],
+				"output":[["plank_%material%", 4]],
+				"materials":["tag_material_wood"],
+				"machine":"caprenter_workshop"
+			}
+	},
+	{
+	"type":"Recipe",
+	"recipe":{
+				"input":[["tag_plank", 4], ["tag_stick", 6], ["tag_nail", 8]],
+				"output":[["hard_wooden_bed", 1]],
+				"machine":"caprenter_workshop"
+			}
+	},
+	{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_plank", 4], ["tag_nail", 8]],
+					"output":[["wooden_door", 1]],
+					"machine":"caprenter_workshop"
+				}
+	},
+	{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["hard_wooden_bed", 1], ["tag_cloth", 4]],
+					"output":[["wooden_bed", 1]],
+					"machine":"caprenter_workshop"
+				}
+	}
+]

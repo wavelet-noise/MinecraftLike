@@ -1,0 +1,15 @@
+[
+{
+	"type":"Item",
+    "id":"anvil",
+    "agents":[
+    ],
+	"template":{
+		"type":"TemplateItemMaterial",
+		"materials":["tag_material_metal"]
+	},
+	"tags":["tag_anvil"]
+},
+{
+}
+]
