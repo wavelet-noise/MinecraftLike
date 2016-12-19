@@ -24,19 +24,117 @@
                 "transparent":false
             }
         ],
-        "dynamic":true,
+        "dynamic":false,
         "placeable":true,
-		"active":true
-	},
-	{
+		"active":false
+	},{
 		"type":"Recipe",
 		"recipe":{
-					"input":[["tag_plank", 6], ["tag_nail", 8], ["tag_log, 4"]],
+					"input":[["tag_plank", 6], ["tag_nail", 8], ["tag_log", 4], ["wooden_box", 1], ["wooden_chair", 1], ["wooden_table", 1]],
+					"output":[["caprenter_workshop", 1]],
+					"machine":"caprenter_workshop"
+				}
+	},{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_plank", 25], ["tag_nail", 25], ["tag_stick", 25], ["tag_log", 4]],
 					"output":[["caprenter_workshop", 1]],
 					"machine":"none"
 				}
-	},
-	{
+	},{
+		"type":"Block",
+        "id":"wooden_table",
+        "agents":[
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":false,
+        "placeable":true,
+		"active":false
+	},{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_plank", 4], ["tag_nail", 4], ["tag_stick, 4"]],
+					"output":[["wooden_table", 1]],
+					"machine":"caprenter_workshop"
+				}
+	},{
+		"type":"Block",
+        "id":"wooden_chair",
+        "agents":[
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":false,
+        "placeable":true,
+		"active":false
+	},{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_plank", 2], ["tag_nail", 8], ["tag_stick, 6"]],
+					"output":[["wooden_chair", 1]],
+					"machine":"caprenter_workshop"
+				}
+	},{
+		"type":"Block",
+        "id":"wooden_box",
+        "agents":[
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":false,
+        "placeable":true,
+		"active":false
+	},{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_plank", 4], ["tag_nail", 4]],
+					"output":[["wooden_box", 1]],
+					"machine":"caprenter_workshop"
+				}
+	},{
 		"type":"Recipe",
 		"recipe":{
 				"input":[["plank_%material%", 1]],
@@ -44,8 +142,7 @@
 				"materials":["tag_material_wood"],
 				"machine":"caprenter_workshop"
 			}
-	},
-	{
+	},{
 		"type":"Recipe",
 		"recipe":{
 				"input":[["log_%material%", 1]],
@@ -53,27 +150,31 @@
 				"materials":["tag_material_wood"],
 				"machine":"caprenter_workshop"
 			}
-	},
-	{
+	},{
 	"type":"Recipe",
 	"recipe":{
 				"input":[["tag_plank", 4], ["tag_stick", 6], ["tag_nail", 8]],
 				"output":[["hard_wooden_bed", 1]],
 				"machine":"caprenter_workshop"
 			}
-	},
-	{
+	},{
 		"type":"Recipe",
 		"recipe":{
 					"input":[["tag_plank", 4], ["tag_nail", 8]],
 					"output":[["wooden_door", 1]],
 					"machine":"caprenter_workshop"
 				}
-	},
-	{
+	},{
 		"type":"Recipe",
 		"recipe":{
 					"input":[["hard_wooden_bed", 1], ["tag_cloth", 4]],
+					"output":[["wooden_bed", 1]],
+					"machine":"caprenter_workshop"
+				}
+	},{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_stick", 1], ["wooden_pulp", 2]],
 					"output":[["wooden_bed", 1]],
 					"machine":"caprenter_workshop"
 				}
