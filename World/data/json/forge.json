@@ -1,15 +1,48 @@
 [
-{
-	"type":"Item",
-    "id":"anvil",
-    "agents":[
-    ],
-	"template":{
-		"type":"TemplateItemMaterial",
-		"materials":["tag_material_metal"]
-	},
-	"tags":["tag_anvil"]
-},
-{
-}
+    {
+    	"type":"Item",
+        "id":"anvil",
+        "agents":[
+        ],
+    	"template":{
+    		"type":"TemplateItemMaterial",
+    		"materials":["tag_material_metal"]
+    	},
+    	"tags":["tag_anvil"]
+    },{
+		"type":"Block",
+        "id":"forge_workshop",
+        "agents":[  
+            {  
+                "type":"Workshop",
+				"performer":"Blacksmith"
+            }
+        ],
+        "tesselator":[  
+            {  
+                "type":"SplitBlockTessellator",
+                "generator":{  
+                    "separate":[
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop",
+						"caprenter_workshop"
+					]
+                },
+                "transparent":false
+            }
+        ],
+        "dynamic":false,
+        "placeable":true,
+		"active":false
+	},{
+		"type":"Recipe",
+		"recipe":{
+					"input":[["tag_plank", 6], ["tag_nail", 8], ["tag_log", 1], ["wooden_box", 1], ["wooden_chair", 1], ["wooden_table", 1], ["anvil", 1]],
+					"output":[["forge_workshop", 1]],
+					"machine":"caprenter_workshop"
+				}
+	}
 ]
