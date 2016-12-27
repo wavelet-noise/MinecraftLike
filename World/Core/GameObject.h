@@ -41,22 +41,22 @@ public:
 	virtual void Update(GameObjectParams &params);
 
 	// client
-	// рисует gui этого агента дл€ переданного в параметрах блока. ƒолжен вызыватьс€ каждый кадр, когда требуетс€ отрисовка окна
+	//  gui       .    ,    
 	virtual bool DrawGui(const GameObjectParams &params, float gt);
 
 	virtual void Requirements();
 
 	//client/server paralell
-	//выполн€етс€ 1 раз дл€ каждого агента каждого игрового объекта, хран€щегос€ в базе данных, после полной загрузки последней
+	// 1       ,    ,    
 	virtual void Afterload();
 
-	//вызыветс€ дл€ блоков, перед тем как они будут имключены из сектора
+	//  ,        
 	virtual void OnDestroy(const GameObjectParams &params);
 
-	//вызыветс€ дл€ блоков, после того, как они добавлены в сектор
+	//  ,  ,     
 	virtual void OnCreate(const GameObjectParams & params);
 
-	//вызыветс€ после того, как сосед изменилс€
+	//  ,   
 	virtual void OnAdjacentChanged(const GameObjectParams & params);
 
 	virtual PGameObject Clone();
@@ -89,6 +89,32 @@ public:
 		if (it != mAgents.end())
 		{
 			return true;
+		}
+
+		return false;
+	}
+	
+	template<class T>
+	T *GetAgentBase()
+	{
+		StringIntern name = T::TypeName();
+		for(const auto & a : mAgents)
+		{
+		    if(a->IsBasedOn(name))
+		        return static_cast<T*>(a->second.get());
+		}
+
+		return nullptr;
+	}
+	
+	template<class T>
+	T *HasAgentBase()
+	{
+		StringIntern name = T::TypeName();
+		for(const auto & a : mAgents)
+		{
+		    if(a->IsBasedOn(name))
+		        true;
 		}
 
 		return false;
