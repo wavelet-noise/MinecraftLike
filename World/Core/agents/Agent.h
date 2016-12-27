@@ -33,11 +33,11 @@ struct AgSync
 #define AM_NOVTABLE /*__declspec(novtable)*/
 #endif
 
-// Агент.
-// Тип агента задается потомками на этапе компиляции и не меняется. Аналогичен типу объекта.
-// Имя агента задается потомками в конструкторе. Может использоваться для идентификации
-// экземпляров агентов. Также может отсутствовать.
-// У агентов, которые обязательно присутствуют в игровом объекте, имя должно отсутствовать.
+// .
+//          .   .
+//      .    
+//  .   .
+//  ,      ,   .
 class AM_NOVTABLE Agent
 {
 public:
@@ -46,8 +46,8 @@ public:
 
 	virtual PAgent Clone(GameObject *parent, const std::string &name = "") = 0;
 
-	// максимальный период вызова метода Update в секундах
-	// 0 - не ограничено
+	//     Update  
+	// 0 -  
 	virtual float GetFreq() const
 	{
 		return 1.0f;
@@ -55,6 +55,8 @@ public:
 
 	virtual void __Update(const GameObjectParams &params) = 0;
 	virtual void __AfterUpdate() = 0;
+	
+	virtual bool IsBasedOn(const StringIntern & type) = 0;
 
 	virtual void Update(const GameObjectParams &params);
 
@@ -68,11 +70,11 @@ public:
 	virtual void Requirements();
 
 	// client/server paralell
-	// выполняется 1 раз для каждого агента каждого игрового объекта, хранящегося в базе данных, после полной загрузки последней
+	//  1       ,    ,    
 	virtual void Afterload(GameObject * parent);
 
 	// client
-	// рисует gui этого агента для переданного в параметрах блока. Должен вызываться каждый кадр, когда требуется отрисовка окна
+	//  gui       .    ,    
 	virtual bool DrawGui(const GameObjectParams &params, float gt);
 
 	// client/server syncronize
@@ -143,7 +145,18 @@ static void __req_helper(const First &first, const Rest&... rest)
 						if(s.first) { s.first = false; s.elapsed += params.dt; } \
 						if(s.elapsed >= GetFreq()) { Update({params.world, params.sector, params.pos, s.elapsed, params.render}); s.executed = true; }  \
 					} \
-				    virtual void __AfterUpdate() override { auto & s = Agent::GetSync<type>();  s.first = true; if(s.executed) { s.elapsed = 0.f; } s.executed = false; }
+				    virtual void __AfterUpdate() override { auto & s = Agent::GetSync<type>();  s.first = true; if(s.executed) { s.elapsed = 0.f; } s.executed = false; } \
+				    virtual bool IsInherited(const StringIntern & type) { return type::TypeName() == type; }
+				    
+#define AGENT_EX(type, base) virtual StringIntern GetFullName() const override { return StringIntern(#type); } \
+					         static StringIntern TypeName() { return StringIntern(#type); } \
+                             virtual void __Update(const GameObjectParams &params) override { \
+					         	   auto & s = Agent::GetSync<type>();  \
+					         	   if(s.first) { s.first = false; s.elapsed += params.dt; } \
+					         	   if(s.elapsed >= GetFreq()) { Update({params.world, params.sector, params.pos, s.elapsed, params.render}); s.executed = true; }  \
+					         } \
+				             virtual void __AfterUpdate() override { auto & s = Agent::GetSync<type>();  s.first = true; if(s.executed) { s.elapsed = 0.f; } s.executed = false; } \
+				             virtual bool IsBasedOn(const StringIntern & type) { if(type::TypeName() == type) return true; return base::IsBasedOn(type); }
 
 struct AgentFactory : public boost::noncopyable
 {
