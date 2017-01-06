@@ -98,11 +98,15 @@ public:
 	void OnCreate(const GameObjectParams & params) override;
 	void OnDestroy(const GameObjectParams & params) override;
 
-	void AddPersinal(POrder o);
+	void AddPersonal(POrder o, float priority = 0.5);
 
 	POrder order;
 
 	std::deque<POrder> personal;
+
+	using PriorityOrder = std::pair<float, POrder>;
+	std::priority_queue<PriorityOrder> orders;
+	POrder work_order; // priority == 0.5
 
 	float step_step = 0;
 	glm::vec3 newpos;

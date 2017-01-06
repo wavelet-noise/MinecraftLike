@@ -146,7 +146,7 @@ static void __req_helper(const First &first, const Rest&... rest)
 						if(s.elapsed >= GetFreq()) { Update({params.world, params.sector, params.pos, s.elapsed, params.render}); s.executed = true; }  \
 					} \
 				    virtual void __AfterUpdate() override { auto & s = Agent::GetSync<type>();  s.first = true; if(s.executed) { s.elapsed = 0.f; } s.executed = false; } \
-				    virtual bool IsInherited(const StringIntern & type) { return type::TypeName() == type; }
+				    virtual bool IsBasedOn(const StringIntern & type) { return type::TypeName() == type; }
 				    
 #define AGENT_EX(type, base) virtual StringIntern GetFullName() const override { return StringIntern(#type); } \
 					         static StringIntern TypeName() { return StringIntern(#type); } \

@@ -24,7 +24,7 @@
                 "transparent":false
             }
         ],
-        "dynamic":false,
+        "dynamic":true,
         "placeable":true,
 		"active":false
 	},{

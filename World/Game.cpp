@@ -425,13 +425,13 @@ void GamePhase_Game::Draw(float dt)
 		auto b = mWorld->GetBlock(static_cast<WBPos>(std::get<0>(selection_pos)));
 		if (b && !Settings::Get().pause)
 		{
-			ImGui::SetNextWindowPos({ Game::GetWindow()->GetSize().x / 2.f - 70, 0 });
-			ImGui::SetNextWindowSize({ 140,50 });
+			//ImGui::SetNextWindowPos({ Game::GetWindow()->GetSize().x / 2.f - 70, 0 });
+			//ImGui::SetNextWindowSize({ 140,50 });
 
-			ImGui::Begin("Selected");
-			b->DrawGui({}, dt);
-			ImGui::Text("%s", b->GetDescription().c_str());
-			ImGui::End();
+			//ImGui::Begin("Selected");
+			//b->DrawGui({}, dt);
+			//ImGui::Text("%s", b->GetDescription().c_str());
+			//ImGui::End();
 		}
 
 		ImGui::Begin("Colony", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
@@ -672,7 +672,7 @@ Game::Game()
 	mRender = std::make_unique<Render>();
 
 	ImGui_ImplGlfwGL3_Init(mWindow->Get(), true);
-	ImGui::SetupImGuiStyle(true, 0.8f);
+	//ImGui::SetupImGuiStyle(true, 0.8f);
 
 	Localize::instance().Init();
 

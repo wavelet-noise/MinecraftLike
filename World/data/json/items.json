@@ -325,7 +325,7 @@
 				"input":[["ingot_%material%", 1]],
 				"output":[["hammer_head_%material%", 1]],
 				"materials":["tag_material_metal"],
-			    "machine":"forge_workshop""
+			    "machine":"forge_workshop"
 			},
 	"tags":["tag_metal_basic_component"]
 },{
