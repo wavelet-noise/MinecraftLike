@@ -2,7 +2,8 @@ digraph g{
 subgraph cluster_0{
 label="Legend"
 Tool[color="0.5 1 1"]
-Machine[color="0 1 1"]
+Machine[color="red"]
+"Machine\\Hand"[color="aquamarine3"]
 Component
 }
 
@@ -42,13 +43,22 @@ label="Metalworks"
 "wire x4"->"wire x8"->"isolated wire x8"
 "wire x8"->"wire x16"->"isolated wire x16"
 "wire x16"->"wire x32"
-"wire x1"->"lamp base"->
+"wire x1"->"lamp base"
 }
+
+"Formaldehyde"->"Bakelite"
+"Phenol"->"Bakelite"
+"cloth"->"advanced lamp logic circuit"
+"Varnish"->"lamp logic circuit"
+"Wooden plate"->"lamp logic circuit"
 
 subgraph cluster_4{
 label="Primitive elecronics"
 "empty glass lamp"->"electronic lamp"
 "wire x1"->"electronic lamp"
+"electronic lamp"->"lamp logic circuit"
+"Bakelite"->"advanced lamp logic circuit"
+"electronic lamp"->"advanced lamp logic circuit"
 }
 
 "Crusher 1"[color="0 1 1"]
@@ -62,5 +72,9 @@ V2O5[color="0.5 1 1"]
 "Washer 1"[color="0 1 1"]
 "Macerator 1"[color="0 1 1"]
 "Separator 1"[color="0 1 1"]
-"Sawmill 1"[color="0 1 1"]
+"Sawmill 1"[color="aquamarine3"]
+"Varnish"[color="black"]
+"Wooden plate"[color="black"]
+"Bakelite"[color="black"]
+"cloth"[color="black"]
 }
