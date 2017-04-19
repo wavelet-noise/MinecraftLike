@@ -85,6 +85,12 @@ label="Primitive elecronics"
 "electronic lamp"->"advanced lamp logic circuit"
 }
 
+subgraph cluster_7{
+label="Basic elecronics"
+"polyethylene"->"solid capacitor"
+"metal foil"->"solid capacitor"
+}
+
 "Crusher 1"[color="0 1 1"]
 "Furnance 1"[color="0 1 1"]
 "Macerator 1"[color="0 1 1"]
